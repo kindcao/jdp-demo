@@ -6,7 +6,7 @@
 	<constant name="struts.custom.i18n.resources"
 		value="messageResource" />
 
-	<package name="default" extends="struts-default">
+	<package name="default" extends="json-default">
 		<interceptors>
 			<interceptor name="checkLoginInterceptor"
 				class="com.demo.interceptor.CheckLoginInterceptor" />

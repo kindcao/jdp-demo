@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.custom.i18n.resources"
+		value="messageResource" />
+
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<interceptor name="checkLoginInterceptor"
+				class="com.demo.interceptor.CheckLoginInterceptor" />
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="checkLoginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack" />
+
+		<global-results>
+			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/error.jsp</result>
+		</global-results>
+
+		<action name="showUserList" class="userAction"
+			method="showUserList">
+			<result name="success">/jsp/userList.jsp</result>
+		</action>
+		<action name="getUserList" class="userAction"
+			method="getUserList">
+		</action>
+		<action name="addSysUser" class="userAction"
+			method="addSysUser">
+		</action>
+		<action name="login" class="userAction" method="login">
+			<result name="input">/jsp/login.jsp</result>
+		</action>
+		<action name="logout" class="userAction" method="logout" />
+		<action name="forward" class="userAction" method="forward">
+			<result name="main">/jsp/main.jsp</result>
+		</action>
+	</package>
+</struts>

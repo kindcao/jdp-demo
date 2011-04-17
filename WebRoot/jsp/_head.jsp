@@ -4,6 +4,5 @@
 
 <head>
 	<title><s:text name="msg.sys.title" /></title>
-	<sj:head jqueryui="true" debug="false" scriptPath="/scripts/jquery1.4/" />
-
+	<sj:head jqueryui="true" jquerytheme="black-tie" />
 </head>

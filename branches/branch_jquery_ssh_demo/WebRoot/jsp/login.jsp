@@ -15,7 +15,7 @@
 				function(data){
 				 	if(data.success){
 				 	    alert(document.location); 		        	 
-			        	document.location.href ="forward.action?forward=main";			        			        
+			        	document.location ="forward.action?forward=main";
 			     	}else{			     	
 			     		$("#status").html(data.errors.info);			     		
 			     	}
@@ -34,7 +34,7 @@
 			elements.blur(function(){
 				$(this).parents('li').removeClass('highlight');
 			});
-			$("#login").validate();			
+			$("#loginForm").validate();			
 		});
 	});
 	</script>
@@ -47,7 +47,7 @@
 				</h1>
 			</div>
 			<div id="content">
-				<form id="login" action="login.action" method="post">
+				<form id="loginForm">
 					<p id="status" class="error" />
 					<p></p>
 					<fieldset>

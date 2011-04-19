@@ -1,87 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 
 <html>
 	<!-- include head jsp -->
 	<jsp:include page="_head.jsp" />
 
 	<script type="text/javascript">
-		
-	$(function() {
-		// highlight 
-		var elements = $("input[type!='submit'], textarea, select");
-		elements.focus(function(){
-			$(this).parents('li').addClass('highlight');
+	$.validator.setDefaults({
+		submitHandler: function() {		
+			$.getJSON("login.action", {
+				username: $("#username").val(), 
+				password: $("#password").val()
+				},
+				function(data){
+				 	if(data.success){
+				 	    alert(document.location); 		        	 
+			        	document.location.href ="forward.action?forward=main";			        			        
+			     	}else{			     	
+			     		$("#status").html(data.errors.info);			     		
+			     	}
+				});
+		  }
+	});
+
+//
+	$(document).ready(function(){
+		$(function() {		   
+			// highlight 
+			var elements = $("input[type!='submit'], textarea, select");
+			elements.focus(function(){
+				$(this).parents('li').addClass('highlight');
+			});
+			elements.blur(function(){
+				$(this).parents('li').removeClass('highlight');
+			});
+			$("#login").validate();			
 		});
-		elements.blur(function(){
-			$(this).parents('li').removeClass('highlight');
-		});
-		
-		$("#forgotpassword").click(function() {
-			$("#password").removeClass("required");
-			$("#login").submit();
-			$("#password").addClass("required");
-			return false;
-		});
-		
-		$("#login").validate()
 	});
 	</script>
 
 	<body>
 		<div id="page">
-
 			<div id="header">
 				<h1>
-					Login
+					<s:text name="msg.sys.title" />
 				</h1>
 			</div>
-
 			<div id="content">
-				<p id="status"></p>
-				<form action="" method="get" id="login">
+				<form id="login" action="login.action" method="post">
+					<p id="status" class="error" />
+					<p></p>
 					<fieldset>
 						<legend>
-							User details
+							<s:text name="msg.login" />
 						</legend>
 						<ul>
 							<li>
-								<label for="email">
-									<span class="required">Email address</span>
-								</label>
-								<input id="email" name="email" class="text required email"
-									type="text" />
-								<label for="email" class="error">
-									This must be a valid email address
+								<s:textfield id="username" name="username"
+									key="msg.login.username" cssClass="text required"
+									required="true" />
+								<label for="username" class="error">
+									<s:text name="msg.comm.null">
+										<s:param>
+											<s:text name="msg.login.username" />
+										</s:param>
+									</s:text>
 								</label>
 							</li>
-
 							<li>
-								<label for="password">
-									<span class="required">Password</span>
-								</label>
-								<input name="password" type="password" class="text required"
-									id="password" minlength="4" maxlength="20" />
-							</li>
-
-							<li>
-								<label class="centered info">
-									<a id="forgotpassword" href="#">Email my password...</a>
+								<s:password id="password" name="password" key="msg.login.passwd"
+									cssClass="text required" required="true" />
+								<label for="password" class="error">
+									<s:text name="msg.comm.null">
+										<s:param>
+											<s:text name="msg.login.passwd" />
+										</s:param>
+									</s:text>
 								</label>
 							</li>
 						</ul>
 					</fieldset>
-
 					<fieldset class="submit">
-						<input type="submit" class="button" value="Login..." />
+						<input type="submit" value='<s:text name="msg.button.login"/>'>
 					</fieldset>
-
 					<div class="clear"></div>
 				</form>
-
 			</div>
 		</div>
-
 	</body>
 </html>

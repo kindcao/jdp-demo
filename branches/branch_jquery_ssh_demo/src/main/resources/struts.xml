@@ -6,7 +6,7 @@
 	<constant name="struts.custom.i18n.resources"
 		value="messageResource" />
 
-	<package name="default" extends="json-default">
+	<package name="default" extends="struts-default">
 		<interceptors>
 			<interceptor name="checkLoginInterceptor"
 				class="com.demo.interceptor.CheckLoginInterceptor" />
@@ -20,6 +20,7 @@
 		<global-results>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>
+			<result name="main">/jsp/main.jsp</result>
 		</global-results>
 
 		<action name="showUserList" class="userAction"
@@ -36,8 +37,6 @@
 			<result name="input">/jsp/login.jsp</result>
 		</action>
 		<action name="logout" class="userAction" method="logout" />
-		<action name="forward" class="userAction" method="forward">
-			<result name="main">/jsp/main.jsp</result>
-		</action>
+		<action name="forward" class="userAction" method="forward" />
 	</package>
 </struts>

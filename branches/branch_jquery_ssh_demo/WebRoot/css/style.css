@@ -26,7 +26,7 @@ body,dd,dl,dt,form,h1,h2,h3,h4,h5,h6,ul,ol,li,p {
 body {
 	height: 100%;
 	background-color: #333333;
-	background-image: url(images/bg.gif);
+	background-image: url(../css/images/bg.gif);
 	background-position: 0% 0;
 	color: #000000;
 	line-height: 1.5;
@@ -34,6 +34,7 @@ body {
 	font-size: 62.5%;
 	text-align: center;
 	overflow: auto;
+	background-color: #333333;
 }
 
 a:link {
@@ -51,7 +52,6 @@ a:hover {
 /* PAGE CONTAINERS ---------------------------------------------------------- */
 #page {
 	width: 636px;
-	width: 600px;
 	min-height: 40%;
 	margin: 17px auto;
 	padding: 0 18px;
@@ -61,12 +61,12 @@ a:hover {
 }
 
 * html #page {
-	height: 100%;
+	margin-top: 200px;
+	height: 40%;
 }
 
 /* HEADER ------------------------------------------------------------------- */
 #header {
-	margin-top: 200px;
 	height: 90px;
 	background-color: #B2DD32;
 	background-image: url(../images/header1.jpg);
@@ -103,7 +103,7 @@ form {
 	right column:	160px
 	*/
 form {
-	width: 550px !important;
+	width: 500px !important;
 }
 
 fieldset.submit {
@@ -136,7 +136,7 @@ form .text,form .button,form .group,form .control,form .submit,form textarea,for
 
 /*** FIELDSETS AND LEGENDS ***/
 form {
-	width: 550px;
+	width: 500px;
 	margin-bottom: 25px;
 	clear: both;
 }
@@ -208,7 +208,7 @@ form .error {
 	color: #c00;
 }
 
-form label.error{
+form label.error {
 	color: #c00;
 	font-size: 100%;
 	font-weight: bold;
@@ -307,7 +307,7 @@ form .input[type="radio"],form .input[type="checkbox"] {
 /*** SUPPORTING CLASSES ***/
 form label.required {
 	background-image: url(../images/required_star.gif);
-	background-position: right;
+	/**background-position: right;**/
 	background-repeat: no-repeat;
 }
 

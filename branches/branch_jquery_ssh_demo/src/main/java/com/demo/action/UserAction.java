@@ -48,37 +48,27 @@ public class UserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
-        String pwd = (String) DATA_MAP.get(username);
-        if (pwd != null && pwd.length() > 0 && pwd.equals(password)) {
-            log.info("user " + username + " duplicate login.");
-            HttpServletResponse response = ServletActionContext.getResponse();
-            response.setContentType("text/json;charset=UTF-8");
-            response.getWriter().write(
-                    "{success:false,errors:{info:'Duplicate login!'}}");
-            response.getWriter().flush();
-            return Action.NONE;
-        }
+        // String pwd = (String) DATA_MAP.get(username);
+        // if (pwd != null && pwd.length() > 0 && pwd.equals(password)) {
+        // log.info("user " + username + " duplicate login.");
+        // responseJsonData("{success:false,errors:{info:'Duplicate login!'}}");
+        // return Action.NONE;
+        // }
         //
         User user = userService.findUserByNameAndPass(username, password);
         if (user != null) {
             log.info("user " + user.getUsername() + " login.");
             ActionContext.getContext().getSession().put("_CURR_USER", user);
             DATA_MAP.put(user.getUsername(), user.getPassword());
+            responseJsonData("{success:true}");
         } else {
-            HttpServletResponse response = ServletActionContext.getResponse();
-            response.setContentType("text/json;charset=UTF-8");
-            response
-                    .getWriter()
-                    .write(
-                            "{success:false,errors:{info:'Error username or password'}}");
-            response.getWriter().flush();
+            responseJsonData("{success:false,errors:{info:'Error username or password'}}");
         }
         return NONE;
     }
 
     public String logout() throws Exception {
-        User user = (User) ServletActionContext.getContext().getSession()
-                .remove("_CURR_USER");
+        User user = (User) ServletActionContext.getContext().getSession().remove("_CURR_USER");
         if (user != null) {
             DATA_MAP.remove(user.getUsername());
             log.info("user " + user.getUsername() + " logout.");
@@ -87,8 +77,7 @@ public class UserAction extends BaseAction {
     }
 
     public String forward() throws Exception {
-        String forward = ServletActionContext.getRequest().getParameter(
-                "forward");
+        String forward = ServletActionContext.getRequest().getParameter("forward");
         if ("login".equals(forward)) {
             return LOGIN;
         } else if ("main".equals(forward)) {
@@ -111,8 +100,7 @@ public class UserAction extends BaseAction {
         } finally {
             HttpServletResponse response = ServletActionContext.getResponse();
             response.setContentType("text/json;charset=UTF-8");
-            response.getWriter().write(
-                    "{success:" + isSuccess + ",id:" + sysUser.getId() + "}");
+            response.getWriter().write("{success:" + isSuccess + ",id:" + sysUser.getId() + "}");
             response.getWriter().flush();
         }
         return null;
@@ -137,11 +125,9 @@ public class UserAction extends BaseAction {
                 int totalCount = userService.getUserTotalCount(map);
 
                 JSONArray jsonArray = JSONArray.fromObject(userList);
-                HttpServletResponse response = ServletActionContext
-                        .getResponse();
+                HttpServletResponse response = ServletActionContext.getResponse();
                 response.setContentType("text/json;charset=UTF-8");
-                response.getWriter().write(
-                        "{results:" + totalCount + ",List:" + jsonArray + "}");
+                response.getWriter().write("{results:" + totalCount + ",List:" + jsonArray + "}");
                 log.info("{results:" + totalCount + ",List:" + jsonArray + "}");
             }
         } catch (Exception e) {

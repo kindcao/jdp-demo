@@ -12,9 +12,8 @@
 				username: $("#username").val(), 
 				password: $("#password").val()
 				},
-				function(data){
-				 	if(data.success){
-				 	    alert(document.location); 		        	 
+				function(data){				 
+				 	if(data.success){				 	    		        	 
 			        	document.location ="forward.action?forward=main";
 			     	}else{			     	
 			     		$("#status").html(data.errors.info);			     		

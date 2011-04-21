@@ -11,10 +11,22 @@
 		$(function(){			
 			$('body').layout();			
 		});
-		
-		function clickMenuItem(){
-			
-		}
+	    //////////
+		var index = 1;
+		function addTab(thisObj){		
+		    var str=thisObj.innerHTML.replace(/^\s+|\s+$/g,"");;
+		    if($('#tabs-container').tabs('exists',str)){
+		    	$('#tabs-container').tabs('select',str);
+		    }else{
+		    	index++;
+				var _tab={
+					title: str,
+					content:'Tab Body ' + str,
+					closable:true
+				}			
+				$('#tabs-container').tabs('add',_tab);
+		    }
+		}		
 	</script>
 
 	<body>
@@ -26,30 +38,70 @@
 			style="height: 30px; padding: 5px; overflow: hidden;">
 			&nbsp;
 		</div>
-		<div region="west" split="false" title="dsfsf"
-			style="width: 200px; padding1: 0px; overflow: hidden;">
-			<div class="accordion-container" fit="true">
-				<div title="title1" selected="true">
-					<a href="#" onclick="clickMenuItem('title1');">content12</a>
+		<div region="west" split="false" title="导航菜单"
+			style="width: 200px; padding1: 0px; overflow: ">
+			<div class="accordion-container" fit="true">				
+				<div title="客户管理" >
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">券商</a>
+					</div>
+						<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">銀行</a>
+					</div>
 				</div>
-				<div title="title2">
-					content2
+				<div title="市场工作">
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">日历</a>
+					</div>
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">统计</a>
+					</div>
 				</div>
-				<div title="title3">
-					content3
+				<div title="市场监控">
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">发布监控</a>
+					</div>
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">行业监控</a>
+					</div>
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">新闻专访</a>
+					</div>
+				</div>
+				<div title="开户工作">
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">开户统计</a>
+					</div>					
+				</div>
+				<div title="系统设定" selected="true">
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">用户设定</a>
+					</div>
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">行业设定 </a>
+					</div>
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this);">发布监控</a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div region="center" title="center title"
-			style="padding1: 5px; background: #aaa;">
+		<div region="center" style="padding1: 5px; background: #aaa;">
 			<div id="tabs-container" class="tabs-container" fit="true"
 				style="overflow: hidden;">
-				<div title="Tab1" closable="true"
-					style="padding: 20px; display: none;">
-				</div>
-				<div title="Tab2" closable="true"
-					style="padding: 20px; display: none;">
-					&nbsp;
+				<div title="默认信息" style="padding: 0px; display: none;">
+					<!--div class="tabs-container" plain="true" style="padding: 0px;
+					overflow: hidden;">
+					<div title="子标题1" href="#">
+						子内容1
+					</div>
+					<div title="子标题2">
+						子内容2
+					</div>
+					<div title="子标题3">
+						子内容3
+					</div>
+					</div-->
 				</div>
 			</div>
 		</div>

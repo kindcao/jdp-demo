@@ -64,100 +64,100 @@ $(document).ready(function() {
 			<div id="content">
 				<div id="header">
 					<div id="headerlogo" />
-				</div>
-				<div style="clear: both;">
-					<div></div>
-				</div>
-				<div class="content">
-					<div id="signuptab">
-						<ul>
-							<li id="signupcurrent">
-								<a href="#">Signup</a>
-							</li>
-						</ul>
 					</div>
-					<div id="signupwrap">
-						<form id="signupform" autocomplete="off" method="post">
-							<table>
-								<tr>
-									<td class="label">
-										<label id="lusername" for="username">
-											<s:text name="msg.login.username" />
-											:
-										</label>
-									</td>
-									<td class="field">
-										<input id="username" name="username" type="text" value=""
-											maxlength="20" />
-									</td>
-									<td class="status"></td>
-								</tr>
-								<tr>
-									<td class="label">
-										<label id="lpassword" for="password">
-											<s:text name="msg.login.passwd" />
-											:
-										</label>
-									</td>
-									<td class="field">
-										<input id="password" name="password" type="password"
-											maxlength="50" value="" />
-									</td>
-									<td class="status"></td>
-								</tr>
-								<tr>
-									<td class="label">
-										<label>
+					<div style="clear: both;">
+						<div></div>
+					</div>
+					<div class="content">
+						<div id="signuptab">
+							<ul>
+								<li id="signupcurrent">
+									<a href="#">Signup</a>
+								</li>
+							</ul>
+						</div>
+						<div id="signupwrap">
+							<form id="signupform" autocomplete="off" method="post">
+								<table>
+									<tr>
+										<td class="label">
+											<label id="lusername" for="username">
+												<s:text name="msg.login.username" />
+												:
+											</label>
+										</td>
+										<td class="field">
+											<input id="username" name="username" type="text"
+												value="admin" maxlength="20" />
+										</td>
+										<td class="status"></td>
+									</tr>
+									<tr>
+										<td class="label">
+											<label id="lpassword" for="password">
+												<s:text name="msg.login.passwd" />
+												:
+											</label>
+										</td>
+										<td class="field">
+											<input id="password" name="password" type="password"
+												maxlength="50" value="admin" />
+										</td>
+										<td class="status"></td>
+									</tr>
+									<tr>
+										<td class="label">
+											<label>
+												&nbsp;
+											</label>
+										</td>
+										<td class="field" colspan="2"
+											style="vertical-align: top; padding-top: 2px;">
+											<table>
+												<tbody>
+													<tr>
+														<td style="padding-right: 5px;">
+															<input id="dateformat_eu" name="dateformat"
+																type="checkbox" value="0" />
+															<label id="ldateformat_eu" for="dateformat_eu">
+																save pssward
+															</label>
+														</td>
+														<td style="padding-left: 5px;">
+															<input id="dateformat_am" name="dateformat"
+																type="checkbox" value="1" />
+															<label id="ldateformat_am" for="dateformat_am">
+																change pssward
+															</label>
+														</td>
+														<td>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="label">
 											&nbsp;
-										</label>
-									</td>
-									<td class="field" colspan="2"
-										style="vertical-align: top; padding-top: 2px;">
-										<table>
-											<tbody>
-												<tr>
-													<td style="padding-right: 5px;">
-														<input id="dateformat_eu" name="dateformat"
-															type="checkbox" value="0" />
-														<label id="ldateformat_eu" for="dateformat_eu">
-															save pssward
-														</label>
-													</td>
-													<td style="padding-left: 5px;">
-														<input id="dateformat_am" name="dateformat"
-															type="checkbox" value="1" />
-														<label id="ldateformat_am" for="dateformat_am">
-															change pssward
-														</label>
-													</td>
-													<td>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</td>
-								</tr>
-								<tr>
-									<td class="label">
-										&nbsp;
-									</td>
-									<td class="field" colspan="2" id="errormsg">
-									</td>
-								</tr>
-								<tr>
-									<td class="label">
-										&nbsp;
-									</td>
-									<td class="field" colspan="2">
-										<input id="signupsubmit" name="signup" type="submit"
-											value='<s:text name="msg.button.login"/>' />
-									</td>
-								</tr>
-							</table>
-						</form>
+										</td>
+										<td class="field" colspan="2" id="errormsg">
+										</td>
+									</tr>
+									<tr>
+										<td class="label">
+											&nbsp;
+										</td>
+										<td class="field" colspan="2">
+											<input id="signupsubmit" name="signup" type="submit"
+												value='<s:text name="msg.button.login"/>' />
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 	</body>
 </html>

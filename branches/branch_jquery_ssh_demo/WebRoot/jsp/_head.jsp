@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 
 <head>
 	<meta http-equiv="pragma" content="no-cache">
@@ -8,12 +9,18 @@
 	<%
 	    String root = request.getContextPath();
 	%>
-
+	<link rel="stylesheet" type="text/css" href="<%=root%>/css/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/chili.css" />
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/style.css" />
+
+
 	<script type="text/javascript" src="<%=root%>/scripts/jquery/jquery.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.validate.js"></script>
+	<script type="text/javascript"
+		src="<%=root%>/scripts/jquery/jquery.easyui.min.js"></script>
+
+
 	<script type="text/javascript">
 	 <!--	   
 	   	window.onbeforeunload = function() {

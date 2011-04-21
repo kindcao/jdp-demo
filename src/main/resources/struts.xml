@@ -5,8 +5,10 @@
 <struts>
 	<constant name="struts.custom.i18n.resources"
 		value="messageResource" />
+	<constant name="struts.devMode" value="false" />
 
-	<package name="default" extends="struts-default">
+	<package name="default" extends="struts-default,json-default"
+		namespace="/">
 		<interceptors>
 			<interceptor name="checkLoginInterceptor"
 				class="com.demo.interceptor.CheckLoginInterceptor" />

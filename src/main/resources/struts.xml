@@ -7,8 +7,7 @@
 		value="messageResource" />
 	<constant name="struts.devMode" value="false" />
 
-	<package name="default" extends="struts-default,json-default"
-		namespace="/">
+	<package name="default" extends="json-default" namespace="/">
 		<interceptors>
 			<interceptor name="checkLoginInterceptor"
 				class="com.demo.interceptor.CheckLoginInterceptor" />
@@ -31,12 +30,15 @@
 		</action>
 		<action name="getUserList" class="userAction"
 			method="getUserList">
+			<result name="success" type="json"></result>
 		</action>
 		<action name="addSysUser" class="userAction"
 			method="addSysUser">
 		</action>
 		<action name="login" class="userAction" method="login">
-			<result name="input">/jsp/login.jsp</result>
+			<result name="input" type="json">
+				<param name="includeProperties">jvrResult.*</param>
+			</result>
 		</action>
 		<action name="logout" class="userAction" method="logout" />
 		<action name="forward" class="userAction" method="forward" />

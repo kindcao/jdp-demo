@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 
 <html>
 	<!-- include head jsp -->
 	<jsp:include page="_head.jsp" />
 
-	<script type="text/javascript">
-		$(function(){			
-			$('body').layout();			
-		});
-	    //////////
+	<script>
+	    //
 		var index = 1;
 		function addTab(thisObj,url){		
 		    var str=thisObj.innerHTML.replace(/^\s+|\s+$/g,"");		   
@@ -28,16 +26,17 @@
 		}		
 	</script>
 
-	<body>
-		<div id="region-north" region="north" split="false">
+	<body class="easyui-layout">
+		<div id="region-north" region="north" title="" split="false">
 		</div>
+
 		<div region="south" split="false"
 			style="height: 30px; padding: 5px; overflow: hidden;">
-			&nbsp;
 		</div>
+
 		<div region="west" split="false" title="导航菜单"
 			style="width: 200px; padding1: 0px; overflow: ">
-			<div class="accordion-container" fit="true">
+			<div class="easyui-accordion" fit="true">
 				<div title="客户管理">
 					<div style="margin: 10px;">
 						<a href="#" onclick="addTab(this,'');">券商</a>
@@ -83,8 +82,9 @@
 				</div>
 			</div>
 		</div>
+
 		<div region="center" style="padding1: 5px; background: #aaa;">
-			<div id="tabs-container" class="tabs-container" fit="true"
+			<div id="tabs-container" class="easyui-tabs" fit="true"
 				style="overflow: hidden;">
 				<div title="默认信息" style="padding: 0px; display: none;">
 					<!--div class="tabs-container" plain="true" style="padding: 0px;

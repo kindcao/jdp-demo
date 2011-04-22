@@ -38,18 +38,19 @@ $(document).ready(function() {
 				error.appendTo( element.parent().next() );
 		},
 		// specifying a submitHandler prevents the default submit, good for the demo
-		submitHandler: function() {		
+		submitHandler: function() {      
 			$.getJSON("login.action", {
 				username: $("#username").val(), 
 				password: $("#password").val()
 				},
 				function(data){								 
-				 	if(data.success){				 	    		        	 
+				 	if(data.jvrResult.success){				 	    		        	 
 			        	document.location ="forward.action?forward=main";
 			     	}else{			     	
-			     		$("#errormsg").html(data.errors.info);			     		
+			     		$("#errormsg").html(data.jvrResult.errors);			     		
 			     	}
-				});
+				}
+			);			
 		},
 		// set this class to error-labels to indicate valid fields
 		success: function(label) {

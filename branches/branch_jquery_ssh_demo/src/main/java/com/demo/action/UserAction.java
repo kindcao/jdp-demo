@@ -1,23 +1,23 @@
 package com.demo.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.json.annotations.JSON;
 
 import com.action.BaseAction;
+import com.action.json.JsonValidateResult;
 import com.demo.model.User;
 import com.demo.service.UserService;
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
 /**
@@ -27,7 +27,7 @@ import com.opensymphony.xwork2.ActionContext;
  *          Dec 4, 2010 9:09:55 PM
  */
 
-public class UserAction extends BaseAction {
+public class UserAction extends BaseAction implements SessionAware {
 
     /**
      * 
@@ -46,6 +46,30 @@ public class UserAction extends BaseAction {
 
     private UserService userService;
 
+    private JsonValidateResult jvrResult = new JsonValidateResult();
+
+    // ////////////////////
+    private List<User> gridModel;
+
+    private List<User> myCustomers;
+
+    private Integer rows = 0;
+
+    private Integer page = 0;
+
+    private Integer total = 0;
+
+    private Integer record = 0;
+
+    // private String sord;
+    // private String sidx;
+    // private String searchField;
+    // private String searchString;
+    // private String searchOper;
+    private boolean loadonce = false;
+
+    private Map<String, Object> session;
+
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
         // String pwd = (String) DATA_MAP.get(username);
@@ -56,19 +80,25 @@ public class UserAction extends BaseAction {
         // }
         //
         User user = userService.findUserByNameAndPass(username, password);
+
         if (user != null) {
             log.info("user " + user.getUsername() + " login.");
             ActionContext.getContext().getSession().put("_CURR_USER", user);
             DATA_MAP.put(user.getUsername(), user.getPassword());
-            responseJsonData("{success:true}");
+            jvrResult.setSuccess(true);
+            // responseJsonData("{\"success\":true}");
         } else {
-            responseJsonData("{success:false,errors:{info:'Error username or password'}}");
+            // responseJsonData("{\"success\":false,\"errors\":\"Error username
+            // or password\"}");
+            jvrResult.setSuccess(false);
+            jvrResult.setErrors("Error username or password");
         }
-        return NONE;
+        return INPUT;
     }
 
     public String logout() throws Exception {
-        User user = (User) ServletActionContext.getContext().getSession().remove("_CURR_USER");
+        User user = (User) ServletActionContext.getContext().getSession()
+                .remove("_CURR_USER");
         if (user != null) {
             DATA_MAP.remove(user.getUsername());
             log.info("user " + user.getUsername() + " logout.");
@@ -77,7 +107,8 @@ public class UserAction extends BaseAction {
     }
 
     public String forward() throws Exception {
-        String forward = ServletActionContext.getRequest().getParameter("forward");
+        String forward = ServletActionContext.getRequest().getParameter(
+                "forward");
         if ("login".equals(forward)) {
             return LOGIN;
         } else if ("main".equals(forward)) {
@@ -100,7 +131,8 @@ public class UserAction extends BaseAction {
         } finally {
             HttpServletResponse response = ServletActionContext.getResponse();
             response.setContentType("text/json;charset=UTF-8");
-            response.getWriter().write("{success:" + isSuccess + ",id:" + sysUser.getId() + "}");
+            response.getWriter().write(
+                    "{success:" + isSuccess + ",id:" + sysUser.getId() + "}");
             response.getWriter().flush();
         }
         return null;
@@ -112,28 +144,49 @@ public class UserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String getUserList() throws Exception {
-        HttpServletRequest request = ServletActionContext.getRequest();
-        int start = Integer.parseInt(request.getParameter("start"));
-        int limit = Integer.parseInt(request.getParameter("limit"));
-        System.out.println("start=" + start + " limit=" + limit);
-
-        Map map = new HashMap();
-        try {
-            List<User> userList = userService.getUserByPage(start, limit, map);
-            if (userList != null && userList.size() > 0) {
-
-                int totalCount = userService.getUserTotalCount(map);
-
-                JSONArray jsonArray = JSONArray.fromObject(userList);
-                HttpServletResponse response = ServletActionContext.getResponse();
-                response.setContentType("text/json;charset=UTF-8");
-                response.getWriter().write("{results:" + totalCount + ",List:" + jsonArray + "}");
-                log.info("{results:" + totalCount + ",List:" + jsonArray + "}");
-            }
-        } catch (Exception e) {
-            throw new Exception("find all user error," + e);
+        Object list = session.get("mylist");
+        if (list != null) {
+            myCustomers = (List<User>) list;
+        } else {
+            log.debug("Build new List");
+            myCustomers = new ArrayList<User>();
         }
-        return null;
+        Map map = new HashMap();
+        int totalCount = userService.getUserTotalCount(map);
+        setRecord(totalCount);
+        if (loadonce) {
+            setGridModel(myCustomers);
+        } else {
+            setGridModel(userService.getUserByPage(getPage(), getRows(), map));
+        }
+        setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
+        session.put("mylist", myCustomers);
+        return SUCCESS;
+
+        // HttpServletRequest request = ServletActionContext.getRequest();
+        // int start = Integer.parseInt(request.getParameter("start"));
+        // int limit = Integer.parseInt(request.getParameter("limit"));
+        // System.out.println("start=" + start + " limit=" + limit);
+        //
+        // Map map = new HashMap();
+        // try {
+        // List<User> userList = userService.getUserByPage(start, limit, map);
+        // if (userList != null && userList.size() > 0) {
+        //
+        // int totalCount = userService.getUserTotalCount(map);
+        //
+        // JSONArray jsonArray = JSONArray.fromObject(userList);
+        // HttpServletResponse response = ServletActionContext
+        // .getResponse();
+        // response.setContentType("text/json;charset=UTF-8");
+        // response.getWriter().write(
+        // "{results:" + totalCount + ",List:" + jsonArray + "}");
+        // log.info("{results:" + totalCount + ",List:" + jsonArray + "}");
+        // }
+        // } catch (Exception e) {
+        // throw new Exception("find all user error," + e);
+        // }
+        // return null;
     }
 
     public String getUsername() {
@@ -175,6 +228,79 @@ public class UserAction extends BaseAction {
     @Resource
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @JSON
+    public JsonValidateResult getJvrResult() {
+        return jvrResult;
+    }
+
+    public List<User> getGridModel() {
+        return gridModel;
+    }
+
+    public void setGridModel(List<User> gridModel) {
+        this.gridModel = gridModel;
+    }
+
+    public List<User> getMyCustomers() {
+        return myCustomers;
+    }
+
+    public void setMyCustomers(List<User> myCustomers) {
+        this.myCustomers = myCustomers;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getRecord() {
+        return record;
+    }
+
+    public void setRecord(Integer record) {
+        this.record = record;
+    }
+
+    public boolean isLoadonce() {
+        return loadonce;
+    }
+
+    public void setLoadonce(boolean loadonce) {
+        this.loadonce = loadonce;
+    }
+
+    public Map<String, Object> getSession() {
+        return session;
+    }
+
+    public void setSession(Map<String, Object> session) {
+        this.session = session;
+    }
+
+    public void setJvrResult(JsonValidateResult jvrResult) {
+        this.jvrResult = jvrResult;
     }
 
 }

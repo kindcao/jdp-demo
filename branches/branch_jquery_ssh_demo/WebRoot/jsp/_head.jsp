@@ -8,6 +8,7 @@
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
+	<sj:head ajaxcache="false" jqueryui="true" jquerytheme="start" />
 
 	<%
 	    String root = request.getContextPath();
@@ -16,7 +17,6 @@
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/chili.css" />
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/style.css" />
 
-	<script type="text/javascript" src="<%=root%>/scripts/jquery/jquery.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.validate.js"></script>
 	<script type="text/javascript"

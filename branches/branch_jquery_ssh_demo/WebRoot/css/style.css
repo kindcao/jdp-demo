@@ -374,6 +374,14 @@ table.tabbedtable label {
 }
 
 #errormsg {
-	font-weight:bold;
+	font-weight: bold;
 	color: red;
+}
+
+#region-north {
+	height: 100px;
+	padding: 5px;
+	overflow: hidden;
+	background: url("../images/logo.jpg") no-repeat 10px center;
+	padding: 5px;
 }

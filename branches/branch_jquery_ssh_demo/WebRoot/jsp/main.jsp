@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <html>
-
 	<!-- include head jsp -->
 	<jsp:include page="_head.jsp" />
 
@@ -13,16 +11,17 @@
 		});
 	    //////////
 		var index = 1;
-		function addTab(thisObj){		
-		    var str=thisObj.innerHTML.replace(/^\s+|\s+$/g,"");;
+		function addTab(thisObj,url){		
+		    var str=thisObj.innerHTML.replace(/^\s+|\s+$/g,"");		   
 		    if($('#tabs-container').tabs('exists',str)){
 		    	$('#tabs-container').tabs('select',str);
 		    }else{
 		    	index++;
 				var _tab={
 					title: str,
-					content:'Tab Body ' + str,
-					closable:true
+					href: url,
+					cache: false,					
+					closable: true
 				}			
 				$('#tabs-container').tabs('add',_tab);
 		    }
@@ -30,9 +29,7 @@
 	</script>
 
 	<body>
-		<div region="north" split="false"
-			style="height: 100px; padding: 5px; overflow: hidden;">
-			&nbsp;
+		<div id="region-north" region="north" split="false">
 		</div>
 		<div region="south" split="false"
 			style="height: 30px; padding: 5px; overflow: hidden;">
@@ -40,48 +37,48 @@
 		</div>
 		<div region="west" split="false" title="导航菜单"
 			style="width: 200px; padding1: 0px; overflow: ">
-			<div class="accordion-container" fit="true">				
-				<div title="客户管理" >
+			<div class="accordion-container" fit="true">
+				<div title="客户管理">
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">券商</a>
+						<a href="#" onclick="addTab(this,'');">券商</a>
 					</div>
-						<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">銀行</a>
+					<div style="margin: 10px;">
+						<a href="#" onclick="addTab(this,'');">銀行</a>
 					</div>
 				</div>
 				<div title="市场工作">
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">日历</a>
+						<a href="#" onclick="addTab(this,'');">日历</a>
 					</div>
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">统计</a>
+						<a href="#" onclick="addTab(this,'');">统计</a>
 					</div>
 				</div>
 				<div title="市场监控">
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">发布监控</a>
+						<a href="#" onclick="addTab(this,'');">发布监控</a>
 					</div>
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">行业监控</a>
+						<a href="#" onclick="addTab(this,'');">行业监控</a>
 					</div>
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">新闻专访</a>
+						<a href="#" onclick="addTab(this,'');">新闻专访</a>
 					</div>
 				</div>
 				<div title="开户工作">
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">开户统计</a>
-					</div>					
+						<a href="#" onclick="addTab(this,'');">开户统计</a>
+					</div>
 				</div>
 				<div title="系统设定" selected="true">
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">用户设定</a>
+						<a href="#" onclick="addTab(this,'showUserList.action');">用户设定</a>
 					</div>
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">行业设定 </a>
+						<a href="#" onclick="addTab(this,'');">行业设定</a>
 					</div>
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this);">发布监控</a>
+						<a href="#" onclick="addTab(this,'');">发布监控</a>
 					</div>
 				</div>
 			</div>

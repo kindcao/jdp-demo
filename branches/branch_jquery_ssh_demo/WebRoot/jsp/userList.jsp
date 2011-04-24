@@ -6,16 +6,18 @@
 		
 ////////////////////
 		$(document).ready(function() {
-			$('#test').datagrid({							
+			$('#test').datagrid({
+			    //title: '查询结果',	
+			    border:true,						
 				nowrap: false,
 				striped: true,
-				collapsible:true,
+				collapsible:false,
 				url:'getUserList.action',
 				queryParams:{},			
-				sortName: 'code',
+				sortName: 'id',
 				sortOrder: 'desc',
 				remoteSort: false,
-				idField:'code',				
+				idField:'id',				
 				fitColumns: true,				
 				rownumbers:false,
 				pagination:true,
@@ -27,15 +29,10 @@
 	                {field:'id',title:'ID',width:80,sortable:true}
 				]],
 				columns:[[
-					{field:"username",title:"User Name",width:120},
-					{field:'password',title:'Password',width:120,rowspan:2,sortable:true,
-						sorter:function(a,b){						     
-							return (a>b?1:-1);
-						}
-					},
-					{field:"email",title:"email",width:120}										
+					{field:'username',title:'User Name',width:120,sortable:true},
+					{field:'password',title:'Password',width:120},
+					{field:'email',title:'email',width:120}										
 				]],
-				
 				toolbar:[{
 					id:'btnsearch',
 					text:'查询',
@@ -212,8 +209,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div style="margin: 5px;">
+	<div style="margin: 5px;" align="left">
 		<table id="test"></table>
 	</div>
-
 </body>

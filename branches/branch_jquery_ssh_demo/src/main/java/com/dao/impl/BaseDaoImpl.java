@@ -50,26 +50,32 @@ public class BaseDaoImpl implements BaseDao {
         getHibernateTemplate().delete(getHibernateTemplate().get(clazz, id));
     }
 
-    public List findPageByQuery(final int pageNo, final int pageSize, final String hql, final Map map) {
+    public List findPageByQuery(final int pageNo, final int pageSize,
+            final String hql, final Map map) {
         // TODO Auto-generated method stub
         List result = null;
         try {
-            result = getHibernateTemplate().executeFind(new HibernateCallback() {
+            result = getHibernateTemplate().executeFind(
+                    new HibernateCallback() {
 
-                public Object doInHibernate(Session session) throws HibernateException {
-                    Query query = session.createQuery(hql);
-                    Iterator it = map.keySet().iterator();
-                    while (it.hasNext()) {
-                        Object key = it.next();
-                        query.setParameter(key.toString(), map.get(key));
-                    }
-                    System.out.println("pageNo=" + pageNo);
-                    query.setFirstResult(pageNo); // (pageNo - 1) * pageSize
-                    query.setMaxResults(pageSize);
-                    return query.list();
-                }
-            });
+                        public Object doInHibernate(Session session)
+                                throws HibernateException {
+                            Query query = session.createQuery(hql);
+                            Iterator it = map.keySet().iterator();
+                            while (it.hasNext()) {
+                                Object key = it.next();
+                                query.setString(key.toString(), map.get(key)
+                                        .toString());
+                            }
+                            System.out.println("pageNo=" + pageNo);
+                            query.setFirstResult(pageNo); // (pageNo - 1) *
+                            // pageSize
+                            query.setMaxResults(pageSize);
+                            return query.list();
+                        }
+                    });
         } catch (RuntimeException re) {
+            re.printStackTrace();
             throw re;
         }
         return result;
@@ -78,21 +84,26 @@ public class BaseDaoImpl implements BaseDao {
     public int getTotalCount(final String hql, final Map map) {
         // TODO Auto-generated method stub
         List result = null;
-        try {
-            result = getHibernateTemplate().executeFind(new HibernateCallback() {
 
-                public Object doInHibernate(Session session) throws HibernateException, SQLException {
-                    // TODO Auto-generated method stub
-                    Query query = session.createQuery(hql);
-                    Iterator it = map.keySet().iterator();
-                    while (it.hasNext()) {
-                        Object key = it.next();
-                        query.setParameter(key.toString(), map.get(key));
-                    }
-                    return query.list();
-                }
-            });
+        try {
+            result = getHibernateTemplate().executeFind(
+                    new HibernateCallback() {
+
+                        public Object doInHibernate(Session session)
+                                throws HibernateException, SQLException {
+                            // TODO Auto-generated method stub
+                            Query query = session.createQuery(hql);
+                            Iterator<String> it = map.keySet().iterator();
+                            while (it.hasNext()) {
+                                Object key = it.next();
+                                query.setString(key.toString(), map.get(key)
+                                        .toString());
+                            }
+                            return query.list();
+                        }
+                    });
         } catch (RuntimeException re) {
+            re.printStackTrace();
             throw re;
         }
         return result.size();

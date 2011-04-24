@@ -38,14 +38,15 @@ $(document).ready(function() {
 				error.appendTo( element.parent().next() );
 		},
 		// specifying a submitHandler prevents the default submit, good for the demo
-		submitHandler: function() {      
+		submitHandler: function() {		  
 			$.getJSON("login.action", {
 				username: $("#username").val(), 
 				password: $("#password").val()
 				},
-				function(data){								 
-				 	if(data.jvrResult.success){				 	    		        	 
+				function(data){				    					 
+				 	if(data.jvrResult.success){				 		 	    		        	 
 			        	document.location ="forward.action?forward=main";
+			        	//alert(document.location);
 			     	}else{			     	
 			     		$("#errormsg").html(data.jvrResult.errors);			     		
 			     	}
@@ -79,7 +80,7 @@ $(document).ready(function() {
 							</ul>
 						</div>
 						<div id="signupwrap">
-							<form id="signupform" autocomplete="off" method="post">
+							<form id="signupform" name="signupform"  autocomplete="off" method="post">
 								<table>
 									<tr>
 										<td class="label">

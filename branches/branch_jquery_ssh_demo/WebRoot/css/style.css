@@ -1,3 +1,9 @@
+@IMPORT url("easyui.css");
+
+@IMPORT url("icon.css");
+
+@IMPORT url("chili.css");
+
 /* GENERAL ELEMENTS */
 * {
 	margin: 0;
@@ -85,7 +91,7 @@ p {
 	margin: 1.2em 0em 1.2em 0em;
 }
 
-li>p {
+li p {
 	margin-top: 0.2em;
 }
 

@@ -1,12 +1,13 @@
 package com.demo.action;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -103,7 +104,7 @@ public class UserAction extends BaseAction implements SessionAware {
             DATA_MAP.remove(user.getUsername());
             log.info("user " + user.getUsername() + " logout.");
         }
-        return NONE;
+        return LOGIN;
     }
 
     public String forward() throws Exception {
@@ -144,23 +145,42 @@ public class UserAction extends BaseAction implements SessionAware {
 
     @SuppressWarnings("unchecked")
     public String getUserList() throws Exception {
-        Object list = session.get("mylist");
-        if (list != null) {
-            myCustomers = (List<User>) list;
-        } else {
-            log.debug("Build new List");
-            myCustomers = new ArrayList<User>();
-        }
+        // Object list = session.get("mylist");
+        // if (list != null) {
+        // myCustomers = (List<User>) list;
+        // } else {
+        // log.debug("Build new List");
+        // myCustomers = new ArrayList<User>();
+        // }
+        System.out.println(ServletActionContext.getRequest().getQueryString());
         Map map = new HashMap();
-        int totalCount = userService.getUserTotalCount(map);
-        setRecord(totalCount);
-        if (loadonce) {
-            setGridModel(myCustomers);
-        } else {
-            setGridModel(userService.getUserByPage(getPage(), getRows(), map));
+        if (username != null) {
+            map.put("username", "%" + username + "%");
         }
-        setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
-        session.put("mylist", myCustomers);
+        // int totalCount = userService.getUserTotalCount(map);
+        // setRecord(totalCount);
+        // if (loadonce) {
+        // setGridModel(myCustomers);
+        // } else {
+        // setGridModel(userService.getUserByPage(getPage(), getRows(), map));
+        // }
+        // setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
+        // session.put("mylist", myCustomers);
+        int totalCount = userService.getUserTotalCount(map);
+        gridModel = userService.getUserByPage((getPage() - 1) * getRows(),
+                getRows(), map);
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("{\"total\":").append(totalCount).append(",");
+        sb.append("\"rows\":");
+        if (gridModel != null && gridModel.size() > 0) {
+            JSONArray jsonArray = JSONArray.fromObject(gridModel);
+            sb.append(jsonArray);
+        } else {
+            sb.append("{}");
+        }
+        sb.append("}");
+        responseJsonData(sb.toString());
         return SUCCESS;
 
         // HttpServletRequest request = ServletActionContext.getRequest();

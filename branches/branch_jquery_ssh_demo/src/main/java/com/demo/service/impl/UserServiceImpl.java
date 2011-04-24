@@ -28,13 +28,14 @@ public class UserServiceImpl extends BaseManagerImpl implements UserService {
 
     public List<User> getUserByPage(int start, int limit, Map map) {
         // TODO Auto-generated method stub
-        String hql = "from User";
+        String hql = "from User where username like :username";
         return userDao.findPageByQuery(start, limit, hql, map);
     }
 
     public int getUserTotalCount(Map map) {
         // TODO Auto-generated method stub
-        String hql = "from User";
+        String hql = "from User where username like :username";
+
         return this.userDao.getTotalCount(hql, map);
     }
 

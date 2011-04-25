@@ -29,7 +29,11 @@
 	                {field:'id',title:'ID',width:80,sortable:true}
 				]],
 				columns:[[
-					{field:'username',title:'User Name',width:120,sortable:true},
+					{field:'username',title:'User Name',width:120,sortable:true,
+						formatter:function(value,rec){
+						    return "<a href='javascript:void(0);' onclick='editUser("+rec.id+");'>"+value+"</a>";
+						}
+					},
 					{field:'password',title:'Password',width:120},
 					{field:'email',title:'email',width:120}										
 				]],
@@ -47,6 +51,7 @@
 					text:'新增',
 					iconCls:'icon-add',
 					handler:function(){
+						$('#actionFlag').val('A');
 						document.getElementById('_userUpdate').style.display='inline';
 						$('#btnsearch').linkbutton('disable');
 						$('#btncut').linkbutton('disable');	
@@ -95,8 +100,8 @@
 							
 		$("#_searchAction").click(function() {
 			var queryParams = $('#test').datagrid('options').queryParams;		   
-		    queryParams.username = $("#username").val();
-		    queryParams.password = $("#password").val();  
+		    queryParams.username = $("#_username").val();
+		    queryParams.password = $("#_password").val();  
 		    reloadDatagrid('test');
 		});
 		
@@ -121,7 +126,7 @@
 		
 		function saveData(formIdStr){
 			var isValid=$('#'+formIdStr).form('validate');
-			if(isValid){			   
+			if(isValid){							   
 				var options = {
 					url:'addUser.action',
 					dataType:'json',
@@ -137,6 +142,28 @@
 				 };				
 				 $('#'+formIdStr).ajaxSubmit(options);
 			}		      	    
+		}
+		
+		function editUser(id){
+			$.ajax({
+		   		url:'editUser.action?id='+id,
+		       	dataType:'json',	                        
+		        success:function(data){		                       
+			        if(data){			      						
+						$("#id").val(data.obj.id);
+						$("#username").val(data.obj.username);
+						$("#password").val(data.obj.password);
+						$("#email").val(data.obj.email);
+						$('#actionFlag').val('U');						
+						document.getElementById('_userUpdate').style.display='inline';
+						document.getElementById('_userSearch').style.display='none';
+						$('#btnsearch').linkbutton('disable');	
+						$('#btnadd').linkbutton('disable');
+						$('#btncut').linkbutton('disable');							
+						$('#test').datagrid('clearSelections');						
+					}
+		  	  	}
+		  	});			
 		}
 		//	
 	</script>
@@ -158,7 +185,7 @@
 							</label>
 						</td>
 						<td>
-							<input id="username" name="username" />
+							<input id="_username" name="_username" />
 						</td>
 					</tr>
 					<tr height="30px">
@@ -169,7 +196,7 @@
 							</label>
 						</td>
 						<td>
-							<input id="password" name="password" type="password" />
+							<input id="_password" name="_password" type="password" />
 						</td>
 					</tr>
 					<tr>
@@ -196,7 +223,7 @@
 	<div id="_userUpdate" style="display: none;">
 		<form id="updateFrom" name="updateFrom"
 			style="margin: 5px; text-align: left" method="post">
-			<input name="actionFlag" id="actionFlag" type="hidden" value="A">
+			<input name="actionFlag" id="actionFlag" type="hidden">
 			<input name="id" id="id" type="hidden">
 			<fieldset>
 				<legend>

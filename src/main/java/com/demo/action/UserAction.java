@@ -13,6 +13,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.action.BaseAction;
 import com.action.json.JsonListResult;
+import com.action.json.JsonObjectResult;
 import com.action.json.JsonValidateResult;
 import com.demo.model.User;
 import com.demo.service.UserService;
@@ -44,6 +45,8 @@ public class UserAction extends BaseAction {
     private JsonValidateResult jvr = new JsonValidateResult();
 
     private JsonListResult jlr = new JsonListResult();
+
+    private JsonObjectResult jor = new JsonObjectResult();
 
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
@@ -94,15 +97,30 @@ public class UserAction extends BaseAction {
         user.setEmail(email);
         user.setPassword(password);
         user.setUsername(username);
-        if (null == userService.findUserByName(username)) {
+        if ("U".equals(getActionFlag())) {
+            user.setId(Integer.valueOf(id));
             userService.saveOrUpdate(user);
             jvr.setSuccess(true);
-
         } else {
-            jvr.setSuccess(false);
-            jvr.setErrors("User name has exist!");
+            if (null == userService.findUserByName(username)) {
+                userService.saveOrUpdate(user);
+                jvr.setSuccess(true);
+            } else {
+                jvr.setSuccess(false);
+                jvr.setErrors("User name has exist!");
+            }
         }
         responseJsonData(jvr);
+        return NONE;
+    }
+
+    public String editUser() throws Exception {
+        if (Integer.parseInt(id) > 0) {
+            User user = (User) userService.getObject(User.class, Integer
+                    .valueOf(id));
+            jor.setObj(user);
+        }
+        responseJsonData(jor);
         return NONE;
     }
 
@@ -122,6 +140,8 @@ public class UserAction extends BaseAction {
 
     public String showUserList() throws Exception {
         username = "";
+        password = "";
+        email = "";
         return SUCCESS;
     }
 

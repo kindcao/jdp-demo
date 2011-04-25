@@ -6,7 +6,7 @@ package com.action.json;
  * @version 1.0 <br>
  *          Apr 22, 2011 3:28:32 PM
  */
-public class JsonValidateResult {
+public class JsonValidateResult implements JsonResult {
 
     private boolean success;
 

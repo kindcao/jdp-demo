@@ -44,11 +44,10 @@ $(document).ready(function() {
 				password: $("#password").val()
 				},
 				function(data){				    					 
-				 	if(data.jvrResult.success){				 		 	    		        	 
-			        	document.location ="forward.action?forward=main";
-			        	//alert(document.location);
+				 	if(data.success){		
+				 	 	window.location.href="forward.action?forward=main";
 			     	}else{			     	
-			     		$("#errormsg").html(data.jvrResult.errors);			     		
+			     		$("#errormsg").html(data.errors);			     		
 			     	}
 				}
 			);			
@@ -80,7 +79,8 @@ $(document).ready(function() {
 							</ul>
 						</div>
 						<div id="signupwrap">
-							<form id="signupform" name="signupform"  autocomplete="off" method="post">
+							<form id="signupform" name="signupform" autocomplete="off"
+								method="post">
 								<table>
 									<tr>
 										<td class="label">

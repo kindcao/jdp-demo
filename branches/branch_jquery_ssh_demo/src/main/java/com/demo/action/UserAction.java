@@ -1,21 +1,18 @@
 package com.demo.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.SessionAware;
-import org.apache.struts2.json.annotations.JSON;
 
 import com.action.BaseAction;
+import com.action.json.JsonListResult;
 import com.action.json.JsonValidateResult;
 import com.demo.model.User;
 import com.demo.service.UserService;
@@ -28,11 +25,8 @@ import com.opensymphony.xwork2.ActionContext;
  *          Dec 4, 2010 9:09:55 PM
  */
 
-public class UserAction extends BaseAction implements SessionAware {
+public class UserAction extends BaseAction {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -2322517524694073991L;
 
     protected Log log = LogFactory.getLog(UserAction.class);
@@ -47,29 +41,9 @@ public class UserAction extends BaseAction implements SessionAware {
 
     private UserService userService;
 
-    private JsonValidateResult jvrResult = new JsonValidateResult();
+    private JsonValidateResult jvr = new JsonValidateResult();
 
-    // ////////////////////
-    private List<User> gridModel;
-
-    private List<User> myCustomers;
-
-    private Integer rows = 0;
-
-    private Integer page = 0;
-
-    private Integer total = 0;
-
-    private Integer record = 0;
-
-    // private String sord;
-    // private String sidx;
-    // private String searchField;
-    // private String searchString;
-    // private String searchOper;
-    private boolean loadonce = false;
-
-    private Map<String, Object> session;
+    private JsonListResult jlr = new JsonListResult();
 
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
@@ -81,20 +55,17 @@ public class UserAction extends BaseAction implements SessionAware {
         // }
         //
         User user = userService.findUserByNameAndPass(username, password);
-
         if (user != null) {
             log.info("user " + user.getUsername() + " login.");
             ActionContext.getContext().getSession().put("_CURR_USER", user);
             DATA_MAP.put(user.getUsername(), user.getPassword());
-            jvrResult.setSuccess(true);
-            // responseJsonData("{\"success\":true}");
+            jvr.setSuccess(true);
         } else {
-            // responseJsonData("{\"success\":false,\"errors\":\"Error username
-            // or password\"}");
-            jvrResult.setSuccess(false);
-            jvrResult.setErrors("Error username or password");
+            jvr.setSuccess(false);
+            jvr.setErrors("Error username or password");
         }
-        return INPUT;
+        responseJsonData(jvr);
+        return LOGIN;
     }
 
     public String logout() throws Exception {
@@ -118,28 +89,39 @@ public class UserAction extends BaseAction implements SessionAware {
         return NONE;
     }
 
-    public String addSysUser() throws Exception {
-        boolean isSuccess = false;
-        User sysUser = new User();
-        sysUser.setEmail(email);
-        sysUser.setPassword(password);
-        sysUser.setUsername(username);
-        try {
-            userService.addSysUser(sysUser);
-            isSuccess = true;
-        } catch (Exception e) {
-            throw new Exception(e);
-        } finally {
-            HttpServletResponse response = ServletActionContext.getResponse();
-            response.setContentType("text/json;charset=UTF-8");
-            response.getWriter().write(
-                    "{success:" + isSuccess + ",id:" + sysUser.getId() + "}");
-            response.getWriter().flush();
+    public String addUser() throws Exception {
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setUsername(username);
+        if (null == userService.findUserByName(username)) {
+            userService.saveOrUpdate(user);
+            jvr.setSuccess(true);
+
+        } else {
+            jvr.setSuccess(false);
+            jvr.setErrors("User name has exist!");
         }
-        return null;
+        responseJsonData(jvr);
+        return NONE;
+    }
+
+    public String delUser() throws Exception {
+        if (id != null) {
+            List<Integer> ids = new ArrayList<Integer>();
+            String[] _idStr = id.split(",");
+            for (int i = 0; i < _idStr.length; i++) {
+                ids.add(Integer.valueOf(_idStr[i]));
+            }
+            userService.deleteAll(User.class, ids);
+            jvr.setSuccess(true);
+            responseJsonData(jvr);
+        }
+        return NONE;
     }
 
     public String showUserList() throws Exception {
+        username = "";
         return SUCCESS;
     }
 
@@ -152,11 +134,9 @@ public class UserAction extends BaseAction implements SessionAware {
         // log.debug("Build new List");
         // myCustomers = new ArrayList<User>();
         // }
-        System.out.println(ServletActionContext.getRequest().getQueryString());
         Map map = new HashMap();
-        if (username != null) {
-            map.put("username", "%" + username + "%");
-        }
+        map.put("username", "%" + username + "%");
+
         // int totalCount = userService.getUserTotalCount(map);
         // setRecord(totalCount);
         // if (loadonce) {
@@ -166,22 +146,26 @@ public class UserAction extends BaseAction implements SessionAware {
         // }
         // setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
         // session.put("mylist", myCustomers);
-        int totalCount = userService.getUserTotalCount(map);
-        gridModel = userService.getUserByPage((getPage() - 1) * getRows(),
-                getRows(), map);
+        int totalCount = userService.getTotalCount(map);
+        List<User> userList = userService.findPageByQuery((getPage() - 1)
+                * getRows(), getRows(), map);
 
-        StringBuffer sb = new StringBuffer();
-        sb.append("{\"total\":").append(totalCount).append(",");
-        sb.append("\"rows\":");
-        if (gridModel != null && gridModel.size() > 0) {
-            JSONArray jsonArray = JSONArray.fromObject(gridModel);
-            sb.append(jsonArray);
-        } else {
-            sb.append("{}");
-        }
-        sb.append("}");
-        responseJsonData(sb.toString());
-        return SUCCESS;
+        // StringBuffer sb = new StringBuffer();
+        // sb.append("{\"total\":").append(totalCount).append(",");
+        // sb.append("\"rows\":");
+        // if (gridModel != null && gridModel.size() > 0) {
+        // JSONArray jsonArray = JSONArray.fromObject(gridModel);
+        // sb.append(jsonArray);
+        // } else {
+        // sb.append("{}");
+        // }
+        // sb.append("}");
+        // responseJsonData(sb.toString());
+
+        jlr.setTotal(totalCount);
+        jlr.setRows(userList);
+        responseJsonData(jlr);
+        return NONE;
 
         // HttpServletRequest request = ServletActionContext.getRequest();
         // int start = Integer.parseInt(request.getParameter("start"));
@@ -249,78 +233,4 @@ public class UserAction extends BaseAction implements SessionAware {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
-    @JSON
-    public JsonValidateResult getJvrResult() {
-        return jvrResult;
-    }
-
-    public List<User> getGridModel() {
-        return gridModel;
-    }
-
-    public void setGridModel(List<User> gridModel) {
-        this.gridModel = gridModel;
-    }
-
-    public List<User> getMyCustomers() {
-        return myCustomers;
-    }
-
-    public void setMyCustomers(List<User> myCustomers) {
-        this.myCustomers = myCustomers;
-    }
-
-    public Integer getRows() {
-        return rows;
-    }
-
-    public void setRows(Integer rows) {
-        this.rows = rows;
-    }
-
-    public Integer getPage() {
-        return page;
-    }
-
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
-    public Integer getRecord() {
-        return record;
-    }
-
-    public void setRecord(Integer record) {
-        this.record = record;
-    }
-
-    public boolean isLoadonce() {
-        return loadonce;
-    }
-
-    public void setLoadonce(boolean loadonce) {
-        this.loadonce = loadonce;
-    }
-
-    public Map<String, Object> getSession() {
-        return session;
-    }
-
-    public void setSession(Map<String, Object> session) {
-        this.session = session;
-    }
-
-    public void setJvrResult(JsonValidateResult jvrResult) {
-        this.jvrResult = jvrResult;
-    }
-
 }

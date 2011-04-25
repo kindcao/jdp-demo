@@ -19,7 +19,7 @@ body,input,select,textarea {
 body {
 	color: #333;
 	background-color: #fff;
-	text-align: center;
+	/**text-align: center;**/
 }
 
 a:link {

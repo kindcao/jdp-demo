@@ -7,8 +7,7 @@
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
-	<title><s:text name="msg.sys.title" />
-	</title>
+	<title><s:text name="msg.sys.title" /></title>
 	<%
 	    String root = request.getContextPath();
 	%>
@@ -18,6 +17,8 @@
 		src="<%=root%>/scripts/jquery/jquery-1.4.4.min.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.validate.js"></script>
+	<script type="text/javascript"
+		src="<%=root%>/scripts/jquery/jquery.form.min.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.easyui.min.js"></script>
 
@@ -48,8 +49,8 @@
 			//alert("不准你使用ALT+方向键前进或后退网页！");    
 			event.returnValue=false;    
 		}    
-		//屏蔽退格删除键 屏蔽 F5 刷新键  Ctrl + R  
-		if ((event.keyCode==8) ||(event.keyCode==116)||(event.ctrlKey && event.keyCode==82)){  
+		//屏蔽退格删除键(event.keyCode==8) 屏蔽 F5 刷新键  Ctrl + R  
+		if ((event.keyCode==116)||(event.ctrlKey && event.keyCode==82)){  
 			event.keyCode=0;    
 			event.returnValue=false;
 		}    

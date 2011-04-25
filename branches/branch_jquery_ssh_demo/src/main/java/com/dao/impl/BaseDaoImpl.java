@@ -2,6 +2,7 @@ package com.dao.impl;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.dao.BaseDao;
+import com.demo.model.User;
 
 public class BaseDaoImpl implements BaseDao {
 
@@ -38,11 +40,6 @@ public class BaseDaoImpl implements BaseDao {
     public void merge(Object object) {
         // TODO Auto-generated method stub
         getHibernateTemplate().merge(object);
-    }
-
-    public void save(Object object) {
-        // TODO Auto-generated method stub
-        getHibernateTemplate().save(object);
     }
 
     public void removeObject(Class clazz, Serializable id) {
@@ -109,4 +106,43 @@ public class BaseDaoImpl implements BaseDao {
         return result.size();
     }
 
+    @Override
+    public void saveOrUpdate(Object object) {
+        try {
+            getHibernateTemplate().saveOrUpdate(object);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+    }
+
+    @Override
+    public void deleteAll(Collection entities) {
+        try {
+            getHibernateTemplate().deleteAll(entities);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public List<?> loadAll(Class entityClass) {
+        try {
+            return getHibernateTemplate().loadAll(entityClass);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteAll(Class clazz, Collection ids) {
+        for (Iterator iterator = ids.iterator(); iterator.hasNext();) {
+            Serializable id = (Serializable) iterator.next();
+            getHibernateTemplate()
+                    .delete(getHibernateTemplate().get(clazz, id));
+        }
+    }
 }

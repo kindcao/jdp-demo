@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import com.demo.dao.UserDao;
 import com.demo.model.User;
 import com.demo.service.UserService;
-import com.service.impl.BaseManagerImpl;
+import com.service.impl.BaseServiceImpl;
 
 /**
  * 
@@ -17,7 +17,7 @@ import com.service.impl.BaseManagerImpl;
  *          Dec 4, 2010 9:16:09 PM
  */
 
-public class UserServiceImpl extends BaseManagerImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     private UserDao userDao;
 
@@ -26,37 +26,27 @@ public class UserServiceImpl extends BaseManagerImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public List<User> getUserByPage(int start, int limit, Map map) {
-        // TODO Auto-generated method stub
+    @Override
+    public List<User> findPageByQuery(int pageNo, int pageSize, Map map) {
         String hql = "from User where username like :username";
-        return userDao.findPageByQuery(start, limit, hql, map);
-    }
-
-    public int getUserTotalCount(Map map) {
-        // TODO Auto-generated method stub
-        String hql = "from User where username like :username";
-
-        return this.userDao.getTotalCount(hql, map);
-    }
-
-    public void addSysUser(User sysUser) {
-        userDao.save(sysUser);
+        return userDao.findPageByQuery(pageNo, pageSize, hql, map);
     }
 
     @Override
-    public List<User> findAll() {
+    public int getTotalCount(Map map) {
         // TODO Auto-generated method stub
-        return null;
+        String hql = "from User where username like :username";
+        return userDao.getTotalCount(hql, map);
     }
 
     @Override
     public User findUserByName(String username) {
-        // TODO Auto-generated method stub
-        return null;
+        return userDao.findUserByName(username);
     }
 
     @Override
     public User findUserByNameAndPass(String username, String password) {
         return userDao.findUserByNameAndPass(username, password);
     }
+
 }

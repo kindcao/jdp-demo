@@ -92,8 +92,8 @@
 			</table>
 		</div>
 
-		<div region="west" split="false" title="导航菜单"
-			style="width: 200px; padding1: 0px; overflow: ">
+		<div region="west" split="false" title="&nbsp;" align="center"
+			style="width: 200px; padding1: 0px; overflow: hidden;">
 			<div class="easyui-accordion" fit="true">
 				<div title="客户管理">
 					<div style="margin: 10px;">

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.demo.model.User;
-import com.service.BaseManager;
+import com.service.BaseService;
 
 /**
  * 
@@ -12,18 +12,13 @@ import com.service.BaseManager;
  * @version 1.0 <br>
  *          Dec 4, 2010 9:15:00 PM
  */
-public interface UserService extends BaseManager {
+public interface UserService extends BaseService {
 
-    public List<User> getUserByPage(int start, int limit, Map map);
+    User findUserByNameAndPass(String username, String password);
 
-    public int getUserTotalCount(Map map);
+    User findUserByName(String username);
 
-    public void addSysUser(User sysUser);
+    List<User> findPageByQuery(int pageNo, int pageSize, Map map);
 
-    public List<User> findAll();
-
-    public User findUserByNameAndPass(String username, String password);
-
-    public User findUserByName(String username);
-
+    int getTotalCount(Map map);
 }

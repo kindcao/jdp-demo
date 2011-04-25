@@ -23,6 +23,8 @@ public class BaseAction extends ActionSupport implements SessionAware {
 
     private Integer page = 1;
 
+    private String actionFlag;
+
     protected void responseJsonData(JsonResult jr) throws Exception {
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setContentType("text/json;charset=UTF-8");
@@ -41,23 +43,29 @@ public class BaseAction extends ActionSupport implements SessionAware {
         this.session = session;
     }
 
-    
     public Integer getRows() {
         return rows;
     }
 
-    
     public void setRows(Integer rows) {
         this.rows = rows;
     }
 
-    
     public Integer getPage() {
         return page;
     }
 
-    
     public void setPage(Integer page) {
         this.page = page;
+    }
+
+    
+    public String getActionFlag() {
+        return actionFlag;
+    }
+
+    
+    public void setActionFlag(String actionFlag) {
+        this.actionFlag = actionFlag;
     }
 }

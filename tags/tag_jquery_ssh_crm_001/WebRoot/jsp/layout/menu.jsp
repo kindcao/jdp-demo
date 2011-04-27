@@ -3,7 +3,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<script type="text/javascript">	
+<script type="text/javascript" defer="defer">	
 	$(document).ready(function() {
 		var selectTitle='${sessionScope.menutitle}';
 		$('#menu').accordion('select',selectTitle);
@@ -15,7 +15,7 @@
 </script>
 
 <div id="menu" class="easyui-accordion" align="center"
-	style="height: 712px;">
+	style="overflow: hidden;">
 	<div title="客户管理">
 		<div style="margin: 10px;">
 			<a href="javascript:void(0)" onclick="clickMenu('#');">券商</a>

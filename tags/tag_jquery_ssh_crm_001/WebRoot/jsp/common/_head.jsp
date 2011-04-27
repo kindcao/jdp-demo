@@ -8,11 +8,10 @@
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
-	<title><s:text name="msg.sys.title" />
-	</title>
+	<title><s:text name="msg.sys.title" /></title>
 
 	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/css/style.css" />
+		href="${pageContext.request.contextPath}/styles/style.css" />
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/jquery-1.4.4.min.js"></script>
 	<script type="text/javascript"

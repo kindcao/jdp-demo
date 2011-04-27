@@ -392,3 +392,15 @@ table.tabbedtable label {
 	background: url("../images/logo.jpg") no-repeat 10px center;
 	padding: 5px;
 }
+.toolbar2{
+	height:20px;
+	background:#efefef;	
+	border-bottom:1px solid #ccc;
+}
+.separator2{
+	float:left;
+	height:15px;
+	border-left:1px solid #ccc;
+	border-right:1px solid #fff;
+	margin:1px 1px;
+}

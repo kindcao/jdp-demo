@@ -3,13 +3,14 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<constant name="struts.custom.i18n.resources" value="messageResource" />
+	<constant name="struts.custom.i18n.resources"
+		value="messageResource" />
 	<constant name="struts.devMode" value="false" />
 
 	<package name="default" extends="tiles-default" namespace="/">
 		<interceptors>
 			<interceptor name="checkLoginInterceptor"
-				class="com.demo.interceptor.CheckLoginInterceptor" />
+				class="core.interceptor.CheckLoginInterceptor" />
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="checkLoginInterceptor" />
 				<interceptor-ref name="defaultStack" />
@@ -19,26 +20,20 @@
 
 		<global-results>
 			<result name="login" type="tiles">sysuser.login</result>
-			<result name="error">/jsp/error.jsp</result>
-			<result name="main" type="tiles">sysuser.list</result>
-
+			<result name="error" type="tiles">error</result>
 		</global-results>
-		<action name="showUserList" class="userAction" method="showUserList">
-			<result name="success" type="tiles">sysuser.list</result>
-		</action>
-		<action name="getUserList" class="userAction" method="getUserList" />
-		<action name="login" class="userAction" method="login">
-			<!-- result name="jvrResult" type="json">
-				<param name="includeProperties">jvrResult.*</param>
-				</result -->
-		</action>
-		<action name="logout" class="userAction" method="logout" />
-		<action name="forward" class="userAction" method="forward" />
-		<action name="addUser" class="userAction" method="addUser" />
-		<action name="editUser" class="userAction" method="editUser" />
-		<action name="delUser" class="userAction" method="delUser" />
 
-
+		<!-- sysuser  -->
+		<action name="getUserList" class="sysUserAction"
+			method="getUserList" />
+		<action name="login" class="sysUserAction" method="login" />
+		<action name="logout" class="sysUserAction" method="logout" />
+		<action name="forward" class="sysUserAction" method="forward">
+			<result name="list" type="tiles">sysuser.list</result>
+		</action>
+		<action name="addUser" class="sysUserAction" method="addUser" />
+		<action name="editUser" class="sysUserAction" method="editUser" />
+		<action name="delUser" class="sysUserAction" method="delUser" />
 	</package>
 
 

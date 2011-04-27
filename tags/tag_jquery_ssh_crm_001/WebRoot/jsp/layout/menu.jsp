@@ -51,7 +51,7 @@
 	<div title="系统设定">
 		<div style="margin: 10px;">
 			<a href="javascript:void(0)"
-				onclick="clickMenu('showUserList.action');">用户管理</a>
+				onclick="clickMenu('forward.action?forward=list');">用户管理</a>
 		</div>
 		<div style="margin: 10px;">
 			<a href="javascript:void(0)" onclick="clickMenu('#');">行业设定</a>

@@ -5,25 +5,32 @@
 	   "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-	<definition name="nomenu.layout" template="/jsp/layout/nomenuLayout.jsp">
+	<definition name="nomenu.layout"
+		template="/jsp/layout/nomenuLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/jsp/layout/footer2.jsp" />
 	</definition>
-	<definition name="main.layout" template="/jsp/layout/mainLayout.jsp">
+	<definition name="main.layout"
+		template="/jsp/layout/mainLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="menu" value="/jsp/layout/menu.jsp" />
 		<put-attribute name="bodyhead" value="" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/jsp/layout/footer.jsp" />
 	</definition>
-	<!-- sys user layout -->
-	<definition name="syssetup.layout" extends="main.layout">
-		<put-attribute name="menutitle" value="系统设定" />
+
+	<!-- common -->
+	<definition name="error" extends="nomenu.layout">
+		<put-attribute name="body" value="/jsp/common/error.jsp" />
 	</definition>
 
+	<!-- sysuser layout -->
 	<definition name="sysuser.login" extends="nomenu.layout">
 		<put-attribute name="body" value="/jsp/sysuser/login.jsp" />
+	</definition>
+	<definition name="syssetup.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="系统设定" />
 	</definition>
 	<definition name="sysuser.list" extends="syssetup.layout">
 		<put-attribute name="bodyhead" value="用户管理" />

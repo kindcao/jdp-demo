@@ -5,16 +5,16 @@
 <script type="text/javascript">
 <!--
 function login(formIdStr) {
-	var isValid = $('#' + formIdStr).form('validate');
+	var isValid = $('#' + formIdStr).form('validate');	
 	if (isValid) {
 		var options = {
 			url : 'login.action',
 			dataType : 'json',
-			success : function(data) {			
+			success : function(data){
 				if (!data.success) {
 					$.messager.alert('提示信息', data.errors, 'error');
 				} else {
-					window.location.href="forward.action?forward=main";
+					window.location.href="forward.action?forward=list";
 				}
 			}
 		};
@@ -66,8 +66,8 @@ function login(formIdStr) {
 					</label>
 				</td>
 				<td align="center">
-					<a href="#" class="easyui-linkbutton" iconCls="icon-ok"
-						plain="true" onclick="login('loginForm');">登录</a>
+					<a href="javascript:void(0);" class="easyui-linkbutton"
+						iconCls="icon-ok" plain="true" onclick="login('loginForm');">登录</a>
 				</td>
 			</tr>
 		</table>

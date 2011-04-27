@@ -39,7 +39,7 @@
 	</listener>
 
 	<listener>
-		<listener-class>com.demo.listener.SessionListener</listener-class>
+		<listener-class>core.listener.SessionListener</listener-class>
 	</listener>
 
 	<!-- spring的监听器，以便在启动时就自动加载spring的配置 -->

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="core.common.Constants"%>
 
 <script type="text/javascript">	
 	function clockon() {
@@ -52,7 +53,7 @@
 						</td>
 						<td nowrap="nowrap" width="120px">
 							在线人数:
-							<%=com.action.BaseAction.DATA_MAP.size()%>
+							<%=Constants.SYS_USER_MAP.size()%>
 						</td>
 						<td width="1px" style="border-right: 1px solid white">
 							&nbsp;

@@ -1,12 +1,11 @@
-package crm.sysuser.dao.impl;
+package crm.sysuser.dao;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import core.dao.impl.BaseDaoImpl;
-import crm.sysuser.dao.SysUserDao;
-import crm.sysuser.model.SysUser;
+import core.dao.BaseDaoImpl;
+import crm.model.SysUser;
 
 public class SysUserDaoImpl extends BaseDaoImpl implements SysUserDao {
 

@@ -1,4 +1,4 @@
-package crm.sysuser.model;
+package crm.model;
 
 import java.io.Serializable;
 

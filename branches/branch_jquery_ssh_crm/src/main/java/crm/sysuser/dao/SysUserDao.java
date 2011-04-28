@@ -1,7 +1,7 @@
 package crm.sysuser.dao;
 
 import core.dao.BaseDao;
-import crm.sysuser.model.SysUser;
+import crm.model.SysUser;
 
 public interface SysUserDao extends BaseDao {
 

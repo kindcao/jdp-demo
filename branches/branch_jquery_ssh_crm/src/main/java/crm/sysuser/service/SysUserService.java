@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import core.service.BaseService;
-import crm.sysuser.model.SysUser;
+import crm.model.SysUser;
 
 /**
  * 

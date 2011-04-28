@@ -1,6 +1,5 @@
 package core.action;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,14 +11,13 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import core.json.JsonListResult;
-import core.json.JsonObjectResult;
 import core.json.JsonResult;
-import core.json.JsonValidateResult;
 
 public class BaseAction extends ActionSupport implements SessionAware {
 
     private static final long serialVersionUID = -7367003790059602087L;
+
+    public static final String LIST = "list";
 
     protected Map<String, Object> session;
 

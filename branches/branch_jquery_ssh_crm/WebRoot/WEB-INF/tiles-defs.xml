@@ -5,16 +5,15 @@
 	   "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-	<definition name="nomenu.layout"
-		template="/jsp/layout/nomenuLayout.jsp">
+	<definition name="nomenu.layout" template="/jsp/layout/nomenuLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/jsp/layout/footer2.jsp" />
 	</definition>
-	<definition name="main.layout"
-		template="/jsp/layout/mainLayout.jsp">
+	<definition name="main.layout" template="/jsp/layout/mainLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="menu" value="/jsp/layout/menu.jsp" />
+		<put-attribute name="menutitle" value="" />
 		<put-attribute name="bodyhead" value="" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/jsp/layout/footer.jsp" />
@@ -24,6 +23,23 @@
 	<definition name="error" extends="nomenu.layout">
 		<put-attribute name="body" value="/jsp/common/error.jsp" />
 	</definition>
+	<definition name="welcome" extends="main.layout">
+		<put-attribute name="menutitle" value="系统默认" />
+		<put-attribute name="bodyhead" value="欢迎版面" />
+		<put-attribute name="body" value="/jsp/common/welcome.jsp" />
+	</definition>
+
+	<!-- cust -->
+	<definition name="cust.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="客户管理" />
+	</definition>
+	<definition name="cust.list.layout" extends="cust.layout">
+		<put-attribute name="body" value="/jsp/cust/custList.jsp" />
+	</definition>
+	<definition name="cust.broker.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="券商" />
+	</definition>
+
 
 	<!-- sysuser layout -->
 	<definition name="sysuser.login" extends="nomenu.layout">

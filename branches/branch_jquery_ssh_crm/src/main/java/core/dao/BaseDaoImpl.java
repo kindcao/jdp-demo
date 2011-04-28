@@ -1,4 +1,4 @@
-package core.dao.impl;
+package core.dao;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -15,7 +15,6 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-import core.dao.BaseDao;
 
 public class BaseDaoImpl implements BaseDao {
 

@@ -15,7 +15,7 @@ import core.common.Constants;
 import core.json.JsonListResult;
 import core.json.JsonObjectResult;
 import core.json.JsonValidateResult;
-import crm.sysuser.model.SysUser;
+import crm.model.SysUser;
 import crm.sysuser.service.SysUserService;
 
 /**

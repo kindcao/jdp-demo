@@ -18,7 +18,7 @@
 					<tiles:insertAttribute name="menu" />
 					<s:set name="menutitle" scope="session">
 						<tiles:getAsString name="menutitle" />
-					</s:set>
+					</s:set>			
 				</td>
 				<td style="border: 1px solid #A4BED4;" width="100%">
 					<div style="margin: 0 0 0 5px;">

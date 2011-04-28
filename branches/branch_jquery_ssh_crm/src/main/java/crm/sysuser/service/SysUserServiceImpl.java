@@ -1,14 +1,13 @@
-package crm.sysuser.service.impl;
+package crm.sysuser.service;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import core.service.impl.BaseServiceImpl;
+import core.service.BaseServiceImpl;
+import crm.model.SysUser;
 import crm.sysuser.dao.SysUserDao;
-import crm.sysuser.model.SysUser;
-import crm.sysuser.service.SysUserService;
 
 /**
  * 

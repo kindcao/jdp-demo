@@ -6,7 +6,7 @@
 		<tr>
 			<td>
 				<a href="#" class="easyui-linkbutton" plain="true"
-					iconCls="icon-add">新增</a>
+					iconCls="icon-add" id="_add">新增</a>
 			</td>
 			<td>
 				<div class="separator2">

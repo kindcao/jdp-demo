@@ -5,12 +5,14 @@
 	   "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-	<definition name="nomenu.layout" template="/jsp/layout/nomenuLayout.jsp">
+	<definition name="nomenu.layout"
+		template="/jsp/layout/nomenuLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/jsp/layout/footer2.jsp" />
 	</definition>
-	<definition name="main.layout" template="/jsp/layout/mainLayout.jsp">
+	<definition name="main.layout"
+		template="/jsp/layout/mainLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="menu" value="/jsp/layout/menu.jsp" />
 		<put-attribute name="menutitle" value="" />
@@ -36,9 +38,18 @@
 	<definition name="cust.list.layout" extends="cust.layout">
 		<put-attribute name="body" value="/jsp/cust/custList.jsp" />
 	</definition>
+	<definition name="cust.info.layout" extends="cust.layout">
+		<put-attribute name="body" value="/jsp/cust/custInfo.jsp" />
+	</definition>
 	<definition name="cust.broker.list" extends="cust.list.layout">
 		<put-attribute name="bodyhead" value="券商" />
 	</definition>
+	<definition name="cust.broker.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="券商" />
+	</definition>
+
+
+
 
 
 	<!-- sysuser layout -->

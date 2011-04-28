@@ -8,8 +8,8 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
 import core.common.Constants;
+import crm.model.SysUser;
 import crm.sysuser.action.SysUserAction;
-import crm.sysuser.model.SysUser;
 
 /**
  * 

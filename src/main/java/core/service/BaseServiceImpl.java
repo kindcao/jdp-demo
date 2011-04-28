@@ -1,4 +1,4 @@
-package core.service.impl;
+package core.service;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import core.dao.BaseDao;
-import core.service.BaseService;
 
 public class BaseServiceImpl implements BaseService {
 

@@ -14,7 +14,7 @@ function login(formIdStr) {
 				if (!data.success) {
 					$.messager.alert('提示信息', data.errors, 'error');
 				} else {
-					window.location.href="forward.action?forward=list";
+					window.location.href="welcome.action";
 				}
 			}
 		};

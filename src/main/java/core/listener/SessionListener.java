@@ -8,7 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import core.common.Constants;
-import crm.sysuser.model.SysUser;
+import crm.model.SysUser;
 
 /**
  * 

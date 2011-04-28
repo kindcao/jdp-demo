@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!--  -->
+
+
+	<!--  -->
+	<context:component-scan base-package="*"
+		use-default-filters="false">
+		<context:include-filter type="regex"
+			expression="^[core|crm].*.[impl|action].*" />
+		<!--context:include-filter type="aspectj" expression="core..*.impl..*" /-->
+	</context:component-scan>
+
+
+
+	<!--cfg data source  -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://jdp-demo.dbserver:3306/test</value>
+		</property>
+		<property name="username">
+			<value>user</value>
+		</property>
+		<property name="password">
+			<value>user</value>
+		</property>
+	</bean>
+
+	<!-- 配置Hibernate -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>/WEB-INF/hbm</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.EhCacheProvider
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+		<ref local="dataSource" />
+		</property>
+		<property name="annotatedPackages">
+		<list>
+		<value>crm.model</value>
+		</list>
+		</property>
+		<property name="hibernateProperties">
+		<props>
+		<prop key="hibernate.dialect">
+		org.hibernate.dialect.MySQLDialect
+		</prop>
+		<prop key="hibernate.show_sql">true</prop>
+		<prop key="hibernate.cache.provider_class">
+		org.hibernate.cache.EhCacheProvider
+		</prop>
+		</props>
+		</property>
+		</bean>-->
+
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+</beans>

@@ -85,6 +85,7 @@ public class SysUserAction extends BaseAction {
         if ("login".equals(getForward())) {
             return LOGIN;
         } else if ("list".equals(getForward())) {
+            username="";
             return "list";
         }
         return NONE;

@@ -3,18 +3,15 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<script type="text/javascript" defer="defer">	
-    /**
+<script type="text/javascript" defer="defer">    
 	$(document).ready(function() {
 		var selectTitle='${sessionScope.menutitle}';
-		$('#menu').accordion('select',selectTitle);	
-		alert(selectTitle);	
-	});	**/
+		$('#menu').accordion('select',selectTitle);					
+	});
 	
 	function clickMenu(href){
 		window.location.href=href;	
 	}
-
 </script>
 
 <div id="menu" class="easyui-accordion" align="center"

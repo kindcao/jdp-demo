@@ -4,6 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import core.action.BaseAction;
+import core.json.JsonValidateResult;
+import crm.model.Customer;
 
 /**
  * @author Kind Cao
@@ -17,6 +19,10 @@ public class CustAction extends BaseAction {
 
     private int induId;
 
+    private Customer cust;
+
+    private JsonValidateResult jvr = new JsonValidateResult();
+
     public String showCustList() throws Exception {
         switch (induId) {
         case 1: {
@@ -28,11 +34,36 @@ public class CustAction extends BaseAction {
         return NONE;
     }
 
+    public String showCustInfo() throws Exception {
+        switch (induId) {
+        case 1: {
+            return "cust.broker.info";
+        }
+        default:
+            break;
+        }
+        return NONE;
+    }
+
+    public String saveCustInfo() throws Exception {
+        jvr.setSuccess(true);
+        responseJsonData(jvr);
+        return NONE;
+    }
+
     public int getInduId() {
         return induId;
     }
 
     public void setInduId(int induId) {
         this.induId = induId;
+    }
+
+    public Customer getCust() {
+        return cust;
+    }
+
+    public void setCust(Customer cust) {
+        this.cust = cust;
     }
 }

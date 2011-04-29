@@ -3,8 +3,7 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<constant name="struts.custom.i18n.resources"
-		value="messageResource" />
+	<constant name="struts.custom.i18n.resources" value="messageResource" />
 	<constant name="struts.devMode" value="false" />
 
 	<package name="default" extends="tiles-default" namespace="/">
@@ -27,24 +26,26 @@
 		<action name="welcome" class="commAction" method="welcome">
 			<result name="welcome" type="tiles">welcome</result>
 		</action>
+		<action name="getSysComp" class="commAction" method="getSysComp" />
+		<action name="getSysCompUser" class="commAction"
+			method="getSysCompUser" />
 		<!-- cust -->
-		<action name="showCustList" class="custAction"
-			method="showCustList">
+		<action name="showCustList" class="custAction" method="showCustList">
 			<result name="cust.broker.list" type="tiles">
 				cust.broker.list
 			</result>
 		</action>
-		<action name="showCustInfo" class="custAction"
-			method="showCustInfo">
+		<action name="showCustInfo" class="custAction" method="showCustInfo">
 			<result name="cust.broker.info" type="tiles">
 				cust.broker.info
 			</result>
 		</action>
-		<action name="saveCustInfo" class="custAction"
-			method="saveCustInfo" />
+		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
+		<action name="getCustInduList" class="custAction"
+			method="getCustInduList" />
+
 		<!-- sysuser  -->
-		<action name="getUserList" class="sysUserAction"
-			method="getUserList" />
+		<action name="getUserList" class="sysUserAction" method="getUserList" />
 		<action name="login" class="sysUserAction" method="login" />
 		<action name="logout" class="sysUserAction" method="logout" />
 		<action name="forward" class="sysUserAction" method="forward">

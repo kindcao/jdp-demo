@@ -14,4 +14,16 @@ public class Constants {
     public static final Map<Object, Object> SYS_USER_MAP = new HashMap<Object, Object>();
 
     public static final String CURR_SYS_USER_SESSION_KEY = "CURR_SYS_USER_SESSION_KEY";
+
+    public static final String STATUS_Y = "Y";
+
+    public static final String STATUS_N = "N";
+
+    public static final String STATUS_R = "R";
+
+    public static final String STATUS_O = "O";
+
+    public static final String STATUS_A = "A";
+
+    public static final String STATUS_D = "D";
 }

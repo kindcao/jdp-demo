@@ -1,11 +1,19 @@
 package crm.cust.action;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import core.action.BaseAction;
 import core.json.JsonValidateResult;
+import crm.cust.service.CustService;
 import crm.model.Customer;
+import crm.model.CustomerIndustry;
+import crm.model.CustomerSysCompanyRel;
+import crm.model.CustomerSysUserRel;
 
 /**
  * @author Kind Cao
@@ -19,9 +27,15 @@ public class CustAction extends BaseAction {
 
     private int induId;
 
+    private String custSysCompIds;
+
+    private String custSysUserIds;
+
+    private String custSysUserPrimIds;
+
     private Customer cust;
 
-    private JsonValidateResult jvr = new JsonValidateResult();
+    private CustService custService;
 
     public String showCustList() throws Exception {
         switch (induId) {
@@ -46,8 +60,25 @@ public class CustAction extends BaseAction {
     }
 
     public String saveCustInfo() throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
         jvr.setSuccess(true);
         responseJsonData(jvr);
+        return NONE;
+    }
+
+    public String getCustInduList() throws Exception {
+        if (induId > 0) {
+            CustomerIndustry custIndu = new CustomerIndustry();
+            custIndu.setSuperiorId(induId);
+            List<?> list = custService.findByExample(custIndu);
+            if (list != null && list.size() > 0) {
+                responseJsonData(list);
+            } else {
+                log.info("cust indu list is null");
+            }
+        } else {
+            log.warn("induId is zero.");
+        }
         return NONE;
     }
 
@@ -65,5 +96,38 @@ public class CustAction extends BaseAction {
 
     public void setCust(Customer cust) {
         this.cust = cust;
+    }
+
+    public CustService getCustService() {
+        return custService;
+    }
+
+    @Resource
+    public void setCustService(CustService custService) {
+        this.custService = custService;
+    }
+
+    public String getCustSysCompIds() {
+        return custSysCompIds;
+    }
+
+    public void setCustSysCompIds(String custSysCompIds) {
+        this.custSysCompIds = custSysCompIds;
+    }
+
+    public String getCustSysUserIds() {
+        return custSysUserIds;
+    }
+
+    public void setCustSysUserIds(String custSysUserIds) {
+        this.custSysUserIds = custSysUserIds;
+    }
+
+    public String getCustSysUserPrimIds() {
+        return custSysUserPrimIds;
+    }
+
+    public void setCustSysUserPrimIds(String custSysUserPrimIds) {
+        this.custSysUserPrimIds = custSysUserPrimIds;
     }
 }

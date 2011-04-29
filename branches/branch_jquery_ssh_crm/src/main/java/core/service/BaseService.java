@@ -7,8 +7,6 @@ import java.util.Map;
 
 public interface BaseService {
 
-    Object getObject(Class clazz, Serializable serializable);
-
     void removeObject(Class clazz, Serializable serializable);
 
     void saveOrUpdate(Object o);
@@ -17,8 +15,12 @@ public interface BaseService {
 
     void deleteAll(Class clazz, Collection ids);
 
+    int getTotalCount(String hql, Map map);
+
+    Object getObject(Class clazz, Serializable serializable);
+
     List findPageByQuery(int pageNo, int pageSize, String hql, Map map);
 
-    int getTotalCount(String hql, Map map);
+    List<?> findByExample(Object exampleEntity);
 
 }

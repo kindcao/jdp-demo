@@ -7,9 +7,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import core.dao.BaseDao;
 
 public class BaseServiceImpl implements BaseService {
+
+    protected Log log = LogFactory.getLog(BaseServiceImpl.class);
 
     private BaseDao baseDaoImpl;
 
@@ -19,8 +24,7 @@ public class BaseServiceImpl implements BaseService {
     }
 
     public Object getObject(Class class1, Serializable serializable) {
-        // TODO Auto-generated method stub
-        return this.baseDaoImpl.getObject(class1, serializable);
+        return baseDaoImpl.getObject(class1, serializable);
     }
 
     @Override
@@ -51,6 +55,11 @@ public class BaseServiceImpl implements BaseService {
     @Override
     public void deleteAll(Collection entities) {
         baseDaoImpl.deleteAll(entities);
+    }
+
+    @Override
+    public List<?> findByExample(Object exampleEntity) {
+        return baseDaoImpl.findByExample(exampleEntity);
     }
 
 }

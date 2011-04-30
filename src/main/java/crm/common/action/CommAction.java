@@ -1,5 +1,6 @@
 package crm.common.action;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import core.action.BaseAction;
 import core.common.Constants;
 import core.service.BaseService;
+import crm.model.CustomerIndustry;
 import crm.model.SysCompany;
 import crm.model.SysCompanyUser;
 
@@ -25,33 +27,72 @@ public class CommAction extends BaseAction {
 
     private BaseService baseServiceImpl;
 
+    private int induId;
+
+    private String sysCompIds;
+
+    private String sysUserIds;
+
     public String welcome() throws Exception {
         return "welcome";
     }
 
-    public String getSysComp() throws Exception {
-        SysCompany sysComp = new SysCompany();
-        sysComp.setStatus(Constants.STATUS_A);
-        List<?> list = baseServiceImpl.findByExample(sysComp);
-        if (list != null && list.size() > 0) {
-            responseJsonData(list);
+    public String getCustIndu() throws Exception {
+        List<?> list = null;
+        if (induId > 0) {
+            CustomerIndustry custIndu = new CustomerIndustry();
+            custIndu.setSuperiorId(induId);
+            list = baseServiceImpl.findByExample(custIndu);
         } else {
-            log.info("cust indu list is null");
+            list = baseServiceImpl.loadAll(CustomerIndustry.class);
         }
+        responseJsonData(list);
         return NONE;
     }
 
-    public String getSysCompUser() throws Exception {
+    public String getSysComp() throws Exception {
+        List<?> list = null;
+        SysCompany sysComp = new SysCompany();
+        sysComp.setStatus(Constants.STATUS_A);
+        list = baseServiceImpl.findByExample(sysComp);
+        responseJsonData(list);
+        return NONE;
+    }
+
+    public String getSysCompUserByUserIds() throws Exception {
+        List<?> list = null;
         SysCompanyUser sysCompUser = new SysCompanyUser();
         sysCompUser.setStatus(Constants.STATUS_A);
         sysCompUser.setDeleteFlag(Constants.STATUS_N);
-        // sysCompUser.setSuperiorId(superiorId)
-        List<?> list = baseServiceImpl.findByExample(sysCompUser);
-        if (list != null && list.size() > 0) {
-            responseJsonData(list);
-        } else {
-            log.info("cust indu list is null");
+        list = baseServiceImpl.findByExample(sysCompUser);
+        if (null != sysUserIds && sysUserIds.length() > 0) {
+            for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+                SysCompanyUser object = (SysCompanyUser) iterator.next();
+                if (!sysUserIds.contains(object.getId().toString())) {
+                    iterator.remove();
+                }
+            }
         }
+        responseJsonData(list);
+        return NONE;
+    }
+
+    public String getSysCompUserByCompIds() throws Exception {
+        List<?> list = null;
+        SysCompanyUser sysCompUser = new SysCompanyUser();
+        sysCompUser.setStatus(Constants.STATUS_A);
+        sysCompUser.setDeleteFlag(Constants.STATUS_N);
+        list = baseServiceImpl.findByExample(sysCompUser);
+        //
+        if (null != sysCompIds && sysCompIds.length() > 0) {
+            for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+                SysCompanyUser object = (SysCompanyUser) iterator.next();
+                if (!sysCompIds.contains(object.getSysCompanyId().toString())) {
+                    iterator.remove();
+                }
+            }
+        }
+        responseJsonData(list);
         return NONE;
     }
 
@@ -62,5 +103,29 @@ public class CommAction extends BaseAction {
     @Resource
     public void setBaseServiceImpl(BaseService baseServiceImpl) {
         this.baseServiceImpl = baseServiceImpl;
+    }
+
+    public int getInduId() {
+        return induId;
+    }
+
+    public void setInduId(int induId) {
+        this.induId = induId;
+    }
+
+    public String getSysCompIds() {
+        return sysCompIds;
+    }
+
+    public void setSysCompIds(String sysCompIds) {
+        this.sysCompIds = sysCompIds;
+    }
+
+    public String getSysUserIds() {
+        return sysUserIds;
+    }
+
+    public void setSysUserIds(String sysUserIds) {
+        this.sysUserIds = sysUserIds;
     }
 }

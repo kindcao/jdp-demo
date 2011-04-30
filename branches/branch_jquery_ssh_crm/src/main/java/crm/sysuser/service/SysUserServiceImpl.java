@@ -27,7 +27,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements
     }
 
     @Override
-    public List<SysUser> findPageByQuery(int pageNo, int pageSize, Map map) {
+    public List<?> findPageByQuery(int pageNo, int pageSize, Map map) {
         String hql = "from SysUser where username like :username";
         return sysUserDao.findPageByQuery(pageNo, pageSize, hql, map);
     }

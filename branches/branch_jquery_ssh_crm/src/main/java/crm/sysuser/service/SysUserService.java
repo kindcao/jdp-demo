@@ -18,7 +18,7 @@ public interface SysUserService extends BaseService {
 
     SysUser findUserByName(String username);
 
-    List<SysUser> findPageByQuery(int pageNo, int pageSize, Map map);
+    List<?> findPageByQuery(int pageNo, int pageSize, Map map);
 
     int getTotalCount(Map map);
 }

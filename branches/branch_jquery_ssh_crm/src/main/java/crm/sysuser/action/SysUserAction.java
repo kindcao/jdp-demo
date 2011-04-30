@@ -73,7 +73,8 @@ public class SysUserAction extends BaseAction {
     }
 
     public String logout() throws Exception {
-        SysUser sysUser = (SysUser) getSession().remove(Constants.CURR_SYS_USER_SESSION_KEY);
+        SysUser sysUser = (SysUser) getSession().remove(
+                Constants.CURR_SYS_USER_SESSION_KEY);
         if (sysUser != null) {
             Constants.SYS_USER_MAP.remove(sysUser.getUsername());
             log.info("user " + sysUser.getUsername() + " logout.");
@@ -85,7 +86,7 @@ public class SysUserAction extends BaseAction {
         if ("login".equals(getForward())) {
             return LOGIN;
         } else if ("list".equals(getForward())) {
-            username="";
+            username = "";
             return "list";
         }
         return NONE;
@@ -159,7 +160,7 @@ public class SysUserAction extends BaseAction {
         // setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
         // session.put("mylist", myCustomers);
         int totalCount = sysUserService.getTotalCount(map);
-        List<SysUser> userList = sysUserService.findPageByQuery((getPage() - 1)
+        List<?> userList = sysUserService.findPageByQuery((getPage() - 1)
                 * getRows(), getRows(), map);
 
         // StringBuffer sb = new StringBuffer();

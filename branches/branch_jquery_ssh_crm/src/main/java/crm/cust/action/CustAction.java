@@ -1,7 +1,5 @@
 package crm.cust.action;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
@@ -11,9 +9,6 @@ import core.action.BaseAction;
 import core.json.JsonValidateResult;
 import crm.cust.service.CustService;
 import crm.model.Customer;
-import crm.model.CustomerIndustry;
-import crm.model.CustomerSysCompanyRel;
-import crm.model.CustomerSysUserRel;
 
 /**
  * @author Kind Cao
@@ -63,22 +58,6 @@ public class CustAction extends BaseAction {
         JsonValidateResult jvr = new JsonValidateResult();
         jvr.setSuccess(true);
         responseJsonData(jvr);
-        return NONE;
-    }
-
-    public String getCustInduList() throws Exception {
-        if (induId > 0) {
-            CustomerIndustry custIndu = new CustomerIndustry();
-            custIndu.setSuperiorId(induId);
-            List<?> list = custService.findByExample(custIndu);
-            if (list != null && list.size() > 0) {
-                responseJsonData(list);
-            } else {
-                log.info("cust indu list is null");
-            }
-        } else {
-            log.warn("induId is zero.");
-        }
         return NONE;
     }
 

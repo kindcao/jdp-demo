@@ -3,68 +3,46 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<constant name="struts.custom.i18n.resources"
-		value="messageResource" />
+	<constant name="struts.custom.i18n.resources" value="messageResource" />
 	<constant name="struts.devMode" value="false" />
-
 	<package name="default" extends="tiles-default" namespace="/">
 		<interceptors>
-			<interceptor name="checkLoginInterceptor"
-				class="core.interceptor.CheckLoginInterceptor" />
+			<interceptor name="checkLoginInterceptor" class="crm.interceptor.CheckLoginInterceptor" />
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="checkLoginInterceptor" />
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="myStack" />
-
 		<global-results>
-			<result name="login" type="tiles">sysuser.login</result>
+			<result name="login" type="tiles">syscompuser.login</result>
 			<result name="error" type="tiles">error</result>
 		</global-results>
-
 		<!-- comm -->
 		<action name="welcome" class="commAction" method="welcome">
 			<result name="welcome" type="tiles">welcome</result>
 		</action>
-		<action name="getSysComp" class="commAction"
-			method="getSysComp" />
-		<action name="getCustIndu" class="commAction"
-			method="getCustIndu" />
-		<action name="getSysCompUserByCompIds" class="commAction"
-			method="getSysCompUserByCompIds" />
-		<action name="getSysCompUserByUserIds" class="commAction"
-			method="getSysCompUserByUserIds" />
-
+		<action name="getSysComp" class="commAction" method="getSysComp" />
+		<action name="getCustIndu" class="commAction" method="getCustIndu" />
+		<action name="getSysCompUserByCompIds" class="commAction" method="getSysCompUserByCompIds" />
+		<action name="getSysCompUserByUserIds" class="commAction" method="getSysCompUserByUserIds" />
 		<!-- cust -->
-		<action name="showCustList" class="custAction"
-			method="showCustList">
-			<result name="cust.broker.list" type="tiles">
-				cust.broker.list
-			</result>
+		<action name="showCustList" class="custAction" method="showCustList">
+			<result name="cust.broker.list" type="tiles">cust.broker.list</result>
 		</action>
-		<action name="showCustInfo" class="custAction"
-			method="showCustInfo">
-			<result name="cust.broker.info" type="tiles">
-				cust.broker.info
-			</result>
+		<action name="showCustInfo" class="custAction" method="showCustInfo">
+			<result name="cust.broker.info" type="tiles">cust.broker.info</result>
 		</action>
-		<action name="saveCustInfo" class="custAction"
-			method="saveCustInfo" />
-
-		<!-- sysuser  -->
-		<action name="getUserList" class="sysUserAction"
-			method="getUserList" />
-		<action name="login" class="sysUserAction" method="login" />
-		<action name="logout" class="sysUserAction" method="logout" />
-		<action name="forward" class="sysUserAction" method="forward">
-			<result name="list" type="tiles">sysuser.list</result>
+		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
+		<!-- syssetup  -->
+		<action name="getUserList" class="sysCompUserAction" method="getUserList" />
+		<action name="login" class="sysCompUserAction" method="login" />
+		<action name="logout" class="sysCompUserAction" method="logout" />
+		<action name="forward" class="sysCompUserAction" method="forward">
+			<result name="list" type="tiles">syscompuser.list</result>
 		</action>
-		<action name="addUser" class="sysUserAction" method="addUser" />
-		<action name="editUser" class="sysUserAction" method="editUser" />
-		<action name="delUser" class="sysUserAction" method="delUser" />
+		<action name="addUser" class="sysCompUserAction" method="addUser" />
+		<action name="editUser" class="sysCompUserAction" method="editUser" />
+		<action name="delUser" class="sysCompUserAction" method="delUser" />
 	</package>
-
-
-
 </struts>

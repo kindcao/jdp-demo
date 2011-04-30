@@ -35,24 +35,36 @@
 		}
 	});
 	
-	$('#cust_sys_comp').combobox({
-		 onSelect:function(rec){
-		 	var _sysUserIds=$(this).combobox("getValues");
-		 	/**
-		 	$('#cust_sys_user').combobox({
-             	disabled:false,
-                url:'${pageContext.request.contextPath}/region/city/'+record.id+'/json.htm',
-                valueField:'id',
-                textField:'name'
-            }).combobox('clear');	**/		 	
-		 }
+	$("#_reset").click(function() {
+		$('#cust_indu').combobox('clear');		
+		$('#cust_sys_comp').combobox('clear');
+		$('#cust_sys_user').combobox('clear');
+		$('#cust_sys_prim_user').combobox('clear');
+		resetForm('infoForm');
 	});
 	
 	
+	
+	$('#cust_indu').combobox({
+		url:'getCustIndu.action?induId='+$('#induId').val()				
+	});			
+	
+	$('#cust_sys_comp').combobox({
+		url:'getSysComp.action',	
+		onChange:function(rec){
+		 	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#cust_sys_user').combobox({
+		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
+		 	}).combobox('clear');		 	
+		}
+	});	
+	
 	$('#cust_sys_user').combobox({
-	    onSelect:function(rec){
-	    	//alert($(this).combobox("getValues"));
-	    	//$('#cust_sys_prim_user').combobox('clear');
+	    onChange:function(rec){
+	    	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#cust_sys_prim_user').combobox({
+		 		url:'getSysCompUserByUserIds?sysUserIds='+_sysUserIds
+		 	}).combobox('clear');
 	    }
 	});
 	
@@ -85,9 +97,9 @@
 				</td>
 				<td width="20%">
 					<input id="cust_indu" class="easyui-combobox"
-						name="cust.industryId" required="true"
-						url="getCustInduList.action" valueField="id" textField="name"
-						multiple="false" editable="false" panelHeight="auto">
+						name="cust.industryId" required="true" url="" valueField="id"
+						textField="name" multiple="false" editable="false"
+						panelHeight="auto" style="width: 135px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -122,7 +134,8 @@
 					邮编:
 				</td>
 				<td>
-					<input type="text" name="cust.postcode" maxlength="10">
+					<input type="text" name="cust.postcode" class="easyui-validatebox"
+						validType="postcode" maxlength="10">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -131,16 +144,16 @@
 				</td>
 				<td colspan="3">
 					<input id="cust_sys_comp" class="easyui-combobox"
-						name="custSysCompIds" required="true" url="getSysComp.action"
-						valueField="id" textField="companyName" multiple="true"
-						editable="false" panelHeight="auto" style="width: 400px;">
+						name="custSysCompIds" required="true" url="" valueField="id"
+						textField="companyName" multiple="true" editable="false"
+						panelHeight="auto" style="width: 400px;">
 				</td>
 				<td nowrap="nowrap" align="center">
 					电话:
 				</td>
 				<td>
 					<input type="text" name="cust.phone" class="easyui-validatebox"
-						required="true" validType="mobile" maxlength="40">
+						required="true" validType="phone" maxlength="40">
 				</td>
 
 			</tr>
@@ -150,8 +163,8 @@
 				</td>
 				<td colspan="3">
 					<input id="cust_sys_user" class="easyui-combobox"
-						name="custSysUserIds" required="true" url="getSysCompUser.action"
-						valueField="id" textField="name" multiple="true" editable="false"
+						name="custSysUserIds" required="true" url="" valueField="id"
+						textField="name" multiple="true" editable="false"
 						panelHeight="auto" style="width: 400px;">
 				</td>
 				<td nowrap="nowrap" align="center">
@@ -209,7 +222,7 @@
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-save" id="_save">保存</a>
 					<a href="#" class="easyui-linkbutton" plain="true"
-						iconCls="icon-remove" onclick="resetForm('infoForm');">重置</a>
+						iconCls="icon-remove" id="_reset">重置</a>
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-back" id="_back">返回</a>
 				</td>

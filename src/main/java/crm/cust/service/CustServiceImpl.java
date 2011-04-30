@@ -1,6 +1,6 @@
 package crm.cust.service;
 
-import core.service.BaseServiceImpl;
+import crm.base.service.BaseServiceImpl;
 
 /**
  * @author Kind Cao

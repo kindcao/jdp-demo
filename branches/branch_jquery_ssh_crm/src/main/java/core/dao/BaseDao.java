@@ -25,6 +25,8 @@ public interface BaseDao {
 
     List<?> findByExample(Object exampleEntity);
 
-    List findPageByQuery(int pageNo, int pageSize, String hql, Map map);
+    List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map map);
+
+    List<?> findByIds(Class clazz, Collection ids);
 
 }

@@ -19,8 +19,12 @@ public interface BaseService {
 
     Object getObject(Class clazz, Serializable serializable);
 
-    List findPageByQuery(int pageNo, int pageSize, String hql, Map map);
+    List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map map);
 
     List<?> findByExample(Object exampleEntity);
+
+    List<?> loadAll(Class entityClass);
+
+    List<?> findByIds(Class clazz, Collection ids);
 
 }

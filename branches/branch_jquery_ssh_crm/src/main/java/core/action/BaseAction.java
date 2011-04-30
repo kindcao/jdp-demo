@@ -38,7 +38,9 @@ public class BaseAction extends ActionSupport implements SessionAware {
             if (JSONUtils.isNull(obj)) {
                 log.warn("JSONUtils.isNull(obj)");
                 return;
-            } else if (JSONUtils.isArray(obj)) {
+            } 
+            
+            if (JSONUtils.isArray(obj)) {
                 sb.append(JSONArray.fromObject(obj));
             } else if (JSONUtils.isObject(obj)) {
                 sb.append(JSONObject.fromObject(obj));

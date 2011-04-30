@@ -1,6 +1,6 @@
 package crm.cust.dao;
 
-import core.dao.BaseDaoImpl;
+import crm.base.dao.BaseDaoImpl;
 
 /**
  * @author Kind Cao

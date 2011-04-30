@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import core.action.BaseAction;
-import core.common.Constants;
-import core.service.BaseService;
+import crm.base.action.BaseAction;
+import crm.base.service.BaseService;
+import crm.common.Constants;
 import crm.model.CustomerIndustry;
 import crm.model.SysCompany;
 import crm.model.SysCompanyUser;

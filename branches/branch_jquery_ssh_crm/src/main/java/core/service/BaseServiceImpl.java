@@ -33,7 +33,7 @@ public class BaseServiceImpl implements BaseService {
     }
 
     @Override
-    public List findPageByQuery(int pageNo, int pageSize, String hql, Map map) {
+    public List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map map) {
         return baseDaoImpl.findPageByQuery(pageNo, pageSize, hql, map);
     }
 
@@ -60,6 +60,16 @@ public class BaseServiceImpl implements BaseService {
     @Override
     public List<?> findByExample(Object exampleEntity) {
         return baseDaoImpl.findByExample(exampleEntity);
+    }
+
+    @Override
+    public List<?> loadAll(Class entityClass) {
+        return baseDaoImpl.loadAll(entityClass);
+    }
+
+    @Override
+    public List<?> findByIds(Class clazz, Collection ids) {
+        return baseDaoImpl.findByIds(clazz, ids);
     }
 
 }

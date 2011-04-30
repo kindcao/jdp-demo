@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE tiles-definitions PUBLIC
 	   "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
 	   "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-
 <tiles-definitions>
-	<definition name="nomenu.layout"
-		template="/jsp/layout/nomenuLayout.jsp">
+	<definition name="nomenu.layout" template="/jsp/layout/nomenuLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/jsp/layout/footer2.jsp" />
 	</definition>
-	<definition name="main.layout"
-		template="/jsp/layout/mainLayout.jsp">
+	<definition name="main.layout" template="/jsp/layout/mainLayout.jsp">
 		<put-attribute name="header" value="/jsp/layout/header.jsp" />
 		<put-attribute name="menu" value="/jsp/layout/menu.jsp" />
 		<put-attribute name="menutitle" value="" />
@@ -20,7 +16,6 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/jsp/layout/footer.jsp" />
 	</definition>
-
 	<!-- common -->
 	<definition name="error" extends="nomenu.layout">
 		<put-attribute name="body" value="/jsp/common/error.jsp" />
@@ -30,7 +25,6 @@
 		<put-attribute name="bodyhead" value="欢迎版面" />
 		<put-attribute name="body" value="/jsp/common/welcome.jsp" />
 	</definition>
-
 	<!-- cust -->
 	<definition name="cust.layout" extends="main.layout">
 		<put-attribute name="menutitle" value="客户管理" />
@@ -47,20 +41,15 @@
 	<definition name="cust.broker.info" extends="cust.info.layout">
 		<put-attribute name="bodyhead" value="券商" />
 	</definition>
-
-
-
-
-
 	<!-- sysuser layout -->
-	<definition name="sysuser.login" extends="nomenu.layout">
-		<put-attribute name="body" value="/jsp/sysuser/login.jsp" />
+	<definition name="syscompuser.login" extends="nomenu.layout">
+		<put-attribute name="body" value="/jsp/syssetup/sysCompUserlogin.jsp" />
 	</definition>
 	<definition name="syssetup.layout" extends="main.layout">
 		<put-attribute name="menutitle" value="系统设定" />
 	</definition>
-	<definition name="sysuser.list" extends="syssetup.layout">
+	<definition name="syscompuser.list" extends="syssetup.layout">
 		<put-attribute name="bodyhead" value="用户管理" />
-		<put-attribute name="body" value="/jsp/sysuser/userList.jsp" />
+		<put-attribute name="body" value="/jsp/syssetup/sysCompUserList.jsp" />
 	</definition>
 </tiles-definitions>

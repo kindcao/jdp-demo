@@ -1,7 +1,7 @@
 package crm.interceptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -20,20 +20,17 @@ import crm.syssetup.action.SysCompUserAction;
 @SuppressWarnings("serial")
 public class CheckLoginInterceptor extends MethodFilterInterceptor {
 
-    protected Log log = LogFactory.getLog(CheckLoginInterceptor.class);
+    protected Logger log = LoggerFactory.getLogger(CheckLoginInterceptor.class);
 
     @Override
     protected String doIntercept(ActionInvocation invocation) throws Exception {
-        if (SysCompUserAction.class.getName().equals(
-                invocation.getAction().getClass().getName())
-                && "login".equals(invocation.getProxy().getConfig()
-                        .getMethodName())) {
+        if (SysCompUserAction.class.getName().equals(invocation.getAction().getClass().getName())
+                && "login".equals(invocation.getProxy().getConfig().getMethodName())) {
             return invocation.invoke();
         }
 
-        SysCompanyUser sysCompUser = (SysCompanyUser) invocation
-                .getInvocationContext().getSession().get(
-                        Constants.CURR_SYS_USER_SESSION_KEY);
+        SysCompanyUser sysCompUser = (SysCompanyUser) invocation.getInvocationContext().getSession().get(
+                Constants.CURR_SYS_USER_SESSION_KEY);
         if (sysCompUser != null) {
             return invocation.invoke();
         } else {

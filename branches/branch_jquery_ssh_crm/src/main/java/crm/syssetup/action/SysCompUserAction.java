@@ -6,9 +6,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
@@ -29,7 +29,7 @@ public class SysCompUserAction extends BaseAction {
 
     private static final long serialVersionUID = -2322517524694073991L;
 
-    protected Log log = LogFactory.getLog(SysCompUserAction.class);
+    protected Logger log = LoggerFactory.getLogger(SysCompUserAction.class);
 
     private SysCompanyUser sysCompUser;
 
@@ -58,7 +58,7 @@ public class SysCompUserAction extends BaseAction {
         List<?> list = sysCompUserService.findByExample(_sysCompUser);
         if (list != null && list.size() > 0) {
             log.info("user " + sysCompUser.getLoginId() + " login.");
-            getSession().put(Constants.CURR_SYS_USER_SESSION_KEY, sysCompUser);
+            getSession().put(Constants.CURR_SYS_USER_SESSION_KEY, list.get(0));
             Constants.SYS_USER_MAP.put(sysCompUser.getLoginId(), ServletActionContext.getRequest().getSession());
             jvr.setSuccess(true);
         } else {

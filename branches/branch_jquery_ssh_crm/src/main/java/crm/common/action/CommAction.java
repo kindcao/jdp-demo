@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
 import crm.base.service.BaseService;
@@ -23,7 +23,7 @@ public class CommAction extends BaseAction {
 
     private static final long serialVersionUID = 7374356470643624209L;
 
-    protected Log log = LogFactory.getLog(CommAction.class);
+    private final Logger log = LoggerFactory.getLogger(CommAction.class);
 
     private BaseService baseServiceImpl;
 

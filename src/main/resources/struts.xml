@@ -22,6 +22,7 @@
 		<action name="welcome" class="commAction" method="welcome">
 			<result name="welcome" type="tiles">welcome</result>
 		</action>
+		<action name="error" class="commAction" method="error" />
 		<action name="getSysComp" class="commAction" method="getSysComp" />
 		<action name="getCustIndu" class="commAction" method="getCustIndu" />
 		<action name="getSysCompUserByCompIds" class="commAction" method="getSysCompUserByCompIds" />

@@ -17,7 +17,7 @@ public interface BaseDao {
 
     void deleteAll(Class clazz, Collection ids);
 
-    int getTotalCount(String hql, Map map);
+    int getTotalCount(String hql, Map<String, Object> map);
 
     Object getObject(Class clazz, Serializable serializable);
 
@@ -25,7 +25,7 @@ public interface BaseDao {
 
     List<?> findByExample(Object exampleEntity);
 
-    List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map map);
+    List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map<String, Object> map);
 
     List<?> findByIds(Class clazz, Collection ids);
 

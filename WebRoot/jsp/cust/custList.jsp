@@ -4,6 +4,7 @@
 
 <script type="text/javascript" defer="defer">
 <!--
+	//for add begin
 	$("#_add").click(function() {
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
@@ -22,6 +23,8 @@
 			var options = {
 				url : 'saveCustInfo.action',
 				dataType : 'json',
+				type: 'post',
+				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
 				success : function(data){
 					if (!data.success) {
 						$.messager.alert('提示信息', data.errors, 'error');
@@ -41,13 +44,11 @@
 		$('#cust_sys_user').combobox('clear');
 		$('#cust_sys_prim_user').combobox('clear');
 		resetForm('infoForm');
-	});
-	
-	
+	});	
 	
 	$('#cust_indu').combobox({
 		url:'getCustIndu.action?induId='+$('#induId').val()				
-	});			
+	});		
 	
 	$('#cust_sys_comp').combobox({
 		url:'getSysComp.action',	
@@ -55,7 +56,7 @@
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
 		 	$('#cust_sys_user').combobox({
 		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
-		 	}).combobox('clear');		 	
+		 	}).combobox('clear');
 		}
 	});	
 	
@@ -66,15 +67,38 @@
 		 		url:'getSysCompUserByUserIds?sysUserIds='+_sysUserIds
 		 	}).combobox('clear');
 	    }
-	});
+	});	
+	//for add end
 	
+	//for search begin
+	$('#cust_indu_search').combobox({
+		url:'getCustIndu.action?induId='+$('#induId').val()				
+	});	
+	
+	$('#cust_sys_comp_search').combobox({
+		url:'getSysComp.action',	
+		onChange:function(rec){
+		 	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#cust_sys_user_search').combobox({
+		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
+		 	}).combobox('clear');
+		}
+	});	
+	
+	$("#_reset_search").click(function() {
+		$('#cust_indu_search').combobox('clear');		
+		$('#cust_sys_comp_search').combobox('clear');
+		$('#cust_sys_user_search').combobox('clear');
+		resetForm('searchForm');
+	});	
+	//for search end
+			
 //-->
 </script>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
 <s:hidden id="induId" name="induId" />
 <div id="div_info" style="margin-top: 10px; display: none;">
-	<s:hidden id="induId" name="induId" />
 	<form id="infoForm" name="infoForm">
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
@@ -231,15 +255,87 @@
 	</form>
 </div>
 
-<div id="div_search" style="margin-top: 10px; display: inline;">
+<div id="div_search" style="display: inline;">
 	<form id="searchForm" name="searchForm">
-		sss
+		<fieldset style="margin-top: 10px;">
+			<legend>
+				查询条件
+			</legend>
+			<table cellpadding="0" cellspacing="0" width="800" border="0"
+				style="margin: 10px;">
+				<tr height="30px">
+					<td nowrap="nowrap" align="center" width="10%">
+						客户名称:
+					</td>
+					<td width="20%">
+						<input type="text" name="custSearch.custName" class="easyui-validatebox"
+							validType="length[1,50]">
+					</td>
+					<td nowrap="nowrap" align="center">
+						所属公司:
+					</td>
+					<td colspan="3">
+						<input id="cust_sys_comp_search" class="easyui-combobox"
+							name="custSysCompIds" url="" valueField="id"
+							textField="companyName" multiple="true" editable="false"
+							panelHeight="auto" style="width: 400px;">
+					</td>
+				</tr>
+				<tr height="30px">
+					<td nowrap="nowrap" align="center" width="10%">
+						客户编码:
+					</td>
+					<td width="20%">
+						<input type="text" name="custSearch.custCode" maxlength="20">
+					</td>
+					<td nowrap="nowrap" align="center">
+						负责人:
+					</td>
+					<td colspan="3">
+						<input id="cust_sys_user_search" class="easyui-combobox"
+							name="custSysUserIds" url="" valueField="id" textField="name"
+							multiple="true" editable="false" panelHeight="auto"
+							style="width: 400px;">
+					</td>
+				</tr>
+				<tr height="30px">
+					<td nowrap="nowrap" align="center" width="10%">
+						行业:
+					</td>
+					<td width="20%">
+						<input id="cust_indu_search" class="easyui-combobox"
+							name="custSearch.industryId" url="" valueField="id" textField="name"
+							multiple="false" editable="false" panelHeight="auto"
+							style="width: 135px;">
+					</td>
+					<td nowrap="nowrap" align="center">
+						地址:
+					</td>
+					<td colspan="3">
+						<input type="text" name="custSearch.address" maxlength="200"
+							style="width: 402px;" />
+					</td>
+				</tr>
+				<tr height="30px">
+					<td colspan="5">
+						&nbsp;
+					</td>
+					<td align="right">
+						<a href="#" class="easyui-linkbutton" plain="true"
+							iconCls="icon-search" id="_search">查询</a>
+						<a href="#" class="easyui-linkbutton" plain="true"
+							iconCls="icon-remove" id="_reset_search">重置</a>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
 	</form>
 	<div style="height: 30px;">
 		&nbsp;
 	</div>
 	<div align="left">
 		<table id="grid-datalist"></table>
+		ff
 	</div>
 </div>
 

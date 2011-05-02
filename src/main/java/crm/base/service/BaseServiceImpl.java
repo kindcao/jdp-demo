@@ -7,21 +7,16 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import crm.base.dao.BaseDao;
 
 public class BaseServiceImpl implements BaseService {
 
-    protected Log log = LogFactory.getLog(BaseServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(BaseServiceImpl.class);
 
     private BaseDao baseDaoImpl;
-
-    @Resource
-    public void setBaseDaoImpl(BaseDao baseDaoImpl) {
-        this.baseDaoImpl = baseDaoImpl;
-    }
 
     public Object getObject(Class class1, Serializable serializable) {
         return baseDaoImpl.getObject(class1, serializable);
@@ -30,16 +25,6 @@ public class BaseServiceImpl implements BaseService {
     @Override
     public void saveOrUpdate(Object object) {
         baseDaoImpl.saveOrUpdate(object);
-    }
-
-    @Override
-    public List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map map) {
-        return baseDaoImpl.findPageByQuery(pageNo, pageSize, hql, map);
-    }
-
-    @Override
-    public int getTotalCount(String hql, Map map) {
-        return baseDaoImpl.getTotalCount(hql, map);
     }
 
     @Override
@@ -70,6 +55,25 @@ public class BaseServiceImpl implements BaseService {
     @Override
     public List<?> findByIds(Class clazz, Collection ids) {
         return baseDaoImpl.findByIds(clazz, ids);
+    }
+
+    @Override
+    public int getTotalCount(Map<String, Object> map) {
+        return 0;
+    }
+
+    @Override
+    public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) {
+        return null;
+    }
+
+    @Resource
+    public void setBaseDaoImpl(BaseDao baseDaoImpl) {
+        this.baseDaoImpl = baseDaoImpl;
+    }
+
+    public BaseDao getBaseDaoImpl() {
+        return baseDaoImpl;
     }
 
 }

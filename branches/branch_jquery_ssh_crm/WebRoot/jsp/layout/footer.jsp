@@ -46,7 +46,7 @@
 					<tr valign="middle" align="center">
 						<td nowrap="nowrap" width="120px">
 							当前用户:
-							<s:property value="#session._CURR_USER.username" />
+							<s:property value="#session.CURR_SYS_USER_SESSION_KEY.loginId" />
 						</td>
 						<td width="1px" style="border-right: 1px solid white">
 							&nbsp;

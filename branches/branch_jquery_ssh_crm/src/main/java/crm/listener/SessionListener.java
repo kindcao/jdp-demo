@@ -4,8 +4,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import crm.common.Constants;
 import crm.model.SysCompanyUser;
@@ -18,7 +18,7 @@ import crm.model.SysCompanyUser;
  */
 public class SessionListener implements HttpSessionListener {
 
-    protected Log log = LogFactory.getLog(SessionListener.class);
+    protected Logger log = LoggerFactory.getLogger(SessionListener.class);
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {

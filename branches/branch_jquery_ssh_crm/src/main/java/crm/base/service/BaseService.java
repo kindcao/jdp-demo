@@ -15,11 +15,11 @@ public interface BaseService {
 
     void deleteAll(Class clazz, Collection ids);
 
-    int getTotalCount(String hql, Map map);
+    int getTotalCount(Map<String, Object> map);
 
     Object getObject(Class clazz, Serializable serializable);
 
-    List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map map);
+    List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map);
 
     List<?> findByExample(Object exampleEntity);
 

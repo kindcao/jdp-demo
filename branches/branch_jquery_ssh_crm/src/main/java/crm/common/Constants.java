@@ -15,6 +15,8 @@ public class Constants {
 
     public static final String CURR_SYS_USER_SESSION_KEY = "CURR_SYS_USER_SESSION_KEY";
 
+    public static final String RESULT_TRANSFORMER_DTO = "RESULT_TRANSFORMER_DTO";
+
     public static final String STATUS_Y = "Y";
 
     public static final String STATUS_N = "N";

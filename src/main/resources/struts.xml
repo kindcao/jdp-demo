@@ -18,6 +18,9 @@
 			<result name="login" type="tiles">syscompuser.login</result>
 			<result name="error" type="tiles">error</result>
 		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
 		<!-- comm -->
 		<action name="welcome" class="commAction" method="welcome">
 			<result name="welcome" type="tiles">welcome</result>

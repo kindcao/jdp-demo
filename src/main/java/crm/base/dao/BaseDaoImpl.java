@@ -147,22 +147,25 @@ public class BaseDaoImpl implements BaseDao {
 
     @Override
     public int getTotalCount(final String hql, final Map<String, Object> map) {
-        List<?> result = null;
+        Object result = null;
         try {
-            result = getHibernateTemplate().executeFind(new HibernateCallback() {
+            result = getHibernateTemplate().execute(new HibernateCallback() {
 
                 @Override
                 public Object doInHibernate(Session session) throws HibernateException, SQLException {
-                    Query query = session.createQuery(hql);
+                    Query query = session.createQuery("select count(*) " + hql);
                     setQueryParasValue(query, map);
-                    return query.list();
+                    return query.iterate().next();
                 }
             });
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw e;
         }
-        return result.size();
+        if (null != result) {
+            return ((Long) result).intValue();
+        }
+        return 0;
     }
 
     private void setQueryParasValue(Query query, final Map<String, Object> map) {
@@ -170,6 +173,9 @@ public class BaseDaoImpl implements BaseDao {
         while (it.hasNext()) {
             String key = it.next();
             Object value = map.get(key);
+            if (null == value) {
+                continue;
+            }
             if (value instanceof String) {
                 query.setString(key, value.toString());
             }

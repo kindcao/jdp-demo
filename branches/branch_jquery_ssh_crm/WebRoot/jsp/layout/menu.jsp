@@ -70,7 +70,10 @@
 	</div>
 	<div title="系统设定">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('forward.action?forward=list');">用户管理</a>
+			<a href="#" onclick="clickMenu('showCompList.action');">用户公司</a>
+		</div>
+		<div style="margin: 10px;">
+			<a href="#" onclick="clickMenu('forward.action?forward=list');">系统用户</a>
 		</div>
 		<div style="margin: 10px;">
 			<a href="#" onclick="clickMenu('#');">行业设定</a>

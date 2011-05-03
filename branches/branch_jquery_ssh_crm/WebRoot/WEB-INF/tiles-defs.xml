@@ -48,8 +48,12 @@
 	<definition name="syssetup.layout" extends="main.layout">
 		<put-attribute name="menutitle" value="系统设定" />
 	</definition>
-	<definition name="syscompuser.list" extends="syssetup.layout">
-		<put-attribute name="bodyhead" value="用户管理" />
-		<put-attribute name="body" value="/jsp/syssetup/sysCompUserList.jsp" />
+	<definition name="syscomp.list" extends="syssetup.layout">
+		<put-attribute name="bodyhead" value="用户公司" />
+		<put-attribute name="body" value="/jsp/syssetup/sysCompList.jsp" />
 	</definition>
+	<definition name="syscompuser.list" extends="syssetup.layout">
+		<put-attribute name="bodyhead" value="系统用户" />
+		<put-attribute name="body" value="/jsp/syssetup/sysCompUserList.jsp" />
+	</definition>	
 </tiles-definitions>

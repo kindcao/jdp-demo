@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import crm.base.action.BaseAction;
 import crm.common.Constants;
 import crm.json.JsonListResult;
-import crm.json.JsonObjectResult;
 import crm.json.JsonValidateResult;
 import crm.model.SysCompanyUser;
 import crm.syssetup.service.SysCompUserService;
@@ -35,21 +35,17 @@ public class SysCompUserAction extends BaseAction {
 
     private SysCompUserService sysCompUserService;
 
-    private JsonValidateResult jvr = new JsonValidateResult();
-
-    private JsonListResult jlr = new JsonListResult();
-
-    private JsonObjectResult jor = new JsonObjectResult();
-
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
-        // String pwd = (String) DATA_MAP.get(username);
-        // if (pwd != null && pwd.length() > 0 && pwd.equals(password)) {
-        // log.info("user " + username + " duplicate login.");
-        // responseJsonData("{success:false,errors:{info:'Duplicate login!'}}");
-        // return Action.NONE;
-        // }
+        HttpSession currSession = ServletActionContext.getRequest().getSession();
+        HttpSession lastSession = (HttpSession) Constants.SYS_USER_MAP.get(sysCompUser.getLoginId());
+        if (currSession.getId().equals(lastSession.getId())) {
+            log.warn("user " + sysCompUser.getLoginId() + " duplicate login.");
+            lastSession.removeAttribute(Constants.CURR_SYS_USER_SESSION_KEY);
+            lastSession = currSession;
+        }
         //
+        JsonValidateResult jvr = new JsonValidateResult();
         SysCompanyUser _sysCompUser = new SysCompanyUser();
         _sysCompUser.setStatus(Constants.STATUS_A);
         _sysCompUser.setDeleteFlag(Constants.STATUS_N);
@@ -88,6 +84,7 @@ public class SysCompUserAction extends BaseAction {
     }
 
     public String addUser() throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
         sysCompUser.setStatus(Constants.STATUS_A);
         sysCompUser.setDeleteFlag(Constants.STATUS_N);
         if ("U".equals(getActionFlag())) {
@@ -135,6 +132,7 @@ public class SysCompUserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String getUserList() throws Exception {
+        JsonListResult jlr = new JsonListResult();
         // Object list = session.get("mylist");
         // if (list != null) {
         // myCustomers = (List<User>) list;

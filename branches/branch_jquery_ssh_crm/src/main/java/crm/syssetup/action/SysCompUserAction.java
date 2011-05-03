@@ -39,7 +39,7 @@ public class SysCompUserAction extends BaseAction {
     public String login() throws Exception {
         HttpSession currSession = ServletActionContext.getRequest().getSession();
         HttpSession lastSession = (HttpSession) Constants.SYS_USER_MAP.get(sysCompUser.getLoginId());
-        if (currSession.getId().equals(lastSession.getId())) {
+        if (null != lastSession && currSession.getId().equals(lastSession.getId())) {
             log.warn("user " + sysCompUser.getLoginId() + " duplicate login.");
             lastSession.removeAttribute(Constants.CURR_SYS_USER_SESSION_KEY);
             lastSession = currSession;

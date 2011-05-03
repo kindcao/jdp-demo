@@ -3,15 +3,15 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 
-<div>
-	<h1>
+<div style="margin: 10px">
+	<h3>
 		系统出现异常，请联系管理员或重新
-		<a href="login.action">登录</a>
-	</h1>
+		<a href="forward.action?forward=login">登录</a>
+	</h3>
+	<hr>
 	<h5>
 		详细错误信息：
 	</h5>
-	<hr>
-	<s:set value="#request.exception" name="e" />
-	<s:property value="#e.printStackTrace()" />
+	<s:property value="exception.message" />
+	<s:property value="exceptionStack" />
 </div>

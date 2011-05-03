@@ -24,11 +24,11 @@ public class CheckLoginInterceptor extends MethodFilterInterceptor {
 
     @Override
     protected String doIntercept(ActionInvocation invocation) throws Exception {
-        if (SysCompUserAction.class.getName().equals(invocation.getAction().getClass().getName())
-                && "login".equals(invocation.getProxy().getConfig().getMethodName())) {
+        if ("login".equals(invocation.getProxy().getConfig().getMethodName())
+                && SysCompUserAction.class.getName().equals(invocation.getAction().getClass().getName())) {
             return invocation.invoke();
         }
-
+        //
         SysCompanyUser sysCompUser = (SysCompanyUser) invocation.getInvocationContext().getSession().get(
                 Constants.CURR_SYS_USER_SESSION_KEY);
         if (sysCompUser != null) {

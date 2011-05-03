@@ -37,12 +37,12 @@ public class SysCompUserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
-        HttpSession currSession = ServletActionContext.getRequest().getSession();
+        HttpSession session = ServletActionContext.getRequest().getSession();
         HttpSession lastSession = (HttpSession) Constants.SYS_USER_MAP.get(sysCompUser.getLoginId());
-        if (null != lastSession && currSession.getId().equals(lastSession.getId())) {
+        if (null != lastSession) {
             log.warn("user " + sysCompUser.getLoginId() + " duplicate login.");
             lastSession.removeAttribute(Constants.CURR_SYS_USER_SESSION_KEY);
-            lastSession = currSession;
+            lastSession = session;
         }
         //
         JsonValidateResult jvr = new JsonValidateResult();
@@ -55,7 +55,7 @@ public class SysCompUserAction extends BaseAction {
         if (list != null && list.size() > 0) {
             log.info("user " + sysCompUser.getLoginId() + " login.");
             getSession().put(Constants.CURR_SYS_USER_SESSION_KEY, list.get(0));
-            Constants.SYS_USER_MAP.put(sysCompUser.getLoginId(), ServletActionContext.getRequest().getSession());
+            Constants.SYS_USER_MAP.put(sysCompUser.getLoginId(), session);
             jvr.setSuccess(true);
         } else {
             jvr.setSuccess(false);

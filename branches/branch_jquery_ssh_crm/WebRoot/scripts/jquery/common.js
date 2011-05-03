@@ -12,7 +12,7 @@ function showDatagrid(datagridIdStr, url, frozenColumns, columns) {
 				sortOrder : 'desc',
 				remoteSort : false,
 				idField : 'id',
-				fitColumns : true,
+				//fitColumns : true,
 				rownumbers : false,
 				pagination : true,
 				pageNumber : 1,

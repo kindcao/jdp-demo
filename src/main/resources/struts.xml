@@ -39,6 +39,10 @@
 		</action>
 		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
 		<!-- syssetup  -->
+		<action name="showCompList" class="sysCompAction" method="showCompList">
+			<result name="syscomp.list" type="tiles">syscomp.list</result>
+		</action>
+		<action name="getCompList" class="sysCompAction" method="getCompList" />
 		<action name="getUserList" class="sysCompUserAction" method="getUserList" />
 		<action name="login" class="sysCompUserAction" method="login" />
 		<action name="logout" class="sysCompUserAction" method="logout" />

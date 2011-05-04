@@ -42,7 +42,13 @@ public class CustAction extends BaseAction {
 
     private Customer cust;
 
-    private Customer custSearch;
+    private String custName;
+
+    private String custCode;
+
+    private Integer industryId;
+
+    private String address;
 
     private CustService custService;
 
@@ -129,13 +135,23 @@ public class CustAction extends BaseAction {
     public String getCustList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("custName", custSearch.getCustName());
-        map.put("custCode", custSearch.getCustCode());
-        map.put("industryId", custSearch.getIndustryId());
-        map.put("address", custSearch.getAddress());
-        map.put("custSysCompIds", custSysCompIds);
-        // map.put("custSysUserIds", custSysUserIds);
+        if (StringUtils.isNotBlank(custName)) {
+            map.put("custName", custName);
+        }
+        if (StringUtils.isNotBlank(custCode)) {
+            map.put("custCode", custCode);
+        }
+        if (industryId > 0) {
+            map.put("industryId", industryId);
+        }
+        if (StringUtils.isNotBlank(address)) {
+            map.put("address", address);
+        }
+        if (StringUtils.isNotBlank(custSysCompIds)) {
+            map.put("custSysCompIds", custSysCompIds);
+        }
 
+        //
         int totalCount = custService.getTotalCount(map);
         List<?> custList = custService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
         jlr.setTotal(totalCount);
@@ -177,11 +193,36 @@ public class CustAction extends BaseAction {
         this.custSysCompIds = custSysCompIds;
     }
 
-    public Customer getCustSearch() {
-        return custSearch;
+    public String getCustName() {
+        return custName;
     }
 
-    public void setCustSearch(Customer custSearch) {
-        this.custSearch = custSearch;
+    public void setCustName(String custName) {
+        this.custName = custName;
     }
+
+    public String getCustCode() {
+        return custCode;
+    }
+
+    public void setCustCode(String custCode) {
+        this.custCode = custCode;
+    }
+
+    public Integer getIndustryId() {
+        return industryId;
+    }
+
+    public void setIndustryId(Integer industryId) {
+        this.industryId = industryId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 }

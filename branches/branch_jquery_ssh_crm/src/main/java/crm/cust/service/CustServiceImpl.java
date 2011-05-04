@@ -70,23 +70,27 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
 
     private String getQueryHQL(Map<String, Object> map) {
         StringBuilder sb = new StringBuilder();
-        StringBuilder sb2 = new StringBuilder();
+        // StringBuilder sb2 = new StringBuilder();
         sb.append(" from Customer cust");
 
-        if (null != map.get("custSysCompIds")) {
-            sb.append(" left outer join CustomerSysCompanyRel cscr on cust.id = cscr.id.customerId");
-            sb2.append(" and cscr.id.sysCompanyId in (" + map.get("custSysCompIds") + ") ");
-        }
-
-        if (null != map.get("custSysUserIds")) {
-            sb.append(" left outer join CustomerSysUserRel csur  on cust.id = csur.id.customerId");
-            sb2.append(" and csur.id.sysCompanyUserId in (" + map.get("custSysUserIds") + ") ");
-        }
+        // if (null != map.get("custSysCompIds")) {
+        // sb.append(" left outer join CustomerSysCompanyRel cscr on cust.id =
+        // cscr.id.customerId");
+        // sb2.append(" and cscr.id.sysCompanyId in (" +
+        // map.get("custSysCompIds") + ") ");
+        // }
+        //
+        // if (null != map.get("custSysUserIds")) {
+        // sb.append(" left outer join CustomerSysUserRel csur on cust.id =
+        // csur.id.customerId");
+        // sb2.append(" and csur.id.sysCompanyUserId in (" +
+        // map.get("custSysUserIds") + ") ");
+        // }
 
         sb.append(" where 1=1 ");
         if (null != map.get("custName")) {
             sb.append(" and cust.custName like :custName ");
-            map.put("custName", "'%" + map.get("custName") + "%'");
+            map.put("custName", "%" + map.get("custName") + "%");
         }
 
         if (null != map.get("custCode")) {
@@ -106,12 +110,12 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
             sb.append(" or cust.province like :address ");
             sb.append(" or cust.city like :address ");
             sb.append(" or cust.address like :address) ");
-            map.put("address", "'%" + map.get("address") + "%'");
+            map.put("address", "%" + map.get("address") + "%");
         }
 
-        if (sb2.length() > 0) {
-            sb.append(sb2);
-        }
+        // if (sb2.length() > 0) {
+        // sb.append(sb2);
+        // }
         sb.append(" order by cust.id desc ");
         return sb.toString();
     }

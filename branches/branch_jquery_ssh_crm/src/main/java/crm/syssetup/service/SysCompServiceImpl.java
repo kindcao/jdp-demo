@@ -31,7 +31,7 @@ public class SysCompServiceImpl extends BaseServiceImpl implements SysCompServic
 
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) {
-        String hql = getQueryHQL(map) + " order by id ";
+        String hql = getQueryHQL(map) + " order by id desc";
         return sysCompDao.findPageByQuery(pageNo, pageSize, hql, map);
     }
 

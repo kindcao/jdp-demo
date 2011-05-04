@@ -21,8 +21,6 @@ import crm.json.JsonValidateResult;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;
-import crm.model.CustomerSysUserRel;
-import crm.model.CustomerSysUserRelId;
 
 /**
  * @author Kind Cao

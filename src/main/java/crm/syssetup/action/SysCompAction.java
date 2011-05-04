@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.Action;
 
 import crm.base.action.BaseAction;
 import crm.json.JsonListResult;
+import crm.json.JsonValidateResult;
 import crm.model.SysCompany;
 import crm.syssetup.service.SysCompService;
 
@@ -58,6 +59,17 @@ public class SysCompAction extends BaseAction {
         jlr.setTotal(totalCount);
         jlr.setRows(results);
         responseJsonData(jlr);
+        return Action.NONE;
+    }
+
+    public String saveSysCompInfo() throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
+        if (StringUtils.isBlank(getActionFlag())) {
+            sysComp.setId(null);
+        }
+        sysCompService.saveOrUpdate(sysComp);
+        jvr.setSuccess(true);
+        responseJsonData(jvr);
         return Action.NONE;
     }
 

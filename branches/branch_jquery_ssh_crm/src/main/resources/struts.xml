@@ -34,6 +34,7 @@
 		<action name="showCustList" class="custAction" method="showCustList">
 			<result name="cust.broker.list" type="tiles">cust.broker.list</result>
 		</action>
+		<action name="getCustList" class="custAction" method="getCustList" />
 		<action name="showCustInfo" class="custAction" method="showCustInfo">
 			<result name="cust.broker.info" type="tiles">cust.broker.info</result>
 		</action>

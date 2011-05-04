@@ -3,7 +3,6 @@ package crm.base.dao;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -131,7 +130,7 @@ public class BaseDaoImpl implements BaseDao {
                     } else {
                         query = session.createQuery(hql);
                     }
-                    setQueryParasValue(query, map);
+                    query.setProperties(map);
                     // (pageNo - 1) * pageSize
                     query.setFirstResult(pageNo);
                     query.setMaxResults(pageSize);
@@ -154,7 +153,7 @@ public class BaseDaoImpl implements BaseDao {
                 @Override
                 public Object doInHibernate(Session session) throws HibernateException, SQLException {
                     Query query = session.createQuery("select count(*) " + hql);
-                    setQueryParasValue(query, map);
+                    query.setProperties(map);
                     return query.iterate().next();
                 }
             });
@@ -168,20 +167,21 @@ public class BaseDaoImpl implements BaseDao {
         return 0;
     }
 
-    private void setQueryParasValue(Query query, final Map<String, Object> map) {
-        Iterator<String> it = map.keySet().iterator();
-        while (it.hasNext()) {
-            String key = it.next();
-            Object value = map.get(key);
-            if (null == value) {
-                continue;
-            }
-            if (value instanceof String) {
-                query.setString(key, value.toString());
-            }
-            if (value instanceof Integer) {
-                query.setInteger(key, (Integer) value);
-            }
-        }
-    }
+    // private void setQueryParasValue(Query query, final Map<String, Object>
+    // map) {
+    // Iterator<String> it = map.keySet().iterator();
+    // while (it.hasNext()) {
+    // String key = it.next();
+    // Object value = map.get(key);
+    // if (null == value) {
+    // continue;
+    // }
+    // if (value instanceof String) {
+    // query.setString(key, value.toString());
+    // }
+    // if (value instanceof Integer) {
+    // query.setInteger(key, (Integer) value);
+    // }
+    // }
+    // }
 }

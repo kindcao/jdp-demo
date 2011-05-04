@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,8 @@ public class CommAction extends BaseAction {
 
     private String sysCompIds;
 
+    private String sysCompType;
+
     private String sysUserIds;
 
     public String welcome() throws Exception {
@@ -54,6 +57,11 @@ public class CommAction extends BaseAction {
         List<?> list = null;
         SysCompany sysComp = new SysCompany();
         sysComp.setStatus(Constants.STATUS_A);
+        if (StringUtils.isNotBlank(sysCompType)) {
+            sysComp.setType(sysCompType);
+        } else {
+            sysComp.setType(Constants.STATUS_O);
+        }
         list = baseServiceImpl.findByExample(sysComp);
         responseJsonData(list);
         return NONE;
@@ -65,7 +73,7 @@ public class CommAction extends BaseAction {
         sysCompUser.setStatus(Constants.STATUS_A);
         sysCompUser.setDeleteFlag(Constants.STATUS_N);
         list = baseServiceImpl.findByExample(sysCompUser);
-        if (null != sysUserIds && sysUserIds.length() > 0) {
+        if (StringUtils.isNotBlank(sysUserIds)) {
             for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
                 SysCompanyUser object = (SysCompanyUser) iterator.next();
                 if (!sysUserIds.contains(object.getId().toString())) {
@@ -84,7 +92,7 @@ public class CommAction extends BaseAction {
         sysCompUser.setDeleteFlag(Constants.STATUS_N);
         list = baseServiceImpl.findByExample(sysCompUser);
         //
-        if (null != sysCompIds && sysCompIds.length() > 0) {
+        if (StringUtils.isNotBlank(sysCompIds)) {
             for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
                 SysCompanyUser object = (SysCompanyUser) iterator.next();
                 if (!sysCompIds.contains(object.getSysCompanyId().toString())) {
@@ -127,5 +135,13 @@ public class CommAction extends BaseAction {
 
     public void setSysUserIds(String sysUserIds) {
         this.sysUserIds = sysUserIds;
+    }
+
+    public String getSysCompType() {
+        return sysCompType;
+    }
+
+    public void setSysCompType(String sysCompType) {
+        this.sysCompType = sysCompType;
     }
 }

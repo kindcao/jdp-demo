@@ -8,13 +8,15 @@
 	$("#_add").click(function() {
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
-		$('#_delete').linkbutton('disable');		
+		$('#_delete').linkbutton('disable');	
+		$("#_reset").click();	
 	});	
 	
 	$("#_back").click(function() {
 		document.getElementById('div_info').style.display='none';
 		document.getElementById('div_search').style.display='inline';
 		$('#_delete').linkbutton('enable');
+		$("#_reset").click();
 	});	
 	
 	$("#_save").click(function() {
@@ -28,8 +30,7 @@
 				success : function(data){
 					if (!data.success) {
 						$.messager.alert('提示信息', data.errors, 'error');
-					} else {
-						resetForm('infoForm');
+					} else {						
 						$("#_back").click();
 					}
 				}
@@ -41,17 +42,18 @@
 	$("#_reset").click(function() {
 		$('#cust_indu').combobox('clear');		
 		$('#cust_sys_comp').combobox('clear');
-		$('#cust_sys_user').combobox('clear');
-		$('#cust_sys_prim_user').combobox('clear');
+		//$('#cust_sys_user').combobox('clear');
+		//$('#cust_sys_prim_user').combobox('clear');
 		resetForm('infoForm');
-	});	
+	});		
 	
 	$('#cust_indu').combobox({
 		url:'getCustIndu.action?induId='+$('#induId').val()				
 	});		
 	
+	/**
 	$('#cust_sys_comp').combobox({
-		url:'getSysComp.action',	
+		url:'getSysComp.action',		
 		onChange:function(rec){
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
 		 	$('#cust_sys_user').combobox({
@@ -67,7 +69,7 @@
 		 		url:'getSysCompUserByUserIds?sysUserIds='+_sysUserIds
 		 	}).combobox('clear');
 	    }
-	});	
+	});	**/
 	//for add end
 	
 	//for search begin
@@ -75,6 +77,7 @@
 		url:'getCustIndu.action?induId='+$('#induId').val()				
 	});	
 	
+	/**
 	$('#cust_sys_comp_search').combobox({
 		url:'getSysComp.action',	
 		onChange:function(rec){
@@ -83,12 +86,12 @@
 		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
 		 	}).combobox('clear');
 		}
-	});	
+	});	**/
 	
 	$("#_reset_search").click(function() {
 		$('#cust_indu_search').combobox('clear');		
 		$('#cust_sys_comp_search').combobox('clear');
-		$('#cust_sys_user_search').combobox('clear');
+		//$('#cust_sys_user_search').combobox('clear');
 		resetForm('searchForm');
 	});	
 	//for search end
@@ -128,6 +131,46 @@
 			</tr>
 			<tr height="30px">
 				<td nowrap="nowrap" align="center">
+					所属公司:
+				</td>
+				<td colspan="3">
+					<input id="cust_sys_comp" class="easyui-combobox"
+						name="custSysCompIds" required="true" url="getSysComp.action"
+						valueField="id" textField="companyName" multiple="true"
+						editable="false" panelHeight="auto" style="width: 400px;">
+				</td>
+				<td nowrap="nowrap" align="center">
+					电话:
+				</td>
+				<td>
+					<input type="text" name="cust.phone" class="easyui-validatebox"
+						required="true" validType="phone" maxlength="40">
+				</td>
+			</tr>
+			<tr height="30px">
+				<td nowrap="nowrap" align="center">
+					邮箱:
+				</td>
+				<td>
+					<input type="text" name="cust.email" maxlength="40"
+						class="easyui-validatebox" validType="email">
+				</td>
+				<td nowrap="nowrap" align="center">
+					传真:
+				</td>
+				<td>
+					<input type="text" name="cust.fax" maxlength="40">
+				</td>
+				<td nowrap="nowrap" align="center">
+					网站:
+				</td>
+				<td>
+					<input type="text" name="cust.website" class="easyui-validatebox"
+						validType="url" maxlength="50">
+				</td>
+			</tr>
+			<tr height="30px">
+				<td nowrap="nowrap" align="center">
 					国家:
 				</td>
 				<td>
@@ -162,60 +205,6 @@
 						validType="postcode" maxlength="10">
 				</td>
 			</tr>
-			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					所属公司:
-				</td>
-				<td colspan="3">
-					<input id="cust_sys_comp" class="easyui-combobox"
-						name="custSysCompIds" required="true" url="" valueField="id"
-						textField="companyName" multiple="true" editable="false"
-						panelHeight="auto" style="width: 400px;">
-				</td>
-				<td nowrap="nowrap" align="center">
-					电话:
-				</td>
-				<td>
-					<input type="text" name="cust.phone" class="easyui-validatebox"
-						required="true" validType="phone" maxlength="40">
-				</td>
-
-			</tr>
-			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					负责人:
-				</td>
-				<td colspan="3">
-					<input id="cust_sys_user" class="easyui-combobox"
-						name="custSysUserIds" required="true" url="" valueField="id"
-						textField="name" multiple="true" editable="false"
-						panelHeight="auto" style="width: 400px;">
-				</td>
-				<td nowrap="nowrap" align="center">
-					传真:
-				</td>
-				<td>
-					<input type="text" name="cust.fax" maxlength="40">
-				</td>
-			</tr>
-			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					主要负责人:
-				</td>
-				<td colspan="3">
-					<input id="cust_sys_prim_user" class="easyui-combobox"
-						name="custSysUserPrimIds" url="" valueField="id" textField="name"
-						multiple="true" editable="false" panelHeight="auto"
-						style="width: 400px;">
-				</td>
-				<td nowrap="nowrap" align="center">
-					网站:
-				</td>
-				<td>
-					<input type="text" name="cust.website" class="easyui-validatebox"
-						validType="url" maxlength="50">
-				</td>
-			</tr>
 			<tr height="30px" valign="top">
 				<td nowrap="nowrap" align="center">
 					简介:
@@ -225,12 +214,8 @@
 						class="easyui-validatebox" validType="length[0,500]"> 
 					</textarea>
 				</td>
-				<td nowrap="nowrap" align="center">
-					邮箱:
-				</td>
-				<td>
-					<input type="text" name="cust.email" maxlength="40"
-						class="easyui-validatebox" validType="email">
+				<td colspan="2" align="center">
+					&nbsp;
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
@@ -268,46 +253,38 @@
 						客户名称:
 					</td>
 					<td width="20%">
-						<input type="text" name="custSearch.custName" class="easyui-validatebox"
-							validType="length[1,50]">
+						<input type="text" name="custSearch.custName"
+							class="easyui-validatebox" validType="length[1,50]">
 					</td>
-					<td nowrap="nowrap" align="center">
-						所属公司:
-					</td>
-					<td colspan="3">
-						<input id="cust_sys_comp_search" class="easyui-combobox"
-							name="custSysCompIds" url="" valueField="id"
-							textField="companyName" multiple="true" editable="false"
-							panelHeight="auto" style="width: 400px;">
-					</td>
-				</tr>
-				<tr height="30px">
 					<td nowrap="nowrap" align="center" width="10%">
 						客户编码:
 					</td>
 					<td width="20%">
 						<input type="text" name="custSearch.custCode" maxlength="20">
 					</td>
-					<td nowrap="nowrap" align="center">
-						负责人:
-					</td>
-					<td colspan="3">
-						<input id="cust_sys_user_search" class="easyui-combobox"
-							name="custSysUserIds" url="" valueField="id" textField="name"
-							multiple="true" editable="false" panelHeight="auto"
-							style="width: 400px;">
-					</td>
-				</tr>
-				<tr height="30px">
 					<td nowrap="nowrap" align="center" width="10%">
 						行业:
 					</td>
 					<td width="20%">
 						<input id="cust_indu_search" class="easyui-combobox"
-							name="custSearch.industryId" url="" valueField="id" textField="name"
-							multiple="false" editable="false" panelHeight="auto"
-							style="width: 135px;">
+							name="custSearch.industryId" url="" valueField="id"
+							textField="name" multiple="false" editable="false"
+							panelHeight="auto" style="width: 135px;">
 					</td>
+				</tr>
+				<tr height="30px">
+					<td nowrap="nowrap" align="center">
+						所属公司:
+					</td>
+					<td colspan="3">
+						<input id="cust_sys_comp_search" class="easyui-combobox"
+							name="custSysCompIds" url="getSysComp.action" valueField="id"
+							textField="companyName" multiple="true" editable="false"
+							panelHeight="auto" style="width: 400px;">
+					</td>
+				</tr>
+				<tr height="30px">
+
 					<td nowrap="nowrap" align="center">
 						地址:
 					</td>

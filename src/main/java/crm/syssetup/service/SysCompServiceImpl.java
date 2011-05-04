@@ -40,7 +40,7 @@ public class SysCompServiceImpl extends BaseServiceImpl implements SysCompServic
         sb.append(" from SysCompany where 1=1 ");
         if (null != map.get("companyName")) {
             sb.append(" and companyName like :companyName ");
-            map.put("companyName", "'%" + map.get("companyName") + "%'");
+            map.put("companyName", "%" + map.get("companyName") + "%");
         }
         if (null != map.get("status")) {
             sb.append(" and status = :status ");

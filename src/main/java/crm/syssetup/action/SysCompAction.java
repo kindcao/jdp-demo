@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,17 +33,26 @@ public class SysCompAction extends BaseAction {
 
     private SysCompany sysComp;
 
+    private String companyName;
+
+    private String status;
+
     public String showCompList() throws Exception {
+        companyName = "";
+        status = "";
         return "syscomp.list";
     }
 
     public String getCompList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
-        if (null != sysComp) {
-            map.put("companyName", sysComp.getCompanyName());
-            map.put("status", sysComp.getStatus());
+        if (StringUtils.isNotBlank(companyName)) {
+            map.put("companyName", companyName);
         }
+        if (StringUtils.isNotBlank(status)) {
+            map.put("status", status);
+        }
+
         int totalCount = sysCompService.getTotalCount(map);
         List<?> results = sysCompService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
         jlr.setTotal(totalCount);
@@ -62,6 +72,22 @@ public class SysCompAction extends BaseAction {
 
     public void setSysComp(SysCompany sysComp) {
         this.sysComp = sysComp;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

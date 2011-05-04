@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <script type="text/javascript" defer="defer">
-<!--
+<!--	
 	//for add begin
 	$("#_add").click(function() {
 		document.getElementById('div_info').style.display='inline';
@@ -93,6 +93,67 @@
 		$('#cust_sys_comp_search').combobox('clear');
 		//$('#cust_sys_user_search').combobox('clear');
 		resetForm('searchForm');
+	});	
+	
+	$("#_search").click(function() {		
+		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
+		  queryParams.companyName = $("#companyName").val();
+		  queryParams.status = $('#status').combobox('getValue'); 
+		  reloadDatagrid('grid-datalist');
+	});	
+		
+	$(document).ready(function() {		
+		var frozenColumns = [[{
+					field : 'ck',
+					checkbox : true
+				}, {
+					field : 'companyName',
+					title : '公司名称',
+					width : 200,
+					sortable : true,			
+					formatter : function(value, rec) {
+						return "<a href='javascript:void(0);' onclick='editComp(" + rec.id+ ");'>" + value + "</a>";
+					}
+				}]];
+		var columns = [[{
+		    field : 'type',
+			title : '公司类型',
+			width : 100,
+			formatter : function(value, rec) {				
+				if(value=='R'){
+					value='融聚公司';
+				}else{
+					value='其它公司';
+				}
+				return value;
+			}
+		}, {
+			field : 'status',
+			title : '公司状态',
+			width : 100,
+			formatter : function(value, rec) {
+				if(value=='A'){
+					value='正常';
+				}else{
+					value='禁用';
+				}
+				return value;
+			}
+		}, {
+			field : 'logo',
+			title : '公司Logo图URI',
+			width : 250,
+			formatter : function(value, rec) {				
+				return "<a href='#' onclick=viewLogo('"+value+"')>" + value + "</a>";			
+			}
+		}, {
+			field : 'descript',
+			title : '备注',
+			width : 250
+		}]];
+			
+		//		
+		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);			
 	});	
 	//for search end
 			
@@ -312,7 +373,6 @@
 	</div>
 	<div align="left">
 		<table id="grid-datalist"></table>
-		ff
 	</div>
 </div>
 

@@ -38,7 +38,7 @@
 		style="background-color: #A4BED4;" align="left" width="100%"
 		height="28px;">
 		<tr valign="middle">
-			<td style="width: 196px; border: 1px solid white;" nowrap="nowrap">
+			<td style="width: 198px; border: 1px solid white;" nowrap="nowrap">
 				<div style="margin: 0 10px 0 10px;" id="labtime"></div>
 			</td>
 			<td style="border: 1px solid white;" nowrap="nowrap">

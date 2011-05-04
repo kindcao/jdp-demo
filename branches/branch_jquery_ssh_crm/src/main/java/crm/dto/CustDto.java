@@ -4,7 +4,6 @@ import java.util.Set;
 
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
-import crm.model.CustomerSysUserRel;
 
 /**
  * 
@@ -18,7 +17,7 @@ public class CustDto {
 
     private Set<CustomerSysCompanyRel> custSysCompRels;
 
-    private Set<CustomerSysUserRel> custSysUserRels;
+    // private Set<CustomerSysUserRel> custSysUserRels;
 
     public Customer getCustObj() {
         return custObj;
@@ -36,12 +35,12 @@ public class CustDto {
         this.custSysCompRels = custSysCompRels;
     }
 
-    public Set<CustomerSysUserRel> getCustSysUserRels() {
-        return custSysUserRels;
-    }
-
-    public void setCustSysUserRels(Set<CustomerSysUserRel> custSysUserRels) {
-        this.custSysUserRels = custSysUserRels;
-    }
+    // public Set<CustomerSysUserRel> getCustSysUserRels() {
+    // return custSysUserRels;
+    // }
+    //
+    // public void setCustSysUserRels(Set<CustomerSysUserRel> custSysUserRels) {
+    // this.custSysUserRels = custSysUserRels;
+    // }
 
 }

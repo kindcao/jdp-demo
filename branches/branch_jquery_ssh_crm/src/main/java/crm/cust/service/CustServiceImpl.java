@@ -12,7 +12,6 @@ import crm.base.service.BaseServiceImpl;
 import crm.dto.CustDto;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
-import crm.model.CustomerSysUserRel;
 
 /**
  * @author Kind Cao
@@ -41,16 +40,18 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
                 log.warn("custSysCompRels is null");
             }
             // set customer id and save CustomerSysUserRel
-            Set<CustomerSysUserRel> custSysUserRels = custDto.getCustSysUserRels();
-            if (null != custSysUserRels) {
-                for (Iterator<CustomerSysUserRel> iterator = custSysUserRels.iterator(); iterator.hasNext();) {
-                    CustomerSysUserRel ele = (CustomerSysUserRel) iterator.next();
-                    ele.getId().setCustomerId(custObj.getId());
-                    super.saveOrUpdate(ele);
-                }
-            } else {
-                log.warn("custSysUserRels is null");
-            }
+            // Set<CustomerSysUserRel> custSysUserRels =
+            // custDto.getCustSysUserRels();
+            // if (null != custSysUserRels) {
+            // for (Iterator<CustomerSysUserRel> iterator =
+            // custSysUserRels.iterator(); iterator.hasNext();) {
+            // CustomerSysUserRel ele = (CustomerSysUserRel) iterator.next();
+            // ele.getId().setCustomerId(custObj.getId());
+            // super.saveOrUpdate(ele);
+            // }
+            // } else {
+            // log.warn("custSysUserRels is null");
+            // }
         } else {
             log.error("object not instanceof CustDto,object type :" + object.getClass().getSimpleName());
         }

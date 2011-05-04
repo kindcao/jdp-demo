@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +38,9 @@ public class CustAction extends BaseAction {
 
     private String custSysCompIds = "";
 
-    private String custSysUserIds = "";
-
-    private String custSysUserPrimIds = "";
+    // private String custSysUserIds = "";
+    //
+    // private String custSysUserPrimIds = "";
 
     private Customer cust;
 
@@ -72,9 +73,12 @@ public class CustAction extends BaseAction {
     public String saveCustInfo() throws Exception {
         JsonValidateResult jvr = new JsonValidateResult();
         CustDto custDto = new CustDto();
-        cust.setDeleteFlag(Constants.STATUS_N);
-        cust.setCreatedBy(getCurrSysCompUser().getId());
-        cust.setCreatedTime(getCurrDate());
+        if (StringUtils.isBlank(getActionFlag())) {
+            cust.setId(null);
+            cust.setDeleteFlag(Constants.STATUS_N);
+            cust.setCreatedBy(getCurrSysCompUser().getId());
+            cust.setCreatedTime(getCurrDate());
+        }
         cust.setLastUpdatedBy(cust.getCreatedBy());
         cust.setLastUpdatedTime(cust.getCreatedTime());
         custDto.setCustObj(cust);
@@ -94,24 +98,27 @@ public class CustAction extends BaseAction {
             jvr.getErrors().concat("custSysCompRelIds is null \n");
         }
         //
-        Integer[] custSysUserRelIds = splitIdsStrByRegex(custSysUserIds);
-        if (null != custSysUserRelIds) {
-            Set<CustomerSysUserRel> custSysUserRels = new HashSet<CustomerSysUserRel>();
-            for (int i = 0; i < custSysUserRelIds.length; i++) {
-                CustomerSysUserRel obj = new CustomerSysUserRel();
-                obj.setId(new CustomerSysUserRelId());
-                obj.getId().setSysCompanyUserId(custSysUserRelIds[i]);
-                //
-                if (custSysUserPrimIds.contains(obj.getId().getSysCompanyUserId().toString())) {
-                    obj.setIsPrimary(Constants.STATUS_Y);
-                }
-                custSysUserRels.add(obj);
-            }
-            custDto.setCustSysUserRels(custSysUserRels);
-        } else {
-            log.error("custSysUserRelIds is null");
-            jvr.getErrors().concat("custSysUserRelIds is null \n");
-        }
+        // Integer[] custSysUserRelIds = splitIdsStrByRegex(custSysUserIds);
+        // if (null != custSysUserRelIds) {
+        // Set<CustomerSysUserRel> custSysUserRels = new
+        // HashSet<CustomerSysUserRel>();
+        // for (int i = 0; i < custSysUserRelIds.length; i++) {
+        // CustomerSysUserRel obj = new CustomerSysUserRel();
+        // obj.setId(new CustomerSysUserRelId());
+        // obj.getId().setSysCompanyUserId(custSysUserRelIds[i]);
+        // //
+        // if
+        // (custSysUserPrimIds.contains(obj.getId().getSysCompanyUserId().toString()))
+        // {
+        // obj.setIsPrimary(Constants.STATUS_Y);
+        // }
+        // custSysUserRels.add(obj);
+        // }
+        // custDto.setCustSysUserRels(custSysUserRels);
+        // } else {
+        // log.error("custSysUserRelIds is null");
+        // jvr.getErrors().concat("custSysUserRelIds is null \n");
+        // }
         //
         if (jvr.getErrors().length() == 0) {
             custService.saveOrUpdate(custDto);
@@ -129,7 +136,7 @@ public class CustAction extends BaseAction {
         map.put("industryId", custSearch.getIndustryId());
         map.put("address", custSearch.getAddress());
         map.put("custSysCompIds", custSysCompIds);
-        map.put("custSysUserIds", custSysUserIds);
+        // map.put("custSysUserIds", custSysUserIds);
 
         int totalCount = custService.getTotalCount(map);
         List<?> custList = custService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
@@ -170,22 +177,6 @@ public class CustAction extends BaseAction {
 
     public void setCustSysCompIds(String custSysCompIds) {
         this.custSysCompIds = custSysCompIds;
-    }
-
-    public String getCustSysUserIds() {
-        return custSysUserIds;
-    }
-
-    public void setCustSysUserIds(String custSysUserIds) {
-        this.custSysUserIds = custSysUserIds;
-    }
-
-    public String getCustSysUserPrimIds() {
-        return custSysUserPrimIds;
-    }
-
-    public void setCustSysUserPrimIds(String custSysUserPrimIds) {
-        this.custSysUserPrimIds = custSysUserPrimIds;
     }
 
     public Customer getCustSearch() {

@@ -94,9 +94,9 @@ public class BaseDaoImpl implements BaseDao {
     }
 
     @Override
-    public void deleteAll(Class clazz, Collection ids) {
+    public void deleteAll(Object object, Collection ids) {
         try {
-            getHibernateTemplate().deleteAll(findByIds(clazz, ids));
+            getHibernateTemplate().deleteAll(findByIds(object.getClass(), ids));
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw e;
@@ -165,6 +165,16 @@ public class BaseDaoImpl implements BaseDao {
             return ((Long) result).intValue();
         }
         return 0;
+    }
+
+    @Override
+    public void saveOrUpdateAll(Collection entities) {
+        try {
+            getHibernateTemplate().saveOrUpdateAll(entities);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
+            throw e;
+        }
     }
 
     // private void setQueryParasValue(Query query, final Map<String, Object>

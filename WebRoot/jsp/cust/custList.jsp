@@ -32,6 +32,7 @@
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {						
 						$("#_back").click();
+						reloadDatagrid('grid-datalist');
 					}
 				}
 			};
@@ -72,6 +73,12 @@
 	});	**/
 	//for add end
 	
+	//for delete begin
+	$("#_delete").click(function() {
+		deleteRecord('grid-datalist','deleteCust.action');
+	});
+	//fore delte end
+	
 	//for search begin
 	$('#cust_indu_search').combobox({
 		url:'getCustIndu.action?induId='+$('#induId').val()				
@@ -97,66 +104,62 @@
 	
 	$("#_search").click(function() {		
 		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
-		  queryParams.companyName = $("#companyName").val();
-		  queryParams.status = $('#status').combobox('getValue'); 
+		  queryParams.custName = $("#custName").val();
+		  queryParams.custCode = $("#custCode").val();
+		  queryParams.address = $("#address").val();
+		  queryParams.industryId = $("#cust_indu_search").combobox('getValue');
+		  queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValue');		  
 		  reloadDatagrid('grid-datalist');
 	});	
 		
+	//	
 	$(document).ready(function() {		
 		var frozenColumns = [[{
 					field : 'ck',
 					checkbox : true
 				}, {
-					field : 'companyName',
-					title : '公司名称',
+					field : 'custName',
+					title : '客户名称',
 					width : 200,
 					sortable : true,			
 					formatter : function(value, rec) {
-						return "<a href='javascript:void(0);' onclick='editComp(" + rec.id+ ");'>" + value + "</a>";
+						return "<a href='#' onclick='editComp(" + rec.customerId+ ");'>" + value + "</a>";
 					}
 				}]];
 		var columns = [[{
-		    field : 'type',
-			title : '公司类型',
-			width : 100,
-			formatter : function(value, rec) {				
-				if(value=='R'){
-					value='融聚公司';
-				}else{
-					value='其它公司';
-				}
-				return value;
-			}
+		    field : 'custCode',
+			title : '公司编码',
+			width : 100
+		},{
+			field : 'companyName',
+			title : '所属公司',
+			width : 100
+		},{
+			field : 'industryName',
+			title : '行业',
+			width : 100
 		}, {
-			field : 'status',
-			title : '公司状态',
-			width : 100,
-			formatter : function(value, rec) {
-				if(value=='A'){
-					value='正常';
-				}else{
-					value='禁用';
-				}
-				return value;
-			}
+			field : 'phone',
+			title : '电话',
+			width : 150
 		}, {
-			field : 'logo',
-			title : '公司Logo图URI',
-			width : 250,
-			formatter : function(value, rec) {				
-				return "<a href='#' onclick=viewLogo('"+value+"')>" + value + "</a>";			
-			}
+			field : 'address',
+			title : '联系地址',
+			width : 200
 		}, {
-			field : 'descript',
-			title : '备注',
-			width : 250
+			field : 'contactName',
+			title : '联系人',
+			width : 150
 		}]];
 			
 		//		
 		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);			
 	});	
 	//for search end
-			
+	
+    function editComp(cId){    	
+		window.location.href='showCustInfo.action?cust.id='+cId;
+	}	
 //-->
 </script>
 
@@ -314,23 +317,23 @@
 						客户名称:
 					</td>
 					<td width="20%">
-						<input type="text" name="custSearch.custName"
+						<input type="text" id="custName" name="custName"
 							class="easyui-validatebox" validType="length[1,50]">
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
 						客户编码:
 					</td>
 					<td width="20%">
-						<input type="text" name="custSearch.custCode" maxlength="20">
+						<input type="text" id="custCode" name="custCode" maxlength="20">
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
 						行业:
 					</td>
 					<td width="20%">
 						<input id="cust_indu_search" class="easyui-combobox"
-							name="custSearch.industryId" url="" valueField="id"
-							textField="name" multiple="false" editable="false"
-							panelHeight="auto" style="width: 135px;">
+							name="industryId" url="" valueField="id" textField="name"
+							multiple="false" editable="false" panelHeight="auto"
+							style="width: 135px;">
 					</td>
 				</tr>
 				<tr height="30px">
@@ -350,7 +353,7 @@
 						地址:
 					</td>
 					<td colspan="3">
-						<input type="text" name="custSearch.address" maxlength="200"
+						<input type="text" id="address" name="address" maxlength="200"
 							style="width: 402px;" />
 					</td>
 				</tr>

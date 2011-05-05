@@ -44,7 +44,7 @@ function deleteRecord(datagridIdStr, url) {
 						}
 						//							
 						$.ajax({
-									url : url + '?id=' + ids.join(','),
+									url : url + '?ids=' + ids.join(','),
 									dataType : 'json',
 									success : function(data) {
 										if (!data.success) {

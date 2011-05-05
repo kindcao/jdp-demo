@@ -13,17 +13,19 @@ public interface BaseDao {
 
     void saveOrUpdate(Object object);
 
+    void saveOrUpdateAll(Collection entities);
+
     void deleteAll(Collection entities);
 
-    void deleteAll(Class clazz, Collection ids);
+    void deleteAll(Object object, Collection ids);
 
     int getTotalCount(String hql, Map<String, Object> map);
 
     Object getObject(Class clazz, Serializable serializable);
 
-    List<?> loadAll(Class entityClass);
+    List<?> loadAll(Class clazz);
 
-    List<?> findByExample(Object exampleEntity);
+    List<?> findByExample(Object object);
 
     List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map<String, Object> map);
 

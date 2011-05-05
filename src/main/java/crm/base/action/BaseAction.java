@@ -20,6 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import crm.common.Constants;
 import crm.model.SysCompanyUser;
+import crm.util.Utils;
 
 public class BaseAction extends ActionSupport implements SessionAware {
 
@@ -36,6 +37,8 @@ public class BaseAction extends ActionSupport implements SessionAware {
     private String actionFlag;
 
     private String forward;
+
+    private String ids;
 
     protected void responseJsonData(Object obj) {
         responseJsonData(obj, new JsonConfig());
@@ -145,4 +148,11 @@ public class BaseAction extends ActionSupport implements SessionAware {
         this.forward = forward;
     }
 
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = Utils.fmtAndSortIds(ids);
+    }
 }

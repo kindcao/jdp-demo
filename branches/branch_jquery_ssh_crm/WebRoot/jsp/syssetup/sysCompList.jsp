@@ -45,10 +45,8 @@
 			field : 'logo',
 			title : '公司Logo图URI',
 			width : 250,
-			formatter : function(value, rec) {
-				if(value)(				
-					return "<a href='#' onclick=viewLogo('"+value+"')>" + value + "</a>";
-				}			
+			formatter : function(value, rec) {					
+				return "<a href='#' onclick=viewLogo('"+value+"')>" + value + "</a>";							
 			}
 		}, {
 			field : 'descript',

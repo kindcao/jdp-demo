@@ -7,28 +7,28 @@ import java.util.Map;
 
 public interface BaseDao {
 
-    void removeObject(Class clazz, Serializable serializable);
+    void removeObject(Class clazz, Serializable serializable) throws Exception;
 
-    void merge(Object object);
+    void merge(Object object) throws Exception;
 
-    void saveOrUpdate(Object object);
+    void saveOrUpdate(Object object) throws Exception;
 
-    void saveOrUpdateAll(Collection entities);
+    void saveOrUpdateAll(Collection entities) throws Exception;
 
-    void deleteAll(Collection entities);
+    void deleteAll(Collection entities) throws Exception;
 
-    void deleteAll(Object object, Collection ids);
+    void deleteAll(Object object, Collection ids) throws Exception;
 
-    int getTotalCount(String hql, Map<String, Object> map);
+    int getTotalCount(String hql, Map<String, Object> map) throws Exception;
 
-    Object getObject(Class clazz, Serializable serializable);
+    Object getObject(Class clazz, Serializable serializable) throws Exception;
 
-    List<?> loadAll(Class clazz);
+    List<?> loadAll(Class clazz) throws Exception;
 
-    List<?> findByExample(Object object);
+    List<?> findByExample(Object object) throws Exception;
 
-    List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map<String, Object> map);
+    List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map<String, Object> map) throws Exception;
 
-    List<?> findByIds(Class clazz, Collection ids);
+    List<?> findByIds(Class clazz, Collection ids) throws Exception;
 
 }

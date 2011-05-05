@@ -7,68 +7,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import crm.base.dao.BaseDao;
 
 public class BaseServiceImpl implements BaseService {
 
-    private final Logger log = LoggerFactory.getLogger(BaseServiceImpl.class);
-
     private BaseDao baseDaoImpl;
 
-    public Object getObject(Class class1, Serializable serializable) {
-        return baseDaoImpl.getObject(class1, serializable);
-    }
-
-    @Override
-    public void saveOrUpdate(Object object) {
-        baseDaoImpl.saveOrUpdate(object);
-    }
-
-    @Override
-    public void removeObject(Class clazz, Serializable serializable) {
-        baseDaoImpl.removeObject(clazz, serializable);
-    }
-
-    @Override
-    public void deleteAll(Object object, Collection ids) {
-        baseDaoImpl.deleteAll(object, ids);
-    }
-
-    @Override
-    public void deleteAll(Collection entities) {
-        baseDaoImpl.deleteAll(entities);
-    }
-
-    @Override
-    public List<?> findByExample(Object exampleEntity) {
-        return baseDaoImpl.findByExample(exampleEntity);
-    }
-
-    @Override
-    public List<?> loadAll(Class entityClass) {
-        return baseDaoImpl.loadAll(entityClass);
-    }
-
-    @Override
-    public List<?> findByIds(Class clazz, Collection ids) {
-        return baseDaoImpl.findByIds(clazz, ids);
-    }
-
-    @Override
-    public int getTotalCount(Map<String, Object> map) {
-        return 0;
-    }
-
-    @Override
-    public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) {
-        return null;
-    }
-
     @Resource
-    public void setBaseDaoImpl(BaseDao baseDaoImpl) {
+    public void setBaseDaoImpl(BaseDao baseDaoImpl) throws Exception {
         this.baseDaoImpl = baseDaoImpl;
     }
 
@@ -76,14 +22,62 @@ public class BaseServiceImpl implements BaseService {
         return baseDaoImpl;
     }
 
+    public Object getObject(Class class1, Serializable serializable) throws Exception {
+        return baseDaoImpl.getObject(class1, serializable);
+    }
+
     @Override
-    public void merge(Object object) {
-        // TODO Auto-generated method stub
+    public void saveOrUpdate(Object object) throws Exception {
+        baseDaoImpl.saveOrUpdate(object);
+    }
+
+    @Override
+    public void removeObject(Class clazz, Serializable serializable) throws Exception {
+        baseDaoImpl.removeObject(clazz, serializable);
+    }
+
+    @Override
+    public void deleteAll(Object object, Collection ids) throws Exception {
+        baseDaoImpl.deleteAll(object, ids);
+    }
+
+    @Override
+    public void deleteAll(Collection entities) throws Exception {
+        baseDaoImpl.deleteAll(entities);
+    }
+
+    @Override
+    public List<?> findByExample(Object exampleEntity) throws Exception {
+        return baseDaoImpl.findByExample(exampleEntity);
+    }
+
+    @Override
+    public List<?> loadAll(Class entityClass) throws Exception {
+        return baseDaoImpl.loadAll(entityClass);
+    }
+
+    @Override
+    public List<?> findByIds(Class clazz, Collection ids) throws Exception {
+        return baseDaoImpl.findByIds(clazz, ids);
+    }
+
+    @Override
+    public int getTotalCount(Map<String, Object> map) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void merge(Object object) throws Exception {
 
     }
 
     @Override
-    public void saveOrUpdateAll(Collection entities) {
+    public void saveOrUpdateAll(Collection entities) throws Exception {
         baseDaoImpl.saveOrUpdateAll(entities);
     }
 

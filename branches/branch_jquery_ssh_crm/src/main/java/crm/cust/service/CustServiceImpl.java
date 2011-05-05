@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
-import crm.common.Constants;
 import crm.dto.CustDto;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
@@ -24,7 +23,7 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
     private final Logger log = LoggerFactory.getLogger(CustServiceImpl.class);
 
     @Override
-    public void saveOrUpdate(Object object) {
+    public void saveOrUpdate(Object object) throws Exception {
         if (object instanceof CustDto) {
             CustDto custDto = (CustDto) object;
             Customer custObj = custDto.getCustObj();
@@ -60,18 +59,18 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
     }
 
     @Override
-    public int getTotalCount(Map<String, Object> map) {
+    public int getTotalCount(Map<String, Object> map) throws Exception {
         return getBaseDaoImpl().getTotalCount(getQueryHQL(map), map);
     }
 
     @Override
-    public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) {
+    public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
         String hql = getQueryHQL(map) + " order by cv.customerId desc ";
         List<?> result = getBaseDaoImpl().findPageByQuery(pageNo, pageSize, hql, map);
         return result;
     }
 
-    private String getQueryHQL(Map<String, Object> map) {
+    private String getQueryHQL(Map<String, Object> map) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" from CustomerView cv where 1=1 ");
 
@@ -108,7 +107,7 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
     }
 
     @Override
-    public void deleteAll(Object object, Collection ids) {
+    public void deleteAll(Object object, Collection ids) throws Exception {
         if (object instanceof Customer) {
             if (null != ids && ids.size() > 0) {
                 List<?> list = getBaseDaoImpl().findByIds(object.getClass(), ids);

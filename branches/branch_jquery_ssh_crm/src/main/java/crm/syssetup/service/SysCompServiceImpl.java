@@ -25,12 +25,12 @@ public class SysCompServiceImpl extends BaseServiceImpl implements SysCompServic
     }
 
     @Override
-    public int getTotalCount(Map<String, Object> map) {
+    public int getTotalCount(Map<String, Object> map) throws Exception {
         return sysCompDao.getTotalCount(getQueryHQL(map), map);
     }
 
     @Override
-    public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) {
+    public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
         String hql = getQueryHQL(map) + " order by id desc";
         return sysCompDao.findPageByQuery(pageNo, pageSize, hql, map);
     }

@@ -39,6 +39,7 @@
 			<result name="cust.broker.info" type="tiles">cust.broker.info</result>
 		</action>
 		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
+		<action name="deleteCust" class="custAction" method="deleteCust" />
 		<!-- syssetup  -->
 		<action name="showCompList" class="sysCompAction" method="showCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>

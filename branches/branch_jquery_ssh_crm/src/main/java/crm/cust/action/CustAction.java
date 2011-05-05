@@ -21,6 +21,7 @@ import crm.json.JsonValidateResult;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;
+import crm.util.Utils;
 
 /**
  * @author Kind Cao
@@ -40,8 +41,6 @@ public class CustAction extends BaseAction {
     //
     // private String custSysUserPrimIds = "";
 
-    private Customer cust;
-
     private String custName;
 
     private String custCode;
@@ -49,6 +48,8 @@ public class CustAction extends BaseAction {
     private Integer industryId;
 
     private String address;
+
+    private Customer cust;
 
     private CustService custService;
 
@@ -129,6 +130,7 @@ public class CustAction extends BaseAction {
             jvr.setSuccess(true);
         }
         responseJsonData(jvr);
+        reset();
         return NONE;
     }
 
@@ -141,7 +143,7 @@ public class CustAction extends BaseAction {
         if (StringUtils.isNotBlank(custCode)) {
             map.put("custCode", custCode);
         }
-        if (industryId > 0) {
+        if (null != industryId && industryId > 0) {
             map.put("industryId", industryId);
         }
         if (StringUtils.isNotBlank(address)) {
@@ -158,6 +160,26 @@ public class CustAction extends BaseAction {
         jlr.setRows(custList);
         responseJsonData(jlr);
         return NONE;
+    }
+
+    public String deleteCust() throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
+        if (StringUtils.isNotBlank(getIds())) {
+            Customer _custObj = new Customer();
+            _custObj.setDeletedBy(getCurrSysCompUser().getId());
+            _custObj.setDeletedTime(getCurrDate());
+            _custObj.setDeleteFlag(Constants.STATUS_Y);
+            custService.deleteAll(_custObj, Utils.getIds(getIds()));
+            jvr.setSuccess(true);
+        } else {
+            jvr.setErrors("delete ids is null");
+        }
+        responseJsonData(jvr);
+        return NONE;
+    }
+
+    private void reset() {
+        this.custSysCompIds = "";
     }
 
     public int getInduId() {
@@ -190,7 +212,7 @@ public class CustAction extends BaseAction {
     }
 
     public void setCustSysCompIds(String custSysCompIds) {
-        this.custSysCompIds = custSysCompIds;
+        this.custSysCompIds = Utils.fmtAndSortIds(custSysCompIds);
     }
 
     public String getCustName() {

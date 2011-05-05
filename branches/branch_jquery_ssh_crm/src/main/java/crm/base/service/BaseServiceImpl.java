@@ -33,8 +33,8 @@ public class BaseServiceImpl implements BaseService {
     }
 
     @Override
-    public void deleteAll(Class clazz, Collection ids) {
-        baseDaoImpl.deleteAll(clazz, ids);
+    public void deleteAll(Object object, Collection ids) {
+        baseDaoImpl.deleteAll(object, ids);
     }
 
     @Override
@@ -74,6 +74,17 @@ public class BaseServiceImpl implements BaseService {
 
     public BaseDao getBaseDaoImpl() {
         return baseDaoImpl;
+    }
+
+    @Override
+    public void merge(Object object) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void saveOrUpdateAll(Collection entities) {
+        baseDaoImpl.saveOrUpdateAll(entities);
     }
 
 }

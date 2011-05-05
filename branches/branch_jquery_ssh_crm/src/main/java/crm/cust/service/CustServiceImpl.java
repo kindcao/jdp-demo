@@ -1,5 +1,6 @@
 package crm.cust.service;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
+import crm.common.Constants;
 import crm.dto.CustDto;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
@@ -64,59 +66,67 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
 
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) {
-        List<?> result = getBaseDaoImpl().findPageByQuery(pageNo, pageSize, getQueryHQL(map), map);
+        String hql = getQueryHQL(map) + " order by cv.customerId desc ";
+        List<?> result = getBaseDaoImpl().findPageByQuery(pageNo, pageSize, hql, map);
         return result;
     }
 
     private String getQueryHQL(Map<String, Object> map) {
         StringBuilder sb = new StringBuilder();
-        // StringBuilder sb2 = new StringBuilder();
-        sb.append(" from Customer cust");
+        sb.append(" from CustomerView cv where 1=1 ");
 
-        // if (null != map.get("custSysCompIds")) {
-        // sb.append(" left outer join CustomerSysCompanyRel cscr on cust.id =
-        // cscr.id.customerId");
-        // sb2.append(" and cscr.id.sysCompanyId in (" +
-        // map.get("custSysCompIds") + ") ");
-        // }
-        //
-        // if (null != map.get("custSysUserIds")) {
-        // sb.append(" left outer join CustomerSysUserRel csur on cust.id =
-        // csur.id.customerId");
-        // sb2.append(" and csur.id.sysCompanyUserId in (" +
-        // map.get("custSysUserIds") + ") ");
-        // }
-
-        sb.append(" where 1=1 ");
         if (null != map.get("custName")) {
-            sb.append(" and cust.custName like :custName ");
+            sb.append(" and cv.custName like :custName ");
             map.put("custName", "%" + map.get("custName") + "%");
         }
 
         if (null != map.get("custCode")) {
             if ("---".equals(map.get("custCode"))) {
-                sb.append(" and cust.custCode is not null ");
+                sb.append(" and cv.custCode is not null  ");
+                sb.append(" and LENGTH(cv.custCode) > 0 ");
             } else {
-                sb.append(" and cust.custCode = :custCode ");
+                sb.append(" and cv.custCode like :custCode ");
+                // sb.append(" and cv.custCode = :custCode ");
+                map.put("custCode", "%" + map.get("custCode") + "%");
             }
         }
 
         if (null != map.get("industryId")) {
-            sb.append(" and cust.industryId = :industryId ");
+            sb.append(" and cv.industryId = :industryId ");
         }
 
         if (null != map.get("address")) {
-            sb.append(" and (cust.country like :address ");
-            sb.append(" or cust.province like :address ");
-            sb.append(" or cust.city like :address ");
-            sb.append(" or cust.address like :address) ");
+            sb.append(" and cv.address like :address ");
             map.put("address", "%" + map.get("address") + "%");
         }
 
-        // if (sb2.length() > 0) {
-        // sb.append(sb2);
-        // }
-        sb.append(" order by cust.id desc ");
+        if (null != map.get("custSysCompIds")) {
+            sb.append(" and cv.sysCompanyId like :custSysCompIds ");
+            map.put("custSysCompIds", "%" + map.get("custSysCompIds") + "%");
+        }
         return sb.toString();
+    }
+
+    @Override
+    public void deleteAll(Object object, Collection ids) {
+        if (object instanceof Customer) {
+            if (null != ids && ids.size() > 0) {
+                List<?> list = getBaseDaoImpl().findByIds(object.getClass(), ids);
+                if (null != list) {
+                    Customer custObj = (Customer) object;
+                    for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+                        Customer ele = (Customer) iterator.next();
+                        ele.setDeletedBy(custObj.getDeletedBy());
+                        ele.setDeletedTime(custObj.getDeletedTime());
+                        ele.setDeleteFlag(custObj.getDeleteFlag());
+                    }
+                    getBaseDaoImpl().saveOrUpdateAll(list);
+                }
+            } else {
+                log.warn("delete ids collection is null");
+            }
+        } else {
+            log.error("object not instanceof Customer,object type :" + object.getClass().getSimpleName());
+        }
     }
 }

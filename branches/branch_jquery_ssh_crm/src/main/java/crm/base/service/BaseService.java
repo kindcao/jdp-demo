@@ -9,21 +9,25 @@ public interface BaseService {
 
     void removeObject(Class clazz, Serializable serializable);
 
-    void saveOrUpdate(Object o);
+    void merge(Object object);
+
+    void saveOrUpdate(Object object);
+
+    void saveOrUpdateAll(Collection entities);
 
     void deleteAll(Collection entities);
 
-    void deleteAll(Class clazz, Collection ids);
+    void deleteAll(Object object, Collection ids);
 
     int getTotalCount(Map<String, Object> map);
 
     Object getObject(Class clazz, Serializable serializable);
 
+    List<?> loadAll(Class clazz);
+
+    List<?> findByExample(Object object);
+
     List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map);
-
-    List<?> findByExample(Object exampleEntity);
-
-    List<?> loadAll(Class entityClass);
 
     List<?> findByIds(Class clazz, Collection ids);
 

@@ -104,12 +104,12 @@
 	
 	$("#_search").click(function() {		
 		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
-		  queryParams.custName = $("#custName").val();
-		  queryParams.custCode = $("#custCode").val();
-		  queryParams.address = $("#address").val();
-		  queryParams.industryId = $("#cust_indu_search").combobox('getValue');
-		  queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValue');		  
-		  reloadDatagrid('grid-datalist');
+		 queryParams.custName = $("#custName").val();
+		 queryParams.custCode = $("#custCode").val();
+		 queryParams.address = $("#address").val();
+		 queryParams.industryId = $("#cust_indu_search").combobox('getValue');
+		 queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValue');
+		 reloadDatagrid('grid-datalist');
 	});	
 		
 	//	

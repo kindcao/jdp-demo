@@ -35,11 +35,23 @@
 		<!-- cust -->
 		<action name="showCustList" class="custAction" method="showCustList">
 			<result name="cust.broker.list" type="tiles">cust.broker.list</result>
+			<result name="cust.bank.list" type="tiles">cust.bank.list</result>
+			<result name="cust.invest.list" type="tiles">cust.invest.list</result>
+			<result name="cust.media.list" type="tiles">cust.media.list</result>
+			<result name="cust.info.list" type="tiles">cust.info.list</result>
+			<result name="cust.listed.list" type="tiles">cust.listed.list</result>
+			<result name="cust.others.list" type="tiles">cust.others.list</result>
 		</action>
-		<action name="getCustList" class="custAction" method="getCustList" />
 		<action name="showCustInfo" class="custAction" method="showCustInfo">
 			<result name="cust.broker.info" type="tiles">cust.broker.info</result>
+			<result name="cust.bank.info" type="tiles">cust.bank.info</result>
+			<result name="cust.invest.info" type="tiles">cust.invest.info</result>
+			<result name="cust.media.info" type="tiles">cust.media.info</result>
+			<result name="cust.info.info" type="tiles">cust.info.info</result>
+			<result name="cust.listed.info" type="tiles">cust.listed.info</result>
+			<result name="cust.others.info" type="tiles">cust.others.info</result>
 		</action>
+		<action name="getCustList" class="custAction" method="getCustList" />
 		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
 		<action name="deleteCust" class="custAction" method="deleteCust" />
 		<!-- syssetup  -->

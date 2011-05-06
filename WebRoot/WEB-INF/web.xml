@@ -35,6 +35,9 @@
 	<listener>
 		<listener-class>crm.listener.SessionListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>crm.listener.InitServletContextListener</listener-class>
+	</listener>
 	<!--listener>
 		<listener-class>
 		org.springframework.security.ui.session.HttpSessionEventPublisher

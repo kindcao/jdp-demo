@@ -41,6 +41,42 @@
 	<definition name="cust.broker.info" extends="cust.info.layout">
 		<put-attribute name="bodyhead" value="券商" />
 	</definition>
+	<definition name="cust.bank.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="银行" />
+	</definition>
+	<definition name="cust.bank.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="银行" />
+	</definition>
+	<definition name="cust.invest.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="投资" />
+	</definition>
+	<definition name="cust.invest.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="投资" />
+	</definition>
+	<definition name="cust.media.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="媒体" />
+	</definition>
+	<definition name="cust.media.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="媒体" />
+	</definition>
+	<definition name="cust.info.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="资讯" />
+	</definition>
+	<definition name="cust.info.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="资讯" />
+	</definition>
+	<definition name="cust.listed.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="上市" />
+	</definition>
+	<definition name="cust.listed.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="上市" />
+	</definition>
+	<definition name="cust.others.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="其他" />
+	</definition>
+	<definition name="cust.others.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="其他" />
+	</definition>
 	<!-- sysuser layout -->
 	<definition name="syscompuser.login" extends="nomenu.layout">
 		<put-attribute name="body" value="/jsp/syssetup/sysCompUserlogin.jsp" />
@@ -55,5 +91,5 @@
 	<definition name="syscompuser.list" extends="syssetup.layout">
 		<put-attribute name="bodyhead" value="系统用户" />
 		<put-attribute name="body" value="/jsp/syssetup/sysCompUserList.jsp" />
-	</definition>	
+	</definition>
 </tiles-definitions>

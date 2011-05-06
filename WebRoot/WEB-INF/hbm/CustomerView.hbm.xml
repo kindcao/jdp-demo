@@ -19,8 +19,14 @@
 		<property name="custCode" type="java.lang.String">
 			<column name="cust_code" length="20" />
 		</property>
+		<property name="phone" type="java.lang.String">
+			<column name="phone" length="40" />
+		</property>
 		<property name="address" type="java.lang.String">
 			<column name="address" length="260" />
+		</property>
+		<property name="superiorIndustryId" type="java.lang.Integer">
+			<column name="superior_industry_id" />
 		</property>
 		<property name="industryId" type="java.lang.Integer">
 			<column name="industry_id" />
@@ -42,9 +48,6 @@
 		</property>
 		<property name="isPrimaryContact" type="java.lang.String">
 			<column name="is_primary_contact" length="341" />
-		</property>
-		<property name="phone" type="java.lang.String">
-			<column name="phone" length="40" />
 		</property>
 	</class>
 </hibernate-mapping>

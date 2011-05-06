@@ -90,6 +90,10 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
             }
         }
 
+        if (null != map.get("superiorIndustryId")) {
+            sb.append(" and cv.superiorIndustryId = :superiorIndustryId ");
+        }
+
         if (null != map.get("industryId")) {
             sb.append(" and cv.industryId = :industryId ");
         }

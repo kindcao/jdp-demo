@@ -19,6 +19,8 @@ public class CustomerView implements java.io.Serializable {
 
     private String address;
 
+    private Integer superiorIndustryId;
+
     private Integer industryId;
 
     private String industryName;
@@ -32,7 +34,7 @@ public class CustomerView implements java.io.Serializable {
     private String contactName;
 
     private String isPrimaryContact;
-    
+
     private String phone;
 
     // Constructors
@@ -219,13 +221,19 @@ public class CustomerView implements java.io.Serializable {
         this.id = id;
     }
 
-    
     public String getPhone() {
         return phone;
     }
 
-    
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Integer getSuperiorIndustryId() {
+        return superiorIndustryId;
+    }
+
+    public void setSuperiorIndustryId(Integer superiorIndustryId) {
+        this.superiorIndustryId = superiorIndustryId;
     }
 }

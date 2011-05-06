@@ -25,15 +25,15 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-	<listener>
-		<listener-class>crm.listener.SessionListener</listener-class>
-	</listener>
 	<!-- spring的监听器，以便在启动时就自动加载spring的配置 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>crm.listener.SessionListener</listener-class>
 	</listener>
 	<!--listener>
 		<listener-class>

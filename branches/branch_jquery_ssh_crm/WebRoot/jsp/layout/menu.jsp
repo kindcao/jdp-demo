@@ -26,22 +26,22 @@
 			<a href="#" onclick="clickMenu('showCustList.action?induId=1');">券商</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">銀行</a>
+			<a href="#" onclick="clickMenu('showCustList.action?induId=2');">银行</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">投资</a>
+			<a href="#" onclick="clickMenu('showCustList.action?induId=3');">投资</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">媒体</a>
+			<a href="#" onclick="clickMenu('showCustList.action?induId=4');">媒体</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">资讯</a>
+			<a href="#" onclick="clickMenu('showCustList.action?induId=5');">资讯</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">上市</a>
+			<a href="#" onclick="clickMenu('showCustList.action?induId=6');">上市</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">其他</a>
+			<a href="#" onclick="clickMenu('showCustList.action?induId=7');">其他</a>
 		</div>
 	</div>
 	<div title="市场工作">

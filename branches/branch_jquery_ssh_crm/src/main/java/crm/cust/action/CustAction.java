@@ -33,7 +33,7 @@ public class CustAction extends BaseAction {
 
     private final Logger log = LoggerFactory.getLogger(CustAction.class);
 
-    private int induId;
+    private Integer induId;
 
     private String custSysCompIds = "";
 
@@ -58,6 +58,24 @@ public class CustAction extends BaseAction {
         case 1: {
             return "cust.broker.list";
         }
+        case 2: {
+            return "cust.bank.list";
+        }
+        case 3: {
+            return "cust.invest.list";
+        }
+        case 4: {
+            return "cust.media.list";
+        }
+        case 5: {
+            return "cust.info.list";
+        }
+        case 6: {
+            return "cust.listed.list";
+        }
+        case 7: {
+            return "cust.others.list";
+        }
         default:
             break;
         }
@@ -68,6 +86,24 @@ public class CustAction extends BaseAction {
         switch (induId) {
         case 1: {
             return "cust.broker.info";
+        }
+        case 2: {
+            return "cust.bank.info";
+        }
+        case 3: {
+            return "cust.invest.info";
+        }
+        case 4: {
+            return "cust.media.info";
+        }
+        case 5: {
+            return "cust.info.info";
+        }
+        case 6: {
+            return "cust.listed.info";
+        }
+        case 7: {
+            return "cust.others.info";
         }
         default:
             break;
@@ -143,6 +179,9 @@ public class CustAction extends BaseAction {
         if (StringUtils.isNotBlank(custCode)) {
             map.put("custCode", custCode);
         }
+        if (null != induId && induId > 0) {
+            map.put("superiorIndustryId", induId);
+        }
         if (null != industryId && industryId > 0) {
             map.put("industryId", industryId);
         }
@@ -152,7 +191,6 @@ public class CustAction extends BaseAction {
         if (StringUtils.isNotBlank(custSysCompIds)) {
             map.put("custSysCompIds", custSysCompIds);
         }
-
         //
         int totalCount = custService.getTotalCount(map);
         List<?> custList = custService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);

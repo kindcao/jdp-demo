@@ -81,7 +81,7 @@
 	
 	//for search begin
 	$('#cust_indu_search').combobox({
-		url:'getCustIndu.action?induId='+$('#induId').val()				
+		url:'getCustIndu.action?induId='+$('#induId').val()			
 	});	
 	
 	/**
@@ -158,7 +158,7 @@
 	//for search end
 	
     function editComp(cId){    	
-		window.location.href='showCustInfo.action?cust.id='+cId;
+		window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
 	}	
 //-->
 </script>

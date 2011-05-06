@@ -51,9 +51,16 @@
 			<result name="cust.listed.info" type="tiles">cust.listed.info</result>
 			<result name="cust.others.info" type="tiles">cust.others.info</result>
 		</action>
+		<action name="showCustInfoDtl" class="custAction" method="showCustInfoDtl">
+			<result name="cust.info.dtl">/jsp/cust/custInfoDtl.jsp</result>
+		</action>
 		<action name="getCustList" class="custAction" method="getCustList" />
 		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
 		<action name="deleteCust" class="custAction" method="deleteCust" />
+		<!-- cust - contact  -->
+		<action name="showContList" class="contactAction" method="showContList">
+			<result name="contact.list">/jsp/cust/contactList.jsp</result>
+		</action>
 		<!-- syssetup  -->
 		<action name="showCompList" class="sysCompAction" method="showCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>

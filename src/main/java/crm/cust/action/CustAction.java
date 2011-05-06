@@ -83,6 +83,14 @@ public class CustAction extends BaseAction {
     }
 
     public String showCustInfo() throws Exception {
+        if (null != cust && null != cust.getId() && cust.getId() > 0) {
+            cust = (Customer) custService.getObject(Customer.class, cust.getId());
+            getSession().put(Constants.CUSTOMER_SESSION_KEY, cust);
+        } else {
+            log.error("cust id is null");
+            return NONE;
+        }
+        //
         switch (induId) {
         case 1: {
             return "cust.broker.info";
@@ -109,6 +117,10 @@ public class CustAction extends BaseAction {
             break;
         }
         return NONE;
+    }
+
+    public String showCustInfoDtl() throws Exception {
+        return "cust.info.dtl";
     }
 
     public String saveCustInfo() throws Exception {

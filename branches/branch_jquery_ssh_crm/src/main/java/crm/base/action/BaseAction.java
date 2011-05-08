@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
@@ -12,6 +14,9 @@ import net.sf.json.JsonConfig;
 import net.sf.json.util.JSONUtils;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ApplicationAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +27,20 @@ import crm.common.Constants;
 import crm.model.SysCompanyUser;
 import crm.util.Utils;
 
-public class BaseAction extends ActionSupport implements SessionAware {
+public class BaseAction extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware,
+        ApplicationAware {
 
     private static final long serialVersionUID = -7367003790059602087L;
 
     private final Logger log = LoggerFactory.getLogger(BaseAction.class);
 
     protected Map<String, Object> session;
+
+    protected Map<String, Object> application;
+
+    protected HttpServletResponse response;
+
+    protected HttpServletRequest request;
 
     private Integer rows = 3;
 
@@ -57,7 +69,6 @@ public class BaseAction extends ActionSupport implements SessionAware {
                 sb.append(JSONObject.fromObject(obj, cfg));
             }
             if (sb.toString().length() > 0) {
-                HttpServletResponse response = ServletActionContext.getResponse();
                 response.setContentType("text/json;charset=UTF-8");
                 response.setHeader("Pragma", "no-cache");
                 response.addHeader("Cache-Control", "must-revalidate");
@@ -71,6 +82,10 @@ public class BaseAction extends ActionSupport implements SessionAware {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    protected ServletContext getCtx() {
+        return ServletActionContext.getServletContext();
     }
 
     protected SysCompanyUser getCurrSysCompUser() {
@@ -112,8 +127,21 @@ public class BaseAction extends ActionSupport implements SessionAware {
         this.session = session;
     }
 
-    public Map<String, Object> getSession() {
-        return session;
+    @Override
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+
+    }
+
+    @Override
+    public void setServletResponse(HttpServletResponse response) {
+        this.response = response;
+    }
+
+    @Override
+    public void setApplication(Map<String, Object> application) {
+        this.application = application;
+
     }
 
     public Integer getRows() {
@@ -155,4 +183,5 @@ public class BaseAction extends ActionSupport implements SessionAware {
     public void setIds(String ids) {
         this.ids = Utils.fmtAndSortIds(ids);
     }
+
 }

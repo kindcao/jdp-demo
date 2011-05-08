@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Expression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import crm.base.service.BaseServiceImpl;
 import crm.dto.CustDto;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
+import crm.model.CustomerSysCompanyRelId;
 
 /**
  * @author Kind Cao
@@ -131,5 +134,12 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
         } else {
             log.error("object not instanceof Customer,object type :" + object.getClass().getSimpleName());
         }
+    }
+
+    @Override
+    public List<?> findCustSysCompRel(CustomerSysCompanyRelId id) throws Exception {
+        DetachedCriteria criteria = DetachedCriteria.forClass(CustomerSysCompanyRel.class);
+        criteria.add(Expression.eq("id.customerId", id.getCustomerId()));
+        return getBaseDaoImpl().findByCriteria(criteria);
     }
 }

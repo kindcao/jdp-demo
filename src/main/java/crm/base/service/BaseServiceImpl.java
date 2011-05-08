@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.hibernate.criterion.DetachedCriteria;
+
 import crm.base.dao.BaseDao;
 
 public class BaseServiceImpl implements BaseService {
@@ -62,6 +64,21 @@ public class BaseServiceImpl implements BaseService {
     }
 
     @Override
+    public void merge(Object object) throws Exception {
+        baseDaoImpl.merge(object);
+    }
+
+    @Override
+    public void saveOrUpdateAll(Collection entities) throws Exception {
+        baseDaoImpl.saveOrUpdateAll(entities);
+    }
+
+    @Override
+    public List<?> findByCriteria(DetachedCriteria criteria) throws Exception {
+        return baseDaoImpl.findByCriteria(criteria);
+    }
+
+    @Override
     public int getTotalCount(Map<String, Object> map) throws Exception {
         return 0;
     }
@@ -69,16 +86,6 @@ public class BaseServiceImpl implements BaseService {
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
         return null;
-    }
-
-    @Override
-    public void merge(Object object) throws Exception {
-
-    }
-
-    @Override
-    public void saveOrUpdateAll(Collection entities) throws Exception {
-        baseDaoImpl.saveOrUpdateAll(entities);
     }
 
 }

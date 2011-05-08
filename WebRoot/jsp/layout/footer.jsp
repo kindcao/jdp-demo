@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="crm.common.Constants"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <script type="text/javascript">	
@@ -54,7 +53,7 @@
 						</td>
 						<td nowrap="nowrap" width="120px">
 							在线人数:
-							<%=Constants.SYS_USER_MAP.size()%>
+							<s:property value="#application.SYS_USER_APPLICATION_KEY.size" />
 						</td>
 						<td width="1px" style="border-right: 1px solid white">
 							&nbsp;

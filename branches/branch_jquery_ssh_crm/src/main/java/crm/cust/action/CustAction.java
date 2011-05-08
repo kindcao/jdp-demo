@@ -1,13 +1,16 @@
 package crm.cust.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +19,14 @@ import crm.base.action.BaseAction;
 import crm.common.Constants;
 import crm.cust.service.CustService;
 import crm.dto.CustDto;
+import crm.dto.CustExtDto;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.model.Customer;
+import crm.model.CustomerIndustry;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;
+import crm.model.SysCompany;
 import crm.util.Utils;
 
 /**
@@ -85,7 +91,33 @@ public class CustAction extends BaseAction {
     public String showCustInfo() throws Exception {
         if (null != cust && null != cust.getId() && cust.getId() > 0) {
             cust = (Customer) custService.getObject(Customer.class, cust.getId());
-            getSession().put(Constants.CUSTOMER_SESSION_KEY, cust);
+            CustExtDto custExtDto = new CustExtDto();
+            BeanUtils.copyProperties(custExtDto, cust);
+            //
+            Map<?, ?> induMap = (Map<?, ?>) getCtx().getAttribute(CustomerIndustry.class.getName());
+            custExtDto.setIndustryName(((CustomerIndustry) induMap.get(custExtDto.getIndustryId().toString()))
+                    .getName());
+            //
+            CustomerSysCompanyRelId custSysCompRelId = new CustomerSysCompanyRelId();
+            custSysCompRelId.setCustomerId(cust.getId());
+            List<?> compList = custService.findCustSysCompRel(custSysCompRelId);
+            if (null != compList) {
+                Map<?, ?> sysCompMap = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
+                List<Integer> custSysCompId = new ArrayList<Integer>();
+                String custSysCompNames = "";
+                for (Iterator<?> iterator = compList.iterator(); iterator.hasNext();) {
+                    CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
+                    custSysCompId.add(ele.getId().getSysCompanyId());
+                    custSysCompNames += ((SysCompany) sysCompMap.get(ele.getId().getSysCompanyId().toString()))
+                            .getCompanyName();
+                    if (iterator.hasNext()) {
+                        custSysCompNames += ",";
+                    }
+                }
+                custExtDto.setCustSysCompNames(custSysCompNames);
+                custExtDto.setCustSysCompId(custSysCompId);
+            }
+            session.put(Constants.CUSTOMER_SESSION_KEY, custExtDto);
         } else {
             log.error("cust id is null");
             return NONE;
@@ -150,29 +182,7 @@ public class CustAction extends BaseAction {
             log.error("custSysCompRelIds is null");
             jvr.getErrors().concat("custSysCompRelIds is null \n");
         }
-        //
-        // Integer[] custSysUserRelIds = splitIdsStrByRegex(custSysUserIds);
-        // if (null != custSysUserRelIds) {
-        // Set<CustomerSysUserRel> custSysUserRels = new
-        // HashSet<CustomerSysUserRel>();
-        // for (int i = 0; i < custSysUserRelIds.length; i++) {
-        // CustomerSysUserRel obj = new CustomerSysUserRel();
-        // obj.setId(new CustomerSysUserRelId());
-        // obj.getId().setSysCompanyUserId(custSysUserRelIds[i]);
-        // //
-        // if
-        // (custSysUserPrimIds.contains(obj.getId().getSysCompanyUserId().toString()))
-        // {
-        // obj.setIsPrimary(Constants.STATUS_Y);
-        // }
-        // custSysUserRels.add(obj);
-        // }
-        // custDto.setCustSysUserRels(custSysUserRels);
-        // } else {
-        // log.error("custSysUserRelIds is null");
-        // jvr.getErrors().concat("custSysUserRelIds is null \n");
-        // }
-        //
+
         if (jvr.getErrors().length() == 0) {
             custService.saveOrUpdate(custDto);
             jvr.setSuccess(true);
@@ -296,5 +306,4 @@ public class CustAction extends BaseAction {
     public void setAddress(String address) {
         this.address = address;
     }
-
 }

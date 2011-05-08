@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.Action;
 
 import crm.base.action.BaseAction;
+import crm.common.MstDataLoader;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.model.SysCompany;
@@ -70,6 +71,8 @@ public class SysCompAction extends BaseAction {
         sysCompService.saveOrUpdate(sysComp);
         jvr.setSuccess(true);
         responseJsonData(jvr);
+        //
+        MstDataLoader.loadSysCompany(getCtx());
         return Action.NONE;
     }
 

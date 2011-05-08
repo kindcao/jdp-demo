@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.criterion.DetachedCriteria;
+
 public interface BaseDao {
 
     void removeObject(Class clazz, Serializable serializable) throws Exception;
@@ -30,5 +32,7 @@ public interface BaseDao {
     List<?> findPageByQuery(int pageNo, int pageSize, String hql, Map<String, Object> map) throws Exception;
 
     List<?> findByIds(Class clazz, Collection ids) throws Exception;
+
+    List<?> findByCriteria(DetachedCriteria criteria) throws Exception;
 
 }

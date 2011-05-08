@@ -57,13 +57,11 @@ public class BaseDaoImpl implements BaseDao {
     @Override
     public List<?> loadAll(Class entityClass) throws Exception {
         return getHibernateTemplate().loadAll(entityClass);
-
     }
 
     @Override
     public List<?> findByExample(Object exampleEntity) throws Exception {
         return getHibernateTemplate().findByExample(exampleEntity);
-
     }
 
     @Override
@@ -123,5 +121,10 @@ public class BaseDaoImpl implements BaseDao {
     @Override
     public void saveOrUpdateAll(Collection entities) throws Exception {
         getHibernateTemplate().saveOrUpdateAll(entities);
+    }
+
+    @Override
+    public List<?> findByCriteria(DetachedCriteria criteria) throws Exception {
+        return getHibernateTemplate().findByCriteria(criteria);
     }
 }

@@ -1,8 +1,5 @@
 package crm.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 
  * @author Kind Cao
@@ -11,9 +8,10 @@ import java.util.Map;
  */
 public class Constants {
 
-    public static final Map<Object, Object> MST_DATA_MAP = new HashMap<Object, Object>();
+    // public static final Map<Object, Object> SYS_USER_MAP = new
+    // HashMap<Object, Object>();
 
-    public static final Map<Object, Object> SYS_USER_MAP = new HashMap<Object, Object>();
+    public static final String SYS_USER_APPLICATION_KEY = "SYS_USER_APPLICATION_KEY";
 
     public static final String CURR_SYS_USER_SESSION_KEY = "CURR_SYS_USER_SESSION_KEY";
 

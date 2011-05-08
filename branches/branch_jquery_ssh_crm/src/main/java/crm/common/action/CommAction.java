@@ -1,7 +1,9 @@
 package crm.common.action;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -41,43 +43,66 @@ public class CommAction extends BaseAction {
     }
 
     public String getCustIndu() throws Exception {
-        List<?> list = null;
-        if (induId > 0) {
-            CustomerIndustry custIndu = new CustomerIndustry();
-            custIndu.setSuperiorId(induId);
-            list = baseServiceImpl.findByExample(custIndu);
-        } else {
-            list = baseServiceImpl.loadAll(CustomerIndustry.class);
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(CustomerIndustry.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getCustIndu map from servlet context is null.");
+        }
+        //
+        List<CustomerIndustry> list = new ArrayList<CustomerIndustry>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            CustomerIndustry value = (CustomerIndustry) map.get(key);
+            if (induId > 0) {
+                if (null != value.getSuperiorId() && value.getSuperiorId().intValue() == induId) {
+                    list.add(value);
+                }
+            } else {
+                list.add(value);
+            }
         }
         responseJsonData(list);
         return NONE;
     }
 
     public String getSysComp() throws Exception {
-        List<?> list = null;
-        SysCompany sysComp = new SysCompany();
-        sysComp.setStatus(Constants.STATUS_A);
-        if (StringUtils.isNotBlank(sysCompType)) {
-            sysComp.setType(sysCompType);
-        } else {
-            sysComp.setType(Constants.STATUS_O);
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getSysComp map from servlet context is null.");
         }
-        list = baseServiceImpl.findByExample(sysComp);
+
+        //
+        List<SysCompany> list = new ArrayList<SysCompany>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            SysCompany value = (SysCompany) map.get(key);
+            if (StringUtils.isNotBlank(sysCompType)) {
+                if (sysCompType.equals(value.getType())) {
+                    list.add(value);
+                }
+            } else {
+                if (Constants.STATUS_O.equals(value.getType())) {
+                    list.add(value);
+                }
+            }
+        }
         responseJsonData(list);
         return NONE;
     }
 
     public String getSysCompUserByUserIds() throws Exception {
-        List<?> list = null;
-        SysCompanyUser sysCompUser = new SysCompanyUser();
-        sysCompUser.setStatus(Constants.STATUS_A);
-        sysCompUser.setDeleteFlag(Constants.STATUS_N);
-        list = baseServiceImpl.findByExample(sysCompUser);
-        if (StringUtils.isNotBlank(sysUserIds)) {
-            for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-                SysCompanyUser object = (SysCompanyUser) iterator.next();
-                if (!sysUserIds.contains(object.getId().toString())) {
-                    iterator.remove();
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompanyUser.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getSysCompUserByUserIds map from servlet context is null.");
+        }
+
+        //
+        List<SysCompanyUser> list = new ArrayList<SysCompanyUser>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            SysCompanyUser value = (SysCompanyUser) map.get(key);
+            if (StringUtils.isNotBlank(sysUserIds)) {
+                if (sysUserIds.contains(value.getId().toString())) {
+                    list.add(value);
                 }
             }
         }
@@ -86,17 +111,19 @@ public class CommAction extends BaseAction {
     }
 
     public String getSysCompUserByCompIds() throws Exception {
-        List<?> list = null;
-        SysCompanyUser sysCompUser = new SysCompanyUser();
-        sysCompUser.setStatus(Constants.STATUS_A);
-        sysCompUser.setDeleteFlag(Constants.STATUS_N);
-        list = baseServiceImpl.findByExample(sysCompUser);
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompanyUser.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getSysCompUserByCompIds map from servlet context is null.");
+        }
+
         //
-        if (StringUtils.isNotBlank(sysCompIds)) {
-            for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-                SysCompanyUser object = (SysCompanyUser) iterator.next();
-                if (!sysCompIds.contains(object.getSysCompanyId().toString())) {
-                    iterator.remove();
+        List<SysCompanyUser> list = new ArrayList<SysCompanyUser>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            SysCompanyUser value = (SysCompanyUser) map.get(key);
+            if (StringUtils.isNotBlank(sysCompIds)) {
+                if (sysCompIds.contains(value.getSysCompanyId().toString())) {
+                    list.add(value);
                 }
             }
         }

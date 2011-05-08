@@ -22,11 +22,12 @@
 		document.getElementById('div_info').style.display='inline';		
 	});
 	
+	/**
 	$("#_reset").click(function() {
 		$('#cust_indu').combobox('clear');		
 		$('#cust_sys_comp').combobox('clear');	
 		resetForm('infoForm');
-	});	
+	});	**/
 	
 	$("#_save").click(function() {
 		var isValid = $('#infoForm').form('validate');	
@@ -315,8 +316,8 @@
 				<td colspan="2" align="center" valign="bottom">
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-save" id="_save">保存</a>
-					<a href="#" class="easyui-linkbutton" plain="true"
-						iconCls="icon-remove" id="_reset">重置</a>
+					<!-- a href="#" class="easyui-linkbutton" plain="true"
+						iconCls="icon-remove" id="_reset">重置</a-->
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-back" id="_back_edit">返回</a>
 				</td>

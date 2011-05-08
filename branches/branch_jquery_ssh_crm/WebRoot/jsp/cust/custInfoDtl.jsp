@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-
 <script type="text/javascript">
 <!--
 	$('#cust_indu').combobox({
@@ -20,7 +19,7 @@
 	
 	$("#_edit").click(function() {
 		document.getElementById('div_info_read-only').style.display='none';
-		document.getElementById('div_info').style.display='inline';
+		document.getElementById('div_info').style.display='inline';		
 	});
 	
 	$("#_reset").click(function() {
@@ -53,8 +52,8 @@
 
 <s:hidden id="induId" name="induId" />
 <s:hidden id="cust.id" name="cust.id" />
+<s:set name="_cust" value="#session.CUSTOMER_SESSION_KEY" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
-	<s:set name="_cust" value="#session.CUSTOMER_SESSION_KEY" />
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
 		<tr height="30px">
@@ -74,7 +73,7 @@
 				行业:
 			</td>
 			<td width="20%">
-				<s:property value="#_cust.industryId" />
+				<s:property value="#_cust.industryName" />
 			</td>
 		</tr>
 		<tr height="30px">
@@ -82,7 +81,7 @@
 				所属公司:
 			</td>
 			<td colspan="3">
-				<s:property value="#_cust.custSysCompIds" />
+				<s:property value="#_cust.custSysCompNames" />
 			</td>
 			<td nowrap="nowrap" align="center">
 				电话:
@@ -182,13 +181,15 @@
 				</td>
 				<td width="20%">
 					<input type="text" name="cust.custName" class="easyui-validatebox"
-						required="true" validType="length[1,50]">
+						required="true" validType="length[1,50]"
+						value='<s:property value="#_cust.custName" />'>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					客户编码:
 				</td>
 				<td width="20%">
-					<input type="text" name="cust.custCode" maxlength="20">
+					<input type="text" name="cust.custCode" maxlength="20"
+						value='<s:property value="#_cust.custCode" />'>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					行业:
@@ -197,7 +198,8 @@
 					<input id="cust_indu" class="easyui-combobox"
 						name="cust.industryId" required="true" url="" valueField="id"
 						textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 135px;">
+						panelHeight="auto" style="width: 135px;"
+						value='<s:property value="#_cust.industryName" />'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -208,14 +210,16 @@
 					<input id="cust_sys_comp" class="easyui-combobox"
 						name="custSysCompIds" required="true" url="getSysComp.action"
 						valueField="id" textField="companyName" multiple="true"
-						editable="false" panelHeight="auto" style="width: 400px;">
+						editable="false" panelHeight="auto" style="width: 400px;"
+						value='<s:property value="#_cust.custSysCompNames" />'>
 				</td>
 				<td nowrap="nowrap" align="center">
 					电话:
 				</td>
 				<td>
 					<input type="text" name="cust.phone" class="easyui-validatebox"
-						required="true" validType="phone" maxlength="40">
+						required="true" validType="phone" maxlength="40"
+						value='<s:property value="#_cust.phone" />'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -224,20 +228,23 @@
 				</td>
 				<td>
 					<input type="text" name="cust.email" maxlength="40"
-						class="easyui-validatebox" validType="email">
+						class="easyui-validatebox" validType="email"
+						value='<s:property value="#_cust.email" />'>
 				</td>
 				<td nowrap="nowrap" align="center">
 					传真:
 				</td>
 				<td>
-					<input type="text" name="cust.fax" maxlength="40">
+					<input type="text" name="cust.fax" maxlength="40"
+						value='<s:property value="#_cust.fax" />'>
 				</td>
 				<td nowrap="nowrap" align="center">
 					网站:
 				</td>
 				<td>
 					<input type="text" name="cust.website" class="easyui-validatebox"
-						validType="url" maxlength="50">
+						validType="url" maxlength="50"
+						value='<s:property value="#_cust.website" />'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -245,19 +252,22 @@
 					国家:
 				</td>
 				<td>
-					<input type="text" name="cust.country" maxlength="20">
+					<input type="text" name="cust.country" maxlength="20"
+						value='<s:property value="#_cust.country" />'>
 				</td>
 				<td nowrap="nowrap" align="center">
 					省份:
 				</td>
 				<td>
-					<input type="text" name="cust.province" maxlength="20">
+					<input type="text" name="cust.province" maxlength="20"
+						value='<s:property value="#_cust.province" />'>
 				</td>
 				<td nowrap="nowrap" align="center">
 					城市:
 				</td>
 				<td>
-					<input type="text" name="cust.city" maxlength="20">
+					<input type="text" name="cust.city" maxlength="20"
+						value='<s:property value="#_cust.city" />'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -266,14 +276,16 @@
 				</td>
 				<td colspan="3">
 					<input type="text" name="cust.address" maxlength="200"
-						style="width: 402px;" />
+						style="width: 402px;"
+						value='<s:property value="#_cust.address" />' />
 				</td>
 				<td nowrap="nowrap" align="center">
 					邮编:
 				</td>
 				<td>
 					<input type="text" name="cust.postcode" class="easyui-validatebox"
-						validType="postcode" maxlength="10">
+						validType="postcode" maxlength="10"
+						value='<s:property value="#_cust.postcode" />'>
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
@@ -282,7 +294,8 @@
 				</td>
 				<td colspan="3">
 					<textarea name="cust.descript" rows="5" style="width: 402px;"
-						class="easyui-validatebox" validType="length[0,500]"> 
+						class="easyui-validatebox" validType="length[0,500]"
+						value='<s:property value="#_cust.descript" />'> 
 					</textarea>
 				</td>
 				<td colspan="2" align="center">
@@ -295,7 +308,8 @@
 				</td>
 				<td colspan="3">
 					<textarea name="cust.remark" rows="5" style="width: 402px;"
-						class="easyui-validatebox" validType="length[0,500]"> 				
+						class="easyui-validatebox" validType="length[0,500]"
+						value='<s:property value="#_cust.remark" />'> 				
 					</textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
@@ -310,3 +324,5 @@
 		</table>
 	</form>
 </div>
+
+

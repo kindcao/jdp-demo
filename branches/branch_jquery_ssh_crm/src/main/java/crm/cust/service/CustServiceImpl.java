@@ -35,6 +35,14 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
             // set customer id and save CustomerSysCompanyRel
             Set<CustomerSysCompanyRel> custSysCompRels = custDto.getCustSysCompRels();
             if (null != custSysCompRels) {
+                // for delete
+                CustomerSysCompanyRelId _relId = new CustomerSysCompanyRelId();
+                _relId.setCustomerId(custObj.getId());
+                List<?> _list = findCustSysCompRel(_relId);
+                if (null != _list && _list.size() > 0) {
+                    super.deleteAll(_list);
+                }
+                // for add
                 for (Iterator<CustomerSysCompanyRel> iterator = custSysCompRels.iterator(); iterator.hasNext();) {
                     CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
                     ele.getId().setCustomerId(custObj.getId());
@@ -43,19 +51,6 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
             } else {
                 log.warn("custSysCompRels is null");
             }
-            // set customer id and save CustomerSysUserRel
-            // Set<CustomerSysUserRel> custSysUserRels =
-            // custDto.getCustSysUserRels();
-            // if (null != custSysUserRels) {
-            // for (Iterator<CustomerSysUserRel> iterator =
-            // custSysUserRels.iterator(); iterator.hasNext();) {
-            // CustomerSysUserRel ele = (CustomerSysUserRel) iterator.next();
-            // ele.getId().setCustomerId(custObj.getId());
-            // super.saveOrUpdate(ele);
-            // }
-            // } else {
-            // log.warn("custSysUserRels is null");
-            // }
         } else {
             log.error("object not instanceof CustDto,object type :" + object.getClass().getSimpleName());
         }

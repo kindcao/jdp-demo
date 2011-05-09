@@ -44,7 +44,7 @@ public class Utils {
             String[] ss = s.split(regex);
             for (int i = 0; i < ss.length; i++) {
                 if (StringUtils.isNotBlank(ss[i])) {
-                    set.add(Integer.valueOf(ss[i]));
+                    set.add(Integer.valueOf(ss[i].trim()));
                 }
             }
             for (Iterator<Integer> iterator = set.iterator(); iterator.hasNext();) {
@@ -70,7 +70,7 @@ public class Utils {
         if (StringUtils.isNotBlank(str)) {
             String[] _idsArr = ids.split(regex);
             for (int i = 0; i < _idsArr.length; i++) {
-                idsList.add(Integer.valueOf(_idsArr[i]));
+                idsList.add(Integer.valueOf(_idsArr[i].trim()));
             }
         }
         return idsList;

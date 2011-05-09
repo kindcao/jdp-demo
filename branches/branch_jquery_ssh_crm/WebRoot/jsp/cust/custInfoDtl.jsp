@@ -2,54 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<script type="text/javascript">
-<!--
-	$('#cust_indu').combobox({
-		url:'getCustIndu.action?induId='+$('#induId').val()				
-	});	
-	
-	$("#_back").click(function() {
-		window.location.href='showCustList.action?induId='+$('#induId').val();
-	});	
-	
-	$("#_back_edit").click(function() {
-		document.getElementById('div_info_read-only').style.display='inline';
-		document.getElementById('div_info').style.display='none';
-	});
-	
-	$("#_edit").click(function() {
-		document.getElementById('div_info_read-only').style.display='none';
-		document.getElementById('div_info').style.display='inline';		
-	});
-	
-	/**
-	$("#_reset").click(function() {
-		$('#cust_indu').combobox('clear');		
-		$('#cust_sys_comp').combobox('clear');	
-		resetForm('infoForm');
-	});	**/
-	
-	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {
-			var options = {
-				url : 'saveCustInfo.action?actionFlag=U',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {						
-						window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);
-		}
-	});	
-//-->
-</script>
 
 <s:hidden id="induId" name="induId" />
 <s:hidden id="cust.id" name="cust.id" />
@@ -326,4 +278,51 @@
 	</form>
 </div>
 
-
+<script type="text/javascript">
+<!--
+	$('#cust_indu').combobox({
+		url:'getCustIndu.action?induId='+$('#induId').val()				
+	});	
+	
+	$("#_back").click(function() {
+		window.location.href='showCustList.action?induId='+$('#induId').val();
+	});	
+	
+	$("#_back_edit").click(function() {
+		document.getElementById('div_info_read-only').style.display='inline';
+		document.getElementById('div_info').style.display='none';
+	});
+	
+	$("#_edit").click(function() {
+		document.getElementById('div_info_read-only').style.display='none';
+		document.getElementById('div_info').style.display='inline';		
+	});
+	
+	/**
+	$("#_reset").click(function() {
+		$('#cust_indu').combobox('clear');		
+		$('#cust_sys_comp').combobox('clear');	
+		resetForm('infoForm');
+	});	**/
+	
+	$("#_save").click(function() {
+		var isValid = $('#infoForm').form('validate');	
+		if (isValid) {
+			var options = {
+				url : 'saveCustInfo.action?actionFlag=U',
+				dataType : 'json',
+				type: 'post',
+				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data){
+					if (!data.success) {
+						$.messager.alert('提示信息', data.errors, 'error');
+					} else {						
+						window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
+					}
+				}
+			};
+			$('#infoForm').ajaxSubmit(options);
+		}
+	});	
+//-->
+</script>

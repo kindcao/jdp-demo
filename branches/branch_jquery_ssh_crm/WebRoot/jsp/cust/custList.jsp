@@ -2,167 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<script type="text/javascript" defer="defer">
-<!--	
-	//for add begin
-	$("#_add").click(function() {
-		document.getElementById('div_info').style.display='inline';
-		document.getElementById('div_search').style.display='none';
-		$('#_delete').linkbutton('disable');	
-		$("#_reset").click();	
-	});	
-	
-	$("#_back").click(function() {
-		document.getElementById('div_info').style.display='none';
-		document.getElementById('div_search').style.display='inline';
-		$('#_delete').linkbutton('enable');
-		$("#_reset").click();
-	});	
-	
-	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {
-			var options = {
-				url : 'saveCustInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {						
-						$("#_back").click();
-						reloadDatagrid('grid-datalist');
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);
-		}
-	});
-	
-	$("#_reset").click(function() {
-		$('#cust_indu').combobox('clear');		
-		$('#cust_sys_comp').combobox('clear');
-		//$('#cust_sys_user').combobox('clear');
-		//$('#cust_sys_prim_user').combobox('clear');
-		resetForm('infoForm');
-	});		
-	
-	$('#cust_indu').combobox({
-		url:'getCustIndu.action?induId='+$('#induId').val()				
-	});		
-	
-	/**
-	$('#cust_sys_comp').combobox({
-		url:'getSysComp.action',		
-		onChange:function(rec){
-		 	var _sysUserIds=$(this).combobox("getValues");		 	
-		 	$('#cust_sys_user').combobox({
-		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
-		 	}).combobox('clear');
-		}
-	});	
-	
-	$('#cust_sys_user').combobox({
-	    onChange:function(rec){
-	    	var _sysUserIds=$(this).combobox("getValues");		 	
-		 	$('#cust_sys_prim_user').combobox({
-		 		url:'getSysCompUserByUserIds?sysUserIds='+_sysUserIds
-		 	}).combobox('clear');
-	    }
-	});	**/
-	//for add end
-	
-	//for delete begin
-	$("#_delete").click(function() {
-		deleteRecord('grid-datalist','deleteCust.action');
-	});
-	//fore delte end
-	
-	//for search begin
-	$('#cust_indu_search').combobox({
-		url:'getCustIndu.action?induId='+$('#induId').val()			
-	});	
-	
-	/**
-	$('#cust_sys_comp_search').combobox({
-		url:'getSysComp.action',	
-		onChange:function(rec){
-		 	var _sysUserIds=$(this).combobox("getValues");		 	
-		 	$('#cust_sys_user_search').combobox({
-		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
-		 	}).combobox('clear');
-		}
-	});	**/
-	
-	$("#_reset_search").click(function() {
-		$('#cust_indu_search').combobox('clear');		
-		$('#cust_sys_comp_search').combobox('clear');		
-		//$('#cust_sys_user_search').combobox('clear');
-		resetForm('searchForm');
-	});	
-	
-	$("#_search").click(function() {		
-		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
-		queryParams.custName = $("#custName").val();
-		queryParams.custCode = $("#custCode").val();
-		queryParams.address = $("#address").val();
-		queryParams.industryId = $("#cust_indu_search").combobox('getValue');
-		queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValues')+'';
-		reloadDatagrid('grid-datalist');
-	});	
-		
-	//	
-	$(document).ready(function() {		
-		var frozenColumns = [[{
-					field : 'ck',
-					checkbox : true
-				}, {
-					field : 'custName',
-					title : '客户名称',
-					width : 200,
-					sortable : true,			
-					formatter : function(value, rec) {
-						return "<a href='#' onclick='editComp(" + rec.customerId+ ");'>" + value + "</a>";
-					}
-				}]];
-		var columns = [[{
-		    field : 'custCode',
-			title : '公司编码',
-			width : 100
-		},{
-			field : 'companyName',
-			title : '所属公司',
-			width : 100
-		},{
-			field : 'industryName',
-			title : '行业',
-			width : 100
-		}, {
-			field : 'phone',
-			title : '电话',
-			width : 150
-		}, {
-			field : 'address',
-			title : '联系地址',
-			width : 200
-		}, {
-			field : 'contactName',
-			title : '联系人',
-			width : 150
-		}]];
-			
-		//		
-		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);			
-	});	
-	//for search end
-	
-    function editComp(cId){    	
-		window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
-	}	
-//-->
-</script>
-
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
 <s:hidden id="induId" name="induId" />
 <div id="div_info" style="margin-top: 10px; display: none;">
@@ -379,3 +218,163 @@
 	</div>
 </div>
 
+<script type="text/javascript" defer="defer">
+<!--	
+	//for add begin
+	$("#_add").click(function() {
+		document.getElementById('div_info').style.display='inline';
+		document.getElementById('div_search').style.display='none';
+		$('#_delete').linkbutton('disable');	
+		$("#_reset").click();	
+	});	
+	
+	$("#_back").click(function() {
+		document.getElementById('div_info').style.display='none';
+		document.getElementById('div_search').style.display='inline';
+		$('#_delete').linkbutton('enable');
+		$("#_reset").click();
+	});	
+	
+	$("#_save").click(function() {
+		var isValid = $('#infoForm').form('validate');	
+		if (isValid) {
+			var options = {
+				url : 'saveCustInfo.action',
+				dataType : 'json',
+				type: 'post',
+				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data){
+					if (!data.success) {
+						$.messager.alert('提示信息', data.errors, 'error');
+					} else {						
+						$("#_back").click();
+						reloadDatagrid('grid-datalist');
+					}
+				}
+			};
+			$('#infoForm').ajaxSubmit(options);
+		}
+	});
+	
+	$("#_reset").click(function() {
+		$('#cust_indu').combobox('clear');		
+		$('#cust_sys_comp').combobox('clear');
+		//$('#cust_sys_user').combobox('clear');
+		//$('#cust_sys_prim_user').combobox('clear');
+		resetForm('infoForm');
+	});		
+	
+	$('#cust_indu').combobox({
+		url:'getCustIndu.action?induId='+$('#induId').val()				
+	});		
+	
+	/**
+	$('#cust_sys_comp').combobox({
+		url:'getSysComp.action',		
+		onChange:function(rec){
+		 	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#cust_sys_user').combobox({
+		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
+		 	}).combobox('clear');
+		}
+	});	
+	
+	$('#cust_sys_user').combobox({
+	    onChange:function(rec){
+	    	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#cust_sys_prim_user').combobox({
+		 		url:'getSysCompUserByUserIds?sysUserIds='+_sysUserIds
+		 	}).combobox('clear');
+	    }
+	});	**/
+	//for add end
+	
+	//for delete begin
+	$("#_delete").click(function() {
+		deleteRecord('grid-datalist','deleteCust.action');
+	});
+	//fore delte end
+	
+	//for search begin
+	$('#cust_indu_search').combobox({
+		url:'getCustIndu.action?induId='+$('#induId').val()			
+	});	
+	
+	/**
+	$('#cust_sys_comp_search').combobox({
+		url:'getSysComp.action',	
+		onChange:function(rec){
+		 	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#cust_sys_user_search').combobox({
+		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
+		 	}).combobox('clear');
+		}
+	});	**/
+	
+	$("#_reset_search").click(function() {
+		$('#cust_indu_search').combobox('clear');		
+		$('#cust_sys_comp_search').combobox('clear');		
+		//$('#cust_sys_user_search').combobox('clear');
+		resetForm('searchForm');
+	});	
+	
+	$("#_search").click(function() {		
+		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
+		queryParams.custName = $("#custName").val();
+		queryParams.custCode = $("#custCode").val();
+		queryParams.address = $("#address").val();
+		queryParams.industryId = $("#cust_indu_search").combobox('getValue');
+		queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValues')+'';
+		reloadDatagrid('grid-datalist');
+	});	
+		
+	//	
+	$(document).ready(function() {		
+		var frozenColumns = [[{
+					field : 'ck',
+					checkbox : true
+				}, {
+					field : 'custName',
+					title : '客户名称',
+					width : 200,
+					sortable : true,			
+					formatter : function(value, rec) {
+						return "<a href='#' onclick='editComp(" + rec.customerId+ ");'>" + value + "</a>";
+					}
+				}]];
+		var columns = [[{
+		    field : 'custCode',
+			title : '公司编码',
+			width : 100
+		},{
+			field : 'companyName',
+			title : '所属公司',
+			width : 100
+		},{
+			field : 'industryName',
+			title : '行业',
+			width : 100
+		}, {
+			field : 'phone',
+			title : '电话',
+			width : 150
+		}, {
+			field : 'address',
+			title : '联系地址',
+			width : 200
+		}, {
+			field : 'contactName',
+			title : '联系人',
+			width : 150
+		}]];
+			
+		//		
+		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);			
+	});	
+	//for search end
+	
+    function editComp(cId){    	
+		window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
+	}	
+//-->
+</script>

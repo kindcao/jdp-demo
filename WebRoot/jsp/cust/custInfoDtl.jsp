@@ -4,7 +4,7 @@
 
 
 <s:hidden id="induId" name="induId" />
-<s:hidden id="cust.id" name="cust.id" />
+<s:hidden id="custId" name="cust.id" />
 <s:set name="_cust" value="#session.CUSTOMER_SESSION_KEY" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
@@ -165,6 +165,7 @@
 						valueField="id" textField="companyName" multiple="true"
 						editable="false" panelHeight="auto" style="width: 400px;"
 						value='<s:property value="#_cust.custSysCompNames" />'>
+
 				</td>
 				<td nowrap="nowrap" align="center">
 					电话:
@@ -246,9 +247,9 @@
 					简介:
 				</td>
 				<td colspan="3">
-					<textarea name="cust.descript" rows="5" style="width: 402px;"
-						class="easyui-validatebox" validType="length[0,500]"
-						value='<s:property value="#_cust.descript" />'> 
+					<textarea id="cust.descript" name="cust.descript" rows="5"
+						style="width: 402px;" class="easyui-validatebox"
+						validType="length[0,500]"> 			
 					</textarea>
 				</td>
 				<td colspan="2" align="center">
@@ -268,8 +269,8 @@
 				<td colspan="2" align="center" valign="bottom">
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-save" id="_save">保存</a>
-					<!-- a href="#" class="easyui-linkbutton" plain="true"
-						iconCls="icon-remove" id="_reset">重置</a-->
+					<a href="#" class="easyui-linkbutton" plain="true"
+						iconCls="icon-remove" id="_reset">重置</a>
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-back" id="_back_edit">返回</a>
 				</td>
@@ -295,19 +296,24 @@
 	
 	$("#_edit").click(function() {
 		document.getElementById('div_info_read-only').style.display='none';
-		document.getElementById('div_info').style.display='inline';		
+		document.getElementById('div_info').style.display='inline';	
+		//
+		document.getElementById('cust.descript').value='<s:property value="#_cust.descript" />';
+		document.getElementById('cust.remark').value='<s:property value="#_cust.remark" />';
+		$('#cust_indu').combobox('setValue','<s:property value="#_cust.industryId" />');
+		var _idsStr='<s:property value="#_cust.custSysCompIds" />';		
+		$('#cust_sys_comp').combobox('setValues',_idsStr.split(','));	
 	});
-	
-	/**
+		
 	$("#_reset").click(function() {
 		$('#cust_indu').combobox('clear');		
 		$('#cust_sys_comp').combobox('clear');	
 		resetForm('infoForm');
-	});	**/
+	});
 	
 	$("#_save").click(function() {
 		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {
+		if (isValid) {			
 			var options = {
 				url : 'saveCustInfo.action?actionFlag=U',
 				dataType : 'json',
@@ -316,12 +322,14 @@
 				success : function(data){
 					if (!data.success) {
 						$.messager.alert('提示信息', data.errors, 'error');
-					} else {						
-						window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
+					} else {
+						var _href='showCustInfo.action?induId='+$('#induId').val()
+						+'&cust.id='+$('#custId').val();						
+						window.location.href=_href;
 					}
 				}
 			};
-			$('#infoForm').ajaxSubmit(options);
+			$('#infoForm').ajaxSubmit(options);			
 		}
 	});	
 //-->

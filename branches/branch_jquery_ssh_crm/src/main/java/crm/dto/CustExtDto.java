@@ -16,7 +16,9 @@ public class CustExtDto extends Customer {
 
     private String custSysCompNames;
 
-    private List<Integer> custSysCompId;
+    private String custSysCompIds;
+
+    private List<Integer> custSysCompIdsList;
 
     public String getIndustryName() {
         return industryName;
@@ -34,12 +36,20 @@ public class CustExtDto extends Customer {
         this.custSysCompNames = custSysCompNames;
     }
 
-    public List<Integer> getCustSysCompId() {
-        return custSysCompId;
+    public String getCustSysCompIds() {
+        return custSysCompIds;
     }
 
-    public void setCustSysCompId(List<Integer> custSysCompId) {
-        this.custSysCompId = custSysCompId;
+    public void setCustSysCompIds(String custSysCompIds) {
+        this.custSysCompIds = custSysCompIds;
+    }
+
+    public List<Integer> getCustSysCompIdsList() {
+        return custSysCompIdsList;
+    }
+
+    public void setCustSysCompIdsList(List<Integer> custSysCompIdsList) {
+        this.custSysCompIdsList = custSysCompIdsList;
     }
 
 }

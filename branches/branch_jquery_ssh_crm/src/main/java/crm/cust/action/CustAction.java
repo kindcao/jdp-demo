@@ -103,11 +103,11 @@ public class CustAction extends BaseAction {
             List<?> compList = custService.findCustSysCompRel(custSysCompRelId);
             if (null != compList) {
                 Map<?, ?> sysCompMap = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
-                List<Integer> custSysCompId = new ArrayList<Integer>();
+                List<Integer> custSysCompIdsList = new ArrayList<Integer>();
                 String custSysCompNames = "";
                 for (Iterator<?> iterator = compList.iterator(); iterator.hasNext();) {
                     CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
-                    custSysCompId.add(ele.getId().getSysCompanyId());
+                    custSysCompIdsList.add(ele.getId().getSysCompanyId());
                     custSysCompNames += ((SysCompany) sysCompMap.get(ele.getId().getSysCompanyId().toString()))
                             .getCompanyName();
                     if (iterator.hasNext()) {
@@ -115,7 +115,7 @@ public class CustAction extends BaseAction {
                     }
                 }
                 custExtDto.setCustSysCompNames(custSysCompNames);
-                custExtDto.setCustSysCompId(custSysCompId);
+                custExtDto.setCustSysCompIdsList(custSysCompIdsList);
             }
             session.put(Constants.CUSTOMER_SESSION_KEY, custExtDto);
         } else {
@@ -168,13 +168,14 @@ public class CustAction extends BaseAction {
         cust.setLastUpdatedTime(cust.getCreatedTime());
         custDto.setCustObj(cust);
         //
-        Integer[] custSysCompRelIds = splitIdsStrByRegex(custSysCompIds);
+        List<Integer> custSysCompRelIds = Utils.getIds(custSysCompIds);
         if (null != custSysCompRelIds) {
             Set<CustomerSysCompanyRel> custSysCompRels = new HashSet<CustomerSysCompanyRel>();
-            for (int i = 0; i < custSysCompRelIds.length; i++) {
+            for (Iterator<Integer> iterator = custSysCompRelIds.iterator(); iterator.hasNext();) {
+                Integer ele = (Integer) iterator.next();
                 CustomerSysCompanyRel obj = new CustomerSysCompanyRel();
                 obj.setId(new CustomerSysCompanyRelId());
-                obj.getId().setSysCompanyId(custSysCompRelIds[i]);
+                obj.getId().setSysCompanyId(ele);
                 custSysCompRels.add(obj);
             }
             custDto.setCustSysCompRels(custSysCompRels);
@@ -219,6 +220,7 @@ public class CustAction extends BaseAction {
         jlr.setTotal(totalCount);
         jlr.setRows(custList);
         responseJsonData(jlr);
+        reset();
         return NONE;
     }
 
@@ -306,4 +308,5 @@ public class CustAction extends BaseAction {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

@@ -96,32 +96,6 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
         return Calendar.getInstance().getTime();
     }
 
-    protected Integer[] splitIdsStrByRegex(String str) {
-        return splitIdsStrByRegex(str, ",");
-    }
-
-    protected Integer[] splitIdsStrByRegex(String str, String regex) {
-        Integer[] ids = null;
-        if (str.startsWith(regex)) {
-            str = str.replaceFirst(regex, "");
-        }
-        if (str.endsWith(regex)) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(str);
-            sb.reverse();
-            str = sb.reverse().toString().replaceFirst(regex, "");
-        }
-        //
-        String[] strArr = str.split(regex.trim());
-        if (strArr != null && strArr.length > 0) {
-            ids = new Integer[strArr.length];
-            for (int i = 0; i < strArr.length; i++) {
-                ids[i] = Integer.valueOf(strArr[i].trim());
-            }
-        }
-        return ids;
-    }
-
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;

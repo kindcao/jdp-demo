@@ -35,7 +35,7 @@ public class MstDataLoader {
         //
         loadCustomerIndustry(ctx);
         loadSysCompany(ctx);
-        loadSysCompanyUser(ctx);
+        // loadSysCompanyUser(ctx);
         log.info("loadMstData end.");
     }
 

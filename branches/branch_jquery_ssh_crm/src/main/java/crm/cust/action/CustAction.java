@@ -1,6 +1,5 @@
 package crm.cust.action;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -103,19 +102,21 @@ public class CustAction extends BaseAction {
             List<?> compList = custService.findCustSysCompRel(custSysCompRelId);
             if (null != compList) {
                 Map<?, ?> sysCompMap = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
-                List<Integer> custSysCompIdsList = new ArrayList<Integer>();
+
+                String custSysCompIds = "";
                 String custSysCompNames = "";
                 for (Iterator<?> iterator = compList.iterator(); iterator.hasNext();) {
                     CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
-                    custSysCompIdsList.add(ele.getId().getSysCompanyId());
+                    custSysCompIds += ele.getId().getSysCompanyId();
                     custSysCompNames += ((SysCompany) sysCompMap.get(ele.getId().getSysCompanyId().toString()))
                             .getCompanyName();
                     if (iterator.hasNext()) {
+                        custSysCompIds += ",";
                         custSysCompNames += ",";
                     }
                 }
+                custExtDto.setCustSysCompIds(custSysCompIds);
                 custExtDto.setCustSysCompNames(custSysCompNames);
-                custExtDto.setCustSysCompIdsList(custSysCompIdsList);
             }
             session.put(Constants.CUSTOMER_SESSION_KEY, custExtDto);
         } else {

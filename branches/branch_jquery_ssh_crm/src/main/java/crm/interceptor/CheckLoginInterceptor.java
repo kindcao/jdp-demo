@@ -34,7 +34,7 @@ public class CheckLoginInterceptor extends MethodFilterInterceptor {
         if (sysCompUser != null) {
             return invocation.invoke();
         } else {
-            log.info("Not login,please login first");
+            log.info("Not login or session timeout,please login first");
             return Action.LOGIN;
         }
     }

@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,14 +36,13 @@ public class SysCompUserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
-        Map<String, Object> map = (Map<String, Object>) application.get(Constants.SYS_USER_APPLICATION_KEY);
-        if (null == map) {
-            map = new HashMap<String, Object>();
-            application.put(Constants.SYS_USER_APPLICATION_KEY, map);
+        if (null == application.get(Constants.SYS_USER_APPLICATION_KEY)) {
+            application.put(Constants.SYS_USER_APPLICATION_KEY, Constants.SYS_USER_MAP);
         }
-        if (map.containsKey(sysCompUser.getLoginId())) {
-            HttpSession lastSession = (HttpSession) map.get(sysCompUser.getLoginId());
+
+        if (Constants.SYS_USER_MAP.containsKey(sysCompUser.getLoginId())) {
             log.warn("user " + sysCompUser.getLoginId() + " duplicate login.");
+            HttpSession lastSession = (HttpSession) Constants.SYS_USER_MAP.get(sysCompUser.getLoginId());
             lastSession.removeAttribute(Constants.CURR_SYS_USER_SESSION_KEY);
             lastSession = request.getSession();
         }
@@ -59,7 +57,7 @@ public class SysCompUserAction extends BaseAction {
         if (list != null && list.size() > 0) {
             log.info("user " + sysCompUser.getLoginId() + " login.");
             session.put(Constants.CURR_SYS_USER_SESSION_KEY, list.get(0));
-            map.put(sysCompUser.getLoginId(), request.getSession());
+            Constants.SYS_USER_MAP.put(sysCompUser.getLoginId(), request.getSession());
             jvr.setSuccess(true);
         } else {
             jvr.setSuccess(false);
@@ -72,9 +70,7 @@ public class SysCompUserAction extends BaseAction {
     public String logout() throws Exception {
         SysCompanyUser _sysCompUser = (SysCompanyUser) session.remove(Constants.CURR_SYS_USER_SESSION_KEY);
         if (_sysCompUser != null) {
-            Map<?, ?> map = (Map<?, ?>) ServletActionContext.getContext().getApplication().get(
-                    Constants.SYS_USER_APPLICATION_KEY);
-            map.remove(sysCompUser.getLoginId());
+            Constants.SYS_USER_MAP.remove(sysCompUser.getLoginId());
             log.info("user " + sysCompUser.getLoginId() + " logout.");
         }
         return LOGIN;

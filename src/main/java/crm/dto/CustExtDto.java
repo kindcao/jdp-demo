@@ -1,7 +1,5 @@
 package crm.dto;
 
-import java.util.List;
-
 import crm.model.Customer;
 
 /**
@@ -17,8 +15,6 @@ public class CustExtDto extends Customer {
     private String custSysCompNames;
 
     private String custSysCompIds;
-
-    private List<Integer> custSysCompIdsList;
 
     public String getIndustryName() {
         return industryName;
@@ -42,14 +38,6 @@ public class CustExtDto extends Customer {
 
     public void setCustSysCompIds(String custSysCompIds) {
         this.custSysCompIds = custSysCompIds;
-    }
-
-    public List<Integer> getCustSysCompIdsList() {
-        return custSysCompIdsList;
-    }
-
-    public void setCustSysCompIdsList(List<Integer> custSysCompIdsList) {
-        this.custSysCompIdsList = custSysCompIdsList;
     }
 
 }

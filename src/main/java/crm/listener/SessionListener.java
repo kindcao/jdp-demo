@@ -1,12 +1,9 @@
 package crm.listener;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +32,7 @@ public class SessionListener implements HttpSessionListener {
         SysCompanyUser sysCompUser = (SysCompanyUser) session.getAttribute(Constants.CURR_SYS_USER_SESSION_KEY);
         if (sysCompUser != null) {
             session.removeAttribute(Constants.CURR_SYS_USER_SESSION_KEY);
-            Map<?, ?> map = (Map<?, ?>) ServletActionContext.getContext().getApplication().get(
-                    Constants.SYS_USER_APPLICATION_KEY);
-            map.remove(sysCompUser.getLoginId());
+            Constants.SYS_USER_MAP.remove(sysCompUser.getLoginId());
             log.info("user[" + sysCompUser.getLoginId() + "] session destroyed");
         }
     }

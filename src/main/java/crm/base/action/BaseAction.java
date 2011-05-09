@@ -15,6 +15,7 @@ import net.sf.json.util.JSONUtils;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ApplicationAware;
+import org.apache.struts2.interceptor.CookiesAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -28,15 +29,17 @@ import crm.model.SysCompanyUser;
 import crm.util.Utils;
 
 public class BaseAction extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware,
-        ApplicationAware {
+        ApplicationAware, CookiesAware {
 
     private static final long serialVersionUID = -7367003790059602087L;
 
     private final Logger log = LoggerFactory.getLogger(BaseAction.class);
 
+    protected Map<String, Object> application;
+
     protected Map<String, Object> session;
 
-    protected Map<String, Object> application;
+    protected Map<String, String> cookies;
 
     protected HttpServletResponse response;
 
@@ -84,10 +87,6 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
         }
     }
 
-    protected ServletContext getCtx() {
-        return ServletActionContext.getServletContext();
-    }
-
     protected SysCompanyUser getCurrSysCompUser() {
         return (SysCompanyUser) session.get(Constants.CURR_SYS_USER_SESSION_KEY);
     }
@@ -99,12 +98,12 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;
+        ServletActionContext.getContext().setSession(session);
     }
 
     @Override
     public void setServletRequest(HttpServletRequest request) {
         this.request = request;
-
     }
 
     @Override
@@ -115,7 +114,16 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     @Override
     public void setApplication(Map<String, Object> application) {
         this.application = application;
+        ServletActionContext.getContext().setApplication(application);
+    }
 
+    @Override
+    public void setCookiesMap(Map<String, String> cookies) {
+        this.cookies = cookies;
+    }
+
+    protected ServletContext getCtx() {
+        return ServletActionContext.getServletContext();
     }
 
     public Integer getRows() {

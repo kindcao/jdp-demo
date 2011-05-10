@@ -9,7 +9,6 @@ import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
 import crm.common.Constants;
 import crm.model.SysCompanyUser;
-import crm.syssetup.action.SysCompUserAction;
 
 /**
  * 
@@ -24,10 +23,12 @@ public class CheckLoginInterceptor extends MethodFilterInterceptor {
 
     @Override
     protected String doIntercept(ActionInvocation invocation) throws Exception {
-        if ("login".equals(invocation.getProxy().getConfig().getMethodName())
-                && SysCompUserAction.class.getName().equals(invocation.getAction().getClass().getName())) {
-            return invocation.invoke();
-        }
+        // if ("login".equals(invocation.getProxy().getConfig().getMethodName())
+        // &&
+        // SysCompUserAction.class.getName().equals(invocation.getAction().getClass().getName()))
+        // {
+        // return invocation.invoke();
+        // }
         //
         SysCompanyUser sysCompUser = (SysCompanyUser) invocation.getInvocationContext().getSession().get(
                 Constants.CURR_SYS_USER_SESSION_KEY);

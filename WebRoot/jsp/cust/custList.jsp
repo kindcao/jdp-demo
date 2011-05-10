@@ -220,12 +220,13 @@
 
 <script type="text/javascript" defer="defer">
 <!--	
-	//for add begin
-	$('#cust_indu').combobox({
-		url:'getCustIndu.action?induId='+$('#induId').val()				
-	});
-		
+	//for add begin		
 	$("#_add").click(function() {
+		//
+		$('#cust_indu').combobox({
+			url:'getCustIndu.action?induId='+$('#induId').val()				
+		});
+		//
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
 		$('#_delete').linkbutton('disable');	

@@ -48,7 +48,10 @@
 				邮箱:
 			</td>
 			<td>
-				<s:property value="#_cust.email" />
+				<s:if test="%{null!=#_cust.email}">
+					<a href='mailto:<s:property value="#_cust.email" />'><s:property
+							value="#_cust.email" /> </a>
+				</s:if>
 			</td>
 			<td nowrap="nowrap" align="center">
 				传真:
@@ -60,7 +63,10 @@
 				网站:
 			</td>
 			<td>
-				<s:property value="#_cust.website" />
+				<s:if test="%{null!=#_cust.website}">
+					<a href='<s:property value="#_cust.website" />'><s:property
+							value="#_cust.website" /> </a>
+				</s:if>
 			</td>
 		</tr>
 		<tr height="30px">
@@ -297,9 +303,9 @@
 	$("#_edit").click(function() {
 		document.getElementById('div_info_read-only').style.display='none';
 		document.getElementById('div_info').style.display='inline';	
-		//
-		document.getElementById('cust.descript').value='<s:property value="#_cust.descript" />';
-		document.getElementById('cust.remark').value='<s:property value="#_cust.remark" />';
+		//		
+		document.getElementById('cust.descript').value='<s:property value="#_cust.descript" escape="false" />';
+		document.getElementById('cust.remark').value='<s:property value="#_cust.remark" escape="false" />';
 		$('#cust_indu').combobox('setValue','<s:property value="#_cust.industryId" />');
 		var _idsStr='<s:property value="#_cust.custSysCompIds" />';		
 		$('#cust_sys_comp').combobox('setValues',_idsStr.split(','));	

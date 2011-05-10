@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-
 <s:hidden id="induId" name="induId" />
 <s:hidden id="custId" name="cust.id" />
 <s:set name="_cust" value="#session.CUSTOMER_SESSION_KEY" />
@@ -285,7 +284,7 @@
 	</form>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" defer="defer">
 <!--
 	$('#cust_indu').combobox({
 		url:'getCustIndu.action?induId='+$('#induId').val()				

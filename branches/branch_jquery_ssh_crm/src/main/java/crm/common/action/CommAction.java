@@ -42,6 +42,11 @@ public class CommAction extends BaseAction {
         return "welcome";
     }
 
+    public String getStatusYN() throws Exception {
+        responseJsonData(Constants.JSON_DATA_STATUS_YN);
+        return NONE;
+    }
+
     public String getCustIndu() throws Exception {
         Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(CustomerIndustry.class.getName());
         if (null == map) {

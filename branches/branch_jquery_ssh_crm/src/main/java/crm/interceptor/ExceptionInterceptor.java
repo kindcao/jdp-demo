@@ -4,19 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 /**
  * @author Kind Cao
  * @version $Rev$, May 5, 2011 4:54:53 PM
  */
 @SuppressWarnings("serial")
-public class ExceptionInterceptor extends MethodFilterInterceptor {
+public class ExceptionInterceptor extends AbstractInterceptor  {
 
     private Logger log = LoggerFactory.getLogger(ExceptionInterceptor.class);
 
     @Override
-    protected String doIntercept(ActionInvocation invocation) throws Exception {
+    public String intercept(ActionInvocation invocation) throws Exception {
         try {
             return invocation.invoke();
         } catch (Exception e) {

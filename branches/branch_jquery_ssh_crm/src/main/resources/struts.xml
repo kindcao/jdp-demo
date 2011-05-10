@@ -28,6 +28,7 @@
 			<result name="welcome" type="tiles">welcome</result>
 		</action>
 		<action name="error" class="commAction" method="error" />
+		<action name="getStatusYN" class="commAction" method="getStatusYN" />
 		<action name="getSysComp" class="commAction" method="getSysComp" />
 		<action name="getCustIndu" class="commAction" method="getCustIndu" />
 		<action name="getSysCompUserByCompIds" class="commAction" method="getSysCompUserByCompIds" />
@@ -58,9 +59,15 @@
 		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
 		<action name="deleteCust" class="custAction" method="deleteCust" />
 		<!-- cust - contact  -->
-		<action name="showContList" class="contactAction" method="showContList">
+		<action name="showContList" class="contAction" method="showContList">
 			<result name="contact.list">/jsp/cust/contactList.jsp</result>
 		</action>
+		<action name="showContInfo" class="contAction" method="showContInfo">
+			<result name="contact.info">/jsp/cust/contactInfo.jsp</result>
+		</action>
+		<action name="getContList" class="contAction" method="getContList" />
+		<action name="saveContInfo" class="contAction" method="saveContInfo" />
+		<action name="deleteCont" class="contAction" method="deleteCont" />
 		<!-- syssetup  -->
 		<action name="showCompList" class="sysCompAction" method="showCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>

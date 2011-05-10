@@ -19,6 +19,8 @@ public class Constants {
 
     public static final String CUSTOMER_SESSION_KEY = "CUSTOMER_SESSION_KEY";
 
+    public static final String CUSTOMER_CONTACT_SESSION_KEY = "CUSTOMER_CONTACT_SESSION_KEY";
+
     public static final String RESULT_TRANSFORMER_DTO = "RESULT_TRANSFORMER_DTO";
 
     public static final String STATUS_Y = "Y";
@@ -32,4 +34,6 @@ public class Constants {
     public static final String STATUS_A = "A";
 
     public static final String STATUS_D = "D";
+
+    public static final String JSON_DATA_STATUS_YN = "[{\"id\":\"Y\", \"text\":\"ÊÇ\"},{\"id\":\"N\", \"text\":\"·ñ\", \"selected\":true}]";
 }

@@ -48,7 +48,7 @@
 				邮箱:
 			</td>
 			<td>
-				<s:if test="%{null!=#_cust.email}">
+				<s:if test="%{#_cust.email.trim().length()>0}">
 					<a href='mailto:<s:property value="#_cust.email" />'><s:property
 							value="#_cust.email" /> </a>
 				</s:if>
@@ -63,7 +63,7 @@
 				网站:
 			</td>
 			<td>
-				<s:if test="%{null!=#_cust.website}">
+				<s:if test="%{#_cust.website.trim().length()>0}">
 					<a href='<s:property value="#_cust.website" />'><s:property
 							value="#_cust.website" /> </a>
 				</s:if>

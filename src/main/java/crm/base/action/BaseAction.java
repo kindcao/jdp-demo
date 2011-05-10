@@ -1,5 +1,6 @@
 package crm.base.action;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -55,35 +56,43 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
 
     private String ids;
 
-    protected void responseJsonData(Object obj) {
+    protected void responseJsonData(String data) throws IOException {
+        response.setContentType("text/json;charset=UTF-8");
+        response.setHeader("Pragma", "no-cache");
+        response.addHeader("Cache-Control", "must-revalidate");
+        response.addHeader("Cache-Control", "no-cache");
+        response.addHeader("Cache-Control", "no-store");
+        response.setDateHeader("Expires", 0);
+        response.getWriter().write(data);
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
+
+    protected void responseJsonData(Object obj) throws IOException {
         responseJsonData(obj, new JsonConfig());
     }
 
-    protected void responseJsonData(Object obj, JsonConfig cfg) {
+    protected void responseJsonData(Object obj, JsonConfig cfg) throws IOException {
         StringBuilder sb = new StringBuilder();
-        try {
-            if (JSONUtils.isNull(obj)) {
-                log.warn("JSONUtils.isNull(obj)");
-                return;
-            }
-            if (JSONUtils.isArray(obj)) {
-                sb.append(JSONArray.fromObject(obj, cfg));
-            } else if (JSONUtils.isObject(obj)) {
-                sb.append(JSONObject.fromObject(obj, cfg));
-            }
-            if (sb.toString().length() > 0) {
-                response.setContentType("text/json;charset=UTF-8");
-                response.setHeader("Pragma", "no-cache");
-                response.addHeader("Cache-Control", "must-revalidate");
-                response.addHeader("Cache-Control", "no-cache");
-                response.addHeader("Cache-Control", "no-store");
-                response.setDateHeader("Expires", 0);
-                response.getWriter().write(sb.toString());
-                response.getWriter().flush();
-                response.getWriter().close();
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
+        if (JSONUtils.isNull(obj)) {
+            log.warn("JSONUtils.isNull(obj)");
+            return;
+        }
+        if (JSONUtils.isArray(obj)) {
+            sb.append(JSONArray.fromObject(obj, cfg));
+        } else if (JSONUtils.isObject(obj)) {
+            sb.append(JSONObject.fromObject(obj, cfg));
+        }
+        if (sb.toString().length() > 0) {
+            response.setContentType("text/json;charset=UTF-8");
+            response.setHeader("Pragma", "no-cache");
+            response.addHeader("Cache-Control", "must-revalidate");
+            response.addHeader("Cache-Control", "no-cache");
+            response.addHeader("Cache-Control", "no-store");
+            response.setDateHeader("Expires", 0);
+            response.getWriter().write(sb.toString());
+            response.getWriter().flush();
+            response.getWriter().close();
         }
     }
 

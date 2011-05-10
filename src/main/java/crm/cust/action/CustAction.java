@@ -102,7 +102,6 @@ public class CustAction extends BaseAction {
             List<?> compList = custService.findCustSysCompRel(custSysCompRelId);
             if (null != compList) {
                 Map<?, ?> sysCompMap = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
-
                 String custSysCompIds = "";
                 String custSysCompNames = "";
                 for (Iterator<?> iterator = compList.iterator(); iterator.hasNext();) {
@@ -165,8 +164,8 @@ public class CustAction extends BaseAction {
             cust.setCreatedBy(getCurrSysCompUser().getId());
             cust.setCreatedTime(getCurrDate());
         }
-        cust.setLastUpdatedBy(cust.getCreatedBy());
-        cust.setLastUpdatedTime(cust.getCreatedTime());
+        cust.setLastUpdatedBy(getCurrSysCompUser().getId());
+        cust.setLastUpdatedTime(getCurrDate());
         custDto.setCustObj(cust);
         //
         List<Integer> custSysCompRelIds = Utils.getIds(custSysCompIds);
@@ -235,6 +234,7 @@ public class CustAction extends BaseAction {
             custService.deleteAll(_custObj, Utils.getIds(getIds()));
             jvr.setSuccess(true);
         } else {
+            log.info("delete ids is null");
             jvr.setErrors("delete ids is null");
         }
         responseJsonData(jvr);

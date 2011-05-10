@@ -223,7 +223,6 @@
 	$("#_reset_contact").click(function() {
 		resetForm('infoFormContact');
 	});	
-	
 	//for add end
 	
 	//for delete begin
@@ -246,6 +245,15 @@
 		reloadDatagrid('grid-datalist-contact');
 	});	
 	
+	function editCont(id){    		
+		var tab = $('#tabs-container').tabs('getSelected');	
+		$('#tabs-container').tabs('update', {
+			tab: tab,
+			options:{
+				href:'showContInfo.action?cont.id='+id			
+			}
+		});		
+	}
 		
 	//	
 	$(document).ready(function() {		
@@ -302,15 +310,5 @@
 		showDatagrid('grid-datalist-contact','getContList.action',frozenColumns,columns);				
 	});	
 	//for search end
-
-    function editCont(id){    		
-		var tab = $('#tabs-container').tabs('getSelected');	
-		$('#tabs-container').tabs('update', {
-			tab: tab,
-			options:{
-				href:'showContInfo.action?cont.id='+id			
-			}
-		});		
-	}	
 //-->
 </script>

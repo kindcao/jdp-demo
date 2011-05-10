@@ -244,7 +244,7 @@
 		</table>
 	</form>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" defer="defer">
 <!--	
 	$("#_back_contact").click(function() {
 		var tab = $('#tabs-container').tabs('getSelected');	

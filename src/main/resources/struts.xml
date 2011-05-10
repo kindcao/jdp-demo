@@ -11,7 +11,9 @@
 			<interceptor name="checkLoginInterceptor" class="crm.interceptor.CheckLoginInterceptor" />
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="checkLoginInterceptor" />
+				<interceptor-ref name="checkLoginInterceptor">
+					<param name="excludeMethods">login</param>
+				</interceptor-ref>
 				<interceptor-ref name="exceptionInterceptor" />
 			</interceptor-stack>
 		</interceptors>

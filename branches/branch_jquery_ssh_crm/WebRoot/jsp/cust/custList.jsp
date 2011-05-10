@@ -221,12 +221,7 @@
 <script type="text/javascript" defer="defer">
 <!--	
 	//for add begin		
-	$("#_add").click(function() {
-		//
-		$('#cust_indu').combobox({
-			url:'getCustIndu.action?induId='+$('#induId').val()				
-		});
-		//
+	$("#_add").click(function() {		
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
 		$('#_delete').linkbutton('disable');	
@@ -268,7 +263,6 @@
 		//$('#cust_sys_prim_user').combobox('clear');
 		resetForm('infoForm');
 	});		
-		
 	
 	/**
 	$('#cust_sys_comp').combobox({
@@ -297,11 +291,7 @@
 	});
 	//fore delte end
 	
-	//for search begin
-	$('#cust_indu_search').combobox({
-		url:'getCustIndu.action?induId='+$('#induId').val()			
-	});	
-	
+	//for search begin	
 	/**
 	$('#cust_sys_comp_search').combobox({
 		url:'getSysComp.action',	
@@ -329,6 +319,10 @@
 		queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValues')+'';
 		reloadDatagrid('grid-datalist');
 	});	
+	
+	function editComp(cId){    	
+		window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
+	}	
 		
 	//	
 	$(document).ready(function() {		
@@ -371,12 +365,17 @@
 		}]];
 			
 		//		
-		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);				
+		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);			
+		
+		//
+		$('#cust_indu').combobox({
+			url:'getCustIndu.action?induId='+$('#induId').val()				
+		});
+		
+		$('#cust_indu_search').combobox({
+			url:'getCustIndu.action?induId='+$('#induId').val()			
+		});				
 	});	
-	//for search end
-	
-    function editComp(cId){    	
-		window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
-	}	
+	//for search end  
 //-->
 </script>

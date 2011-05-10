@@ -24,15 +24,17 @@ function login(formIdStr) {
 //-->
 </script>
 <div align="center">
-	<s:form id="loginForm" method="post">
+	<s:form id="loginForm">
 		<table cellspacing="0" cellpadding="0" width="400" height="150"
 			style="border: 1px solid #A4BED4;" align="center">
 			<tr height="20px">
-				<td width="30%" align="left" bgcolor="#A4BED4" colspan="2">
-					用户登录
-				</td>
+				<th width="30%" align="left" bgcolor="#A4BED4" colspan="2">
+					<div style="margin: 5px;">
+						用户登录
+					</div>
+				</th>
 			</tr>
-			<tr height="30px">
+			<tr height="40px">
 				<td width="30%" align="center">
 					用户名称 :
 				</td>

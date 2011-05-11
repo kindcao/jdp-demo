@@ -189,7 +189,6 @@ public class CustAction extends BaseAction {
             jvr.setSuccess(true);
         }
         responseJsonData(jvr);
-        reset();
         return NONE;
     }
 
@@ -220,7 +219,6 @@ public class CustAction extends BaseAction {
         jlr.setTotal(totalCount);
         jlr.setRows(custList);
         responseJsonData(jlr);
-        reset();
         return NONE;
     }
 
@@ -241,9 +239,13 @@ public class CustAction extends BaseAction {
         return NONE;
     }
 
-    private void reset() {
-        this.custSysCompIds = "";
-    }
+    // private void reset() {
+    // this.custSysCompIds = null;
+    // this.custName = null;
+    // this.custCode = null;
+    // this.industryId = null;
+    // this.address = null;
+    // }
 
     public int getInduId() {
         return induId;

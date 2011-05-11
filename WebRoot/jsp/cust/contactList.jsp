@@ -62,9 +62,10 @@
 					是否主要:
 				</td>
 				<td>
-					<input name="cont.isPrimary" class="easyui-combobox"
-						url="getStatusYN.action" valueField="id" textField="text"
-						panelHeight="auto" editable="false" style="width: 135px;">
+					<input id="cont.isPrimary" name="cont.isPrimary"
+						class="easyui-combobox" url="getStatusYN.action" valueField="id"
+						textField="text" panelHeight="auto" editable="false"
+						style="width: 135px;">
 				</td>
 				<td nowrap="nowrap" align="center">
 					MSN/QQ:
@@ -221,6 +222,7 @@
 	});
 	
 	$("#_reset_contact").click(function() {
+		$('#cont.isPrimary').combobox('clear');
 		resetForm('infoFormContact');
 	});	
 	//for add end
@@ -232,7 +234,8 @@
 	//fore delte end
 	
 	//for search begin	
-	$('#_reset_search_contact').click(function() {		
+	$('#_reset_search_contact').click(function() {
+		$('#isPrimary').combobox('clear');
 		resetForm('searchFormContact');
 	});	
 	

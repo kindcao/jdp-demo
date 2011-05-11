@@ -3,10 +3,7 @@ package crm.syssetup.service;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import crm.base.service.BaseServiceImpl;
-import crm.syssetup.dao.SysCompDao;
 
 /**
  * 
@@ -17,22 +14,15 @@ import crm.syssetup.dao.SysCompDao;
 
 public class SysCompServiceImpl extends BaseServiceImpl implements SysCompService {
 
-    public SysCompDao sysCompDao;
-
-    @Resource
-    public void setSysCompDao(SysCompDao sysCompDao) {
-        this.sysCompDao = sysCompDao;
-    }
-
     @Override
     public int getTotalCount(Map<String, Object> map) throws Exception {
-        return sysCompDao.getTotalCount(getQueryHQL(map), map);
+        return getBaseDaoImpl().getTotalCount(getQueryHQL(map), map);
     }
 
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
         String hql = getQueryHQL(map) + " order by id desc";
-        return sysCompDao.findPageByQuery(pageNo, pageSize, hql, map);
+        return getBaseDaoImpl().findPageByQuery(pageNo, pageSize, hql, map);
     }
 
     private String getQueryHQL(Map<String, Object> map) {

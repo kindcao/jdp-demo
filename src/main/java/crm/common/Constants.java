@@ -35,5 +35,5 @@ public class Constants {
 
     public static final String STATUS_D = "D";
 
-    public static final String JSON_DATA_STATUS_YN = "[{\"id\":\"Y\", \"text\":\"ÊÇ\"},{\"id\":\"N\", \"text\":\"·ñ\", \"selected\":true}]";
+    public static final String JSON_DATA_STATUS_YN = "[{\"id\":\"Y\", \"text\":\"ÊÇ\"},{\"id\":\"N\", \"text\":\"·ñ\"}]";
 }

@@ -155,7 +155,8 @@
 				</td>
 				<td width="20%">
 					<select id="sysComp.type" name="sysComp.type"
-						class="easyui-combobox" panelHeight="auto" required="true">
+						class="easyui-combobox" panelHeight="auto" required="true"
+						editable="false">
 						<option value="R">
 							融聚公司
 						</option>
@@ -169,7 +170,8 @@
 				</td>
 				<td width="20%">
 					<select id="sysComp.status" name="sysComp.status"
-						class="easyui-combobox" panelHeight="auto" required="true">
+						class="easyui-combobox" panelHeight="auto" required="true"
+						editable="false">
 						<option value="A">
 							正常
 						</option>
@@ -227,22 +229,22 @@
 			<legend style="margin-top: 10px;">
 				查询条件
 			</legend>
-			<table cellpadding="0" cellspacing="0" width="60%" border="0"
+			<table cellpadding="0" cellspacing="0" width="800" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
-					<td nowrap="nowrap" align="center">
+					<td nowrap="nowrap" align="center" width="10%">
 						公司名称:
 					</td>
-					<td>
+					<td width="20%">
 						<input id="companyName" name="companyName" type="text"
 							maxlength="50" />
 					</td>
-					<td nowrap="nowrap" align="center">
+					<td nowrap="nowrap" align="center" width="10%">
 						公司状态:
 					</td>
-					<td>
+					<td width="20%">
 						<select id="status" name="status" class="easyui-combobox"
-							panelHeight="auto">
+							panelHeight="auto" editable="false">
 							<option value="">
 								---请选择---
 							</option>
@@ -254,9 +256,12 @@
 							</option>
 						</select>
 					</td>
+					<td colspan="2" align="center">
+						&nbsp;
+					</td>
 				</tr>
 				<tr height="30px">
-					<td colspan="3">
+					<td colspan="5">
 						&nbsp;
 					</td>
 					<td align="right">

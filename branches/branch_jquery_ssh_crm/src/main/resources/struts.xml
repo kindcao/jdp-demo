@@ -12,7 +12,7 @@
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="checkLoginInterceptor">
-					<param name="excludeMethods">login</param>
+					<param name="excludeMethods">showLogin,login</param>
 				</interceptor-ref>
 				<interceptor-ref name="exceptionInterceptor" />
 			</interceptor-stack>
@@ -70,18 +70,20 @@
 		<action name="getContList" class="contAction" method="getContList" />
 		<action name="saveContInfo" class="contAction" method="saveContInfo" />
 		<action name="deleteCont" class="contAction" method="deleteCont" />
-		<!-- syssetup  -->
+		<!-- syssetup company -->
 		<action name="showCompList" class="sysCompAction" method="showCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>
 		</action>
 		<action name="getCompList" class="sysCompAction" method="getCompList" />
 		<action name="saveSysCompInfo" class="sysCompAction" method="saveSysCompInfo" />
-		<action name="getUserList" class="sysCompUserAction" method="getUserList" />
+		<!-- syssetup user -->
+		<action name="showLogin" class="sysCompUserAction" method="showLogin" />
 		<action name="login" class="sysCompUserAction" method="login" />
 		<action name="logout" class="sysCompUserAction" method="logout" />
-		<action name="forward" class="sysCompUserAction" method="forward">
-			<result name="list" type="tiles">syscompuser.list</result>
+		<action name="showUserList" class="sysCompUserAction" method="showUserList">
+			<result name="syscompuser.list" type="tiles">syscompuser.list</result>
 		</action>
+		<action name="getUserList" class="sysCompUserAction" method="getUserList" />
 		<action name="addUser" class="sysCompUserAction" method="addUser" />
 		<action name="editUser" class="sysCompUserAction" method="editUser" />
 		<action name="delUser" class="sysCompUserAction" method="delUser" />

@@ -36,7 +36,7 @@
 <div style="height: 30px; overflow: hidden;">
 	<table cellpadding="0" cellspacing="0"
 		style="background-color: #A4BED4;" align="left" width="100%"
-		height="28px;">
+		height="30px;">
 		<tr valign="middle">
 			<td style="width: 198px; border: 1px solid white;" nowrap="nowrap">
 				<div style="margin: 0 10px 0 10px;" id="labtime"></div>
@@ -61,11 +61,12 @@
 					</tr>
 				</table>
 			</td>
-			<td style="width: 80px; border: 1px solid white;" nowrap="nowrap"
-				align="center">
-				<div style="margin: 5px;" id="labinfo">
-					<a id="logoutAction" href="#"
-						onclick='document.location = "logout.action"'>Logout</a>
+			<td style="width: 70px; border: 1px solid white;" nowrap="nowrap"
+				align="right">
+				<div style="margin-right: 5px;">
+					<a id="logoutAction" href="#" class="easyui-linkbutton"
+						plain="true" iconCls="icon-back"
+						onclick='document.location = "logout.action"'>注销</a>
 				</div>
 			</td>
 		</tr>

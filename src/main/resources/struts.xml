@@ -33,6 +33,7 @@
 		<action name="getStatusYN" class="commAction" method="getStatusYN" />
 		<action name="getSysComp" class="commAction" method="getSysComp" />
 		<action name="getCustIndu" class="commAction" method="getCustIndu" />
+		<action name="getMarketEventType" class="commAction" method="getMarketEventType" />
 		<action name="getSysCompUserByCompIds" class="commAction" method="getSysCompUserByCompIds" />
 		<action name="getSysCompUserByUserIds" class="commAction" method="getSysCompUserByUserIds" />
 		<!-- cust -->

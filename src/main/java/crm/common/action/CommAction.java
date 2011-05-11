@@ -15,6 +15,7 @@ import crm.base.action.BaseAction;
 import crm.base.service.BaseService;
 import crm.common.Constants;
 import crm.model.CustomerIndustry;
+import crm.model.MarketEventType;
 import crm.model.SysCompany;
 import crm.model.SysCompanyUser;
 
@@ -32,6 +33,8 @@ public class CommAction extends BaseAction {
 
     private int induId;
 
+    private int eventTypeId;
+
     private String sysCompIds;
 
     private String sysCompType;
@@ -40,6 +43,24 @@ public class CommAction extends BaseAction {
 
     public String welcome() throws Exception {
         return "welcome";
+    }
+
+    public String getMarketEventType() throws Exception {
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(MarketEventType.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getMarketEventType map from servlet context is null.");
+        }
+
+        List<MarketEventType> list = new ArrayList<MarketEventType>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            MarketEventType value = (MarketEventType) map.get(key);
+            if (eventTypeId > 0 && null != value.getSuperiorId() && value.getSuperiorId().intValue() == eventTypeId) {
+                list.add(value);
+            }
+        }
+        responseJsonData(list);
+        return NONE;
     }
 
     public String getStatusYN() throws Exception {
@@ -175,5 +196,13 @@ public class CommAction extends BaseAction {
 
     public void setSysCompType(String sysCompType) {
         this.sysCompType = sysCompType;
+    }
+
+    public int getEventTypeId() {
+        return eventTypeId;
+    }
+
+    public void setEventTypeId(int eventTypeId) {
+        this.eventTypeId = eventTypeId;
     }
 }

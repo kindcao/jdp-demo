@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,16 @@ public class SysCompUserAction extends BaseAction {
     private SysCompanyUser sysCompUser;
 
     private SysCompUserService sysCompUserService;
+
+    private String name;
+
+    private String loginId;
+
+    private String status;
+
+    public String showLogin() throws Exception {
+        return LOGIN;
+    }
 
     @SuppressWarnings("unchecked")
     public String login() throws Exception {
@@ -74,15 +85,6 @@ public class SysCompUserAction extends BaseAction {
             log.info("user " + sysCompUser.getLoginId() + " logout.");
         }
         return LOGIN;
-    }
-
-    public String forward() throws Exception {
-        if ("login".equals(getForward())) {
-            return LOGIN;
-        } else if ("list".equals(getForward())) {
-            return "list";
-        }
-        return NONE;
     }
 
     public String addUser() throws Exception {
@@ -132,72 +134,30 @@ public class SysCompUserAction extends BaseAction {
         return NONE;
     }
 
+    public String showUserList() throws Exception {
+        return "syscompuser.list";
+    }
+
     @SuppressWarnings("unchecked")
     public String getUserList() throws Exception {
         JsonListResult jlr = new JsonListResult();
-        // Object list = session.get("mylist");
-        // if (list != null) {
-        // myCustomers = (List<User>) list;
-        // } else {
-        // log.debug("Build new List");
-        // myCustomers = new ArrayList<User>();
-        // }
-        Map map = new HashMap();
-        // map.put("username", "%" + sysCompUser.getLoginId() + "%");
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(name)) {
+            map.put("name", name);
+        }
+        if (StringUtils.isNotBlank(loginId)) {
+            map.put("loginId", loginId);
+        }
+        if (StringUtils.isNotBlank(status)) {
+            map.put("status", status);
+        }
 
-        // int totalCount = userService.getUserTotalCount(map);
-        // setRecord(totalCount);
-        // if (loadonce) {
-        // setGridModel(myCustomers);
-        // } else {
-        // setGridModel(userService.getUserByPage(getPage(), getRows(), map));
-        // }
-        // setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
-        // session.put("mylist", myCustomers);
         int totalCount = sysCompUserService.getTotalCount(map);
         List<?> userList = sysCompUserService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
-
-        // StringBuffer sb = new StringBuffer();
-        // sb.append("{\"total\":").append(totalCount).append(",");
-        // sb.append("\"rows\":");
-        // if (gridModel != null && gridModel.size() > 0) {
-        // JSONArray jsonArray = JSONArray.fromObject(gridModel);
-        // sb.append(jsonArray);
-        // } else {
-        // sb.append("{}");
-        // }
-        // sb.append("}");
-        // responseJsonData(sb.toString());
-
         jlr.setTotal(totalCount);
         jlr.setRows(userList);
         responseJsonData(jlr);
         return NONE;
-
-        // HttpServletRequest request = ServletActionContext.getRequest();
-        // int start = Integer.parseInt(request.getParameter("start"));
-        // int limit = Integer.parseInt(request.getParameter("limit"));
-        // System.out.println("start=" + start + " limit=" + limit);
-        //
-        // Map map = new HashMap();
-        // try {
-        // List<User> userList = userService.getUserByPage(start, limit, map);
-        // if (userList != null && userList.size() > 0) {
-        //
-        // int totalCount = userService.getUserTotalCount(map);
-        //
-        // JSONArray jsonArray = JSONArray.fromObject(userList);
-        // HttpServletResponse response = ServletActionContext
-        // .getResponse();
-        // response.setContentType("text/json;charset=UTF-8");
-        // response.getWriter().write(
-        // "{results:" + totalCount + ",List:" + jsonArray + "}");
-        // log.info("{results:" + totalCount + ",List:" + jsonArray + "}");
-        // }
-        // } catch (Exception e) {
-        // throw new Exception("find all user error," + e);
-        // }
-        // return null;
     }
 
     @Resource
@@ -211,6 +171,30 @@ public class SysCompUserAction extends BaseAction {
 
     public void setSysCompUser(SysCompanyUser sysCompUser) {
         this.sysCompUser = sysCompUser;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

@@ -1,4 +1,4 @@
 
 <%
-    response.sendRedirect("forward.action?forward=login");
+    response.sendRedirect("showLogin.action");
 %>

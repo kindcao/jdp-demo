@@ -2,140 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<script type="text/javascript">
-<!--
-	$(document).ready(function() {
-		var frozenColumns = [[{
-					field : 'ck',
-					checkbox : true
-				}, {
-					field : 'companyName',
-					title : '公司名称',
-					width : 200,
-					sortable : true,			
-					formatter : function(value, rec) {
-						return "<a href='javascript:void(0);' onclick='editComp(" + rec.id+ ");'>" + value + "</a>";
-					}
-				}]];
-		var columns = [[{
-		    field : 'type',
-			title : '公司类型',
-			width : 100,
-			formatter : function(value, rec) {				
-				if(value=='R'){
-					value='融聚公司';
-				}else{
-					value='其它公司';
-				}
-				return value;
-			}
-		}, {
-			field : 'status',
-			title : '公司状态',
-			width : 100,
-			formatter : function(value, rec) {
-				if(value=='A'){
-					value='正常';
-				}else{
-					value='禁用';
-				}
-				return value;
-			}
-		}, {
-			field : 'logo',
-			title : '公司Logo图URI',
-			width : 250,
-			formatter : function(value, rec) {					
-				return "<a href='#' onclick=viewLogo('"+value+"')>" + value + "</a>";							
-			}
-		}, {
-			field : 'descript',
-			title : '备注',
-			width : 250
-		}]];
-			
-		//		
-		showDatagrid('grid-datalist','getCompList.action',frozenColumns,columns);
-		//
-		$("#_search").click(function() {		
-			var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
-		    queryParams.companyName = $("#companyName").val();
-		    queryParams.status = $('#status').combobox('getValue'); 
-		    reloadDatagrid('grid-datalist');
-		});	
-		
-		$('#div-log-img').dialog({
-			title:'Logo图片预览',
-			modal:true,			
-			buttons:[{
-				text:'Ok',
-				iconCls:'icon-ok',
-				handler:function(){
-					$('#div-log-img').dialog('close');
-				}
-			}]
-		});
-		$('#div-log-img').dialog('close');
-		$('#_delete').linkbutton('disable');
-		//	
-		
-		//for add begin
-		$("#_add").click(function() {
-			document.getElementById('div_info').style.display='inline';
-			document.getElementById('div_search').style.display='none';
-			//$('#_delete').linkbutton('disable');	
-			$("#_reset").click();	
-		});	
-		
-		$("#_back").click(function() {
-			document.getElementById('div_info').style.display='none';
-			document.getElementById('div_search').style.display='inline';
-			//$('#_delete').linkbutton('enable');
-			$("#_reset").click();
-		});	
-		
-		$("#_save").click(function() {
-			var isValid = $('#infoForm').form('validate');	
-			if (isValid) {
-				var options = {
-					url : 'saveSysCompInfo.action',
-					dataType : 'json',
-					type: 'post',
-					//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-					success : function(data){
-						if (!data.success) {
-							$.messager.alert('提示信息', data.errors, 'error');
-						} else {						
-							$("#_back").click();
-							reloadDatagrid('grid-datalist');
-						}
-					}
-				};
-				$('#infoForm').ajaxSubmit(options);
-			}
-		});
-		
-		$("#_reset").click(function() {	
-			resetForm('infoForm');
-		});			
-		//for add end			
-	});	
-	
-	
-	function viewLogo(logoUrl){
-		if(logoUrl){
-			document.getElementById('logoImg').src=logoUrl;
-			$('#div-log-img').dialog('open');
-		}		
-	}
-	
-	function editComp(id){
-		alert(id);
-	}
-	
-//-->
-</script>
-
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
@@ -169,7 +35,7 @@
 					公司状态:
 				</td>
 				<td width="20%">
-					<select id="sysComp.status" name="sysComp.status"
+					<select id="sysComp_status" name="sysComp.status"
 						class="easyui-combobox" panelHeight="auto" required="true"
 						editable="false">
 						<option value="A">
@@ -268,8 +134,7 @@
 						<a href="javascript:void(0);" class="easyui-linkbutton"
 							plain="true" iconCls="icon-search" id="_search">查询</a>
 						<a href="javascript:void(0);" class="easyui-linkbutton"
-							plain="true" iconCls="icon-remove"
-							onclick="resetForm('searchFrom');">重置</a>
+							plain="true" iconCls="icon-remove" id="_reset_search">重置</a>
 					</td>
 				</tr>
 			</table>
@@ -287,3 +152,142 @@
 		<table id="grid-datalist"></table>
 	</div>
 </div>
+
+<script type="text/javascript" defer="defer">
+<!--
+	$(document).ready(function() {
+		var frozenColumns = [[{
+					field : 'ck',
+					checkbox : true
+				}, {
+					field : 'companyName',
+					title : '公司名称',
+					width : 200,
+					sortable : true,			
+					formatter : function(value, rec) {
+						return "<a href='javascript:void(0);' onclick='editComp(" + rec.id+ ");'>" + value + "</a>";
+					}
+				}]];
+		var columns = [[{
+		    field : 'type',
+			title : '公司类型',
+			width : 100,
+			formatter : function(value, rec) {				
+				if(value=='R'){
+					value='融聚公司';
+				}else{
+					value='其它公司';
+				}
+				return value;
+			}
+		}, {
+			field : 'status',
+			title : '公司状态',
+			width : 100,
+			formatter : function(value, rec) {
+				if(value=='A'){
+					value='正常';
+				}else{
+					value='禁用';
+				}
+				return value;
+			}
+		}, {
+			field : 'logo',
+			title : '公司Logo图URI',
+			width : 250,
+			formatter : function(value, rec) {					
+				return "<a href='#' onclick=viewLogo('"+value+"')>" + value + "</a>";							
+			}
+		}, {
+			field : 'descript',
+			title : '备注',
+			width : 250
+		}]];
+			
+		//		
+		showDatagrid('grid-datalist','getSysCompList.action',frozenColumns,columns);
+		//
+		$('#div-log-img').dialog('close');
+		$('#_delete').linkbutton('disable');				
+	});	
+	
+	//for add begin
+	$("#_add").click(function() {
+		document.getElementById('div_info').style.display='inline';
+		document.getElementById('div_search').style.display='none';
+		//$('#_delete').linkbutton('disable');	
+		$("#_reset").click();	
+	});	
+	
+	$("#_back").click(function() {
+		document.getElementById('div_info').style.display='none';
+		document.getElementById('div_search').style.display='inline';
+		//$('#_delete').linkbutton('enable');
+		$("#_reset").click();
+	});	
+	
+	$("#_save").click(function() {
+		var isValid = $('#infoForm').form('validate');	
+		if (isValid) {
+			var options = {
+				url : 'saveSysCompInfo.action',
+				dataType : 'json',
+				type: 'post',
+				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data){
+					if (!data.success) {
+						$.messager.alert('提示信息', data.errors, 'error');
+					} else {						
+						$("#_back").click();
+						reloadDatagrid('grid-datalist');
+					}
+				}
+			};
+			$('#infoForm').ajaxSubmit(options);
+		}
+	});
+	
+	$("#_reset").click(function() {
+		$('#sysComp_status').combobox('clear');		
+		resetForm('infoForm');
+	});	
+	
+	//for search
+	$("#_search").click(function() {		
+		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
+	    queryParams.companyName = $("#companyName").val();
+	    queryParams.status = $('#status').combobox('getValue'); 
+	    reloadDatagrid('grid-datalist');
+	});	
+	
+	$('#div-log-img').dialog({
+		title:'Logo图片预览',
+		modal:true,			
+		buttons:[{
+			text:'Ok',
+			iconCls:'icon-ok',
+			handler:function(){
+				$('#div-log-img').dialog('close');
+			}
+		}]
+	});
+	
+	$("#_reset_search").click(function() {
+		$('#status').combobox('clear');		
+		resetForm('searchFrom');
+	});
+	
+	function viewLogo(logoUrl){
+		if(logoUrl){
+			document.getElementById('logoImg').src=logoUrl;
+			$('#div-log-img').dialog('open');
+		}		
+	}
+	
+	function editComp(id){
+		alert(id);
+	}
+	
+//-->
+</script>

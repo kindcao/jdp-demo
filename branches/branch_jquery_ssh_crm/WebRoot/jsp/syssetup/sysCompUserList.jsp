@@ -2,6 +2,67 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
+<jsp:include page="../common/_toolbar.jsp"></jsp:include>
+<div style="margin-top: 10px;">
+	<form id="searchFrom" name="searchFrom">
+		<fieldset>
+			<legend>
+				查询条件
+			</legend>
+			<table cellpadding="0" cellspacing="0" width="800" border="0"
+				style="margin: 10px;">
+				<tr height="30px">
+					<td nowrap="nowrap" align="center" width="10%">
+						用户名称:
+					</td>
+					<td width="20%">
+						<input type="text" id="name" name="name" />
+					</td>
+					<td nowrap="nowrap" align="center" width="10%">
+						登录账号:
+					</td>
+					<td width="20%">
+						<input type="text" id="loginId" name="loginId" />
+					</td>
+					<td nowrap="nowrap" align="center" width="10%">
+						用户状态:
+					</td>
+					<td width="20%">
+						<select id="status" name="status" class="easyui-combobox"
+							panelHeight="auto" editable="false">
+							<option value="">
+								---请选择---
+							</option>
+							<option value="A">
+								正常
+							</option>
+							<option value="D">
+								禁用
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr height="30px">
+					<td colspan="5">
+						&nbsp;
+					</td>
+					<td align="right">
+						<a href="javascript:void(0);" class="easyui-linkbutton"
+							plain="true" iconCls="icon-search" id="_search">查询</a>
+						<a href="javascript:void(0);" class="easyui-linkbutton"
+							plain="true" iconCls="icon-remove" id="_reset_search">重置</a>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+</div>
+<div style="height: 30px;">
+	&nbsp;
+</div>
+<div align="left">
+	<table id="grid-datalist"></table>
+</div>
 <script type="text/javascript" defer="defer">	
 	$(document).ready(function() {
 		var frozenColumns = [[{
@@ -55,82 +116,24 @@
 		}]];
 					
 		//
-		showDatagrid('grid-datalist','getUserList.action',frozenColumns,columns);
+		showDatagrid('grid-datalist','getSysCompUserList.action',frozenColumns,columns);
 	});				
 				
 	$("#_delete").click(function() {
-		 deleteRecord('grid-datalist', 'delUser.action');
+		 deleteRecord('grid-datalist', 'deleteSysCompUser.action');
 	});	
 	
 	$("#_search").click(function() {			
 		var queryParams = $('#grid-datalist').datagrid('options').queryParams;
 		queryParams.name = $("#name").val();   
 	    queryParams.loginId = $("#loginId").val();
-	   queryParams.status = $('#status').combobox('getValue');
+	    queryParams.status = $('#status').combobox('getValue');
 	    reloadDatagrid('grid-datalist');
-	});		
-		//	
+	});
+	
+	$("#_reset_search").click(function() {
+		$('#status').combobox('clear');		
+		resetForm('searchFrom');
+	});			
+	//	
 </script>
-
-<jsp:include page="../common/_toolbar.jsp"></jsp:include>
-<div style="margin-top: 10px;">
-	<form id="searchFrom" name="searchFrom">
-		<fieldset>
-			<legend>
-				查询条件
-			</legend>
-			<table cellpadding="0" cellspacing="0" width="800" border="0"
-				style="margin: 10px;">
-				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						用户名称:
-					</td>
-					<td width="20%">
-						<input type="text" id="name" name="name" />
-					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						登录账号:
-					</td>
-					<td width="20%">
-						<input type="text" id="loginId" name="loginId" />
-					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						用户状态:
-					</td>
-					<td width="20%">
-						<select id="status" name="status" class="easyui-combobox"
-							panelHeight="auto" editable="false">
-							<option value="">
-								---请选择---
-							</option>
-							<option value="A">
-								正常
-							</option>
-							<option value="D">
-								禁用
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr height="30px">
-					<td colspan="5">
-						&nbsp;
-					</td>
-					<td align="right">
-						<a href="javascript:void(0);" class="easyui-linkbutton"
-							plain="true" iconCls="icon-search" id="_search">查询</a>
-						<a href="javascript:void(0);" class="easyui-linkbutton"
-							plain="true" iconCls="icon-remove"
-							onclick="resetForm('searchFrom');">重置</a>
-					</td>
-				</tr>
-			</table>
-		</fieldset>
-	</form>
-</div>
-<div style="height: 30px;">
-	&nbsp;
-</div>
-<div align="left">
-	<table id="grid-datalist"></table>
-</div>

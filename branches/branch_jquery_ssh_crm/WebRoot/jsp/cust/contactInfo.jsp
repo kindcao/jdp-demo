@@ -270,6 +270,7 @@
 	});
 		
 	$("#_reset_edit_contact").click(function() {
+		$('#_cont_isPrimary').combobox('clear');	
 		resetForm('infoFormContantEdit');
 	});
 	

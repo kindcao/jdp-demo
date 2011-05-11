@@ -134,12 +134,12 @@ public class SysCompUserAction extends BaseAction {
         return NONE;
     }
 
-    public String showUserList() throws Exception {
+    public String showSysCompUserList() throws Exception {
         return "syscompuser.list";
     }
 
     @SuppressWarnings("unchecked")
-    public String getUserList() throws Exception {
+    public String getSysCompUserList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(name)) {

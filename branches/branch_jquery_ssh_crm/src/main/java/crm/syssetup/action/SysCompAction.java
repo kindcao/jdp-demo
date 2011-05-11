@@ -39,13 +39,11 @@ public class SysCompAction extends BaseAction {
 
     private String status;
 
-    public String showCompList() throws Exception {
-        companyName = "";
-        status = "";
+    public String showSysCompList() throws Exception {
         return "syscomp.list";
     }
 
-    public String getCompList() throws Exception {
+    public String getSysCompList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(companyName)) {

@@ -70,22 +70,32 @@
 		<action name="getContList" class="contAction" method="getContList" />
 		<action name="saveContInfo" class="contAction" method="saveContInfo" />
 		<action name="deleteCont" class="contAction" method="deleteCont" />
+		<!-- cust - market event  -->
+		<action name="showMarketEventList" class="marketEventAction" method="showMarketEventList">
+			<result name="marketevent.list">/jsp/cust/marketEventList.jsp</result>
+		</action>
+		<action name="showMarketEventInfo" class="marketEventAction" method="showMarketEventInfo">
+			<result name="marketevent.info">/jsp/cust/marketEventInfo.jsp</result>
+		</action>
+		<action name="getMarketEventList" class="marketEventAction" method="getMarketEventList" />
+		<action name="saveMarketEventInfo" class="marketEventAction" method="saveMarketEventInfo" />
+		<action name="deleteMarketEvent" class="marketEventAction" method="deleteMarketEvent" />
 		<!-- syssetup company -->
-		<action name="showCompList" class="sysCompAction" method="showCompList">
+		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>
 		</action>
-		<action name="getCompList" class="sysCompAction" method="getCompList" />
+		<action name="getSysCompList" class="sysCompAction" method="getSysCompList" />
 		<action name="saveSysCompInfo" class="sysCompAction" method="saveSysCompInfo" />
+		<action name="deleteSysCompInfo" class="sysCompAction" method="deleteSysCompInfo" />
 		<!-- syssetup user -->
 		<action name="showLogin" class="sysCompUserAction" method="showLogin" />
 		<action name="login" class="sysCompUserAction" method="login" />
 		<action name="logout" class="sysCompUserAction" method="logout" />
-		<action name="showUserList" class="sysCompUserAction" method="showUserList">
+		<action name="showSysCompUserList" class="sysCompUserAction" method="showSysCompUserList">
 			<result name="syscompuser.list" type="tiles">syscompuser.list</result>
 		</action>
-		<action name="getUserList" class="sysCompUserAction" method="getUserList" />
-		<action name="addUser" class="sysCompUserAction" method="addUser" />
-		<action name="editUser" class="sysCompUserAction" method="editUser" />
-		<action name="delUser" class="sysCompUserAction" method="delUser" />
+		<action name="getSysCompUserList" class="sysCompUserAction" method="getSysCompUserList" />
+		<action name="saveSysCompUserInfo" class="sysCompUserAction" method="saveSysCompUserInfo" />
+		<action name="deleteSysCompUser" class="sysCompUserAction" method="deleteSysCompUser" />
 	</package>
 </struts>

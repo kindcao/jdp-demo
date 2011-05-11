@@ -3,10 +3,7 @@ package crm.syssetup.service;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import crm.base.service.BaseServiceImpl;
-import crm.syssetup.dao.SysCompUserDao;
 
 /**
  * 
@@ -17,17 +14,15 @@ import crm.syssetup.dao.SysCompUserDao;
 
 public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUserService {
 
-    private SysCompUserDao compUserDao;
-
     @Override
     public int getTotalCount(Map<String, Object> map) throws Exception {
-        return compUserDao.getTotalCount(getQueryHQL(map), map);
+        return getBaseDaoImpl().getTotalCount(getQueryHQL(map), map);
     }
 
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
         String hql = getQueryHQL(map) + " order by id desc";
-        return compUserDao.findPageByQuery(pageNo, pageSize, hql, map);
+        return getBaseDaoImpl().findPageByQuery(pageNo, pageSize, hql, map);
     }
 
     private String getQueryHQL(Map<String, Object> map) {
@@ -47,10 +42,5 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
             sb.append(" and status = :status ");
         }
         return sb.toString();
-    }
-
-    @Resource
-    public void setCompUserDao(SysCompUserDao compUserDao) {
-        this.compUserDao = compUserDao;
     }
 }

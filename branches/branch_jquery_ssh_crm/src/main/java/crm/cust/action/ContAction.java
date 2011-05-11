@@ -77,6 +77,10 @@ public class ContAction extends BaseAction {
         }
         cont.setLastUpdatedBy(getCurrSysCompUser().getId());
         cont.setLastUpdatedTime(getCurrDate());
+        //
+        if (StringUtils.isBlank(cont.getIsPrimary())) {
+            cont.setIsPrimary(Constants.STATUS_N);
+        }
         //        
         if (null == customerId || customerId == 0) {
             jvr.setErrors("get customer object from session is null");
@@ -137,6 +141,13 @@ public class ContAction extends BaseAction {
         responseJsonData(jvr);
         return Action.NONE;
     }
+
+    // private void reset() {
+    // this.name = null;
+    // this.posit = null;
+    // this.isPrimary = null;
+    // this.address = null;
+    // }
 
     @Resource
     public void setContService(ContService contService) {

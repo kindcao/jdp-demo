@@ -21,6 +21,9 @@ public class Constants {
 
     public static final String CUSTOMER_CONTACT_SESSION_KEY = "CUSTOMER_CONTACT_SESSION_KEY";
 
+    // public static final String MARKET_EVENT_TYPE_ID_SESSION_KEY =
+    // "MARKET_EVENT_TYPE_ID_SESSION_KEY";
+
     public static final String RESULT_TRANSFORMER_DTO = "RESULT_TRANSFORMER_DTO";
 
     public static final String STATUS_Y = "Y";

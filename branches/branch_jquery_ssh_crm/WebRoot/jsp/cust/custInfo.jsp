@@ -16,10 +16,10 @@
 		href="showMarketEventList.action?eventTypeId=1">
 	</div>
 	<div title="培训" style="margin-left: 5px;" cache="false"
-		href="showMarketEventList.action?eventTypeId=3">
+		href="showMarketEventList.action?eventTypeId=2">
 	</div>
 	<div title="活动" style="margin-left: 5px;" cache="false"
-		href="showMarketEventList.action?eventTypeId=2">
+		href="showMarketEventList.action?eventTypeId=3">
 	</div>
 	<div title="其他" style="margin-left: 5px;" cache="false"
 		href="showMarketEventList.action?eventTypeId=4">

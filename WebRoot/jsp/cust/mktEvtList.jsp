@@ -7,7 +7,7 @@
 <s:hidden id="eventTypeId" name="eventTypeId" />
 <div id="div_info_market_event"
 	style="margin-top: 10px; display: inline;">
-	<form id="infoFormMarketEvent" name="infoFormMarketEvent">
+	<form id="infoFormMktEvt" name="infoFormMktEvt">
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
@@ -15,34 +15,65 @@
 					日期:
 				</td>
 				<td width="20%">
-					<input type="text" id="marketEvent_occurDate"
-						name="marketEvent.occurDate" class="easyui-datebox"
-						required="true">
+					<input type="text" id="mktEvt_occurDate" name="mktEvt.occurDate"
+						class="easyui-datebox" required="true">
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					开始时间:
 				</td>
 				<td width="20%">
-					<input type="text" name="marketEvent.beginTime"
+					<input type="text" name="mktEvt.beginTime"
 						class="easyui-timespinner" value="09:00" required="true">
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					结束时间:
 				</td>
 				<td width="20%">
-					<input type="text" name="marketEvent.endTime"
-						class="easyui-timespinner" value="18:00" required="true">
+					<input type="text" name="mktEvt.endTime" class="easyui-timespinner"
+						value="18:00" required="true">
 				</td>
 			</tr>
 			<tr height="30px">
 				<td nowrap="nowrap" align="center">
-					类型：
+					大类:
 				</td>
 				<td>
-					<input id="marketEvent_marketEventTypeId" class="easyui-combobox"
-						name="marketEvent.marketEventTypeId" required="true" url=""
+					<input id="_marketEventTypeId" class="easyui-combobox"
+						name="_marketEventTypeId" required="true" url="" valueField="id"
+						textField="name" multiple="false" editable="false"
+						panelHeight="auto" style="width: 134px;">
+				</td>
+				<td nowrap="nowrap" align="center">
+					小类:
+				</td>
+				<td>
+					<input id="mktEvt_marketEventTypeId" class="easyui-combobox"
+						name="mktEvt.marketEventTypeId" required="true" url=""
 						valueField="id" textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 135px;">
+						panelHeight="auto" style="width: 134px;">
+				</td>
+				<td colspan="2" align="center">
+					&nbsp;
+				</td>
+			</tr>
+			<tr height="30px">
+				<td nowrap="nowrap" align="center">
+					联系人:
+				</td>
+				<td colspan="5">
+					<input class="easyui-combobox" name="contIds" required="true"
+						url="" valueField="id" textField="name" multiple="true"
+						editable="false" panelHeight="auto" style="width: 401px;">
+				</td>
+			</tr>
+			<tr height="30px">
+				<td nowrap="nowrap" align="center">
+					我方人员
+				</td>
+				<td colspan="5">
+					<input class="easyui-combobox" name="contIds" required="true"
+						url="" valueField="id" textField="name" multiple="true"
+						editable="false" panelHeight="auto" style="width: 401px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -51,7 +82,7 @@
 				</td>
 				<td colspan="5">
 					<input type="text" name="cont.email" maxlength="50"
-						style="width: 402px;" class="easyui-validatebox" validType="email">
+						style="width: 404px;" class="easyui-validatebox" validType="email">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -60,16 +91,15 @@
 				</td>
 				<td colspan="5">
 					<input type="text" name="cont.email" maxlength="50"
-						style="width: 402px;" class="easyui-validatebox" validType="email">
+						style="width: 404px;" class="easyui-validatebox" validType="email">
 				</td>
-
 			</tr>
 			<tr height="30px" valign="top">
 				<td nowrap="nowrap" align="center">
 					物料:
 				</td>
 				<td colspan="5">
-					<textarea name="cont.remark" rows="5" style="width: 402px;"
+					<textarea name="cont.remark" rows="5" style="width: 404px;"
 						class="easyui-validatebox" validType="length[0,500]"> 				
 					</textarea>
 				</td>
@@ -79,7 +109,7 @@
 					情况描述:
 				</td>
 				<td colspan="5">
-					<textarea name="cont.remark" rows="5" style="width: 402px;"
+					<textarea name="cont.remark" rows="5" style="width: 404px;"
 						class="easyui-validatebox" validType="length[0,500]"> 				
 					</textarea>
 				</td>
@@ -89,7 +119,7 @@
 					备注:
 				</td>
 				<td colspan="3">
-					<textarea name="cont.remark" rows="5" style="width: 402px;"
+					<textarea name="cont.remark" rows="5" style="width: 404px;"
 						class="easyui-validatebox" validType="length[0,500]"> 				
 					</textarea>
 				</td>
@@ -111,8 +141,14 @@
 //	
 $(document).ready(function() {
 	//
-	$('#marketEvent_marketEventTypeId').combobox({
-		url:'getMarketEventType.action?eventTypeId='+$('#eventTypeId').val()		
+	$('#_marketEventTypeId').combobox({
+		url:'getMarketEventType.action?eventTypeId=0',		
+		onChange:function(rec){
+		 	var _eventTypeId=$(this).combobox("getValue");		 	 	
+		 	$('#mktEvt_marketEventTypeId').combobox({
+		 		url:'getMarketEventType.action?eventTypeId='+_eventTypeId
+		 	}).combobox('clear');
+		}
 	});	
 });
 //-->

@@ -332,7 +332,7 @@
 					field : 'custName',
 					title : '客户名称',
 					width : 200,
-					sortable : true,			
+					sortable : false,			
 					formatter : function(value, rec) {
 						return "<a href='#' onclick='editComp(" + rec.customerId+ ");'>" + value + "</a>";
 					}

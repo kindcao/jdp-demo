@@ -248,14 +248,14 @@
 		reloadDatagrid('grid-datalist-contact');
 	});	
 	
-	function editCont(id){    		
+	function editCont(id){	
 		var tab = $('#tabs-container').tabs('getSelected');	
 		$('#tabs-container').tabs('update', {
 			tab: tab,
 			options:{
 				href:'showContInfo.action?cont.id='+id			
 			}
-		});		
+		});			
 	}
 		
 	//	
@@ -267,7 +267,7 @@
 					field : 'name',
 					title : '姓名',
 					width : 120,
-					sortable : true,			
+					sortable : false,			
 					formatter : function(value, rec) {
 						return "<a href='#' onclick='editCont(" + rec.id+ ");'>" + value + "</a>";
 					}

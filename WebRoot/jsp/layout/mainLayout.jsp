@@ -9,25 +9,26 @@
 		<table cellpadding="0" cellspacing="0" width="100%" height="100%"
 			style="margin: 0; border: 1px solid #A4BED4;">
 			<tr height="100px">
-				<td colspan="2">
+				<td colspan="2" height="100px">
 					<tiles:insertAttribute name="header" />
 				</td>
 			</tr>
 			<tr valign="top">
-				<td style="border: 1px solid #A4BED4;" width="200px" nowrap="nowrap">
+				<td style="border-top: 1px solid #A4BED4;" width="200px"
+					nowrap="nowrap">
 					<s:set name="menutitle" scope="session">
 						<tiles:getAsString name="menutitle" />
 					</s:set>
 					<tiles:insertAttribute name="menu" />
 				</td>
-				<td style="border: 1px solid #A4BED4;" width="100%">
+				<td style="border-top: 1px solid #A4BED4;" width="100%">
 					<div style="margin: 0 0 0 5px;">
 						<h6>
 							<tiles:getAsString name="menutitle" />
 							－
 							<tiles:getAsString name="bodyhead" />
 						</h6>
-						<div style="border: 1px solid #ccc; margin-top: 1px;"></div>
+						<div style="border: 1px solid #A4BED4;"></div>
 						<tiles:insertAttribute name="body" />
 					</div>
 				</td>

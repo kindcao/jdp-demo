@@ -15,7 +15,7 @@
 </script>
 
 <div id="menu" class="easyui-accordion" align="center"
-	style="overflow: hidden;">
+	style="overflow: hidden;" fit="true">
 	<div title="系统默认">
 		<div style="margin: 10px;">
 			<a href="#" onclick="clickMenu('welcome.action');">欢迎版面</a>

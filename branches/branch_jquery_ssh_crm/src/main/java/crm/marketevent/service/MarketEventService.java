@@ -1,4 +1,4 @@
-package crm.cust.service;
+package crm.marketevent.service;
 
 import crm.base.service.BaseService;
 

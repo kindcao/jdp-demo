@@ -1,9 +1,10 @@
-package crm.cust.service;
+package crm.marketevent.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
+import crm.cust.service.CustServiceImpl;
 
 /**
  * @author Kind Cao

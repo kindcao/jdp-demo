@@ -55,6 +55,9 @@ public class CommAction extends BaseAction {
         for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
             String key = (String) iterator.next();
             MarketEventType value = (MarketEventType) map.get(key);
+            if (eventTypeId == 0 && (null == value.getSuperiorId() || value.getSuperiorId() == 0)) {
+                list.add(value);
+            }
             if (eventTypeId > 0 && null != value.getSuperiorId() && value.getSuperiorId().intValue() == eventTypeId) {
                 list.add(value);
             }

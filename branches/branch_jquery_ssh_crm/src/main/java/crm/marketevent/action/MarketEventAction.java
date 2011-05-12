@@ -1,4 +1,4 @@
-package crm.cust.action;
+package crm.marketevent.action;
 
 import javax.annotation.Resource;
 
@@ -6,8 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
-import crm.common.Constants;
-import crm.cust.service.MarketEventService;
+import crm.marketevent.service.MarketEventService;
 import crm.model.MarketEvent;
 
 /**
@@ -26,11 +25,27 @@ public class MarketEventAction extends BaseAction {
     private MarketEvent marketEvent;
 
     public String showMarketEventList() throws Exception {
-        return "marketevent.list";
+        switch (eventTypeId) {
+        case 1: {
+            return "marketevent.visit.list";
+        }
+        case 2: {
+            return "marketevent.train.list";
+        }
+        case 3: {
+            return "marketevent.activity.list";
+        }
+        case 4: {
+            return "marketevent.others.list";
+        }
+        default:
+            break;
+        }
+        return NONE;
     }
 
     public String showMarketEventInfo() throws Exception {
-        return "marketevent.info";
+        return "crm.marketevent.action.info";
     }
 
     public String saveMarketEventInfo() throws Exception {

@@ -73,10 +73,13 @@
 		<action name="deleteCont" class="contAction" method="deleteCont" />
 		<!-- cust - market event  -->
 		<action name="showMarketEventList" class="marketEventAction" method="showMarketEventList">
-			<result name="marketevent.list">/jsp/cust/marketEventList.jsp</result>
+			<result name="marketevent.visit.list">/jsp/marketevent/visitList.jsp</result>
+			<result name="marketevent.train.list">/jsp/marketevent/trainList.jsp</result>
+			<result name="marketevent.activity.list">/jsp/marketevent/activityList.jsp</result>
+			<result name="marketevent.others.list">/jsp/marketevent/othersList.jsp</result>
 		</action>
 		<action name="showMarketEventInfo" class="marketEventAction" method="showMarketEventInfo">
-			<result name="marketevent.info">/jsp/cust/marketEventInfo.jsp</result>
+			<result name="marketevent.visit.info">/jsp/marketevent/visitInfo.jsp</result>
 		</action>
 		<action name="getMarketEventList" class="marketEventAction" method="getMarketEventList" />
 		<action name="saveMarketEventInfo" class="marketEventAction" method="saveMarketEventInfo" />

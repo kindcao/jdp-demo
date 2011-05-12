@@ -39,8 +39,8 @@
 					类型：
 				</td>
 				<td>
-					<input id="marketEvent_marketEventTypeId" class="easyui-combobox"
-						name="marketEvent.marketEventTypeId" required="true" url=""
+					<input class="easyui-combobox" name="marketEvent.marketEventTypeId"
+						required="true" url="getMarketEventType.action?eventTypeId=1"
 						valueField="id" textField="name" multiple="false" editable="false"
 						panelHeight="auto" style="width: 135px;">
 				</td>
@@ -62,7 +62,6 @@
 					<input type="text" name="cont.email" maxlength="50"
 						style="width: 402px;" class="easyui-validatebox" validType="email">
 				</td>
-
 			</tr>
 			<tr height="30px" valign="top">
 				<td nowrap="nowrap" align="center">
@@ -110,10 +109,7 @@
 <!--
 //	
 $(document).ready(function() {
-	//
-	$('#marketEvent_marketEventTypeId').combobox({
-		url:'getMarketEventType.action?eventTypeId='+$('#eventTypeId').val()		
-	});	
+	
 });
 //-->
 </script>

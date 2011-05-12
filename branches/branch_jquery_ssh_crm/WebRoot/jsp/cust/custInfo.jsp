@@ -12,16 +12,6 @@
 	</div>
 	<div title="联系人" cache="false" href="showContList.action">
 	</div>
-	<div title="拜访" cache="false"
-		href="showMarketEventList.action?eventTypeId=1">
-	</div>
-	<div title="培训" cache="false"
-		href="showMarketEventList.action?eventTypeId=2">
-	</div>
-	<div title="活动" cache="false"
-		href="showMarketEventList.action?eventTypeId=3">
-	</div>
-	<div title="其他" cache="false"
-		href="showMarketEventList.action?eventTypeId=4">
+	<div title="市场工作" cache="false" href="showMktEvtList.action">
 	</div>
 </div>

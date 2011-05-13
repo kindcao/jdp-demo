@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<div style="margin-top: 10px;">
+<div style="margin-top: 5px;">
 	<s:property value="#session.CUSTOMER_SESSION_KEY.custName" />
 </div>
 <div id="tabs-container" class="easyui-tabs" border="false" fit="true"
-	style="margin-top: 5px; overflow: hidden; width: 400px; height: 500px;">
+	style="margin-top: 5px; overflow: hidden; width: 400px; height: 400px;">
 	<div title="客户资料" style="margin-left: 5px;"
 		href="showCustInfoDtl.action">
 	</div>

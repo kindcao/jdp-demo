@@ -12,7 +12,7 @@
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="checkLoginInterceptor">
-					<param name="excludeMethods">showLogin,login</param>
+					<param name="excludeMethods">showLogin,login,getSysStatus</param>
 				</interceptor-ref>
 				<interceptor-ref name="exceptionInterceptor" />
 			</interceptor-stack>
@@ -30,6 +30,7 @@
 			<result name="welcome" type="tiles">welcome</result>
 		</action>
 		<action name="error" class="commAction" method="error" />
+		<action name="getSysStatus" class="commAction" method="getSysStatus" />
 		<action name="getStatusYN" class="commAction" method="getStatusYN" />
 		<action name="getSysComp" class="commAction" method="getSysComp" />
 		<action name="getCustIndu" class="commAction" method="getCustIndu" />
@@ -69,6 +70,7 @@
 			<result name="contact.info">/jsp/cust/contactInfo.jsp</result>
 		</action>
 		<action name="getContList" class="contAction" method="getContList" />
+		<action name="getContByCustIds" class="contAction" method="getContByCustIds" />
 		<action name="saveContInfo" class="contAction" method="saveContInfo" />
 		<action name="deleteCont" class="contAction" method="deleteCont" />
 		<!-- cust - market event  -->

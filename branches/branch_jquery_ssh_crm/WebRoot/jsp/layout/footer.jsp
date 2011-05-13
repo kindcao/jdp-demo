@@ -27,48 +27,91 @@
 		var arr_week = new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
 		week = arr_week[day];
 		var time = year + "-" + month + "-" + date + "&nbsp;" + hour + ":" + minu
-				+ ":" + sec + "&nbsp;&nbsp;" + week;
+			 + "&nbsp;&nbsp;" + week;
 		document.getElementById('labtime').innerHTML = time;
 	}
-	setInterval("clockon()", 1000); 
+	
+	function showErrorMsg(){
+		$.messager.show({
+			title:'提示信息',
+			msg:'Session过期或没有登录，10秒后系统自动转向新登录页面！',
+			timeout:10*1000,
+			showType:'slide'
+		});	
+		setTimeout("window.location.href='showLogin.action'",10*1000);		
+	}
+	
+	function sysStatus() {	
+		var options = {
+			url : 'getSysStatus.action',
+			dataType : 'json',
+			timeout : 5000,
+			success : function(data,textStatus){			
+				if (null!=data && data.statusCode==0) {
+					document.getElementById('labOnlineUserNum').innerHTML = data.onlineUserNum;					
+				} else {
+					showErrorMsg();	
+				}				
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown){
+				if('error'==textStatus){
+					showErrorMsg();
+				}				
+			}
+		}
+		$.ajax(options);
+	}
+	
+	function innerTask(){
+		clockon();
+		sysStatus();
+	}
+	
+	//
+	$(document).ready(function(){
+		innerTask();
+		setInterval("innerTask();", 60*1000);
+	});
 </script>
 
 <div style="height: 30px; overflow: hidden;">
-	<table cellpadding="0" cellspacing="0"
-		style="background-color: #A4BED4;" align="left" width="100%"
-		height="30px;">
-		<tr valign="middle">
-			<td style="width: 198px; border: 1px solid white;" nowrap="nowrap">
-				<div style="margin: 0 10px 0 10px;" id="labtime"></div>
-			</td>
-			<td style="border: 1px solid white;" nowrap="nowrap">
-				<table cellpadding="0" cellspacing="0" border="0">
-					<tr valign="middle" align="center">
-						<td nowrap="nowrap" width="120px">
-							当前用户:
-							<s:property value="#session.CURR_SYS_USER_SESSION_KEY.loginId" />
-						</td>
-						<td width="1px" style="border-right: 1px solid white">
-							&nbsp;
-						</td>
-						<td nowrap="nowrap" width="120px">
-							在线人数:
-							<s:property value="#application.SYS_USER_APPLICATION_KEY.size" />
-						</td>
-						<td width="1px" style="border-right: 1px solid white">
-							&nbsp;
-						</td>
-					</tr>
-				</table>
-			</td>
-			<td style="width: 70px; border: 1px solid white;" nowrap="nowrap"
-				align="right">
-				<div style="margin-right: 5px;">
-					<a id="logoutAction" href="#" class="easyui-linkbutton"
-						plain="true" iconCls="icon-back"
-						onclick='document.location = "logout.action"'>注销</a>
-				</div>
-			</td>
-		</tr>
-	</table>
+	<form id="sysStatusForm" method="post">
+		<table cellpadding="0" cellspacing="0"
+			style="background-color: #A4BED4; table-layout: fixed;" align="left"
+			width="100%" height="30px;">
+			<tr valign="middle">
+				<td style="width: 199px; border: 1px solid white;" nowrap="nowrap">
+					<span id="labtime" style="margin: 0 10px 0 10px;"></span>
+				</td>
+				<td style="border: 1px solid white;" nowrap="nowrap">
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr valign="middle" align="center">
+							<td nowrap="nowrap" width="120px">
+								当前用户:
+								<s:property value="#session._sysUser.loginId" />
+							</td>
+							<td width="1px" style="border-right: 1px solid white">
+								&nbsp;
+							</td>
+							<td nowrap="nowrap" width="120px">
+								在线用户数:
+								<span id="labOnlineUserNum"></span>
+							</td>
+							<td width="1px" style="border-right: 1px solid white">
+								&nbsp;
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td style="width: 70px; border: 1px solid white;" nowrap="nowrap"
+					align="right">
+					<div style="margin-right: 5px;">
+						<a id="logoutAction" href="#" class="easyui-linkbutton"
+							plain="true" iconCls="icon-back"
+							onclick='document.location = "logout.action"'>注销</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</form>
 </div>

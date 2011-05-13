@@ -38,8 +38,8 @@
 					大类:
 				</td>
 				<td>
-					<input id="_marketEventTypeId" class="easyui-combobox"
-						name="_marketEventTypeId" required="true" url="" valueField="id"
+					<input id="_marketEventTypeId" name="_marketEventTypeId"
+						class="easyui-combobox" required="true" url="" valueField="id"
 						textField="name" multiple="false" editable="false"
 						panelHeight="auto" style="width: 134px;">
 				</td>
@@ -47,10 +47,11 @@
 					小类:
 				</td>
 				<td>
-					<input id="mktEvt_marketEventTypeId" class="easyui-combobox"
-						name="mktEvt.marketEventTypeId" required="true" url=""
-						valueField="id" textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 134px;">
+					<input id="mktEvt_marketEventTypeId"
+						name="mktEvt.marketEventTypeId" class="easyui-combobox"
+						required="true" url="" valueField="id" textField="name"
+						multiple="false" editable="false" panelHeight="auto"
+						style="width: 134px;">
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;
@@ -61,8 +62,9 @@
 					联系人:
 				</td>
 				<td colspan="5">
-					<input class="easyui-combobox" name="contIds" required="true"
-						url="" valueField="id" textField="name" multiple="true"
+					<input class="easyui-combobox" id="_contIds" name="contIds"
+						url='getContByCustIds.action?customerId=<s:property value="#_cust.id" />'
+						required="true" valueField="id" textField="name" multiple="true"
 						editable="false" panelHeight="auto" style="width: 401px;">
 				</td>
 			</tr>
@@ -71,9 +73,11 @@
 					我方人员
 				</td>
 				<td colspan="5">
-					<input class="easyui-combobox" name="contIds" required="true"
-						url="" valueField="id" textField="name" multiple="true"
-						editable="false" panelHeight="auto" style="width: 401px;">
+					<input id="_sysCompUseIds" name="sysCompUseIds"
+						url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
+						class="easyui-combobox" required="true" valueField="id"
+						textField="name" multiple="true" editable="false"
+						panelHeight="auto" style="width: 401px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -81,8 +85,8 @@
 					主题:
 				</td>
 				<td colspan="5">
-					<input type="text" name="cont.email" maxlength="50"
-						style="width: 404px;" class="easyui-validatebox" validType="email">
+					<input type="text" name="mktEvt.subject" maxlength="200"
+						style="width: 404px;" class="easyui-validatebox">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -90,18 +94,8 @@
 					规模:
 				</td>
 				<td colspan="5">
-					<input type="text" name="cont.email" maxlength="50"
-						style="width: 404px;" class="easyui-validatebox" validType="email">
-				</td>
-			</tr>
-			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					物料:
-				</td>
-				<td colspan="5">
-					<textarea name="cont.remark" rows="5" style="width: 404px;"
-						class="easyui-validatebox" validType="length[0,500]"> 				
-					</textarea>
+					<input type="text" name="mktEvt.trainScale" maxlength="200"
+						style="width: 404px;" class="easyui-validatebox">
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
@@ -109,8 +103,18 @@
 					情况描述:
 				</td>
 				<td colspan="5">
-					<textarea name="cont.remark" rows="5" style="width: 404px;"
-						class="easyui-validatebox" validType="length[0,500]"> 				
+					<textarea name="mktEvt.situation" rows="5" style="width: 404px;"
+						class="easyui-validatebox" validType="length[0,6000]"> 				
+					</textarea>
+				</td>
+			</tr>
+			<tr height="30px" valign="top">
+				<td nowrap="nowrap" align="center">
+					物料:
+				</td>
+				<td colspan="5">
+					<textarea name="mktEvt.goods" rows="5" style="width: 404px;"
+						class="easyui-validatebox" validType="length[0,1000]"> 				
 					</textarea>
 				</td>
 			</tr>
@@ -119,8 +123,8 @@
 					备注:
 				</td>
 				<td colspan="3">
-					<textarea name="cont.remark" rows="5" style="width: 404px;"
-						class="easyui-validatebox" validType="length[0,500]"> 				
+					<textarea name="mktEvt.remark" rows="5" style="width: 404px;"
+						class="easyui-validatebox" validType="length[0,2000]"> 				
 					</textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">

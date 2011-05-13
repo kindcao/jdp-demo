@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import crm.base.action.BaseAction;
 import crm.base.service.BaseService;
 import crm.common.Constants;
+import crm.json.JsonSysStatusResult;
 import crm.model.CustomerIndustry;
 import crm.model.MarketEventType;
 import crm.model.SysCompany;
@@ -43,6 +44,17 @@ public class CommAction extends BaseAction {
 
     public String welcome() throws Exception {
         return "welcome";
+    }
+
+    public String getSysStatus() throws Exception {
+        JsonSysStatusResult jssr = new JsonSysStatusResult();
+        if (null == getCurrSysCompUser()) {
+            jssr.setStatusCode(1);
+        } else {
+            jssr.setOnlineUserNum(Constants.SYS_USER_MAP.size());
+        }
+        responseJsonData(jssr);
+        return NONE;
     }
 
     public String getMarketEventType() throws Exception {

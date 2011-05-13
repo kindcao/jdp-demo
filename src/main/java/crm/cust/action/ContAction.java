@@ -142,6 +142,19 @@ public class ContAction extends BaseAction {
         return Action.NONE;
     }
 
+    public String getContByCustIds() throws Exception {
+        if (null != customerId && customerId > 0) {
+            CustomerContact _obj = new CustomerContact();
+            _obj.setCustomerId(customerId);
+            _obj.setDeleteFlag(Constants.STATUS_N);
+            List<?> custList = contService.findByExample(_obj);
+            //
+            String[] filedName = new String[] { "id", "name" };
+            responseJsonData(custList, JsonUtils.setIncludes(CustomerContact.class, filedName));
+        }
+        return Action.NONE;
+    }
+
     // private void reset() {
     // this.name = null;
     // this.posit = null;

@@ -394,8 +394,8 @@ table.tabbedtable label {
 
 .toolbar2 {
 	height: 25px;
-	background: #efefef;
-	border-bottom: 1px solid #ccc;
+	/**background: #efefef;
+	border-bottom: 1px solid #ccc;**/
 }
 
 .separator2 {

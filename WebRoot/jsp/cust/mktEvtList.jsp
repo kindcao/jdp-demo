@@ -53,8 +53,15 @@
 						multiple="false" editable="false" panelHeight="auto"
 						style="width: 134px;">
 				</td>
-				<td colspan="2" align="center">
-					&nbsp;
+				<td nowrap="nowrap" align="center">
+					我方人员
+				</td>
+				<td>
+					<input id="_sysCompUseIds" name="sysCompUseIds"
+						url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
+						class="easyui-combobox" required="true" valueField="id"
+						textField="name" multiple="false" editable="false"
+						panelHeight="auto" style="width: 134px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -66,18 +73,6 @@
 						url='getContByCustIds.action?customerId=<s:property value="#_cust.id" />'
 						required="true" valueField="id" textField="name" multiple="true"
 						editable="false" panelHeight="auto" style="width: 401px;">
-				</td>
-			</tr>
-			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					我方人员
-				</td>
-				<td colspan="5">
-					<input id="_sysCompUseIds" name="sysCompUseIds"
-						url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
-						class="easyui-combobox" required="true" valueField="id"
-						textField="name" multiple="true" editable="false"
-						panelHeight="auto" style="width: 401px;">
 				</td>
 			</tr>
 			<tr height="30px">

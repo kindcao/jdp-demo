@@ -33,12 +33,12 @@
 	
 	function showErrorMsg(){
 		$.messager.show({
-			title:'提示信息',
-			msg:'Session过期或没有登录，10秒后系统自动转向新登录页面！',
-			timeout:10*1000,
+			title:'提示信息-Session超时',
+			msg:'没有登录或重复登录，15秒后系统自动转向登录页面！',
+			timeout:15*1000,
 			showType:'slide'
 		});	
-		setTimeout("window.location.href='showLogin.action'",10*1000);		
+		setTimeout("window.location.href='showLogin.action'",15*1000);		
 	}
 	
 	function sysStatus() {	
@@ -75,43 +75,43 @@
 </script>
 
 <div style="height: 30px; overflow: hidden;">
-	<form id="sysStatusForm" method="post">
-		<table cellpadding="0" cellspacing="0"
-			style="background-color: #A4BED4; table-layout: fixed;" align="left"
-			width="100%" height="30px;">
-			<tr valign="middle">
-				<td style="width: 199px; border: 1px solid white;" nowrap="nowrap">
-					<span id="labtime" style="margin: 0 10px 0 10px;"></span>
-				</td>
-				<td style="border: 1px solid white;" nowrap="nowrap">
-					<table cellpadding="0" cellspacing="0" border="0">
-						<tr valign="middle" align="center">
-							<td nowrap="nowrap" width="120px">
-								当前用户:
-								<s:property value="#session._sysUser.loginId" />
-							</td>
-							<td width="1px" style="border-right: 1px solid white">
-								&nbsp;
-							</td>
-							<td nowrap="nowrap" width="120px">
-								在线用户数:
-								<span id="labOnlineUserNum"></span>
-							</td>
-							<td width="1px" style="border-right: 1px solid white">
-								&nbsp;
-							</td>
-						</tr>
-					</table>
-				</td>
-				<td style="width: 70px; border: 1px solid white;" nowrap="nowrap"
-					align="right">
-					<div style="margin-right: 5px;">
-						<a id="logoutAction" href="#" class="easyui-linkbutton"
-							plain="true" iconCls="icon-back"
-							onclick='document.location = "logout.action"'>注销</a>
-					</div>
-				</td>
-			</tr>
-		</table>
-	</form>
+	<table cellpadding="0" cellspacing="0" height="30px" width="100%"
+		style="background-color: #A4BED4;" align="left">
+		<tr valign="middle">
+			<td style="width: 199px; border: 1px solid white;" nowrap="nowrap">
+				<span id="labtime" style="margin: 0 10px 0 10px;"></span>
+			</td>
+			<td style="border: 1px solid white;" nowrap="nowrap">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr valign="middle" align="center">
+						<td nowrap="nowrap" width="120px">
+							当前用户:
+							<s:property value="#session._sysUser.loginId" />
+						</td>
+						<td width="1px" style="border-right: 1px solid white">
+							&nbsp;
+						</td>
+						<td nowrap="nowrap" width="120px">
+							在线用户数:
+							<span id="labOnlineUserNum"></span>
+						</td>
+						<td width="1px" style="border-right: 1px solid white">
+							&nbsp;
+						</td>
+						<td>
+							&nbsp;
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="width: 70px; border: 1px solid white;" nowrap="nowrap"
+				align="right">
+				<div style="margin-right: 5px;">
+					<a id="logoutAction" href="#" class="easyui-linkbutton"
+						plain="true" iconCls="icon-back"
+						onclick='document.location = "logout.action"'>注销</a>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>

@@ -8,6 +8,8 @@
 	<body>
 		<s:set name="_sysUser" value="#session.CURR_SYS_USER_SESSION_KEY"
 			scope="session"></s:set>
+		<s:set name="_sysUserComp"
+			value="#session.CURR_SYS_USER_COMP_SESSION_KEY" scope="session"></s:set>
 		<table cellpadding="0" cellspacing="0" width="100%" height="100%"
 			style="margin: 0; border: 1px solid #A4BED4;">
 			<tr height="100px">

@@ -4,10 +4,11 @@
 
 <div style="margin: 5px;">
 	<s:if test="%{#session._sysUserComp.logo.trim().length()>0}">
-		<img style="background-repeat: no-repeat;"
+		<img height="90px" style="background-repeat: no-repeat;"
 			src='<s:property value="#session._sysUserComp.logo"/>' />
 	</s:if>
 	<s:else>
-		<img style="background-repeat: no-repeat;" src='images/logo.jpg' />
+		<img height="90px" style="background-repeat: no-repeat;"
+			src='images/logo.jpg' />
 	</s:else>
 </div>

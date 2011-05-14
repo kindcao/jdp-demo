@@ -15,6 +15,7 @@ import crm.base.action.BaseAction;
 import crm.common.Constants;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
+import crm.model.SysCompany;
 import crm.model.SysCompanyUser;
 import crm.syssetup.service.SysCompUserService;
 
@@ -66,9 +67,13 @@ public class SysCompUserAction extends BaseAction {
         _sysCompUser.setPasswd(sysCompUser.getPasswd());
         List<?> list = sysCompUserService.findByExample(_sysCompUser);
         if (list != null && list.size() > 0) {
-            log.info("user " + sysCompUser.getLoginId() + " login.");
-            session.put(Constants.CURR_SYS_USER_SESSION_KEY, list.get(0));
-            Constants.SYS_USER_MAP.put(sysCompUser.getLoginId(), request.getSession());
+            SysCompanyUser _currUser = (SysCompanyUser) list.get(0);
+            log.info("user " + _currUser.getLoginId() + " login.");
+            session.put(Constants.CURR_SYS_USER_SESSION_KEY, _currUser);
+            Constants.SYS_USER_MAP.put(_currUser.getLoginId(), request.getSession());
+            //
+            Map<?, ?> _compMap = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
+            session.put(Constants.CURR_SYS_USER_COMP_SESSION_KEY, _compMap.get(_currUser.getSysCompanyId().toString()));
             jvr.setSuccess(true);
         } else {
             jvr.setSuccess(false);

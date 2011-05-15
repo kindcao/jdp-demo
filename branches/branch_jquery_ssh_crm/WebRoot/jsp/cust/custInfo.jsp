@@ -10,8 +10,10 @@
 	<div title="客户资料" style="margin-left: 5px;"
 		href="showCustInfoDtl.action">
 	</div>
-	<div title="联系人" cache="false" href="showContList.action">
+	<div title="联系人" style="margin-left: 5px;" cache="false"
+		href="showContList.action">
 	</div>
-	<div title="市场工作" cache="false" href="showMktEvtList.action">
+	<div title="市场工作" style="margin-left: 5px;" cache="false"
+		href="showMktEvtList.action">
 	</div>
 </div>

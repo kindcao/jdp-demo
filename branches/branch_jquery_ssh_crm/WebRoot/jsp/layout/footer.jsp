@@ -33,8 +33,8 @@
 	
 	function showErrorMsg(){
 		$.messager.show({
-			title:'提示信息-Session超时',
-			msg:'没有登录或重复登录，15秒后系统自动转向登录页面！',
+			title:'提示信息-系统错误',
+			msg:'原因：服务异常或Session超时或重复登录，15秒后系统自动转向登录页面！',
 			timeout:15*1000,
 			showType:'slide'
 		});	
@@ -45,7 +45,7 @@
 		var options = {
 			url : 'getSysStatus.action',
 			dataType : 'json',
-			timeout : 5000,
+			//timeout : 30*1000,
 			success : function(data,textStatus){			
 				if (null!=data && data.statusCode==0) {
 					document.getElementById('labOnlineUserNum').innerHTML = data.onlineUserNum;					

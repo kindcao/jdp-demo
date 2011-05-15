@@ -22,8 +22,7 @@ public class MktEvtExtDto extends MarketEvent {
 
     private String contIds;
 
-    private String occurDateStr;// new SimpleDateFormat("yyyy-MM-dd").format(new
-                                // Date());
+    private String occurDateStr;
 
     private String beginTimeStr;
 

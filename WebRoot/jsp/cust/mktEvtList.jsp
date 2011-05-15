@@ -4,10 +4,9 @@
 
 
 <jsp:include page="../common/_toolbar_mktevt.jsp"></jsp:include>
-<s:hidden id="eventTypeId" name="eventTypeId" />
 <div id="div_info_mktevt" style="margin-top: 10px; display: none;">
 	<form id="infoFormMktEvt" name="infoFormMktEvt">
-		<input type="hidden" name="mktEvt.customerIds"
+		<input type="hidden" id="mktEvt_customerIds" name="mktEvt.customerIds"
 			value='<s:property value="#session.CUSTOMER_SESSION_KEY.id" />' />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
@@ -32,8 +31,9 @@
 					结束时间:
 				</td>
 				<td width="20%">
-					<input name="mktEvt.endTimeStr" class="easyui-timespinner"
-						value="18:00" required="true">
+					<input type="text" name="mktEvt.endTimeStr"
+						class="easyui-timespinner" required="true"
+						value='<%=new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis() + 30 * 60 * 1000))%>'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -144,8 +144,69 @@
 			<legend>
 				查询条件
 			</legend>
+			<table cellpadding="0" cellspacing="0" width="800" border="0"
+				style="margin: 10px;">
+				<tr height="30px">
+					<td nowrap="nowrap" align="center" width="10%">
+						日期:
+					</td>
+					<td width="20%">
+						<input type="text" id="occurDateStr" name="occurDateStr"
+							class="easyui-datebox">
+					</td>
+					<td nowrap="nowrap" align="center" width="10%">
+						开始时间:
+					</td>
+					<td width="20%">
+						<input type="text" id="beginTimeStr" name="beginTimeStr"
+							class="easyui-timespinner">
+					</td>
+					<td nowrap="nowrap" align="center" width="10%">
+						结束时间:
+					</td>
+					<td width="20%">
+						<input type="text" id="endTimeStr" name="endTimeStr"
+							class="easyui-timespinner">
+					</td>
+				</tr>
+				<tr height="30px">
+					<td nowrap="nowrap" align="center">
+						大类:
+					</td>
+					<td>
+						<input id="mktevtSuperiorId" name="mktevtSuperiorId"
+							class="easyui-combobox" url="" valueField="id" textField="name"
+							multiple="false" editable="false" panelHeight="auto"
+							style="width: 134px;">
+					</td>
+					<td nowrap="nowrap" align="center">
+						主题:
+					</td>
+					<td colspan="3">
+						<input type="text" id="subject" name="subject" maxlength="200"
+							style="width: 404px;" class="easyui-validatebox">
+					</td>
+				</tr>
+				<tr height="30px">
+					<td colspan="5">
+						&nbsp;
+					</td>
+					<td align="center">
+						<a href="#" class="easyui-linkbutton" plain="true"
+							iconCls="icon-search" id="_search_mktevt">查询</a>
+						<a href="#" class="easyui-linkbutton" plain="true"
+							iconCls="icon-remove" id="_reset_search_mktevt">重置</a>
+					</td>
+				</tr>
+			</table>
 		</fieldset>
 	</form>
+	<div style="height: 30px;">
+		&nbsp;
+	</div>
+	<div align="left">
+		<table id="grid-datalist-mktevt"></table>
+	</div>
 </div>
 <script type="text/javascript" defer="defer">
 <!--
@@ -177,7 +238,7 @@
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {						
 						$("#_back_mktevt").click();
-						//reloadDatagrid('grid-datalist_mktevt');
+						reloadDatagrid('grid-datalist-mktevt');
 					}
 				}
 			};
@@ -201,10 +262,83 @@
 	//fore delte end
 	
 	
-	//$('#mktEvt_occurDateStr').datebox('setValue','2011-03-05');
+	//for search begin	
+	$('#_reset_search_mktevt').click(function(){
+		$("#occurDateStr").datebox('clear');
+		$("#beginTimeStr").timespinner('clear');
+		$("#endTimeStr").timespinner('clear');
+		$('#mktevtSuperiorId').combobox('clear');		
+		resetForm('searchFormMktEvt');		
+	});	
+	
+	$("#_search_mktevt").click(function() {
+		var queryParams = $('#grid-datalist-mktevt').datagrid('options').queryParams;	
+		queryParams.occurDateStr = $("#occurDateStr").datebox('getValue');
+		queryParams.beginTimeStr = $("#beginTimeStr").timespinner('getValue');
+		queryParams.endTimeStr = $("#endTimeStr").timespinner('getValue');
+		queryParams.subject = $("#subject").val();	
+		queryParams.mktevtSuperiorId = $("#mktevtSuperiorId").combobox('getValue');			
+		reloadDatagrid('grid-datalist-mktevt');		
+	});	
+	
+	$('#mktevtSuperiorId').combobox({
+		url:'getMarketEventType.action?eventTypeId=0'
+	});
+	
+	function editMktEvt(id){	
+		var tab = $('#tabs-container').tabs('getSelected');	
+		$('#tabs-container').tabs('update', {
+			tab: tab,
+			options:{
+				href:'showContInfo.action?cont.id='+id			
+			}
+		});			
+	}
 	
 	//	
 	$(document).ready(function() {
+		var frozenColumns = [[{
+					field : 'ck',
+					checkbox : true
+				}, {
+					field : 'occurDateStr',
+					title : '日期',
+					width : 100,
+					sortable : false,			
+					formatter : function(value, rec) {
+						return "<a href='#' onclick='editMktEvt(" + rec.id+ ");'>" + value + "</a>";
+					}
+				}]];
+		var columns = [[{
+		    field : 'beginTimeStr',
+			title : '开始时间',
+			width : 60
+		},{
+			field : 'endTimeStr',
+			title : '结束时间',
+			width : 60
+		},{
+			field : 'mktevtName',
+			title : '类型',
+			width : 100
+		},{
+			field : 'subject',
+			title : '主题',
+			width : 200
+		},{
+			field : 'contName',
+			title : '联系人',
+			width : 150
+		},{
+			field : 'sysCompUserName',
+			title : '我方人员',
+			width : 150
+		}]];			
+	
+		//		
+		showDatagrid('grid-datalist-mktevt',
+			'getMktEvtList.action?customerIds='+ $('#mktEvt_customerIds').val(),
+			frozenColumns,columns);
 		//		
 		$('#_marketEventTypeId').combobox({
 			url:'getMarketEventType.action?eventTypeId=0',		

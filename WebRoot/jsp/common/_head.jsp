@@ -8,7 +8,8 @@
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
-	<title><s:text name="msg.sys.title" /></title>
+	<title><s:text name="msg.sys.title" />
+	</title>
 
 	<link rel="stylesheet" type="text/css"
 		href="${pageContext.request.contextPath}/styles/style.css" />
@@ -26,9 +27,7 @@
 	<script type="text/javascript">
 		 <!--
 		 $.ajaxSetup ({
-			cache: false, //关闭AJAX相应的缓存
-			type:'POST',
-			timeout:5000
+			cache: false //关闭AJAX相应的缓存			
 		 });
 		 
 		 window.onbeforeunload = function() {

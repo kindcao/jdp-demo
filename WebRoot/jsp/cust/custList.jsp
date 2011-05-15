@@ -323,7 +323,7 @@
 		reloadDatagrid('grid-datalist');
 	});	
 	
-	function editComp(cId){    	
+	function editComp(cId){	
 		window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
 	}	
 		
@@ -338,7 +338,7 @@
 					width : 200,
 					sortable : false,			
 					formatter : function(value, rec) {
-						return "<a href='#' onclick='editComp(" + rec.customerId+ ");'>" + value + "</a>";
+						return "<a href='#' onclick='editComp(" + rec.id+ ");'>" + value + "</a>";
 					}
 				}]];
 		var columns = [[{

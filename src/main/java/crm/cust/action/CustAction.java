@@ -277,7 +277,9 @@ public class CustAction extends BaseAction {
     }
 
     public void setCustSysCompIds(String custSysCompIds) {
-        this.custSysCompIds = Utils.fmtAndSortIds(custSysCompIds);
+        if (StringUtils.isNotBlank(custSysCompIds)) {
+            this.custSysCompIds = Utils.fmtAndSortIds(custSysCompIds);
+        }
     }
 
     public String getCustName() {

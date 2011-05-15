@@ -147,10 +147,12 @@ public class ContAction extends BaseAction {
             CustomerContact _obj = new CustomerContact();
             _obj.setCustomerId(customerId);
             _obj.setDeleteFlag(Constants.STATUS_N);
-            List<?> custList = contService.findByExample(_obj);
+            List<?> contList = contService.findByExample(_obj);
             //
             String[] filedName = new String[] { "id", "name" };
-            responseJsonData(custList, JsonUtils.setIncludes(CustomerContact.class, filedName));
+            responseJsonData(contList, JsonUtils.setIncludes(CustomerContact.class, filedName));
+        } else {
+            log.warn("getContByCustIds customerId is null or 0");
         }
         return Action.NONE;
     }
@@ -205,6 +207,16 @@ public class ContAction extends BaseAction {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
 }

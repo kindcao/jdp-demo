@@ -144,47 +144,52 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
 
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
-        String hql = getQueryHQL(map) + " order by me.id desc ";
+        String hql = getQueryHQL(map) + " order by mev.id desc ";
         List<?> result = getBaseDaoImpl().findPageByQuery(pageNo, pageSize, hql, map);
         return result;
     }
 
     private String getQueryHQL(Map<String, Object> map) throws Exception {
         StringBuilder sb = new StringBuilder();
-        sb.append(" from CustomerView cv where 1=1 ");
+        sb.append(" from MarketEventView mev where 1=1 ");
 
-        if (null != map.get("custName")) {
-            sb.append(" and cv.custName like :custName ");
-            map.put("custName", "%" + map.get("custName") + "%");
+        if (null != map.get("customerIds")) {
+            sb.append(" and mev.custId like :customerIds ");
+            map.put("customerIds", "%" + map.get("customerIds") + "%");
+
         }
 
-        if (null != map.get("custCode")) {
-            if ("---".equals(map.get("custCode"))) {
-                sb.append(" and cv.custCode is not null  ");
-                sb.append(" and LENGTH(cv.custCode) > 0 ");
-            } else {
-                sb.append(" and cv.custCode like :custCode ");
-                // sb.append(" and cv.custCode = :custCode ");
-                map.put("custCode", "%" + map.get("custCode") + "%");
-            }
+        if (null != map.get("sysCompUseIds")) {
+            sb.append(" and mev.sysCompUserId like :sysCompUseIds ");
+            map.put("sysCompUseIds", "%" + map.get("sysCompUseIds") + "%");
         }
 
-        if (null != map.get("superiorIndustryId")) {
-            sb.append(" and cv.superiorIndustryId = :superiorIndustryId ");
+        if (null != map.get("contIds")) {
+            sb.append(" and mev.contId like :contIds ");
+            map.put("contIds", "%" + map.get("contIds") + "%");
         }
 
-        if (null != map.get("industryId")) {
-            sb.append(" and cv.industryId = :industryId ");
+        if (null != map.get("occurDate")) {
+            sb.append(" and mev.occurDate = :occurDate ");
         }
 
-        if (null != map.get("address")) {
-            sb.append(" and cv.address like :address ");
-            map.put("address", "%" + map.get("address") + "%");
+        if (null != map.get("beginTime") && null != map.get("endTime")) {
+            sb.append(" and (mev.beginTime <= mev.endTime ");
+            sb.append(" and mev.beginTime >= :beginTime ");
+            sb.append(" and mev.endTime <= :endTime) ");
+        } else if (null != map.get("beginTime")) {
+            sb.append(" and mev.beginTime = :beginTime ");
+        } else if (null != map.get("endTime")) {
+            sb.append(" and mev.endTime = :endTime ");
         }
 
-        if (null != map.get("custSysCompIds")) {
-            sb.append(" and cv.sysCompanyId like :custSysCompIds ");
-            map.put("custSysCompIds", "%" + map.get("custSysCompIds") + "%");
+        if (null != map.get("subject")) {
+            sb.append(" and mev.subject like :subject ");
+            map.put("subject", "%" + map.get("subject") + "%");
+        }
+
+        if (null != map.get("mktevtSuperiorId")) {
+            sb.append(" and mev.mktevtSuperiorId = :mktevtSuperiorId ");
         }
         return sb.toString();
     }

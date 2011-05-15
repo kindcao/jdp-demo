@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.text.*,java.util.*"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 
-<jsp:include page="../common/_toolbar.jsp"></jsp:include>
+<jsp:include page="../common/_toolbar_mktevt.jsp"></jsp:include>
 <s:hidden id="eventTypeId" name="eventTypeId" />
-<div id="div_info_market_event"
-	style="margin-top: 10px; display: inline;">
+<div id="div_info_mktevt" style="margin-top: 10px; display: none;">
 	<form id="infoFormMktEvt" name="infoFormMktEvt">
+		<input type="hidden" name="mktEvt.customerIds"
+			value='<s:property value="#session.CUSTOMER_SESSION_KEY.id" />' />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
@@ -15,21 +16,23 @@
 					日期:
 				</td>
 				<td width="20%">
-					<input type="text" id="mktEvt_occurDate" name="mktEvt.occurDate"
-						class="easyui-datebox" required="true">
+					<input type="text" id="mktEvt_occurDateStr"
+						name="mktEvt.occurDateStr" class="easyui-datebox" required="true"
+						value='<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>'>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					开始时间:
 				</td>
 				<td width="20%">
-					<input type="text" name="mktEvt.beginTime"
-						class="easyui-timespinner" value="09:00" required="true">
+					<input type="text" name="mktEvt.beginTimeStr"
+						class="easyui-timespinner" required="true"
+						value='<%=new SimpleDateFormat("HH:mm").format(new Date())%>'>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					结束时间:
 				</td>
 				<td width="20%">
-					<input type="text" name="mktEvt.endTime" class="easyui-timespinner"
+					<input name="mktEvt.endTimeStr" class="easyui-timespinner"
 						value="18:00" required="true">
 				</td>
 			</tr>
@@ -57,7 +60,7 @@
 					我方人员
 				</td>
 				<td>
-					<input id="_sysCompUseIds" name="sysCompUseIds"
+					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
 						url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
 						class="easyui-combobox" required="true" valueField="id"
 						textField="name" multiple="false" editable="false"
@@ -69,10 +72,11 @@
 					联系人:
 				</td>
 				<td colspan="5">
-					<input class="easyui-combobox" id="_contIds" name="contIds"
-						url='getContByCustIds.action?customerId=<s:property value="#_cust.id" />'
-						required="true" valueField="id" textField="name" multiple="true"
-						editable="false" panelHeight="auto" style="width: 401px;">
+					<input id="mktEvt_contIds" name="mktEvt.contIds"
+						url='getContByCustIds.action?customerId=<s:property value="#session.CUSTOMER_SESSION_KEY.id" />'
+						class="easyui-combobox" required="true" valueField="id"
+						textField="name" multiple="true" editable="false"
+						panelHeight="auto" style="width: 401px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -124,31 +128,93 @@
 				</td>
 				<td colspan="2" align="center" valign="bottom">
 					<a href="#" class="easyui-linkbutton" plain="true"
-						iconCls="icon-save" id="_save_contact">保存</a>
+						iconCls="icon-save" id="_save_mktevt">保存</a>
 					<a href="#" class="easyui-linkbutton" plain="true"
-						iconCls="icon-remove" id="_reset_contact">重置</a>
+						iconCls="icon-remove" id="_reset_mktevt">重置</a>
 					<a href="#" class="easyui-linkbutton" plain="true"
-						iconCls="icon-back" id="_back_contact">返回</a>
+						iconCls="icon-back" id="_back_mktevt">返回</a>
 				</td>
 			</tr>
 		</table>
 	</form>
 </div>
-
+<div id="div_search_mktevt" style="display: inline;">
+	<form id="searchFormMktEvt" name="searchFormMktEvt">
+		<fieldset style="margin-top: 5px;">
+			<legend>
+				查询条件
+			</legend>
+		</fieldset>
+	</form>
+</div>
 <script type="text/javascript" defer="defer">
 <!--
-//	
-$(document).ready(function() {
-	//
-	$('#_marketEventTypeId').combobox({
-		url:'getMarketEventType.action?eventTypeId=0',		
-		onChange:function(rec){
-		 	var _eventTypeId=$(this).combobox("getValue");		 	 	
-		 	$('#mktEvt_marketEventTypeId').combobox({
-		 		url:'getMarketEventType.action?eventTypeId='+_eventTypeId
-		 	}).combobox('clear');
-		}
+	//for add begin			
+	$("#_add_mktevt").click(function() {
+		document.getElementById('div_info_mktevt').style.display='inline';
+		document.getElementById('div_search_mktevt').style.display='none';
+		$('#_delete_mktevt').linkbutton('disable');	
+		//$("#_reset_contact").click();	
+	});
+	
+	$("#_back_mktevt").click(function() {
+		document.getElementById('div_info_mktevt').style.display='none';
+		document.getElementById('div_search_mktevt').style.display='inline';
+		$('#_delete_mktevt').linkbutton('enable');
+		$("#_reset_mktevt").click();
 	});	
-});
+	
+	$("#_save_mktevt").click(function() {
+		var isValid = $('#infoFormMktEvt').form('validate');	
+		if (isValid) {
+			var options = {
+				url : 'saveMktEvtInfo.action',
+				dataType : 'json',
+				type: 'post',
+				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data){
+					if (!data.success) {
+						$.messager.alert('提示信息', data.errors, 'error');
+					} else {						
+						$("#_back_mktevt").click();
+						//reloadDatagrid('grid-datalist_mktevt');
+					}
+				}
+			};
+			$('#infoFormMktEvt').ajaxSubmit(options);
+		}
+	});
+	
+	$("#_reset_mktevt").click(function() {
+		$('#_marketEventTypeId').combobox('clear');
+		$('#mktEvt_marketEventTypeId').combobox('clear');
+		$('#mktEvt_sysCompUseIds').combobox('clear');
+		$('#mktEvt_contIds').combobox('clear');		
+		resetForm('infoFormMktEvt');
+	});	
+	//for add end
+	
+	//for delete begin
+	$("#_delete_mktevt").click(function() {
+		deleteRecord('grid-datalist_mktevt','deleteCont.action');
+	});
+	//fore delte end
+	
+	
+	//$('#mktEvt_occurDateStr').datebox('setValue','2011-03-05');
+	
+	//	
+	$(document).ready(function() {
+		//		
+		$('#_marketEventTypeId').combobox({
+			url:'getMarketEventType.action?eventTypeId=0',		
+			onChange:function(rec){
+			 	var _eventTypeId=$(this).combobox("getValue");		 	 	
+			 	$('#mktEvt_marketEventTypeId').combobox({
+			 		url:'getMarketEventType.action?eventTypeId='+_eventTypeId
+			 	}).combobox('clear');
+			}
+		});	
+	});
 //-->
 </script>

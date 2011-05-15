@@ -26,7 +26,9 @@
 	<script type="text/javascript">
 		 <!--
 		 $.ajaxSetup ({
-			cache: false //关闭AJAX相应的缓存
+			cache: false, //关闭AJAX相应的缓存
+			type:'POST',
+			timeout:5000
 		 });
 		 
 		 window.onbeforeunload = function() {

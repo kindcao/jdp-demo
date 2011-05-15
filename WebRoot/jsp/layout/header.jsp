@@ -2,13 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<div style="margin: 5px;">
+<div style="margin: 5px; overflow: hidden;">
 	<s:if test="%{#session._sysUserComp.logo.trim().length()>0}">
-		<img height="90px" style="background-repeat: no-repeat;"
+		<img style="background-repeat: no-repeat;"
 			src='<s:property value="#session._sysUserComp.logo"/>' />
 	</s:if>
 	<s:else>
-		<img height="90px" style="background-repeat: no-repeat;"
-			src='images/logo.jpg' />
+		<img style="background-repeat: no-repeat;" src='images/logo.jpg' />
 	</s:else>
 </div>

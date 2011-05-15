@@ -219,7 +219,11 @@
 
 <script type="text/javascript" defer="defer">
 <!--	
-	//for add begin		
+	//for add begin	
+	$('#cust_indu').combobox({
+		url:'getCustIndu.action?induId='+$('#induId').val()				
+	});	
+
 	$("#_add").click(function() {		
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
@@ -366,11 +370,7 @@
 		//		
 		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);			
 		
-		//
-		$('#cust_indu').combobox({
-			url:'getCustIndu.action?induId='+$('#induId').val()				
-		});
-		
+		//	
 		$('#cust_indu_search').combobox({
 			url:'getCustIndu.action?induId='+$('#induId').val()			
 		});				

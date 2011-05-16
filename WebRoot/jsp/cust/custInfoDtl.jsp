@@ -268,8 +268,7 @@
 				<td colspan="3">
 					<textarea name="cust.remark" rows="5" style="width: 402px;"
 						class="easyui-validatebox" validType="length[0,500]"
-						value='<s:property value="#_cust.remark" />'> 				
-					</textarea>
+						value='<s:property value="#_cust.remark" />'></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
 					<a href="#" class="easyui-linkbutton" plain="true"

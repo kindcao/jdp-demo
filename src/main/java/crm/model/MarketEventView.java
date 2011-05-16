@@ -30,6 +30,8 @@ public class MarketEventView implements java.io.Serializable {
 
     private Integer mktevtSuperiorId;
 
+    private String mktevtSuperiorName;
+
     private Integer mktevtId;
 
     private String mktevtName;
@@ -65,9 +67,9 @@ public class MarketEventView implements java.io.Serializable {
 
     /** full constructor */
     public MarketEventView(Integer id, Integer occurDate, String occurDateStr, Integer beginTime, String beginTimeStr,
-            Integer endTime, String endTimeStr, String subject, Integer mktevtSuperiorId, Integer mktevtId,
-            String mktevtName, String custId, String custName, String contId, String contName, String sysCompUserId,
-            String sysCompUserName) {
+            Integer endTime, String endTimeStr, String subject, Integer mktevtSuperiorId, String mktevtSuperiorName,
+            Integer mktevtId, String mktevtName, String custId, String custName, String contId, String contName,
+            String sysCompUserId, String sysCompUserName) {
         this.id = id;
         this.occurDate = occurDate;
         this.occurDateStr = occurDateStr;
@@ -77,6 +79,7 @@ public class MarketEventView implements java.io.Serializable {
         this.endTimeStr = endTimeStr;
         this.subject = subject;
         this.mktevtSuperiorId = mktevtSuperiorId;
+        this.mktevtSuperiorName = mktevtSuperiorName;
         this.mktevtId = mktevtId;
         this.mktevtName = mktevtName;
         this.custId = custId;
@@ -228,6 +231,14 @@ public class MarketEventView implements java.io.Serializable {
         this.sysCompUserName = sysCompUserName;
     }
 
+    public String getMktevtSuperiorName() {
+        return mktevtSuperiorName;
+    }
+
+    public void setMktevtSuperiorName(String mktevtSuperiorName) {
+        this.mktevtSuperiorName = mktevtSuperiorName;
+    }
+
     public boolean equals(Object other) {
         if ((this == other))
             return true;
@@ -300,5 +311,4 @@ public class MarketEventView implements java.io.Serializable {
         result = 37 * result + (getSysCompUserName() == null ? 0 : this.getSysCompUserName().hashCode());
         return result;
     }
-
 }

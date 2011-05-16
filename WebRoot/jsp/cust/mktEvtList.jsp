@@ -23,15 +23,15 @@
 					开始时间:
 				</td>
 				<td width="20%">
-					<input type="text" name="mktEvt.beginTimeStr"
-						class="easyui-timespinner" required="true"
+					<input type="text" id="mktEvt_beginTimeStr" required="true"
+						name="mktEvt.beginTimeStr" class="easyui-timespinner"
 						value='<%=new SimpleDateFormat("HH:mm").format(new Date())%>'>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					结束时间:
 				</td>
 				<td width="20%">
-					<input type="text" name="mktEvt.endTimeStr"
+					<input type="text" id="mktEvt_endTimeStr" name="mktEvt.endTimeStr"
 						class="easyui-timespinner" required="true"
 						value='<%=new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis() + 30 * 60 * 1000))%>'>
 				</td>
@@ -103,8 +103,7 @@
 				</td>
 				<td colspan="5">
 					<textarea name="mktEvt.situation" rows="5" style="width: 404px;"
-						class="easyui-validatebox" validType="length[0,6000]"> 				
-					</textarea>
+						class="easyui-validatebox" validType="length[0,6000]"></textarea>
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
@@ -113,8 +112,7 @@
 				</td>
 				<td colspan="5">
 					<textarea name="mktEvt.goods" rows="5" style="width: 404px;"
-						class="easyui-validatebox" validType="length[0,1000]"> 				
-					</textarea>
+						class="easyui-validatebox" validType="length[0,1000]"></textarea>
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
@@ -123,8 +121,7 @@
 				</td>
 				<td colspan="3">
 					<textarea name="mktEvt.remark" rows="5" style="width: 404px;"
-						class="easyui-validatebox" validType="length[0,2000]"> 				
-					</textarea>
+						class="easyui-validatebox" validType="length[0,2000]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
 					<a href="#" class="easyui-linkbutton" plain="true"
@@ -215,14 +212,14 @@
 		document.getElementById('div_info_mktevt').style.display='inline';
 		document.getElementById('div_search_mktevt').style.display='none';
 		$('#_delete_mktevt').linkbutton('disable');	
-		//$("#_reset_contact").click();	
+		//$("#_reset_mktevt").click();
 	});
 	
 	$("#_back_mktevt").click(function() {
 		document.getElementById('div_info_mktevt').style.display='none';
 		document.getElementById('div_search_mktevt').style.display='inline';
 		$('#_delete_mktevt').linkbutton('enable');
-		$("#_reset_mktevt").click();
+		//$("#_reset_mktevt").click();
 	});	
 	
 	$("#_save_mktevt").click(function() {
@@ -246,7 +243,10 @@
 		}
 	});
 	
-	$("#_reset_mktevt").click(function() {
+	$("#_reset_mktevt").click(function() {	  
+	    $("#mktEvt_occurDateStr").datebox('clear');
+		$("#mktEvt_beginTimeStr").timespinner('clear');
+		$("#mktEvt_endTimeStr").timespinner('clear');
 		$('#_marketEventTypeId').combobox('clear');
 		$('#mktEvt_marketEventTypeId').combobox('clear');
 		$('#mktEvt_sysCompUseIds').combobox('clear');
@@ -257,7 +257,7 @@
 	
 	//for delete begin
 	$("#_delete_mktevt").click(function() {
-		deleteRecord('grid-datalist_mktevt','deleteCont.action');
+		deleteRecord('grid-datalist-mktevt','deleteMktEvt.action');
 	});
 	//fore delte end
 	
@@ -290,7 +290,7 @@
 		$('#tabs-container').tabs('update', {
 			tab: tab,
 			options:{
-				href:'showContInfo.action?cont.id='+id			
+				href:'showMktEvtInfo.action?mktEvt.id='+id			
 			}
 		});			
 	}

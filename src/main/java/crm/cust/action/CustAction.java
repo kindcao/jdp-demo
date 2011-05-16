@@ -59,6 +59,7 @@ public class CustAction extends BaseAction {
     private CustService custService;
 
     public String showCustList() throws Exception {
+        reset();
         switch (induId) {
         case 1: {
             return "cust.broker.list";
@@ -239,13 +240,13 @@ public class CustAction extends BaseAction {
         return NONE;
     }
 
-    // private void reset() {
-    // this.custSysCompIds = null;
-    // this.custName = null;
-    // this.custCode = null;
-    // this.industryId = null;
-    // this.address = null;
-    // }
+    private void reset() {
+        this.custSysCompIds = null;
+        this.custName = null;
+        this.custCode = null;
+        this.industryId = null;
+        this.address = null;
+    }
 
     public int getInduId() {
         return induId;
@@ -277,6 +278,7 @@ public class CustAction extends BaseAction {
     }
 
     public void setCustSysCompIds(String custSysCompIds) {
+        this.custSysCompIds = custSysCompIds;
         if (StringUtils.isNotBlank(custSysCompIds)) {
             this.custSysCompIds = Utils.fmtAndSortIds(custSysCompIds);
         }

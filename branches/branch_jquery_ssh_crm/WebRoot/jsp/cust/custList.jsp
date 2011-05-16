@@ -114,8 +114,7 @@
 				</td>
 				<td colspan="3">
 					<textarea name="cust.descript" rows="5" style="width: 402px;"
-						class="easyui-validatebox" validType="length[0,500]"> 
-					</textarea>
+						class="easyui-validatebox" validType="length[0,500]"></textarea>
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;

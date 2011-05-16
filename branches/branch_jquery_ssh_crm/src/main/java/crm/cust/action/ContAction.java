@@ -209,12 +209,10 @@ public class ContAction extends BaseAction {
         this.address = address;
     }
 
-    
     public Integer getCustomerId() {
         return customerId;
     }
 
-    
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }

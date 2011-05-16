@@ -318,7 +318,7 @@
 		queryParams.custCode = $("#custCode").val();
 		queryParams.address = $("#address").val();
 		queryParams.industryId = $("#cust_indu_search").combobox('getValue');
-		queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValues')+'';
+		queryParams.custSysCompIds = $('#cust_sys_comp_search').combobox('getValues')+'';		
 		reloadDatagrid('grid-datalist');
 	});	
 	

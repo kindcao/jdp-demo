@@ -42,6 +42,9 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
             BeanUtils.copyProperties(mktEvtObj, mktEvtExtDto);
             if (mktEvtObj.getId() == 0) {
                 mktEvtObj.setId(null);
+            } else {
+                // for update ,delete rels
+                deleteAllRel(Utils.getIds(mktEvtObj.getId().toString()));
             }
             super.saveOrUpdate(mktEvtObj);
             //
@@ -100,6 +103,15 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
     @Override
     public void deleteAll(Object object, Collection ids) throws Exception {
         if (null != ids && ids.size() > 0) {
+            deleteAllRel(ids);
+            super.deleteAll(object, ids);
+        } else {
+            log.error("deleteAll fail, ids is null");
+        }
+    }
+
+    private void deleteAllRel(Collection ids) throws Exception {
+        if (null != ids && ids.size() > 0) {
             for (Iterator<?> iterator = ids.iterator(); iterator.hasNext();) {
                 Integer ele = (Integer) iterator.next();
                 //
@@ -109,7 +121,7 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 if (null != custRelList && custRelList.size() > 0) {
                     super.deleteAll(custRelList);
                 } else {
-                    log.warn("deleteAll custRelList is null");
+                    log.warn("deleteAllRel custRelList is null");
                 }
                 //
                 List<?> contRelList = getBaseDaoImpl().findByCriteria(
@@ -118,7 +130,7 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 if (null != contRelList && contRelList.size() > 0) {
                     super.deleteAll(contRelList);
                 } else {
-                    log.warn("deleteAll contRelList is null");
+                    log.warn("deleteAllRel contRelList is null");
                 }
                 //
                 List<?> sysUserList = getBaseDaoImpl().findByCriteria(
@@ -127,13 +139,11 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 if (null != sysUserList && sysUserList.size() > 0) {
                     super.deleteAll(sysUserList);
                 } else {
-                    log.warn("deleteAll sysUserList is null");
+                    log.warn("deleteAllRel sysUserList is null");
                 }
             }
-            //
-            super.deleteAll(object, ids);
         } else {
-            log.error("deleteAll fail, ids is null");
+            log.error("deleteAllRel fail, ids is null");
         }
     }
 

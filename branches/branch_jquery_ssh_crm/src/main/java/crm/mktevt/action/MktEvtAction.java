@@ -11,10 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
+import crm.common.Constants;
 import crm.dto.MktEvtExtDto;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.mktevt.service.MktEvtService;
+import crm.model.MarketEvent;
+import crm.model.MarketEventView;
 import crm.util.Utils;
 
 /**
@@ -51,6 +54,17 @@ public class MktEvtAction extends BaseAction {
     }
 
     public String showMktEvtInfo() throws Exception {
+        if (null != mktEvt && null != mktEvt.getId() && mktEvt.getId() > 0) {
+            MarketEvent _mktEvt = (MarketEvent) mktEvtService.getObject(MarketEvent.class, mktEvt.getId());
+            MarketEventView _mktEvtView = (MarketEventView) mktEvtService.getObject(MarketEventView.class, mktEvt
+                    .getId());
+            //        
+            session.put(Constants.MARKET_EVENT_SESSION_KEY, _mktEvt);
+            session.put(Constants.MARKET_EVENT_VIEW_SESSION_KEY, _mktEvtView);
+        } else {
+            log.error("mktEvt id is null");
+            return NONE;
+        }
         return "mktevt.info";
     }
 
@@ -105,6 +119,15 @@ public class MktEvtAction extends BaseAction {
     }
 
     public String deleteMktEvt() throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
+        if (StringUtils.isNotBlank(getIds())) {
+            mktEvtService.deleteAll(new MarketEvent(), Utils.getIds(getIds()));
+            jvr.setSuccess(true);
+        } else {
+            log.info("delete ids is null");
+            jvr.setErrors("delete ids is null");
+        }
+        responseJsonData(jvr);
         return NONE;
     }
 

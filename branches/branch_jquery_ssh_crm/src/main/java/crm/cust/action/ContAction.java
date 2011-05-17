@@ -10,8 +10,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opensymphony.xwork2.Action;
-
 import crm.base.action.BaseAction;
 import crm.common.Constants;
 import crm.cust.service.ContService;
@@ -90,7 +88,7 @@ public class ContAction extends BaseAction {
             jvr.setSuccess(true);
         }
         responseJsonData(jvr);
-        return Action.NONE;
+        return NONE;
     }
 
     public String getContList() throws Exception {
@@ -122,7 +120,7 @@ public class ContAction extends BaseAction {
         String[] filedName = new String[] { "id", "name", "department", "posit", "phone", "mobile", "email", "address",
                 "isPrimary" };
         responseJsonData(jlr, JsonUtils.setIncludes(CustomerContact.class, filedName));
-        return Action.NONE;
+        return NONE;
     }
 
     public String deleteCont() throws Exception {
@@ -139,7 +137,7 @@ public class ContAction extends BaseAction {
             jvr.setErrors("delete ids is null");
         }
         responseJsonData(jvr);
-        return Action.NONE;
+        return NONE;
     }
 
     public String getContByCustIds() throws Exception {
@@ -154,7 +152,7 @@ public class ContAction extends BaseAction {
         } else {
             log.warn("getContByCustIds customerId is null or 0");
         }
-        return Action.NONE;
+        return NONE;
     }
 
     // private void reset() {

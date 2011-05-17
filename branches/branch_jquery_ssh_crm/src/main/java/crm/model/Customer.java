@@ -16,6 +16,8 @@ public class Customer implements java.io.Serializable {
 
     private String custName;
 
+    private String shortName;
+
     private String custCode;
 
     private Integer industryId;
@@ -63,8 +65,10 @@ public class Customer implements java.io.Serializable {
     }
 
     /** minimal constructor */
-    public Customer(String custName, Integer industryId, String phone, Integer createdBy, String deleteFlag) {
+    public Customer(String custName, String shortName, Integer industryId, String phone, Integer createdBy,
+            String deleteFlag) {
         this.custName = custName;
+        this.shortName = shortName;
         this.industryId = industryId;
         this.phone = phone;
         this.createdBy = createdBy;
@@ -72,11 +76,12 @@ public class Customer implements java.io.Serializable {
     }
 
     /** full constructor */
-    public Customer(String custName, String custCode, Integer industryId, String phone, String fax, String website,
-            String country, String province, String city, String address, String postcode, String descript,
-            String remark, String email, Integer createdBy, Date createdTime, Integer lastUpdatedBy,
+    public Customer(String custName, String shortName, String custCode, Integer industryId, String phone, String fax,
+            String website, String country, String province, String city, String address, String postcode,
+            String descript, String remark, String email, Integer createdBy, Date createdTime, Integer lastUpdatedBy,
             Date lastUpdatedTime, String deleteFlag, Integer deletedBy, Date deletedTime) {
         this.custName = custName;
+        this.shortName = shortName;
         this.custCode = custCode;
         this.industryId = industryId;
         this.phone = phone;
@@ -115,6 +120,14 @@ public class Customer implements java.io.Serializable {
 
     public void setCustName(String custName) {
         this.custName = custName;
+    }
+
+    public String getShortName() {
+        return this.shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public String getCustCode() {

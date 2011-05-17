@@ -77,6 +77,26 @@
 	<definition name="cust.others.info" extends="cust.info.layout">
 		<put-attribute name="bodyhead" value="其他" />
 	</definition>
+	<!-- market event -->
+	<definition name="mktevt.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="市场工作" />
+	</definition>
+	<definition name="mktevt.list" extends="mktevt.layout">
+		<put-attribute name="bodyhead" value="市场工作" />
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtList.jsp" />
+	</definition>
+	<definition name="mktevt.info" extends="mktevt.layout">
+		<put-attribute name="bodyhead" value="市场工作" />
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtInfo.jsp" />
+	</definition>
+	<definition name="mktevt.cal" extends="mktevt.layout">
+		<put-attribute name="bodyhead" value="日历" />
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtCal.jsp" />
+	</definition>
+	<definition name="mktevt.count" extends="mktevt.layout">
+		<put-attribute name="bodyhead" value="统计" />
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtCount.jsp" />
+	</definition>
 	<!-- sysuser layout -->
 	<definition name="syscompuser.login" extends="nomenu.layout">
 		<put-attribute name="body" value="/jsp/syssetup/sysCompUserlogin.jsp" />

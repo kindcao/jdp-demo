@@ -46,10 +46,13 @@
 	</div>
 	<div title="市场工作">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">日历</a>
+			<a href="#" onclick="clickMenu('showMktEvtList.action');">市场工作</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">统计</a>
+			<a href="#" onclick="clickMenu('showMktEvtCal.action');">日历</a>
+		</div>
+		<div style="margin: 10px;">
+			<a href="#" onclick="clickMenu('showMktEvtCount.action');">统计</a>
 		</div>
 	</div>
 	<div title="市场监控">

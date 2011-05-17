@@ -5,6 +5,7 @@
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
 <div id="div_info_contact" style="margin-top: 10px; display: none;">
 	<form id="infoFormContact" name="infoFormContact">
+		<s:hidden name="actionFlag" value="" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
@@ -212,7 +213,7 @@
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {						
 						$("#_back_contact").click();
-						reloadDatagrid('grid-datalist-contact');
+						$("#_search_contact").click();
 					}
 				}
 			};

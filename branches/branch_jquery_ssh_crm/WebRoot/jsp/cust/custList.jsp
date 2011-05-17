@@ -6,6 +6,7 @@
 <s:hidden id="induId" name="induId" />
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
+		<s:hidden name="actionFlag" value="" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
@@ -17,19 +18,17 @@
 						required="true" validType="length[1,50]">
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
+					简称:
+				</td>
+				<td width="20%">
+					<input type="text" name="cust.shortName" class="easyui-validatebox"
+						required="true" validType="length[1,50]">
+				</td>
+				<td nowrap="nowrap" align="center" width="10%">
 					客户编码:
 				</td>
 				<td width="20%">
 					<input type="text" name="cust.custCode" maxlength="20">
-				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					行业:
-				</td>
-				<td width="20%">
-					<input id="cust_indu" class="easyui-combobox"
-						name="cust.industryId" required="true" url="" valueField="id"
-						textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 135px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -43,20 +42,22 @@
 						editable="false" panelHeight="auto" style="width: 400px;">
 				</td>
 				<td nowrap="nowrap" align="center">
+					行业:
+				</td>
+				<td>
+					<input id="cust_indu" class="easyui-combobox"
+						name="cust.industryId" required="true" url="" valueField="id"
+						textField="name" multiple="false" editable="false"
+						panelHeight="auto" style="width: 135px;">
+				</td>
+			</tr>
+			<tr height="30px">
+				<td nowrap="nowrap" align="center">
 					电话:
 				</td>
 				<td>
 					<input type="text" name="cust.phone" class="easyui-validatebox"
 						required="true" validType="phone" maxlength="40">
-				</td>
-			</tr>
-			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					邮箱:
-				</td>
-				<td>
-					<input type="text" name="cust.email" maxlength="40"
-						class="easyui-validatebox" validType="email">
 				</td>
 				<td nowrap="nowrap" align="center">
 					传真:
@@ -65,11 +66,11 @@
 					<input type="text" name="cust.fax" maxlength="40">
 				</td>
 				<td nowrap="nowrap" align="center">
-					网站:
+					邮箱:
 				</td>
 				<td>
-					<input type="text" name="cust.website" class="easyui-validatebox"
-						validType="url" maxlength="50">
+					<input type="text" name="cust.email" maxlength="40"
+						class="easyui-validatebox" validType="email">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -116,8 +117,12 @@
 					<textarea name="cust.descript" rows="5" style="width: 402px;"
 						class="easyui-validatebox" validType="length[0,500]"></textarea>
 				</td>
-				<td colspan="2" align="center">
-					&nbsp;
+				<td nowrap="nowrap" align="center">
+					网站:
+				</td>
+				<td>
+					<input type="text" name="cust.website" class="easyui-validatebox"
+						validType="url" maxlength="50">
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
@@ -250,7 +255,7 @@
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {						
 						$("#_back").click();
-						reloadDatagrid('grid-datalist');
+						$("#_search").click();					
 					}
 				}
 			};

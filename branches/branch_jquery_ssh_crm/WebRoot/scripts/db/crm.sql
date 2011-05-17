@@ -1,3 +1,7 @@
+------------------------------
+alter table customer add short_name varchar(50) not null;
+alter table market_event add status char not null default 'N';
+
 -- ----------------------------
 -- View structure for customer_contact_view
 -- ----------------------------

@@ -28,6 +28,8 @@ public class MarketEventView implements java.io.Serializable {
 
     private String subject;
 
+    private String status;
+
     private Integer mktevtSuperiorId;
 
     private String mktevtSuperiorName;
@@ -36,17 +38,19 @@ public class MarketEventView implements java.io.Serializable {
 
     private String mktevtName;
 
+    private String sysCompUserId;
+
+    private String sysCompUserName;
+
+    private String compId;
+
+    private String compName;
+
     private String custId;
 
     private String custName;
 
-    private String contId;
-
-    private String contName;
-
-    private String sysCompUserId;
-
-    private String sysCompUserName;
+    private String compCustName;
 
     // Constructors
 
@@ -55,21 +59,23 @@ public class MarketEventView implements java.io.Serializable {
     }
 
     /** minimal constructor */
-    public MarketEventView(Integer id, Integer occurDate, Integer beginTime, Integer endTime, Integer mktevtId,
-            String mktevtName) {
+    public MarketEventView(Integer id, Integer occurDate, Integer beginTime, Integer endTime, String status,
+            String mktevtSuperiorName, Integer mktevtId, String mktevtName) {
         this.id = id;
         this.occurDate = occurDate;
         this.beginTime = beginTime;
         this.endTime = endTime;
+        this.status = status;
+        this.mktevtSuperiorName = mktevtSuperiorName;
         this.mktevtId = mktevtId;
         this.mktevtName = mktevtName;
     }
 
     /** full constructor */
     public MarketEventView(Integer id, Integer occurDate, String occurDateStr, Integer beginTime, String beginTimeStr,
-            Integer endTime, String endTimeStr, String subject, Integer mktevtSuperiorId, String mktevtSuperiorName,
-            Integer mktevtId, String mktevtName, String custId, String custName, String contId, String contName,
-            String sysCompUserId, String sysCompUserName) {
+            Integer endTime, String endTimeStr, String subject, String status, Integer mktevtSuperiorId,
+            String mktevtSuperiorName, Integer mktevtId, String mktevtName, String sysCompUserId,
+            String sysCompUserName, String compId, String compName, String custId, String custName, String compCustName) {
         this.id = id;
         this.occurDate = occurDate;
         this.occurDateStr = occurDateStr;
@@ -78,16 +84,18 @@ public class MarketEventView implements java.io.Serializable {
         this.endTime = endTime;
         this.endTimeStr = endTimeStr;
         this.subject = subject;
+        this.status = status;
         this.mktevtSuperiorId = mktevtSuperiorId;
         this.mktevtSuperiorName = mktevtSuperiorName;
         this.mktevtId = mktevtId;
         this.mktevtName = mktevtName;
-        this.custId = custId;
-        this.custName = custName;
-        this.contId = contId;
-        this.contName = contName;
         this.sysCompUserId = sysCompUserId;
         this.sysCompUserName = sysCompUserName;
+        this.compId = compId;
+        this.compName = compName;
+        this.custId = custId;
+        this.custName = custName;
+        this.compCustName = compCustName;
     }
 
     // Property accessors
@@ -150,7 +158,7 @@ public class MarketEventView implements java.io.Serializable {
 
     public String getSubject() {
         if (StringUtils.isNotBlank(subject)) {
-            return StringUtils.abbreviate(subject, 20);
+            return StringUtils.abbreviate(subject, 40);
         }
         return this.subject;
     }
@@ -159,12 +167,28 @@ public class MarketEventView implements java.io.Serializable {
         this.subject = subject;
     }
 
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Integer getMktevtSuperiorId() {
         return this.mktevtSuperiorId;
     }
 
     public void setMktevtSuperiorId(Integer mktevtSuperiorId) {
         this.mktevtSuperiorId = mktevtSuperiorId;
+    }
+
+    public String getMktevtSuperiorName() {
+        return this.mktevtSuperiorName;
+    }
+
+    public void setMktevtSuperiorName(String mktevtSuperiorName) {
+        this.mktevtSuperiorName = mktevtSuperiorName;
     }
 
     public Integer getMktevtId() {
@@ -183,38 +207,6 @@ public class MarketEventView implements java.io.Serializable {
         this.mktevtName = mktevtName;
     }
 
-    public String getCustId() {
-        return this.custId;
-    }
-
-    public void setCustId(String custId) {
-        this.custId = custId;
-    }
-
-    public String getCustName() {
-        return this.custName;
-    }
-
-    public void setCustName(String custName) {
-        this.custName = custName;
-    }
-
-    public String getContId() {
-        return this.contId;
-    }
-
-    public void setContId(String contId) {
-        this.contId = contId;
-    }
-
-    public String getContName() {
-        return this.contName;
-    }
-
-    public void setContName(String contName) {
-        this.contName = contName;
-    }
-
     public String getSysCompUserId() {
         return this.sysCompUserId;
     }
@@ -231,12 +223,47 @@ public class MarketEventView implements java.io.Serializable {
         this.sysCompUserName = sysCompUserName;
     }
 
-    public String getMktevtSuperiorName() {
-        return mktevtSuperiorName;
+    public String getCompId() {
+        return this.compId;
     }
 
-    public void setMktevtSuperiorName(String mktevtSuperiorName) {
-        this.mktevtSuperiorName = mktevtSuperiorName;
+    public void setCompId(String compId) {
+        this.compId = compId;
+    }
+
+    public String getCompName() {
+        return this.compName;
+    }
+
+    public void setCompName(String compName) {
+        this.compName = compName;
+    }
+
+    public String getCustId() {
+        return this.custId;
+    }
+
+    public void setCustId(String custId) {
+        this.custId = custId;
+    }
+
+    public String getCustName() {
+        return this.custName;
+    }
+
+    public void setCustName(String custName) {
+        this.custName = custName;
+    }
+
+    public String getCompCustName() {
+        if (StringUtils.isNotBlank(compCustName)) {
+            return StringUtils.abbreviate(compCustName, 40);
+        }
+        return this.compCustName;
+    }
+
+    public void setCompCustName(String compCustName) {
+        this.compCustName = compCustName;
     }
 
     public boolean equals(Object other) {
@@ -266,27 +293,36 @@ public class MarketEventView implements java.io.Serializable {
                         && castOther.getEndTimeStr() != null && this.getEndTimeStr().equals(castOther.getEndTimeStr())))
                 && ((this.getSubject() == castOther.getSubject()) || (this.getSubject() != null
                         && castOther.getSubject() != null && this.getSubject().equals(castOther.getSubject())))
+                && ((this.getStatus() == castOther.getStatus()) || (this.getStatus() != null
+                        && castOther.getStatus() != null && this.getStatus().equals(castOther.getStatus())))
                 && ((this.getMktevtSuperiorId() == castOther.getMktevtSuperiorId()) || (this.getMktevtSuperiorId() != null
                         && castOther.getMktevtSuperiorId() != null && this.getMktevtSuperiorId().equals(
                         castOther.getMktevtSuperiorId())))
+                && ((this.getMktevtSuperiorName() == castOther.getMktevtSuperiorName()) || (this
+                        .getMktevtSuperiorName() != null
+                        && castOther.getMktevtSuperiorName() != null && this.getMktevtSuperiorName().equals(
+                        castOther.getMktevtSuperiorName())))
                 && ((this.getMktevtId() == castOther.getMktevtId()) || (this.getMktevtId() != null
                         && castOther.getMktevtId() != null && this.getMktevtId().equals(castOther.getMktevtId())))
                 && ((this.getMktevtName() == castOther.getMktevtName()) || (this.getMktevtName() != null
                         && castOther.getMktevtName() != null && this.getMktevtName().equals(castOther.getMktevtName())))
-                && ((this.getCustId() == castOther.getCustId()) || (this.getCustId() != null
-                        && castOther.getCustId() != null && this.getCustId().equals(castOther.getCustId())))
-                && ((this.getCustName() == castOther.getCustName()) || (this.getCustName() != null
-                        && castOther.getCustName() != null && this.getCustName().equals(castOther.getCustName())))
-                && ((this.getContId() == castOther.getContId()) || (this.getContId() != null
-                        && castOther.getContId() != null && this.getContId().equals(castOther.getContId())))
-                && ((this.getContName() == castOther.getContName()) || (this.getContName() != null
-                        && castOther.getContName() != null && this.getContName().equals(castOther.getContName())))
                 && ((this.getSysCompUserId() == castOther.getSysCompUserId()) || (this.getSysCompUserId() != null
                         && castOther.getSysCompUserId() != null && this.getSysCompUserId().equals(
                         castOther.getSysCompUserId())))
                 && ((this.getSysCompUserName() == castOther.getSysCompUserName()) || (this.getSysCompUserName() != null
                         && castOther.getSysCompUserName() != null && this.getSysCompUserName().equals(
-                        castOther.getSysCompUserName())));
+                        castOther.getSysCompUserName())))
+                && ((this.getCompId() == castOther.getCompId()) || (this.getCompId() != null
+                        && castOther.getCompId() != null && this.getCompId().equals(castOther.getCompId())))
+                && ((this.getCompName() == castOther.getCompName()) || (this.getCompName() != null
+                        && castOther.getCompName() != null && this.getCompName().equals(castOther.getCompName())))
+                && ((this.getCustId() == castOther.getCustId()) || (this.getCustId() != null
+                        && castOther.getCustId() != null && this.getCustId().equals(castOther.getCustId())))
+                && ((this.getCustName() == castOther.getCustName()) || (this.getCustName() != null
+                        && castOther.getCustName() != null && this.getCustName().equals(castOther.getCustName())))
+                && ((this.getCompCustName() == castOther.getCompCustName()) || (this.getCompCustName() != null
+                        && castOther.getCompCustName() != null && this.getCompCustName().equals(
+                        castOther.getCompCustName())));
     }
 
     public int hashCode() {
@@ -300,15 +336,19 @@ public class MarketEventView implements java.io.Serializable {
         result = 37 * result + (getEndTime() == null ? 0 : this.getEndTime().hashCode());
         result = 37 * result + (getEndTimeStr() == null ? 0 : this.getEndTimeStr().hashCode());
         result = 37 * result + (getSubject() == null ? 0 : this.getSubject().hashCode());
+        result = 37 * result + (getStatus() == null ? 0 : this.getStatus().hashCode());
         result = 37 * result + (getMktevtSuperiorId() == null ? 0 : this.getMktevtSuperiorId().hashCode());
+        result = 37 * result + (getMktevtSuperiorName() == null ? 0 : this.getMktevtSuperiorName().hashCode());
         result = 37 * result + (getMktevtId() == null ? 0 : this.getMktevtId().hashCode());
         result = 37 * result + (getMktevtName() == null ? 0 : this.getMktevtName().hashCode());
-        result = 37 * result + (getCustId() == null ? 0 : this.getCustId().hashCode());
-        result = 37 * result + (getCustName() == null ? 0 : this.getCustName().hashCode());
-        result = 37 * result + (getContId() == null ? 0 : this.getContId().hashCode());
-        result = 37 * result + (getContName() == null ? 0 : this.getContName().hashCode());
         result = 37 * result + (getSysCompUserId() == null ? 0 : this.getSysCompUserId().hashCode());
         result = 37 * result + (getSysCompUserName() == null ? 0 : this.getSysCompUserName().hashCode());
+        result = 37 * result + (getCompId() == null ? 0 : this.getCompId().hashCode());
+        result = 37 * result + (getCompName() == null ? 0 : this.getCompName().hashCode());
+        result = 37 * result + (getCustId() == null ? 0 : this.getCustId().hashCode());
+        result = 37 * result + (getCustName() == null ? 0 : this.getCustName().hashCode());
+        result = 37 * result + (getCompCustName() == null ? 0 : this.getCompCustName().hashCode());
         return result;
     }
+
 }

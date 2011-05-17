@@ -131,6 +131,14 @@ public class MktEvtAction extends BaseAction {
         return NONE;
     }
 
+    public String showMktEvtCal() throws Exception {
+        return "mktevt.cal";
+    }
+
+    public String showMktEvtCount() throws Exception {
+        return "mktevt.count";
+    }
+
     public MktEvtService getMktEvtService() {
         return mktEvtService;
     }

@@ -30,6 +30,8 @@ public class MarketEvent implements java.io.Serializable {
 
     private String subject;
 
+    private String status;
+
     // Constructors
 
     /** default constructor */
@@ -38,17 +40,18 @@ public class MarketEvent implements java.io.Serializable {
 
     /** minimal constructor */
     public MarketEvent(Integer occurDate, Integer beginTime, Integer endTime, Integer marketEventTypeId,
-            String situation) {
+            String situation, String status) {
         this.occurDate = occurDate;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.marketEventTypeId = marketEventTypeId;
         this.situation = situation;
+        this.status = status;
     }
 
     /** full constructor */
     public MarketEvent(Integer occurDate, Integer beginTime, Integer endTime, Integer marketEventTypeId,
-            String situation, String goods, String remark, String trainScale, String subject) {
+            String situation, String goods, String remark, String trainScale, String subject, String status) {
         this.occurDate = occurDate;
         this.beginTime = beginTime;
         this.endTime = endTime;
@@ -58,6 +61,7 @@ public class MarketEvent implements java.io.Serializable {
         this.remark = remark;
         this.trainScale = trainScale;
         this.subject = subject;
+        this.status = status;
     }
 
     // Property accessors
@@ -140,6 +144,14 @@ public class MarketEvent implements java.io.Serializable {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

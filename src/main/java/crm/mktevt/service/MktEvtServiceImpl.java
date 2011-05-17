@@ -15,11 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
-import crm.cust.service.CustServiceImpl;
 import crm.dto.MktEvtExtDto;
 import crm.model.MarketEvent;
-import crm.model.MarketEventContactRel;
-import crm.model.MarketEventContactRelId;
+import crm.model.MarketEventCompanyRel;
+import crm.model.MarketEventCompanyRelId;
 import crm.model.MarketEventCustomerRel;
 import crm.model.MarketEventCustomerRelId;
 import crm.model.MarketEventSysUserRel;
@@ -32,7 +31,7 @@ import crm.util.Utils;
  */
 public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService {
 
-    private final Logger log = LoggerFactory.getLogger(CustServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(MktEvtServiceImpl.class);
 
     @Override
     public void saveOrUpdate(Object object) throws Exception {
@@ -47,6 +46,22 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 deleteAllRel(Utils.getIds(mktEvtObj.getId().toString()));
             }
             super.saveOrUpdate(mktEvtObj);
+            //
+            if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompIds())) {
+                Set<MarketEventCompanyRel> mktEvtCompRels = new HashSet<MarketEventCompanyRel>();
+                List<Integer> compIds = Utils.getIds(mktEvtExtDto.getSysCompIds());
+                MarketEventCompanyRelId _relId = null;
+                for (Iterator<Integer> iterator = compIds.iterator(); iterator.hasNext();) {
+                    Integer ele = (Integer) iterator.next();
+                    _relId = new MarketEventCompanyRelId();
+                    _relId.setMarketEventId(mktEvtObj.getId());
+                    _relId.setSysCompanyId(ele);
+                    mktEvtCompRels.add(new MarketEventCompanyRel(_relId));
+                }
+                super.saveOrUpdateAll(mktEvtCompRels);
+            } else {
+                log.warn("syscomp ids is null");
+            }
             //
             if (StringUtils.isNotBlank(mktEvtExtDto.getCustomerIds())) {
                 Set<MarketEventCustomerRel> mktEvtCustRels = new HashSet<MarketEventCustomerRel>();
@@ -64,21 +79,23 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 log.warn("customer ids is null");
             }
             // 
-            if (StringUtils.isNotBlank(mktEvtExtDto.getContIds())) {
-                Set<MarketEventContactRel> mktEvtContRels = new HashSet<MarketEventContactRel>();
-                List<Integer> contIds = Utils.getIds(mktEvtExtDto.getContIds());
-                MarketEventContactRelId _relId = null;
-                for (Iterator<Integer> iterator = contIds.iterator(); iterator.hasNext();) {
-                    Integer ele = (Integer) iterator.next();
-                    _relId = new MarketEventContactRelId();
-                    _relId.setMarketEventId(mktEvtObj.getId());
-                    _relId.setCustomerContactId(ele);
-                    mktEvtContRels.add(new MarketEventContactRel(_relId));
-                }
-                super.saveOrUpdateAll(mktEvtContRels);
-            } else {
-                log.warn("contact ids is null");
-            }
+            // if (StringUtils.isNotBlank(mktEvtExtDto.getContIds())) {
+            // Set<MarketEventContactRel> mktEvtContRels = new
+            // HashSet<MarketEventContactRel>();
+            // List<Integer> contIds = Utils.getIds(mktEvtExtDto.getContIds());
+            // MarketEventContactRelId _relId = null;
+            // for (Iterator<Integer> iterator = contIds.iterator();
+            // iterator.hasNext();) {
+            // Integer ele = (Integer) iterator.next();
+            // _relId = new MarketEventContactRelId();
+            // _relId.setMarketEventId(mktEvtObj.getId());
+            // _relId.setCustomerContactId(ele);
+            // mktEvtContRels.add(new MarketEventContactRel(_relId));
+            // }
+            // super.saveOrUpdateAll(mktEvtContRels);
+            // } else {
+            // log.warn("contact ids is null");
+            // }
             //
             if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompUseIds())) {
                 Set<MarketEventSysUserRel> mktEvtSysUserRels = new HashSet<MarketEventSysUserRel>();
@@ -115,6 +132,15 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
             for (Iterator<?> iterator = ids.iterator(); iterator.hasNext();) {
                 Integer ele = (Integer) iterator.next();
                 //
+                List<?> compRelList = getBaseDaoImpl().findByCriteria(
+                        DetachedCriteria.forClass(MarketEventCustomerRel.class).add(
+                                Expression.eq("id.marketEventId", ele)));
+                if (null != compRelList && compRelList.size() > 0) {
+                    super.deleteAll(compRelList);
+                } else {
+                    log.warn("deleteAllRel compRelList is null");
+                }
+                //
                 List<?> custRelList = getBaseDaoImpl().findByCriteria(
                         DetachedCriteria.forClass(MarketEventCustomerRel.class).add(
                                 Expression.eq("id.marketEventId", ele)));
@@ -124,14 +150,14 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                     log.warn("deleteAllRel custRelList is null");
                 }
                 //
-                List<?> contRelList = getBaseDaoImpl().findByCriteria(
-                        DetachedCriteria.forClass(MarketEventContactRel.class).add(
-                                Expression.eq("id.marketEventId", ele)));
-                if (null != contRelList && contRelList.size() > 0) {
-                    super.deleteAll(contRelList);
-                } else {
-                    log.warn("deleteAllRel contRelList is null");
-                }
+                // List<?> contRelList = getBaseDaoImpl().findByCriteria(
+                // DetachedCriteria.forClass(MarketEventContactRel.class).add(
+                // Expression.eq("id.marketEventId", ele)));
+                // if (null != contRelList && contRelList.size() > 0) {
+                // super.deleteAll(contRelList);
+                // } else {
+                // log.warn("deleteAllRel contRelList is null");
+                // }
                 //
                 List<?> sysUserList = getBaseDaoImpl().findByCriteria(
                         DetachedCriteria.forClass(MarketEventSysUserRel.class).add(

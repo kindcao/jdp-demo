@@ -1,8 +1,5 @@
 package crm.dto;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.apache.commons.lang.StringUtils;
 
 import crm.model.MarketEvent;
@@ -22,6 +19,8 @@ public class MktEvtExtDto extends MarketEvent {
 
     private String contIds;
 
+    private String sysCompIds;
+
     private String occurDateStr;
 
     private String beginTimeStr;
@@ -34,6 +33,14 @@ public class MktEvtExtDto extends MarketEvent {
 
     public void setSysCompUseIds(String sysCompUseIds) {
         this.sysCompUseIds = sysCompUseIds;
+    }
+
+    public String getSysCompIds() {
+        return sysCompIds;
+    }
+
+    public void setSysCompIds(String sysCompIds) {
+        this.sysCompIds = sysCompIds;
     }
 
     public String getContIds() {
@@ -84,4 +91,5 @@ public class MktEvtExtDto extends MarketEvent {
             this.setEndTime(Integer.valueOf(endTimeStr.replaceAll(":", "")));
         }
     }
+
 }

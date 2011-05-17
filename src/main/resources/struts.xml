@@ -60,6 +60,7 @@
 			<result name="cust.info.dtl">/jsp/cust/custInfoDtl.jsp</result>
 		</action>
 		<action name="getCustList" class="custAction" method="getCustList" />
+		<action name="getCustNameList" class="custAction" method="getCustNameList" />
 		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
 		<action name="deleteCust" class="custAction" method="deleteCust" />
 		<!-- cust - contact  -->
@@ -73,16 +74,24 @@
 		<action name="getContByCustIds" class="contAction" method="getContByCustIds" />
 		<action name="saveContInfo" class="contAction" method="saveContInfo" />
 		<action name="deleteCont" class="contAction" method="deleteCont" />
-		<!-- cust - market event  -->
+		<!-- market event  -->
 		<action name="showMktEvtList" class="mktEvtAction" method="showMktEvtList">
-			<result name="mktevt.list">/jsp/cust/mktEvtList.jsp</result>
+			<result name="mktevt.list" type="tiles">mktevt.list</result>
 		</action>
 		<action name="showMktEvtInfo" class="mktEvtAction" method="showMktEvtInfo">
-			<result name="mktevt.info">/jsp/cust/mktEvtInfo.jsp</result>
+			<result name="mktevt.info" type="tiles">mktevt.info</result>
 		</action>
 		<action name="getMktEvtList" class="mktEvtAction" method="getMktEvtList" />
 		<action name="saveMktEvtInfo" class="mktEvtAction" method="saveMktEvtInfo" />
 		<action name="deleteMktEvt" class="mktEvtAction" method="deleteMktEvt" />
+		<!-- market event - cal -->
+		<action name="showMktEvtCal" class="mktEvtAction" method="showMktEvtCal">
+			<result name="mktevt.cal" type="tiles">mktevt.cal</result>
+		</action>
+		<!-- market event - count -->
+		<action name="showMktEvtCount" class="mktEvtAction" method="showMktEvtCount">
+			<result name="mktevt.count" type="tiles">mktevt.count</result>
+		</action>
 		<!-- syssetup company -->
 		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>

@@ -26,6 +26,7 @@ import crm.model.CustomerIndustry;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;
 import crm.model.SysCompany;
+import crm.util.JsonUtils;
 import crm.util.Utils;
 
 /**
@@ -237,6 +238,15 @@ public class CustAction extends BaseAction {
             jvr.setErrors("delete ids is null");
         }
         responseJsonData(jvr);
+        return NONE;
+    }
+
+    public String getCustNameList() throws Exception {
+        Customer _obj = new Customer();
+        _obj.setDeleteFlag(Constants.STATUS_N);
+        List<?> custList = custService.findByExample(_obj);
+        String[] filedName = new String[] { "id", "custName" };
+        responseJsonData(custList, JsonUtils.setIncludes(Customer.class, filedName));
         return NONE;
     }
 

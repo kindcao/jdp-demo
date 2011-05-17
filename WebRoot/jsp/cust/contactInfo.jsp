@@ -119,6 +119,7 @@
 </div>
 <div id="div_info_contact" style="margin-top: 10px; display: none;">
 	<form id="infoFormContantEdit" name="infoFormContantEdit">
+		<s:hidden name="actionFlag" value="U" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
@@ -277,7 +278,7 @@
 		var isValid = $('#infoFormContantEdit').form('validate');	
 		if (isValid) {			
 			var options = {
-				url : 'saveContInfo.action?actionFlag=U',
+				url : 'saveContInfo.action',
 				dataType : 'json',
 				type: 'post',
 				//contentType:'application/x-www-form-urlencoded; charset=utf-8',

@@ -16,16 +16,16 @@
 				<s:property value="#_cust.custName" />
 			</td>
 			<td nowrap="nowrap" align="center" width="10%">
+				简称:
+			</td>
+			<td width="20%">
+				<s:property value="#_cust.shortName" />
+			</td>
+			<td nowrap="nowrap" align="center" width="10%">
 				客户编码:
 			</td>
 			<td width="20%">
 				<s:property value="#_cust.custCode" />
-			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				行业:
-			</td>
-			<td width="20%">
-				<s:property value="#_cust.industryName" />
 			</td>
 		</tr>
 		<tr height="30px">
@@ -36,21 +36,18 @@
 				<s:property value="#_cust.custSysCompNames" />
 			</td>
 			<td nowrap="nowrap" align="center">
-				电话:
+				行业:
 			</td>
 			<td>
-				<s:property value="#_cust.phone" />
+				<s:property value="#_cust.industryName" />
 			</td>
 		</tr>
 		<tr height="30px">
 			<td nowrap="nowrap" align="center">
-				邮箱:
+				电话:
 			</td>
 			<td>
-				<s:if test="%{#_cust.email.trim().length()>0}">
-					<a href='mailto:<s:property value="#_cust.email" />'><s:property
-							value="#_cust.email" /> </a>
-				</s:if>
+				<s:property value="#_cust.phone" />
 			</td>
 			<td nowrap="nowrap" align="center">
 				传真:
@@ -59,12 +56,12 @@
 				<s:property value="#_cust.fax" />
 			</td>
 			<td nowrap="nowrap" align="center">
-				网站:
+				邮箱:
 			</td>
 			<td>
-				<s:if test="%{#_cust.website.trim().length()>0}">
-					<a href='<s:property value="#_cust.website" />'><s:property
-							value="#_cust.website" /> </a>
+				<s:if test="%{#_cust.email.trim().length()>0}">
+					<a href='mailto:<s:property value="#_cust.email" />'><s:property
+							value="#_cust.email" /> </a>
 				</s:if>
 			</td>
 		</tr>
@@ -109,8 +106,14 @@
 			<td colspan="3">
 				<s:property value="#_cust.descript" />
 			</td>
-			<td colspan="2" align="center">
-				&nbsp;
+			<td nowrap="nowrap" align="center">
+				网站:
+			</td>
+			<td>
+				<s:if test="%{#_cust.website.trim().length()>0}">
+					<a href='<s:property value="#_cust.website" />'><s:property
+							value="#_cust.website" /> </a>
+				</s:if>
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
@@ -131,6 +134,7 @@
 </div>
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
+		<s:hidden name="actionFlag" value="U" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
@@ -143,21 +147,19 @@
 						value='<s:property value="#_cust.custName" />'>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
+					简称:
+				</td>
+				<td width="20%">
+					<input type="text" name="cust.shortName" class="easyui-validatebox"
+						required="true" validType="length[1,50]"
+						value='<s:property value="#_cust.shortName" />'>
+				</td>
+				<td nowrap="nowrap" align="center" width="10%">
 					客户编码:
 				</td>
 				<td width="20%">
 					<input type="text" name="cust.custCode" maxlength="20"
 						value='<s:property value="#_cust.custCode" />'>
-				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					行业:
-				</td>
-				<td width="20%">
-					<input id="cust_indu" class="easyui-combobox"
-						name="cust.industryId" required="true" url="" valueField="id"
-						textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 135px;"
-						value='<s:property value="#_cust.industryName" />'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -173,22 +175,24 @@
 
 				</td>
 				<td nowrap="nowrap" align="center">
+					行业:
+				</td>
+				<td>
+					<input id="cust_indu" class="easyui-combobox"
+						name="cust.industryId" required="true" url="" valueField="id"
+						textField="name" multiple="false" editable="false"
+						panelHeight="auto" style="width: 135px;"
+						value='<s:property value="#_cust.industryName" />'>
+				</td>
+			</tr>
+			<tr height="30px">
+				<td nowrap="nowrap" align="center">
 					电话:
 				</td>
 				<td>
 					<input type="text" name="cust.phone" class="easyui-validatebox"
 						required="true" validType="phone" maxlength="40"
 						value='<s:property value="#_cust.phone" />'>
-				</td>
-			</tr>
-			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					邮箱:
-				</td>
-				<td>
-					<input type="text" name="cust.email" maxlength="40"
-						class="easyui-validatebox" validType="email"
-						value='<s:property value="#_cust.email" />'>
 				</td>
 				<td nowrap="nowrap" align="center">
 					传真:
@@ -198,12 +202,12 @@
 						value='<s:property value="#_cust.fax" />'>
 				</td>
 				<td nowrap="nowrap" align="center">
-					网站:
+					邮箱:
 				</td>
 				<td>
-					<input type="text" name="cust.website" class="easyui-validatebox"
-						validType="url" maxlength="50"
-						value='<s:property value="#_cust.website" />'>
+					<input type="text" name="cust.email" maxlength="40"
+						class="easyui-validatebox" validType="email"
+						value='<s:property value="#_cust.email" />'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -257,8 +261,13 @@
 						validType="length[0,500]"> 			
 					</textarea>
 				</td>
-				<td colspan="2" align="center">
-					&nbsp;
+				<td nowrap="nowrap" align="center">
+					网站:
+				</td>
+				<td>
+					<input type="text" name="cust.website" class="easyui-validatebox"
+						validType="url" maxlength="50"
+						value='<s:property value="#_cust.website" />'>
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
@@ -319,7 +328,7 @@
 		var isValid = $('#infoForm').form('validate');	
 		if (isValid) {			
 			var options = {
-				url : 'saveCustInfo.action?actionFlag=U',
+				url : 'saveCustInfo.action',
 				dataType : 'json',
 				type: 'post',
 				//contentType:'application/x-www-form-urlencoded; charset=utf-8',

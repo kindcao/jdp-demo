@@ -13,7 +13,7 @@
 	<div title="联系人" style="margin-left: 5px;" cache="false"
 		href="showContList.action">
 	</div>
-	<div title="市场工作" style="margin-left: 5px;" cache="false"
+	<!--div title="市场工作" style="margin-left: 5px;" cache="false"
 		href="showMktEvtList.action">
-	</div>
+	</div-->
 </div>

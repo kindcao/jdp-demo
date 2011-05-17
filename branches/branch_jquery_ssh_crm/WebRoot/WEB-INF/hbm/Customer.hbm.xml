@@ -13,6 +13,9 @@
         <property name="custName" type="java.lang.String">
             <column name="cust_name" length="50" not-null="true" />
         </property>
+        <property name="shortName" type="java.lang.String">
+            <column name="short_name" length="50" not-null="true" />
+        </property>
         <property name="custCode" type="java.lang.String">
             <column name="cust_code" length="20" />
         </property>

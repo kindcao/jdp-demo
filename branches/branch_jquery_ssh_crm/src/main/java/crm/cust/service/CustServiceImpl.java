@@ -63,7 +63,7 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
 
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {
-        String hql = getQueryHQL(map) + " order by cv.customerId desc ";
+        String hql = getQueryHQL(map) + " order by cv.id desc ";
         List<?> result = getBaseDaoImpl().findPageByQuery(pageNo, pageSize, hql, map);
         return result;
     }

@@ -76,14 +76,21 @@
 						textField="companyName" multiple="true" editable="false"
 						panelHeight="auto" style="width: 401px;">
 				</td>
+
 				<td nowrap="nowrap" align="center">
-					是否实施:
+					实施状态:
 				</td>
 				<td>
-					<input id="mktEvt_status" name="mktEvt.status"
-						class="easyui-combobox" url="getStatusYN.action" required="true"
-						valueField="id" textField="text" panelHeight="auto"
+					<select id="mktEvt_status" name="mktEvt.status"
+						class="easyui-combobox" required="true" panelHeight="auto"
 						editable="false" style="width: 133px;">
+						<option value="N" selected="selected">
+							未实施
+						</option>
+						<option value="Y">
+							已实施
+						</option>
+					</select>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -230,14 +237,14 @@
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
 		$('#_delete').linkbutton('disable');	
-		//$("#_reset").click();
+		$("#_reset").click();
 	});
 	
 	$("#_back").click(function() {
 		document.getElementById('div_info').style.display='none';
 		document.getElementById('div_search').style.display='inline';
 		$('#_delete').linkbutton('enable');
-		//$("#_reset").click();
+		$("#_reset").click();
 	});	
 	
 	$("#_save").click(function() {
@@ -340,7 +347,7 @@
 				}, {
 					field : 'occurDateStr',
 					title : '日期',
-					width : 100,
+					width : 80,
 					sortable : false,			
 					formatter : function(value, rec) {
 						return "<a href='#' onclick='editMktEvt(" + rec.id+ ");'>" + value + "</a>";
@@ -363,13 +370,23 @@
 			title : '主题',
 			width : 200
 		},{
-			field : 'contName',
-			title : '联系人',
-			width : 150
+			field : 'status', 
+			title : '实施状态',
+			width : 60,
+			formatter : function(value, rec) {
+				if('Y'==value){
+					return '已实施';
+				}
+				return '未实施';
+			}
 		},{
 			field : 'sysCompUserName',
 			title : '我方人员',
 			width : 150
+		},{
+			field : 'compCustName',
+			title : '所属公司/客户名称',
+			width : 250
 		}]];			
 	
 		//		

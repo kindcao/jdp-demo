@@ -2,6 +2,6 @@
 	pageEncoding="UTF-8"%>
 
 <div align="center">
-	<b>Copyright &copy; 2011 By XXX All Rights Reserved.</b>
+	<b>Copyright &copy; 2011 By FORTUNE UNION All Rights Reserved.</b>
 </div>
 

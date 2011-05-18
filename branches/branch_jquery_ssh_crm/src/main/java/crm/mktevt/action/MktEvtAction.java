@@ -139,6 +139,10 @@ public class MktEvtAction extends BaseAction {
     public String showMktEvtCal() throws Exception {
         return "mktevt.cal";
     }
+    
+    public String getMktEvtCalByYear() throws Exception {
+        return "mktevt.cal";
+    }
 
     public String showMktEvtCount() throws Exception {
         return "mktevt.count";

@@ -156,10 +156,7 @@ public class MarketEventView implements java.io.Serializable {
         this.endTimeStr = endTimeStr;
     }
 
-    public String getSubject() {
-        if (StringUtils.isNotBlank(subject)) {
-            return StringUtils.abbreviate(subject, 40);
-        }
+    public String getSubject() {      
         return this.subject;
     }
 
@@ -255,10 +252,7 @@ public class MarketEventView implements java.io.Serializable {
         this.custName = custName;
     }
 
-    public String getCompCustName() {
-        if (StringUtils.isNotBlank(compCustName)) {
-            return StringUtils.abbreviate(compCustName, 40);
-        }
+    public String getCompCustName() {     
         return this.compCustName;
     }
 

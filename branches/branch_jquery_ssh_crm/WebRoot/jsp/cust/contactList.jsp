@@ -295,7 +295,10 @@
 		},{
 			field : 'address',
 			title : '联系地址',
-			width : 200
+			width : 200,
+			formatter : function(value, rec) {				
+				return cutstr(value,20);
+			}
 		}, {
 			field : 'isPrimary',
 			title : '是否主要',

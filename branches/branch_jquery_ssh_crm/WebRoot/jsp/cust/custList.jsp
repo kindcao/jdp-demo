@@ -364,11 +364,17 @@
 		}, {
 			field : 'address',
 			title : '联系地址',
-			width : 200
+			width : 200,
+			formatter : function(value, rec) {				
+				return cutstr(value,20);
+			}
 		}, {
 			field : 'contactName',
 			title : '联系人',
-			width : 150
+			width : 150,
+			formatter : function(value, rec) {				
+				return cutstr(value,20);
+			}
 		}]];
 			
 		//		

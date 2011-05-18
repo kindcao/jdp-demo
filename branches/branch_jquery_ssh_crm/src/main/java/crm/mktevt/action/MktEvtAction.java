@@ -47,6 +47,10 @@ public class MktEvtAction extends BaseAction {
 
     private String subject;
 
+    private String status;
+
+    private String compCustName;
+
     private Integer mktevtSuperiorId;
 
     public String showMktEvtList() throws Exception {
@@ -77,6 +81,8 @@ public class MktEvtAction extends BaseAction {
         mktEvtService.saveOrUpdate(mktEvt);
         jvr.setSuccess(true);
         responseJsonData(jvr);
+        //
+        mktEvt = new MktEvtExtDto();
         return NONE;
     }
 
@@ -84,14 +90,11 @@ public class MktEvtAction extends BaseAction {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
 
-        if (StringUtils.isNotBlank(customerIds)) {
-            map.put("customerIds", customerIds);
-        }
         if (StringUtils.isNotBlank(sysCompUseIds)) {
             map.put("sysCompUseIds", sysCompUseIds);
         }
-        if (StringUtils.isNotBlank(contIds)) {
-            map.put("contIds", contIds);
+        if (StringUtils.isNotBlank(compCustName)) {
+            map.put("compCustName", compCustName);
         }
         if (StringUtils.isNotBlank(occurDateStr)) {
             map.put("occurDate", Integer.valueOf(occurDateStr));
@@ -108,7 +111,9 @@ public class MktEvtAction extends BaseAction {
         if (null != mktevtSuperiorId && mktevtSuperiorId > 0) {
             map.put("mktevtSuperiorId", mktevtSuperiorId);
         }
-
+        if (StringUtils.isNotBlank(status)) {
+            map.put("status", status);
+        }
         //
         int totalCount = mktEvtService.getTotalCount(map);
         List<?> mktEvtList = mktEvtService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
@@ -236,6 +241,22 @@ public class MktEvtAction extends BaseAction {
 
     public void setMktevtSuperiorId(Integer mktevtSuperiorId) {
         this.mktevtSuperiorId = mktevtSuperiorId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCompCustName() {
+        return compCustName;
+    }
+
+    public void setCompCustName(String compCustName) {
+        this.compCustName = compCustName;
     }
 
 }

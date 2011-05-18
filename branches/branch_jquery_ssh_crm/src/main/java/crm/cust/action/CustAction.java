@@ -191,6 +191,8 @@ public class CustAction extends BaseAction {
             jvr.setSuccess(true);
         }
         responseJsonData(jvr);
+        //
+        cust = new Customer();
         return NONE;
     }
 

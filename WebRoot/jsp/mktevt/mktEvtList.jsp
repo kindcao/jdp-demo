@@ -76,7 +76,6 @@
 						textField="companyName" multiple="true" editable="false"
 						panelHeight="auto" style="width: 401px;">
 				</td>
-
 				<td nowrap="nowrap" align="center">
 					实施状态:
 				</td>
@@ -202,11 +201,46 @@
 							style="width: 134px;">
 					</td>
 					<td nowrap="nowrap" align="center">
+						实施状态:
+					</td>
+					<td>
+						<select id="status" name="status" class="easyui-combobox"
+							panelHeight="auto" editable="false" style="width: 133px;">
+							<option value="">
+							</option>
+							<option value="N">
+								未实施
+							</option>
+							<option value="Y">
+								已实施
+							</option>
+						</select>
+					</td>
+					<td nowrap="nowrap" align="center">
 						主题:
 					</td>
-					<td colspan="3">
+					<td>
 						<input type="text" id="subject" name="subject" maxlength="200"
-							style="width: 404px;" class="easyui-validatebox">
+							class="easyui-validatebox">
+					</td>
+				</tr>
+				<tr>
+					<td nowrap="nowrap" align="center">
+						我方人员
+					</td>
+					<td>
+						<input id="sysCompUseIds" name="sysCompUseIds"
+							url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
+							class="easyui-combobox" valueField="id" textField="name"
+							multiple="false" editable="false" panelHeight="auto"
+							style="width: 134px;">
+					</td>
+					<td nowrap="nowrap" align="center">
+						参与机构:
+					</td>
+					<td>
+						<input type="text" id="compCustName" name="compCustName"
+							maxlength="200" class="easyui-validatebox">
 					</td>
 				</tr>
 				<tr height="30px">
@@ -277,6 +311,7 @@
 		$('#mktEvt_sysCompUseIds').combobox('clear');
 		$('#mktEvt_sysCompIds').combobox('clear');
 		$('#mktEvt_customerIds').combobox('clear');	
+		$('#mktEvt_status').combobox('clear');			
 		resetForm('infoForm');
 	});	
 	
@@ -317,7 +352,9 @@
 		$("#occurDateStr").datebox('clear');
 		$("#beginTimeStr").timespinner('clear');
 		$("#endTimeStr").timespinner('clear');
-		$('#mktevtSuperiorId').combobox('clear');		
+		$('#mktevtSuperiorId').combobox('clear');
+		$('#status').combobox('clear');	
+		$('#sysCompUseIds').combobox('clear');		
 		resetForm('searchForm');		
 	});	
 	
@@ -325,9 +362,12 @@
 		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
 		queryParams.occurDateStr = $("#occurDateStr").datebox('getValue');
 		queryParams.beginTimeStr = $("#beginTimeStr").timespinner('getValue');
-		queryParams.endTimeStr = $("#endTimeStr").timespinner('getValue');
-		queryParams.subject = $("#subject").val();	
-		queryParams.mktevtSuperiorId = $("#mktevtSuperiorId").combobox('getValue');			
+		queryParams.endTimeStr = $("#endTimeStr").timespinner('getValue');		
+		queryParams.mktevtSuperiorId = $("#mktevtSuperiorId").combobox('getValue');
+		queryParams.status = $("#status").combobox('getValue');
+		queryParams.subject = $("#subject").val();
+		queryParams.sysCompUseIds = $("#sysCompUseIds").combobox('getValue');
+		queryParams.compCustName = $("#compCustName").val();
 		reloadDatagrid('grid-datalist');		
 	});	
 	
@@ -366,10 +406,6 @@
 			title : '类型',
 			width : 100
 		},{
-			field : 'subject',
-			title : '主题',
-			width : 200
-		},{
 			field : 'status', 
 			title : '实施状态',
 			width : 60,
@@ -380,13 +416,26 @@
 				return '未实施';
 			}
 		},{
+			field : 'subject',
+			title : '主题',
+			width : 150,
+			formatter : function(value, rec) {				
+				return cutstr(value,20);
+			}
+		},{
 			field : 'sysCompUserName',
 			title : '我方人员',
-			width : 150
+			width : 150,
+			formatter : function(value, rec) {				
+				return cutstr(value,20);
+			}
 		},{
 			field : 'compCustName',
-			title : '所属公司/客户名称',
-			width : 250
+			title : '参与机构(所属公司/客户名称)',
+			width : 250,
+			formatter : function(value, rec) {				
+				return cutstr(value,30);
+			}
 		}]];			
 	
 		//		

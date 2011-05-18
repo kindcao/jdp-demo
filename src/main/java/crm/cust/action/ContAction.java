@@ -88,6 +88,8 @@ public class ContAction extends BaseAction {
             jvr.setSuccess(true);
         }
         responseJsonData(jvr);
+        //
+        cont = new CustomerContact();
         return NONE;
     }
 

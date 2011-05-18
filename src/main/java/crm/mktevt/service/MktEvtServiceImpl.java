@@ -133,7 +133,7 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 Integer ele = (Integer) iterator.next();
                 //
                 List<?> compRelList = getBaseDaoImpl().findByCriteria(
-                        DetachedCriteria.forClass(MarketEventCustomerRel.class).add(
+                        DetachedCriteria.forClass(MarketEventCompanyRel.class).add(
                                 Expression.eq("id.marketEventId", ele)));
                 if (null != compRelList && compRelList.size() > 0) {
                     super.deleteAll(compRelList);
@@ -189,20 +189,15 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         StringBuilder sb = new StringBuilder();
         sb.append(" from MarketEventView mev where 1=1 ");
 
-        if (null != map.get("customerIds")) {
-            sb.append(" and mev.custId like :customerIds ");
-            map.put("customerIds", "%" + map.get("customerIds") + "%");
+        if (null != map.get("compCustName")) {
+            sb.append(" and mev.compCustName like :compCustName ");
+            map.put("compCustName", "%" + map.get("compCustName") + "%");
 
         }
 
         if (null != map.get("sysCompUseIds")) {
             sb.append(" and mev.sysCompUserId like :sysCompUseIds ");
             map.put("sysCompUseIds", "%" + map.get("sysCompUseIds") + "%");
-        }
-
-        if (null != map.get("contIds")) {
-            sb.append(" and mev.contId like :contIds ");
-            map.put("contIds", "%" + map.get("contIds") + "%");
         }
 
         if (null != map.get("occurDate")) {
@@ -227,6 +222,11 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         if (null != map.get("mktevtSuperiorId")) {
             sb.append(" and mev.mktevtSuperiorId = :mktevtSuperiorId ");
         }
+
+        if (null != map.get("status")) {
+            sb.append(" and mev.status = :status ");
+        }
+
         return sb.toString();
     }
 }

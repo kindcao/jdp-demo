@@ -262,9 +262,11 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 int endDay = Integer.valueOf(sdf.format(cal.getTime()));
                 criteria.add(Restrictions.between("occurDate", beginDay, endDay));
             }
-            //
             if (StringUtils.isNotBlank(dto.getCompId())) {
                 criteria.add(Restrictions.like("compId", dto.getCompId()));
+            }
+            if (null != dto.getMktevtSuperiorId() && dto.getMktevtSuperiorId() > 0) {
+                criteria.add(Restrictions.eq("mktevtSuperiorId", dto.getMktevtSuperiorId()));
             }
             return getBaseDaoImpl().findByCriteria(criteria);
         } else {

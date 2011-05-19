@@ -12,7 +12,7 @@
 }
 
 #cal-year-tab tr {
-	height: 125px;
+	height: 120px;
 }
 
 #cal-year-tab td {
@@ -80,9 +80,14 @@
 	}
 	
 	function getCalYearData(inc){
-		var year=parseInt($('#_labYear').html())+inc;		
-		$('#_labYear').html(year);
+		var labTxt=$('#_labYear').text();
+		if(!labTxt){
+			labTxt=new Date().getFullYear();
+		}		
+		var year=parseInt(labTxt)+inc;					
+		$('#_labYear').text(year);			
 		$('#calExtDto_occurDate').val(year+'0101');
+		
 		//
 		var options = {
 			url : 'getMktEvtCalByYear.action',
@@ -142,46 +147,93 @@
 </script>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
-<div style="margin-top: 5px;">
-	<form id="mktevtCalYearForm" name="mktevtCalYearForm">
-		<input type="hidden" name="calExtDto.year" value="true">
-		<input type="hidden" id="calExtDto_occurDate"
-			name="calExtDto.occurDate">
-		<table cellpadding="0" cellspacing="0" border="0" width="100%">
-			<tr height="30px">
-				<td nowrap="nowrap" width="10%">
-					市场工作：
-				</td>
-				<td width="20%">
-					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_year">年</a>
-					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_month">月</a>
-				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					用户：
-				</td>
-				<td width="20%">
-					&nbsp;
-				</td>
-				<td width="40%">
-					&nbsp;
-				</td>
-			</tr>
-			<tr height="30px">
-				<td id="cal_year_head" align="center" colspan="6">
-					<img src="images/calendar_prevyear.gif"
-						onclick="getCalYearData(-1)">
-					&nbsp;
-					<label id="_labYear"></label>
-					&nbsp;
-					<img src="images/calendar_nextyear.gif" onclick="getCalYearData(1)">
-				</td>
-			</tr>
-		</table>
-	</form>
+<div style="margin-top: 0px;">
+
+	<table cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td nowrap="nowrap" width="5%">
+				市场工作：
+			</td>
+			<td width="5%" nowrap="nowrap">
+				<a href="#" class="easyui-linkbutton" plain="true" id="_cal_year">年</a>
+				<a href="#" class="easyui-linkbutton" plain="true" id="_cal_month">月</a>
+			</td>
+			<td width="50%">
+				<div id="div-cal-search-year" style="display: inline;">
+					<form id="mktevtCalYearForm" name="mktevtCalYearForm">
+						<input type="hidden" name="calExtDto.year" value="true">
+						<input type="hidden" id="calExtDto_occurDate"
+							name="calExtDto.occurDate">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td nowrap="nowrap" align="center" width="10%">
+									所属公司:
+								</td>
+								<td width="25%">
+									<input id="calExtDto_compId" class="easyui-combobox"
+										name="calExtDto.compId" url="getSysComp.action"
+										valueField="id" textField="companyName" multiple="true"
+										editable="false" panelHeight="auto" style="width: 300px;">
+								</td>
+								<td nowrap="nowrap" align="center" width="15%">
+									<a href="#" class="easyui-linkbutton" plain="true"
+										iconCls="icon-search" id="_search_year">查询</a>
+									<a href="#" class="easyui-linkbutton" plain="true"
+										iconCls="icon-remove" id="_reset_search_year">重置</a>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div id="div-cal-search-month" style="display: none;">
+					<form id="mktevtCalMonthForm" name="mktevtCalMonthForm">
+						<input type="hidden" name="calExtDto.year" value="false">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td nowrap="nowrap" align="center" width="10%">
+									类型(大类):
+								</td>
+								<td width="25%">
+									<input id="calExtDto_mktevtSuperiorId"
+										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
+										url="getMarketEventType.action?eventTypeId=0" valueField="id"
+										textField="name" multiple="false" editable="false"
+										panelHeight="auto" style="width: 300px;">
+								</td>
+								<td nowrap="nowrap" align="center" width="15%">
+									<a href="#" class="easyui-linkbutton" plain="true"
+										iconCls="icon-search" id="_search_month">查询</a>
+									<a href="#" class="easyui-linkbutton" plain="true"
+										iconCls="icon-remove" id="_reset_search_month">重置</a>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</td>
+			<td width="40%">
+				&nbsp;
+			</td>
+		</tr>
+		<tr height="5px">
+			<td>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
 </div>
 <div id="div_cal-year" style="margin-top: 0px; display: inline;">
 	<table cellpadding="0" cellspacing="0" border="0" width="99%">
-		<tr valign="top" height="500px">
+		<tr height="30px">
+			<td id="cal_year_head" align="center">
+				<img src="images/calendar_prevyear.gif" onclick="getCalYearData(-1)">
+				&nbsp;
+				<label id="_labYear"></label>
+				&nbsp;
+				<img src="images/calendar_nextyear.gif" onclick="getCalYearData(1)">
+			</td>
+		</tr>
+		<tr valign="top" height="480px">
 			<td>
 				<script type="text/javascript">
 				printTab();
@@ -192,7 +244,7 @@
 </div>
 <div id="div_cal-month" style="margin-top: 0px; display: none;">
 	<table cellpadding="0" cellspacing="0" border="0" width="99%">
-		<tr valign="top" height="500px">
+		<tr valign="top" height="400px">
 			<td>
 				ss
 			</td>
@@ -204,23 +256,40 @@
 	
 	$('#_cal_year').click(function(){
 		document.getElementById('div_cal-year').style.display='inline';
-		document.getElementById('div_cal-month').style.display='none';		    		
+		document.getElementById('div_cal-month').style.display='none';   		
+		document.getElementById('div-cal-search-year').style.display='inline';
+		document.getElementById('div-cal-search-month').style.display='none';
+		$('#_reset_search_year').click();
 		getCalYearData(0);						
 	});
 	
 	$('#_cal_month').click(function(){
 		document.getElementById('div_cal-year').style.display='none';
-		document.getElementById('div_cal-month').style.display='inline';			
+		document.getElementById('div_cal-month').style.display='inline';
+		document.getElementById('div-cal-search-year').style.display='none';
+		document.getElementById('div-cal-search-month').style.display='inline'; 
+		$('#_reset_search_month').click();			
+	});
+	
+	$('#_search_year').click(function(){
+		getCalYearData(0);
+	});
+	
+	$('#_reset_search_year').click(function(){
+		$('#calExtDto_compId').combobox('clear');		
+	});
+	
+	$('#_search_month').click(function(){
+		
+	});
+	
+	$('#_reset_search_month').click(function(){
+		$('#calExtDto_mktevtSuperiorId').combobox('clear');
 	});
 		
 	$(document).ready(function() {
 		$('#_add').linkbutton('disable');	
 		$('#_delete').linkbutton('disable');
-		
-		//
-		if(!$('#_labYear').html()){
-			$('#_labYear').html(new Date().getFullYear());
-		}
 		
 		//
 		$('#_cal_year').click();

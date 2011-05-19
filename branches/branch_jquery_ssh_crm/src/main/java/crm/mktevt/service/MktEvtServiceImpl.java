@@ -1,5 +1,7 @@
 package crm.mktevt.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,10 +13,12 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
+import crm.dto.MktEvtCalExtDto;
 import crm.dto.MktEvtExtDto;
 import crm.model.MarketEvent;
 import crm.model.MarketEventCompanyRel;
@@ -23,6 +27,7 @@ import crm.model.MarketEventCustomerRel;
 import crm.model.MarketEventCustomerRelId;
 import crm.model.MarketEventSysUserRel;
 import crm.model.MarketEventSysUserRelId;
+import crm.model.MarketEventViewCal;
 import crm.util.Utils;
 
 /**
@@ -226,7 +231,45 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         if (null != map.get("status")) {
             sb.append(" and mev.status = :status ");
         }
-
         return sb.toString();
+    }
+
+    @Override
+    public List<?> findMktEvtCal(Object object) throws Exception {
+        if (object instanceof MktEvtCalExtDto) {
+            MktEvtCalExtDto dto = (MktEvtCalExtDto) object;
+            MarketEventViewCal _mevc = new MarketEventViewCal();
+            BeanUtils.copyProperties(_mevc, dto);
+            //
+            DetachedCriteria criteria = DetachedCriteria.forClass(MarketEventViewCal.class);
+            Calendar cal = Calendar.getInstance();
+            if (null == dto.getOccurDate()) {
+                log.warn("occurDate is null,set occurDate to first day of current year");
+                dto.setOccurDate(cal.get(Calendar.YEAR) * 10000 + 101);
+            }
+            //
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            cal.setTime(sdf.parse(dto.getOccurDate().toString()));
+            if (dto.isYear()) {
+                int beginMonth = cal.get(Calendar.YEAR) * 10000 + 101;
+                int endMonth = cal.get(Calendar.YEAR) * 10000 + 1231;
+                criteria.add(Restrictions.between("occurDate", beginMonth, endMonth));
+            } else {
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+                int beginDay = Integer.valueOf(sdf.format(cal.getTime()));
+                cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);
+                cal.set(Calendar.DAY_OF_MONTH, -1);
+                int endDay = Integer.valueOf(sdf.format(cal.getTime()));
+                criteria.add(Restrictions.between("occurDate", beginDay, endDay));
+            }
+            //
+            if (StringUtils.isNotBlank(dto.getCompId())) {
+                criteria.add(Restrictions.like("compId", dto.getCompId()));
+            }
+            return getBaseDaoImpl().findByCriteria(criteria);
+        } else {
+            log.error("object not instanceof MktEvtCalExtDto,object type :" + object.getClass().getSimpleName());
+        }
+        return null;
     }
 }

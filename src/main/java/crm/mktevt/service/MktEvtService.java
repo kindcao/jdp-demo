@@ -1,5 +1,7 @@
 package crm.mktevt.service;
 
+import java.util.List;
+
 import crm.base.service.BaseService;
 
 /**
@@ -8,4 +10,5 @@ import crm.base.service.BaseService;
  */
 public interface MktEvtService extends BaseService {
 
+    List<?> findMktEvtCal(Object object) throws Exception;
 }

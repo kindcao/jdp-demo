@@ -82,6 +82,7 @@
 			<result name="mktevt.info" type="tiles">mktevt.info</result>
 		</action>
 		<action name="getMktEvtList" class="mktEvtAction" method="getMktEvtList" />
+		<action name="getMktEvtCalByYear" class="mktEvtAction" method="getMktEvtCalByYear" />
 		<action name="saveMktEvtInfo" class="mktEvtAction" method="saveMktEvtInfo" />
 		<action name="deleteMktEvt" class="mktEvtAction" method="deleteMktEvt" />
 		<!-- market event - cal -->

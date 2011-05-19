@@ -1,8 +1,10 @@
 package crm.mktevt.action;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
@@ -12,12 +14,14 @@ import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
+import crm.dto.MktEvtCalExtDto;
 import crm.dto.MktEvtExtDto;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.mktevt.service.MktEvtService;
 import crm.model.MarketEvent;
 import crm.model.MarketEventView;
+import crm.model.MarketEventViewCal;
 import crm.util.Utils;
 
 /**
@@ -52,6 +56,9 @@ public class MktEvtAction extends BaseAction {
     private String compCustName;
 
     private Integer mktevtSuperiorId;
+
+    //
+    private MktEvtCalExtDto calExtDto;
 
     public String showMktEvtList() throws Exception {
         return "mktevt.list";
@@ -139,9 +146,16 @@ public class MktEvtAction extends BaseAction {
     public String showMktEvtCal() throws Exception {
         return "mktevt.cal";
     }
-    
+
     public String getMktEvtCalByYear() throws Exception {
-        return "mktevt.cal";
+        JsonListResult jlr = new JsonListResult();
+        List<?> list = mktEvtService.findMktEvtCal(calExtDto);
+        if (null != list && list.size() > 0) {
+            jlr.setTotal(list.size());
+            jlr.setRows(list);
+        }
+        responseJsonData(jlr);
+        return NONE;
     }
 
     public String showMktEvtCount() throws Exception {
@@ -261,6 +275,14 @@ public class MktEvtAction extends BaseAction {
 
     public void setCompCustName(String compCustName) {
         this.compCustName = compCustName;
+    }
+
+    public MktEvtCalExtDto getCalExtDto() {
+        return calExtDto;
+    }
+
+    public void setCalExtDto(MktEvtCalExtDto calExtDto) {
+        this.calExtDto = calExtDto;
     }
 
 }

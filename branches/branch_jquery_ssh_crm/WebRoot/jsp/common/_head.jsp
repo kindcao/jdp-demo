@@ -15,8 +15,6 @@
 		href="${pageContext.request.contextPath}/styles/style.css" />
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/jquery-1.4.4.min.js"></script>
-	<!--script type="text/javascript"
-		src="${pageContext.request.contextPath}/scripts/jquery/jquery.validate.js"></script-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/jquery.form.min.js"></script>
 	<script type="text/javascript"

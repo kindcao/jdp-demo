@@ -82,13 +82,13 @@
 			<result name="mktevt.info" type="tiles">mktevt.info</result>
 		</action>
 		<action name="getMktEvtList" class="mktEvtAction" method="getMktEvtList" />
-		<action name="getMktEvtCalByYear" class="mktEvtAction" method="getMktEvtCalByYear" />
 		<action name="saveMktEvtInfo" class="mktEvtAction" method="saveMktEvtInfo" />
 		<action name="deleteMktEvt" class="mktEvtAction" method="deleteMktEvt" />
 		<!-- market event - cal -->
 		<action name="showMktEvtCal" class="mktEvtAction" method="showMktEvtCal">
 			<result name="mktevt.cal" type="tiles">mktevt.cal</result>
 		</action>
+		<action name="getMktEvtCal" class="mktEvtAction" method="getMktEvtCal" />
 		<!-- market event - count -->
 		<action name="showMktEvtCount" class="mktEvtAction" method="showMktEvtCount">
 			<result name="mktevt.count" type="tiles">mktevt.count</result>

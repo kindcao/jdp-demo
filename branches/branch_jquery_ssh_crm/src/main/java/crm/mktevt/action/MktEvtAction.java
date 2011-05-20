@@ -144,7 +144,7 @@ public class MktEvtAction extends BaseAction {
         return "mktevt.cal";
     }
 
-    public String getMktEvtCalByYear() throws Exception {
+    public String getMktEvtCal() throws Exception {
         JsonListResult jlr = new JsonListResult();
         List<?> list = mktEvtService.findMktEvtCal(calExtDto);
         if (null != list && list.size() > 0) {
@@ -152,6 +152,8 @@ public class MktEvtAction extends BaseAction {
             jlr.setRows(list);
         }
         responseJsonData(jlr);
+        //
+        calExtDto = new MktEvtCalExtDto();
         return NONE;
     }
 

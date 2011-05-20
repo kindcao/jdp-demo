@@ -84,13 +84,14 @@
 		if(!labTxt){
 			labTxt=new Date().getFullYear();
 		}		
-		var year=parseInt(labTxt)+inc;					
-		$('#_labYear').text(year);			
-		$('#calExtDto_occurDate').val(year+'0101');
+		var year=parseInt(labTxt)+inc;
+		var month=new Date().getMonth()+1;
+	    $('#_labYear').text(year);			
+		$('#calExtDto_occurDate').val(year*10000+month*100+1);
 		
 		//
 		var options = {
-			url : 'getMktEvtCalByYear.action',
+			url : 'getMktEvtCal.action',
 			dataType : 'json',
 			success : function(data){				
 				cleanCalYearData();
@@ -100,7 +101,7 @@
 				}
 			}
 		};		
-		$('#mktevtCalYearForm').ajaxSubmit(options);
+		$('#mktevtCalForm').ajaxSubmit(options);
 	}
 	
 	function cleanCalYearData(){
@@ -143,84 +144,92 @@
 			$('#div_mon_'+ele).html(_txt);
 		});				
 	}
-	 
+	
+	//	
+	function getCalMonthData(){
+		var frozenColumns = [[{
+					field : 'occurDate',
+					title : '日期',
+					width : 100,
+					sortable : true,			
+					formatter : function(value, rec) {
+						return "<a href='#' onclick='editMktEvt(" + rec.id+ ");'>" + value + "</a>";
+					}
+				}]];
+		var columns = [[{
+			field : 'mktevtSuperiorName',
+			title : '类型',
+			width : 100
+		},{
+			field : 'compCustName',
+			title : '参与机构(所属公司/客户名称/主题)',
+			width : 400,
+			formatter : function(value, rec) {				
+				return cutstr(value,50);
+			}
+		}]];			
+	
+		//		
+		showDatagridNoPagination('grid-datalist','',frozenColumns,columns);
+	}	
 </script>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
 <div style="margin-top: 0px;">
-
-	<table cellpadding="0" cellspacing="0" border="0">
-		<tr>
-			<td nowrap="nowrap" width="5%">
-				市场工作：
-			</td>
-			<td width="5%" nowrap="nowrap">
-				<a href="#" class="easyui-linkbutton" plain="true" id="_cal_year">年</a>
-				<a href="#" class="easyui-linkbutton" plain="true" id="_cal_month">月</a>
-			</td>
-			<td width="50%">
-				<div id="div-cal-search-year" style="display: inline;">
-					<form id="mktevtCalYearForm" name="mktevtCalYearForm">
-						<input type="hidden" name="calExtDto.year" value="true">
-						<input type="hidden" id="calExtDto_occurDate"
-							name="calExtDto.occurDate">
+	<form id="mktevtCalForm" name="mktevtCalForm">
+		<input type="hidden" id="calExtDto_year" name="calExtDto.year">
+		<input type="hidden" id="calExtDto_occurDate"
+			name="calExtDto.occurDate">
+		<table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td width="5%" nowrap="nowrap">
+					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_year">年</a>
+					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_month">月</a>
+				</td>
+				<td nowrap="nowrap" align="center" width="10%">
+					所属公司:
+				</td>
+				<td width="20%">
+					<input id="calExtDto_compId" class="easyui-combobox"
+						name="calExtDto.compId" url="getSysComp.action" valueField="id"
+						textField="companyName" multiple="true" editable="false"
+						panelHeight="auto" style="width: 250px;">
+				</td>
+				<td width="25%">
+					<div id="div-cal-search-month" style="display: none;">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td nowrap="nowrap" align="center" width="10%">
-									所属公司:
+								<td nowrap="nowrap" align="center" width="40%">
+									类型:
 								</td>
-								<td width="25%">
-									<input id="calExtDto_compId" class="easyui-combobox"
-										name="calExtDto.compId" url="getSysComp.action"
-										valueField="id" textField="companyName" multiple="true"
-										editable="false" panelHeight="auto" style="width: 300px;">
-								</td>
-								<td nowrap="nowrap" align="center" width="15%">
-									<a href="#" class="easyui-linkbutton" plain="true"
-										iconCls="icon-search" id="_search_year">查询</a>
-									<a href="#" class="easyui-linkbutton" plain="true"
-										iconCls="icon-remove" id="_reset_search_year">重置</a>
-								</td>
-							</tr>
-						</table>
-					</form>
-				</div>
-				<div id="div-cal-search-month" style="display: none;">
-					<form id="mktevtCalMonthForm" name="mktevtCalMonthForm">
-						<input type="hidden" name="calExtDto.year" value="false">
-						<table cellpadding="0" cellspacing="0" border="0">
-							<tr>
-								<td nowrap="nowrap" align="center" width="10%">
-									类型(大类):
-								</td>
-								<td width="25%">
+								<td>
 									<input id="calExtDto_mktevtSuperiorId"
 										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
 										url="getMarketEventType.action?eventTypeId=0" valueField="id"
 										textField="name" multiple="false" editable="false"
-										panelHeight="auto" style="width: 300px;">
-								</td>
-								<td nowrap="nowrap" align="center" width="15%">
-									<a href="#" class="easyui-linkbutton" plain="true"
-										iconCls="icon-search" id="_search_month">查询</a>
-									<a href="#" class="easyui-linkbutton" plain="true"
-										iconCls="icon-remove" id="_reset_search_month">重置</a>
+										panelHeight="auto" style="width: 120px;">
 								</td>
 							</tr>
 						</table>
-					</form>
-				</div>
-			</td>
-			<td width="40%">
-				&nbsp;
-			</td>
-		</tr>
-		<tr height="5px">
-			<td>
-				&nbsp;
-			</td>
-		</tr>
-	</table>
+					</div>
+				</td>
+				<td nowrap="nowrap" width="10%">
+					<a href="#" class="easyui-linkbutton" plain="true"
+						iconCls="icon-search" id="_search">查询</a>
+					<a href="#" class="easyui-linkbutton" plain="true"
+						iconCls="icon-remove" id="_reset">重置</a>
+				</td>
+				<td width="30%">
+					&nbsp;
+				</td>
+			</tr>
+			<tr height="5px">
+				<td>
+					&nbsp;
+				</td>
+			</tr>
+		</table>
+	</form>
 </div>
 <div id="div_cal-year" style="margin-top: 0px; display: inline;">
 	<table cellpadding="0" cellspacing="0" border="0" width="99%">
@@ -244,56 +253,109 @@
 </div>
 <div id="div_cal-month" style="margin-top: 0px; display: none;">
 	<table cellpadding="0" cellspacing="0" border="0" width="99%">
-		<tr valign="top" height="400px">
-			<td>
-				ss
+		<tr height="20px">
+			<td colspan="3">
+				&nbsp;
+			</td>
+		</tr>
+		<tr valign="top" height="380px">
+			<td width="20%">
+				<div id="div-cal-ui" class="easyui-calendar"
+					style="width: 200px; height: 200px;"></div>
+			</td>
+			<td width="1%">
+				&nbsp;
+			</td>
+			<td width="79%">
+				<div align="left">
+					<table id="grid-datalist"></table>
+				</div>
 			</td>
 		</tr>
 	</table>
 </div>
 <script type="text/javascript" defer="defer">
-<!--
-	
+<!--	
 	$('#_cal_year').click(function(){
+		$('#calExtDto_year').val(true);	
+		$('#_cal_year').linkbutton('disable');
+		$('#_cal_month').linkbutton('enable');
 		document.getElementById('div_cal-year').style.display='inline';
-		document.getElementById('div_cal-month').style.display='none';   		
-		document.getElementById('div-cal-search-year').style.display='inline';
-		document.getElementById('div-cal-search-month').style.display='none';
-		$('#_reset_search_year').click();
-		getCalYearData(0);						
+		document.getElementById('div_cal-month').style.display='none';
+		document.getElementById('div-cal-search-month').style.display='none';		
+		$('#_reset').click();
+		$('#_search').click();			
 	});
 	
 	$('#_cal_month').click(function(){
+		$('#calExtDto_year').val('');
+		$('#_cal_year').linkbutton('enable');
+		$('#_cal_month').linkbutton('disable');
 		document.getElementById('div_cal-year').style.display='none';
-		document.getElementById('div_cal-month').style.display='inline';
-		document.getElementById('div-cal-search-year').style.display='none';
+		document.getElementById('div_cal-month').style.display='inline';		
 		document.getElementById('div-cal-search-month').style.display='inline'; 
-		$('#_reset_search_month').click();			
+		$('#_reset').click();
+		$('#_search').click();
 	});
 	
-	$('#_search_year').click(function(){
-		getCalYearData(0);
+	$('#_search').click(function(){		
+		if($('#calExtDto_year').val()){			
+			getCalYearData(0);
+		}else{
+			getCalMonthData();
+			var _url='getMktEvtCal.action?calExtDto.year=false';
+			_url+='&calExtDto.occurDate='+$('#calExtDto_occurDate').val();
+			_url+='&calExtDto.compId='+$("#calExtDto_compId").combobox('getValues');
+			_url+='&calExtDto.mktevtSuperiorId='+$("#calExtDto_mktevtSuperiorId").combobox('getValue');
+			$('#grid-datalist').datagrid('options').url=_url;			
+			$('#grid-datalist').datagrid('reload');					
+		}
 	});
 	
-	$('#_reset_search_year').click(function(){
+	$('#_reset').click(function(){
 		$('#calExtDto_compId').combobox('clear');		
-	});
-	
-	$('#_search_month').click(function(){
-		
-	});
-	
-	$('#_reset_search_month').click(function(){
-		$('#calExtDto_mktevtSuperiorId').combobox('clear');
+		if(!$('#calExtDto_year').val()){
+			$('#calExtDto_mktevtSuperiorId').combobox('clear');
+		}
+		resetForm('mktevtCalForm');
 	});
 		
+		
+	$('#div-cal-ui').calendar().find(".calendar-nextmonth").click(function() {
+		calClick();	
+	});
+	
+	$('#div-cal-ui').calendar().find(".calendar-prevmonth").click(function() {
+		calClick();	
+	});
+	
+	$('#div-cal-ui').calendar().find(".calendar-nextyear").click(function() {
+		calClick();	
+	});
+	
+	$('#div-cal-ui').calendar().find(".calendar-prevyear").click(function() {
+		calClick();	
+	});
+	
+	function calClick(){
+		var _occurDate=$('#calExtDto_occurDate').val();
+		var _year=$('#div-cal-ui').calendar('options').year;
+		var _month=$('#div-cal-ui').calendar('options').month-1;		
+		if(_month==12){
+			_year+=1;
+			_month=1;
+		}
+		var now=new Date(_year,_month,1);
+		$('#calExtDto_occurDate').val(_year*10000+(_month+1)*100+1);
+		$('#_search').click();		
+		//$('#div-cal-ui').calendar('moveTo',now);	
+	}
+	
+	
 	$(document).ready(function() {
 		$('#_add').linkbutton('disable');	
-		$('#_delete').linkbutton('disable');
-		
-		//
+		$('#_delete').linkbutton('disable');	
 		$('#_cal_year').click();
-		//		
 	});
 //-->
 </script>

@@ -24,6 +24,28 @@ function showDatagrid(datagridIdStr, url, frozenColumns, columns) {
 }
 
 //
+function showDatagridNoPagination(datagridIdStr, url, frozenColumns, columns) {
+	$('#' + datagridIdStr).datagrid({
+				title : '查询结果',
+				border : true,
+				nowrap : false,
+				striped : true,
+				collapsible : false,
+				url : url,
+				queryParams : {},
+				sortName : 'id',
+				sortOrder : 'desc',
+				remoteSort : false,
+				idField : 'id',
+				// fitColumns : true,
+				rownumbers : false,
+				pagination : false,
+				frozenColumns : frozenColumns,
+				columns : columns
+			});
+}
+
+//
 function reloadDatagrid(datagridIdStr) {
 	$('#' + datagridIdStr).datagrid('options').pageNumber = 1;
 	$('#' + datagridIdStr).datagrid('getPager').pagination({

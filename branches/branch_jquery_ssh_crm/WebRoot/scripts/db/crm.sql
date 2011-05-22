@@ -30,7 +30,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 -- ----------------------------
 -- View structure for market_event_view_cal
 -- ----------------------------
-CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_cal` AS select `mev`.`id` AS `id`,`mev`.`occur_date` AS `occur_date`,`mev`.`status` AS `status`,`mev`.`mktevt_superior_id` AS `mktevt_superior_id`,`mev`.`mktevt_superior_name` AS `mktevt_superior_name`,`mev`.`comp_id` AS `comp_id`,`mev`.`cust_id` AS `cust_id`,cast((case when (`mev`.`mktevt_superior_id` = 3) then `mev`.`subject` else `mev`.`comp_cust_name` end) as char charset utf8) AS `comp_cust_name` from `market_event_view` `mev` order by `mev`.`mktevt_superior_id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_cal` AS select `mev`.`id` AS `id`,`mev`.`occur_date` AS `occur_date`,`mev`.`occur_date_str` AS `occur_date_str`,`mev`.`status` AS `status`,`mev`.`mktevt_superior_id` AS `mktevt_superior_id`,`mev`.`mktevt_superior_name` AS `mktevt_superior_name`,`mev`.`comp_id` AS `comp_id`,`mev`.`cust_id` AS `cust_id`,cast((case when (`mev`.`mktevt_superior_id` = 3) then `mev`.`subject` else `mev`.`comp_cust_name` end) as char charset utf8) AS `comp_cust_name` from `market_event_view` `mev` order by `mev`.`mktevt_superior_id`;
 
 -- ----------------------------
 -- View structure for market_event_view_comp

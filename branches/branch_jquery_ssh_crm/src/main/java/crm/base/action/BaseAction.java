@@ -52,8 +52,6 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
 
     private String actionFlag;
 
-    private String forward;
-
     private String ids;
 
     protected void responseJsonData(String data) throws IOException {
@@ -157,14 +155,6 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
 
     public void setActionFlag(String actionFlag) {
         this.actionFlag = actionFlag;
-    }
-
-    public String getForward() {
-        return forward;
-    }
-
-    public void setForward(String forward) {
-        this.forward = forward;
     }
 
     public String getIds() {

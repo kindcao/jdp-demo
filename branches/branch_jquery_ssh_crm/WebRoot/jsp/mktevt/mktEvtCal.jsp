@@ -148,12 +148,13 @@
 	//	
 	function getCalMonthData(){
 		var frozenColumns = [[{
-					field : 'occurDate',
+					field : 'occurDateStr',
 					title : '日期',
 					width : 100,
 					sortable : true,			
 					formatter : function(value, rec) {
-						return "<a href='#' onclick='editMktEvt(" + rec.id+ ");'>" + value + "</a>";
+						var str=value+"-" +rec.mktevtSuperiorName;
+						return "<a href='#' onclick=viewMktEvt("+ rec.id +",'"+ str +"');>" + value + "</a>";
 					}
 				}]];
 		var columns = [[{
@@ -171,7 +172,16 @@
 	
 		//		
 		showDatagridNoPagination('grid-datalist','',frozenColumns,columns);
-	}	
+	}
+	
+	function viewMktEvt(id,str){		
+		$('#div-view-dtl').window({
+			title:str,
+			href:'showMktEvtCalDtl.action?mktEvt.id='+id		
+		});		
+		//		
+		$('#div-view-dtl').window('open');		
+	}
 </script>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
@@ -273,7 +283,13 @@
 			</td>
 		</tr>
 	</table>
+	<div id="div-view-dtl" class="easyui-window" icon="icon-search"
+		closed="true" collapsible="false" resizable="false" cache="false"
+		minimizable="false" modal="true" title="详细信息"
+		style="width: 800px; height: 500px; overflow: hidden;">
+	</div>
 </div>
+
 <script type="text/javascript" defer="defer">
 <!--	
 	$('#_cal_year').click(function(){

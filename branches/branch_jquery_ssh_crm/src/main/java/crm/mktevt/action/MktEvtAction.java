@@ -62,18 +62,19 @@ public class MktEvtAction extends BaseAction {
     }
 
     public String showMktEvtInfo() throws Exception {
-        if (null != mktEvt && null != mktEvt.getId() && mktEvt.getId() > 0) {
-            MarketEvent _mktEvt = (MarketEvent) mktEvtService.getObject(MarketEvent.class, mktEvt.getId());
-            MarketEventView _mktEvtView = (MarketEventView) mktEvtService.getObject(MarketEventView.class, mktEvt
-                    .getId());
-            //        
-            session.put(Constants.MARKET_EVENT_SESSION_KEY, _mktEvt);
-            session.put(Constants.MARKET_EVENT_VIEW_SESSION_KEY, _mktEvtView);
-        } else {
-            log.error("mktEvt id is null");
-            return NONE;
-        }
-        return "mktevt.info";
+        return _showMktEvtInfo("mktevt.info");
+    }
+
+    public String showMktEvtCal() throws Exception {
+        return "mktevt.cal";
+    }
+
+    public String showMktEvtCalDtl() throws Exception {
+        return _showMktEvtInfo("mktevt.cal.dtl");
+    }
+
+    public String showMktEvtCount() throws Exception {
+        return "mktevt.count";
     }
 
     public String saveMktEvtInfo() throws Exception {
@@ -140,10 +141,6 @@ public class MktEvtAction extends BaseAction {
         return NONE;
     }
 
-    public String showMktEvtCal() throws Exception {
-        return "mktevt.cal";
-    }
-
     public String getMktEvtCal() throws Exception {
         JsonListResult jlr = new JsonListResult();
         List<?> list = mktEvtService.findMktEvtCal(calExtDto);
@@ -157,8 +154,19 @@ public class MktEvtAction extends BaseAction {
         return NONE;
     }
 
-    public String showMktEvtCount() throws Exception {
-        return "mktevt.count";
+    private String _showMktEvtInfo(String result) throws Exception {
+        if (null != mktEvt && null != mktEvt.getId() && mktEvt.getId() > 0) {
+            MarketEvent _mktEvt = (MarketEvent) mktEvtService.getObject(MarketEvent.class, mktEvt.getId());
+            MarketEventView _mktEvtView = (MarketEventView) mktEvtService.getObject(MarketEventView.class, mktEvt
+                    .getId());
+            //        
+            session.put(Constants.MARKET_EVENT_SESSION_KEY, _mktEvt);
+            session.put(Constants.MARKET_EVENT_VIEW_SESSION_KEY, _mktEvtView);
+        } else {
+            log.error("mktEvt id is null");
+            return null;
+        }
+        return result;
     }
 
     public MktEvtService getMktEvtService() {

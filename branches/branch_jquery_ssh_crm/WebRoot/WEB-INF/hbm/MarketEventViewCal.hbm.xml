@@ -13,6 +13,9 @@
 		<property name="occurDate" type="java.lang.Integer">
 			<column name="occur_date" />
 		</property>
+		<property name="occurDateStr" type="java.lang.String">
+			<column name="occur_date_str" length="10" />
+		</property>
 		<property name="status" type="java.lang.String">
 			<column name="status" length="1" />
 		</property>
@@ -23,10 +26,10 @@
 			<column name="mktevt_superior_name" length="20" />
 		</property>
 		<property name="compId" type="java.lang.String">
-			<column name="comp_id" length="341" />
+			<column name="comp_id" length="256" />
 		</property>
 		<property name="custId" type="java.lang.String">
-			<column name="cust_id" length="341" />
+			<column name="cust_id" length="256" />
 		</property>
 		<property name="compCustName" type="java.lang.String">
 			<column name="comp_cust_name" />

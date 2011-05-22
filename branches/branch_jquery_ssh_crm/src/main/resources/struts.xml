@@ -88,6 +88,9 @@
 		<action name="showMktEvtCal" class="mktEvtAction" method="showMktEvtCal">
 			<result name="mktevt.cal" type="tiles">mktevt.cal</result>
 		</action>
+		<action name="showMktEvtCalDtl" class="mktEvtAction" method="showMktEvtCalDtl">
+			<result name="mktevt.cal.dtl">/jsp/mktevt/mktEvtCalDtl.jsp</result>
+		</action>
 		<action name="getMktEvtCal" class="mktEvtAction" method="getMktEvtCal" />
 		<!-- market event - count -->
 		<action name="showMktEvtCount" class="mktEvtAction" method="showMktEvtCount">

@@ -1,7 +1,7 @@
 package crm.model;
 
 /**
- * MarketEventViewCal entity.
+ * MarketEventViewCalId entity.
  * 
  * @author MyEclipse Persistence Tools
  */
@@ -13,6 +13,8 @@ public class MarketEventViewCal implements java.io.Serializable {
     private Integer id;
 
     private Integer occurDate;
+
+    private String occurDateStr;
 
     private String status;
 
@@ -41,10 +43,11 @@ public class MarketEventViewCal implements java.io.Serializable {
     }
 
     /** full constructor */
-    public MarketEventViewCal(Integer id, Integer occurDate, String status, Integer mktevtSuperiorId,
-            String mktevtSuperiorName, String compId, String custId, String compCustName) {
+    public MarketEventViewCal(Integer id, Integer occurDate, String occurDateStr, String status,
+            Integer mktevtSuperiorId, String mktevtSuperiorName, String compId, String custId, String compCustName) {
         this.id = id;
         this.occurDate = occurDate;
+        this.occurDateStr = occurDateStr;
         this.status = status;
         this.mktevtSuperiorId = mktevtSuperiorId;
         this.mktevtSuperiorName = mktevtSuperiorName;
@@ -69,6 +72,14 @@ public class MarketEventViewCal implements java.io.Serializable {
 
     public void setOccurDate(Integer occurDate) {
         this.occurDate = occurDate;
+    }
+
+    public String getOccurDateStr() {
+        return this.occurDateStr;
+    }
+
+    public void setOccurDateStr(String occurDateStr) {
+        this.occurDateStr = occurDateStr;
     }
 
     public String getStatus() {
@@ -132,6 +143,9 @@ public class MarketEventViewCal implements java.io.Serializable {
                 .getId().equals(castOther.getId())))
                 && ((this.getOccurDate() == castOther.getOccurDate()) || (this.getOccurDate() != null
                         && castOther.getOccurDate() != null && this.getOccurDate().equals(castOther.getOccurDate())))
+                && ((this.getOccurDateStr() == castOther.getOccurDateStr()) || (this.getOccurDateStr() != null
+                        && castOther.getOccurDateStr() != null && this.getOccurDateStr().equals(
+                        castOther.getOccurDateStr())))
                 && ((this.getStatus() == castOther.getStatus()) || (this.getStatus() != null
                         && castOther.getStatus() != null && this.getStatus().equals(castOther.getStatus())))
                 && ((this.getMktevtSuperiorId() == castOther.getMktevtSuperiorId()) || (this.getMktevtSuperiorId() != null
@@ -155,6 +169,7 @@ public class MarketEventViewCal implements java.io.Serializable {
 
         result = 37 * result + (getId() == null ? 0 : this.getId().hashCode());
         result = 37 * result + (getOccurDate() == null ? 0 : this.getOccurDate().hashCode());
+        result = 37 * result + (getOccurDateStr() == null ? 0 : this.getOccurDateStr().hashCode());
         result = 37 * result + (getStatus() == null ? 0 : this.getStatus().hashCode());
         result = 37 * result + (getMktevtSuperiorId() == null ? 0 : this.getMktevtSuperiorId().hashCode());
         result = 37 * result + (getMktevtSuperiorName() == null ? 0 : this.getMktevtSuperiorName().hashCode());

@@ -38,6 +38,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_comp` AS select `me`.`id` AS `id`,group_concat(cast(`sc`.`id` as char charset utf8) order by `sc`.`id` ASC separator ',') AS `comp_id`,group_concat(cast(`sc`.`company_name` as char charset utf8) order by `sc`.`id` ASC separator ',') AS `comp_name` from ((`market_event` `me` join `market_event_company_rel` `mecr`) join `sys_company` `sc`) where ((`me`.`id` = `mecr`.`market_event_id`) and (`mecr`.`sys_company_id` = `sc`.`id`)) group by `me`.`id`;
 
 -- ----------------------------
+-- View structure for market_event_view_count
+-- ----------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_count` AS select sql_no_cache `test`.`rno`() AS `id`,`a`.`id` AS `industry_superior_id`,`a`.`name` AS `industry_superior_name`,`cust`.`id` AS `cust_id`,`cust`.`cust_name` AS `cust_name`,`cscr`.`sys_company_id` AS `sys_company_id`,`mecr`.`market_event_id` AS `market_event_id`,`me`.`occur_date` AS `occur_date`,`n`.`id` AS `mktevt_superior_id`,`n`.`name` AS `mktevt_superior_name` from (((((((`customer_industry` `a` join `customer_industry` `b`) join `customer` `cust`) join `customer_sys_company_rel` `cscr`) join `market_event_customer_rel` `mecr`) join `market_event` `me`) join `market_event_type` `m`) join `market_event_type` `n`) where ((`test`.`rno_reset`() = 1) and (`a`.`id` = `b`.`superior_id`) and (`b`.`id` = `cust`.`industry_id`) and (`cust`.`id` = `cscr`.`customer_id`) and (`cust`.`id` = `mecr`.`customer_id`) and (`mecr`.`market_event_id` = `me`.`id`) and (`me`.`market_event_type_id` = `m`.`id`) and (`m`.`superior_id` = `n`.`id`));
+
+-- ----------------------------
 -- View structure for market_event_view_cust
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_cust` AS select `me`.`id` AS `id`,group_concat(cast(`cust`.`id` as char charset utf8) order by `cust`.`id` ASC separator ',') AS `cust_id`,group_concat(cast(`cust`.`short_name` as char charset utf8) order by `cust`.`id` ASC separator ',') AS `cust_name` from ((`market_event` `me` join `market_event_customer_rel` `mesr`) join `customer` `cust`) where ((`me`.`id` = `mesr`.`market_event_id`) and (`mesr`.`customer_id` = `cust`.`id`)) group by `me`.`id`;
@@ -51,3 +56,25 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 -- View structure for market_event_view_sysuser
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_sysuser` AS select `me`.`id` AS `id`,group_concat(cast(`scu`.`id` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_id`,group_concat(cast(`scu`.`name` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_name` from ((`market_event` `me` join `market_event_sys_user_rel` `mesur`) join `sys_company_user` `scu`) where ((`me`.`id` = `mesur`.`market_event_id`) and (`mesur`.`sys_company_user_id` = `scu`.`id`)) group by `me`.`id`;
+
+-- ----------------------------
+-- Function structure for rno
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`user`@`%` FUNCTION `rno`() RETURNS int(11)
+BEGIN 
+SET @rno = @rno + 1; 
+ RETURN @rno; 
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for rno_reset
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`user`@`%` FUNCTION `rno_reset`() RETURNS int(11)
+BEGIN 
+SET @rno = 0; 
+RETURN 1; 
+END;;
+DELIMITER ;

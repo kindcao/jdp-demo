@@ -6,17 +6,33 @@
 <!--
 #count-tab {
 	border-left: 1px solid #A4BED4;
-	overflow: hidden;
+	border-bottom: 1px solid #A4BED4;
+	font-size: 10px;
 }
 
 #count-tab td {
 	border-top: 1px solid #A4BED4;
 	border-right: 1px solid #A4BED4;
+	padding-left: 5px;
+}
+
+#tab-head {
+	font-weight: bold;
+	color: gray;
+	height: 20px;
+	vertical-align: middle;
+}
+
+#sum {
+	color: blue;
 }
 
 .title-left {
 	font-weight: bold;
 	text-align: center;
+	width: 10%;
+	color: gray;
+	white-space: nowrap;
 }
 -->
 </style>
@@ -39,30 +55,30 @@
 	}
 	
 	function parserCountTabData(data){
-		var _tabHTML='<table id="count-tab" cellpadding="0"  cellspacing="0" width="100%" height="100%" >';
-		_tabHTML+='<tr>';
-		_tabHTML+='<td class="title-left">&nbsp;</td>';
-		_tabHTML+='<td class="title-top">客户名称</td>';
-		_tabHTML+='<td class="title-top">拜访</td>';
-		_tabHTML+='<td class="title-top">培训</td>';
-		_tabHTML+='<td class="title-top">活动</td>';
+		var _tabHTML='<table id="count-tab" cellpadding="0"  cellspacing="0" width="99%" height="80%" >';
+		_tabHTML+='<tr id="tab-head">';
+		_tabHTML+='<td>&nbsp;</td>';
+		_tabHTML+='<td nowrap="nowrap">客户名称</td>';
+		_tabHTML+='<td>拜访</td>';
+		_tabHTML+='<td>培训</td>';
+		_tabHTML+='<td>活动</td>';
 		_tabHTML+='<td>其他</td>';
 		_tabHTML+='</tr>';
 		$.each(data.rows, function(i, ele) {
 			//
 			_tabHTML+='<tr>';
-			_tabHTML+='<td rowspan='+ele.itemNum +'>'+ele.induName+'</td>';
+			_tabHTML+='<td class="title-left" rowspan='+ele.itemNum +'>'+ele.induName+'</td>';
 			$.each(ele.items, function(i, ele2) {
-				_tabHTML+='<td>'+ele2.custName +'</td>';
-				_tabHTML+='<td>'+ele2.visitNum +'</td>';
-				_tabHTML+='<td>'+ele2.trainingNum +'</td>';
-				_tabHTML+='<td>'+ele2.activityNum +'</td>';
-				_tabHTML+='<td>'+ele2.othersNum +'</td>';
+				_tabHTML+='<td width="30%" nowrap="nowrap">'+ele2.custName +'</td>';
+				_tabHTML+='<td width="15%">'+ele2.visitNum +'</td>';
+				_tabHTML+='<td width="15%">'+ele2.trainingNum +'</td>';
+				_tabHTML+='<td width="15%">'+ele2.activityNum +'</td>';
+				_tabHTML+='<td width="15%">'+ele2.othersNum +'</td>';
 			});
 			_tabHTML+='</tr>';			
 			//
-			_tabHTML+='<tr>';			
-			_tabHTML+='<td class="sum">小计</td>';
+			_tabHTML+='<tr id="sum">';			
+			_tabHTML+='<td >小计</td>';
 			_tabHTML+='<td>'+ele.sum.visitNum +'</td>';
 			_tabHTML+='<td>'+ele.sum.trainingNum +'</td>';
 			_tabHTML+='<td>'+ele.sum.activityNum +'</td>';
@@ -148,7 +164,7 @@
 		</table>
 	</form>
 </div>
-<div id="div-count-tab">
+<div id="div-count-tab" style="margin-top: 10px;">
 </div>
 
 <script type="text/javascript" defer="defer">

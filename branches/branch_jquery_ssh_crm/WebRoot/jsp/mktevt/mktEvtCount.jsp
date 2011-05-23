@@ -2,6 +2,80 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
+<style>
+<!--
+#count-tab {
+	border-left: 1px solid #A4BED4;
+	overflow: hidden;
+}
+
+#count-tab td {
+	border-top: 1px solid #A4BED4;
+	border-right: 1px solid #A4BED4;
+}
+
+.title-left {
+	font-weight: bold;
+	text-align: center;
+}
+-->
+</style>
+
+<script type="text/javascript">
+<!--	
+	function getCountTabData(inc){
+		var options = {
+			url : 'getMktEvtCountTab.action',
+			dataType : 'json',
+			success : function(data){				
+				//cleanCalYearData();
+				//
+				if (data.total>0) {
+					parserCountTabData(data);	
+				}
+			}
+		};		
+		$('#mktevtCountForm').ajaxSubmit(options);
+	}
+	
+	function parserCountTabData(data){
+		var _tabHTML='<table id="count-tab" cellpadding="0"  cellspacing="0" width="100%" height="100%" >';
+		_tabHTML+='<tr>';
+		_tabHTML+='<td class="title-left">&nbsp;</td>';
+		_tabHTML+='<td class="title-top">客户名称</td>';
+		_tabHTML+='<td class="title-top">拜访</td>';
+		_tabHTML+='<td class="title-top">培训</td>';
+		_tabHTML+='<td class="title-top">活动</td>';
+		_tabHTML+='<td>其他</td>';
+		_tabHTML+='</tr>';
+		$.each(data.rows, function(i, ele) {
+			//
+			_tabHTML+='<tr>';
+			_tabHTML+='<td rowspan='+ele.itemNum +'>'+ele.induName+'</td>';
+			$.each(ele.items, function(i, ele2) {
+				_tabHTML+='<td>'+ele2.custName +'</td>';
+				_tabHTML+='<td>'+ele2.visitNum +'</td>';
+				_tabHTML+='<td>'+ele2.trainingNum +'</td>';
+				_tabHTML+='<td>'+ele2.activityNum +'</td>';
+				_tabHTML+='<td>'+ele2.othersNum +'</td>';
+			});
+			_tabHTML+='</tr>';			
+			//
+			_tabHTML+='<tr>';			
+			_tabHTML+='<td class="sum">小计</td>';
+			_tabHTML+='<td>'+ele.sum.visitNum +'</td>';
+			_tabHTML+='<td>'+ele.sum.trainingNum +'</td>';
+			_tabHTML+='<td>'+ele.sum.activityNum +'</td>';
+			_tabHTML+='<td>'+ele.sum.othersNum +'</td>';
+			_tabHTML+='</tr>';
+		});
+		_tabHTML+='</table>';	
+		$('#div-count-tab').html(_tabHTML);		
+	}	
+	
+//-->
+</script>
+
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
 <div style="margin-top: 0px;">
 	<form id="mktevtCountForm" name="mktevtCountForm">
@@ -74,6 +148,8 @@
 		</table>
 	</form>
 </div>
+<div id="div-count-tab">
+</div>
 
 <script type="text/javascript" defer="defer">
 <!--	
@@ -115,17 +191,16 @@
 		if(!$('#calExtDto_year').val()){
 			$('#calExtDto_mktevtSuperiorId').combobox('clear');
 		}
-		resetForm('mktevtCalForm');
-	});
-		
-		
-
-	
+		resetForm('mktevtCountForm');
+	});   
 	
 	$(document).ready(function() {
 		$('#_add').linkbutton('disable');	
 		$('#_delete').linkbutton('disable');	
 		$('#_cal_tab').click();
+		
+		//
+		getCountTabData();
 	});
 //-->
 </script>

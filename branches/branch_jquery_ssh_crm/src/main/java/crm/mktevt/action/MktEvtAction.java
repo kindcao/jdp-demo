@@ -1,6 +1,8 @@
 package crm.mktevt.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +15,13 @@ import org.slf4j.LoggerFactory;
 import crm.base.action.BaseAction;
 import crm.common.Constants;
 import crm.dto.MktEvtCalExtDto;
+import crm.dto.MktEvtCountDto;
+import crm.dto.MktEvtCountItemDto;
 import crm.dto.MktEvtExtDto;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.mktevt.service.MktEvtService;
+import crm.model.CustomerIndustry;
 import crm.model.MarketEvent;
 import crm.model.MarketEventView;
 import crm.util.Utils;
@@ -151,6 +156,44 @@ public class MktEvtAction extends BaseAction {
         responseJsonData(jlr);
         //
         calExtDto = new MktEvtCalExtDto();
+        return NONE;
+    }
+
+    public String getMktEvtCountTab() throws Exception {
+        JsonListResult jlr = new JsonListResult();
+        //
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(CustomerIndustry.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getCustIndu map from servlet context is null.");
+        }
+        //
+        List<MktEvtCountDto> list = new ArrayList<MktEvtCountDto>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            CustomerIndustry value = (CustomerIndustry) map.get(key);
+            if (null == value.getSuperiorId() || value.getSuperiorId() == 0 || value.getLevel().intValue() == 1) {
+                MktEvtCountDto dto = new MktEvtCountDto();
+                dto.setInduName(value.getName());
+                dto.setInduId(value.getId());
+                list.add(dto);
+            }
+        }
+
+        //        
+        for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+            MktEvtCountDto ele = (MktEvtCountDto) iterator.next();
+            MktEvtCountItemDto itemDto = new MktEvtCountItemDto();
+            itemDto.setCustName("test");
+            itemDto.setVisitNum(5);
+            itemDto.setTrainingNum(10);
+            itemDto.setActivityNum(15);
+            ele.getItems().add(itemDto);
+            //
+            ele.getSum().setActivityNum(ele.getSum().getActivityNum() + itemDto.getActivityNum());
+        }
+        jlr.setRows(list);
+        jlr.setTotal(list.size());
+        responseJsonData(jlr);
         return NONE;
     }
 

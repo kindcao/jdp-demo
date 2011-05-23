@@ -96,6 +96,7 @@
 		<action name="showMktEvtCount" class="mktEvtAction" method="showMktEvtCount">
 			<result name="mktevt.count" type="tiles">mktevt.count</result>
 		</action>
+		<action name="getMktEvtCountTab" class="mktEvtAction" method="getMktEvtCountTab" />
 		<!-- syssetup company -->
 		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>

@@ -16,6 +16,7 @@ import crm.base.action.BaseAction;
 import crm.common.Constants;
 import crm.dto.MktEvtCalExtDto;
 import crm.dto.MktEvtCountDto;
+import crm.dto.MktEvtCountExtDto;
 import crm.dto.MktEvtCountItemDto;
 import crm.dto.MktEvtExtDto;
 import crm.json.JsonListResult;
@@ -24,6 +25,7 @@ import crm.mktevt.service.MktEvtService;
 import crm.model.CustomerIndustry;
 import crm.model.MarketEvent;
 import crm.model.MarketEventView;
+import crm.model.MarketEventViewCount;
 import crm.util.Utils;
 
 /**
@@ -61,6 +63,8 @@ public class MktEvtAction extends BaseAction {
 
     //
     private MktEvtCalExtDto calExtDto;
+
+    private MktEvtCountExtDto countExtDto;
 
     public String showMktEvtList() throws Exception {
         return "mktevt.list";
@@ -176,24 +180,56 @@ public class MktEvtAction extends BaseAction {
                 dto.setInduName(value.getName());
                 dto.setInduId(value.getId());
                 list.add(dto);
+                //             
+                countExtDto.setIndustrySuperiorId(dto.getInduId());
+                List<?> _numList = mktEvtService.findMktEvtCountTab(countExtDto);
+                if (null != _numList) {
+                    MktEvtCountItemDto itemDto = null;
+                    Map<Integer, MktEvtCountItemDto> _map = new HashMap<Integer, MktEvtCountItemDto>();
+                    for (Iterator<?> iterator2 = _numList.iterator(); iterator2.hasNext();) {
+                        MarketEventViewCount ele = (MarketEventViewCount) iterator2.next();
+                        if (!_map.containsKey(ele.getCustId())) {
+                            itemDto = new MktEvtCountItemDto();
+                            itemDto.setCustName(ele.getCustName());
+                            _map.put(ele.getCustId(), itemDto);
+                            //
+                            dto.getItems().add(itemDto);
+                        } else {
+                            itemDto = _map.get(ele.getCustId());
+                        }
+                        //
+                        switch (ele.getMktevtSuperiorId()) {
+                        case 1:
+                            itemDto.setVisitNum(ele.getNum());
+                            dto.getSum().setVisitNum(dto.getSum().getVisitNum() + itemDto.getVisitNum());
+                            break;
+                        case 2:
+                            itemDto.setTrainingNum(ele.getNum());
+                            dto.getSum().setTrainingNum(dto.getSum().getTrainingNum() + itemDto.getTrainingNum());
+                            break;
+                        case 3:
+                            itemDto.setActivityNum(ele.getNum());
+                            dto.getSum().setActivityNum(dto.getSum().getActivityNum() + itemDto.getActivityNum());
+                            break;
+                        default:
+                            itemDto.setOthersNum(ele.getNum());
+                            dto.getSum().setOthersNum(dto.getSum().getOthersNum() + itemDto.getOthersNum());
+                            break;
+                        }
+                    }
+                    //
+                    dto.setItemNum(dto.getItems().size() + 1);
+                } else {
+                    log.warn("findMktEvtCountTab list is null");
+                }
             }
         }
-
-        //        
-        for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-            MktEvtCountDto ele = (MktEvtCountDto) iterator.next();
-            MktEvtCountItemDto itemDto = new MktEvtCountItemDto();
-            itemDto.setCustName("test");
-            itemDto.setVisitNum(5);
-            itemDto.setTrainingNum(10);
-            itemDto.setActivityNum(15);
-            ele.getItems().add(itemDto);
-            //
-            ele.getSum().setActivityNum(ele.getSum().getActivityNum() + itemDto.getActivityNum());
-        }
+        //            
         jlr.setRows(list);
         jlr.setTotal(list.size());
         responseJsonData(jlr);
+        //
+        countExtDto = new MktEvtCountExtDto();
         return NONE;
     }
 
@@ -333,6 +369,14 @@ public class MktEvtAction extends BaseAction {
 
     public void setCalExtDto(MktEvtCalExtDto calExtDto) {
         this.calExtDto = calExtDto;
+    }
+
+    public MktEvtCountExtDto getCountExtDto() {
+        return countExtDto;
+    }
+
+    public void setCountExtDto(MktEvtCountExtDto countExtDto) {
+        this.countExtDto = countExtDto;
     }
 
 }

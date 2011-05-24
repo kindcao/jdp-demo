@@ -97,6 +97,24 @@
 			<result name="mktevt.count" type="tiles">mktevt.count</result>
 		</action>
 		<action name="getMktEvtCountTab" class="mktEvtAction" method="getMktEvtCountTab" />
+		<!-- market monitor -->
+		<action name="showPublishList" class="monitorAction" method="showPublishList">
+			<result name="publish.list" type="tiles">publish.list</result>
+		</action>
+		<!-- market monitor news -->
+		<action name="showNewsList" class="monitorAction" method="showNewsList">
+			<result name="news.list" type="tiles">news.list</result>
+		</action>
+		<action name="showNewsInfo" class="monitorAction" method="showNewsInfo">
+			<result name="news.info" type="tiles">news.info</result>
+		</action>
+		<!-- market monitor industry -->
+		<action name="showIndustryList" class="monitorAction" method="showIndustryList">
+			<result name="industry.list" type="tiles">industry.list</result>
+		</action>
+		<action name="showIndustryInfo" class="monitorAction" method="showIndustryInfo">
+			<result name="industry.info" type="tiles">industry.info</result>
+		</action>
 		<!-- syssetup company -->
 		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>

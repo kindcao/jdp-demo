@@ -57,13 +57,13 @@
 	</div>
 	<div title="市场监控">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">发布监控</a>
+			<a href="#" onclick="clickMenu('showPublishList.action');">发布监控</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">行业监控</a>
+			<a href="#" onclick="clickMenu('showNewsList.action');">新闻专访</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('#');">新闻专访</a>
+			<a href="#" onclick="clickMenu('showIndustryList.action');">行业监控</a>
 		</div>
 	</div>
 	<div title="开户工作">

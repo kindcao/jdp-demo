@@ -40,7 +40,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 -- ----------------------------
 -- View structure for market_event_view_count
 -- ----------------------------
-CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_count` AS select `rno`() AS `id`,`sub`.`industry_superior_id` AS `industry_superior_id`,`sub`.`cust_id` AS `cust_id`,`sub`.`cust_name` AS `cust_name`,`sub`.`mktevt_superior_id` AS `mktevt_superior_id`,`sub`.`mktevt_superior_name` AS `mktevt_superior_name`,count(0) AS `num`,`sub`.`occur_date` AS `occur_date`,`sub`.`sys_company_id` AS `sys_company_id` from `market_event_view_count_sub` `sub` where (`rno_reset`() = 1) group by `sub`.`industry_superior_id`,`sub`.`cust_id`,`sub`.`mktevt_superior_id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_count` AS select sql_no_cache `test`.`rno`() AS `id`,`sub`.`industry_superior_id` AS `industry_superior_id`,`sub`.`cust_id` AS `cust_id`,`sub`.`cust_name` AS `cust_name`,`sub`.`mktevt_superior_id` AS `mktevt_superior_id`,`sub`.`mktevt_superior_name` AS `mktevt_superior_name`,count(0) AS `num`,`sub`.`occur_date` AS `occur_date`,`sub`.`sys_company_id` AS `sys_company_id` from `market_event_view_count_sub` `sub` where (`test`.`rno_reset`() = 1) group by `sub`.`industry_superior_id`,`sub`.`cust_id`,`sub`.`mktevt_superior_id`;
 
 -- ----------------------------
 -- View structure for market_event_view_count_sub
@@ -52,6 +52,20 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_cust` AS select `me`.`id` AS `id`,group_concat(cast(`cust`.`id` as char charset utf8) order by `cust`.`id` ASC separator ',') AS `cust_id`,group_concat(cast(`cust`.`short_name` as char charset utf8) order by `cust`.`id` ASC separator ',') AS `cust_name` from ((`market_event` `me` join `market_event_customer_rel` `mesr`) join `customer` `cust`) where ((`me`.`id` = `mesr`.`market_event_id`) and (`mesr`.`customer_id` = `cust`.`id`)) group by `me`.`id`;
 
+-- ----------------------------
+-- View structure for market_event_view_sub
+-- ----------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_sub` AS select `me`.`id` AS `id`,`me`.`occur_date` AS `occur_date`,date_format(`me`.`occur_date`,_utf8'%Y-%m-%d') AS `occur_date_str`,`me`.`begin_time` AS `begin_time`,time_format(`me`.`begin_time`,_utf8'%i:%s') AS `begin_time_str`,`me`.`end_time` AS `end_time`,time_format(`me`.`end_time`,_utf8'%i:%s') AS `end_time_str`,`me`.`subject` AS `subject`,`me`.`status` AS `status`,`met`.`superior_id` AS `mktevt_superior_id`,`mets`.`name` AS `mktevt_superior_name`,`met`.`id` AS `mktevt_id`,`met`.`name` AS `mktevt_name` from ((`market_event` `me` join `market_event_type` `met`) join `market_event_type` `mets`) where ((`me`.`market_event_type_id` = `met`.`id`) and (`met`.`superior_id` = `mets`.`id`));
+
+-- ----------------------------
+-- View structure for market_event_view_sysuser
+-- ----------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_sysuser` AS select `me`.`id` AS `id`,group_concat(cast(`scu`.`id` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_id`,group_concat(cast(`scu`.`name` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_name` from ((`market_event` `me` join `market_event_sys_user_rel` `mesur`) join `sys_company_user` `scu`) where ((`me`.`id` = `mesur`.`market_event_id`) and (`mesur`.`sys_company_user_id` = `scu`.`id`)) group by `me`.`id`;
+
+-- ----------------------------
+-- View structure for monitor_publish_view
+-- ----------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor_publish_view` AS select `mp`.`id` AS `id`,`mp`.`publish_date` AS `publish_date`,date_format(`mp`.`publish_date`,_utf8'%Y-%m-%d') AS `publish_date_str`,`mp`.`publish_time` AS `publish_time`,time_format(`mp`.`publish_time`,_utf8'%i:%s') AS `publish_time_str`,`mp`.`subject` AS `subject`,`mp`.`website` AS `website`,`mp`.`url` AS `url` from `monitor_publish` `mp`;
 
 -- ----------------------------
 -- Function structure for rno

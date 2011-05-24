@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
 import crm.dto.MktEvtCalExtDto;
+import crm.dto.MktEvtCountExtDto;
 import crm.dto.MktEvtExtDto;
 import crm.model.MarketEvent;
 import crm.model.MarketEventCompanyRel;
@@ -29,6 +30,7 @@ import crm.model.MarketEventCustomerRelId;
 import crm.model.MarketEventSysUserRel;
 import crm.model.MarketEventSysUserRelId;
 import crm.model.MarketEventViewCal;
+import crm.model.MarketEventViewCount;
 import crm.util.Utils;
 
 /**
@@ -239,9 +241,8 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
     public List<?> findMktEvtCal(Object object) throws Exception {
         if (object instanceof MktEvtCalExtDto) {
             MktEvtCalExtDto dto = (MktEvtCalExtDto) object;
-            MarketEventViewCal _mevc = new MarketEventViewCal();
-            BeanUtils.copyProperties(_mevc, dto);
-            //
+            // MarketEventViewCal _mevc = new MarketEventViewCal();
+            // BeanUtils.copyProperties(_mevc, dto);
             DetachedCriteria criteria = DetachedCriteria.forClass(MarketEventViewCal.class);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             Calendar cal = Calendar.getInstance();
@@ -252,7 +253,6 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                 log.warn("occurDate is null,set occurDate to first day of current month");
             }
             //
-
             if (dto.isYear()) {
                 int beginMonth = cal.get(Calendar.YEAR) * 10000 + 101;
                 int endMonth = cal.get(Calendar.YEAR) * 10000 + 1231;
@@ -274,6 +274,42 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
             return getBaseDaoImpl().findByCriteria(criteria);
         } else {
             log.error("object not instanceof MktEvtCalExtDto,object type :" + object.getClass().getSimpleName());
+        }
+        return null;
+    }
+
+    @Override
+    public List<?> findMktEvtCountTab(Object object) throws Exception {
+        if (object instanceof MktEvtCountExtDto) {
+            MktEvtCountExtDto dto = (MktEvtCountExtDto) object;
+            DetachedCriteria criteria = DetachedCriteria.forClass(MarketEventViewCount.class);
+            //
+            if (null != dto.getIndustrySuperiorId() && dto.getIndustrySuperiorId() > 0) {
+                criteria.add(Restrictions.eq("industrySuperiorId", dto.getIndustrySuperiorId()));
+            }
+            if (StringUtils.isNotBlank(dto.getOccurDateStart()) && StringUtils.isNotBlank(dto.getOccurDateEnd())) {
+                criteria.add(Restrictions.between("occurDate", Integer.valueOf(dto.getOccurDateStart()), Integer
+                        .valueOf(dto.getOccurDateEnd())));
+            } else if (StringUtils.isNotBlank(dto.getOccurDateStart())) {
+                criteria.add(Restrictions.eq("occurDate", Integer.valueOf(dto.getOccurDateStart())));
+            } else if (StringUtils.isNotBlank(dto.getOccurDateEnd())) {
+                criteria.add(Restrictions.eq("occurDate", Integer.valueOf(dto.getOccurDateEnd())));
+            } else {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+                int beginDay = Integer.valueOf(sdf.format(cal.getTime()));
+                cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);
+                cal.add(Calendar.DAY_OF_MONTH, -1);
+                int endDay = Integer.valueOf(sdf.format(cal.getTime()));
+                criteria.add(Restrictions.between("occurDate", beginDay, endDay));
+            }
+            if (StringUtils.isNotBlank(dto.getSysCompIds())) {
+                criteria.add(Restrictions.in("sysCompanyId", Utils.getIds(dto.getSysCompIds())));
+            }
+            return getBaseDaoImpl().findByCriteria(criteria);
+        } else {
+            log.error("object not instanceof findMktEvtCountTab,object type :" + object.getClass().getSimpleName());
         }
         return null;
     }

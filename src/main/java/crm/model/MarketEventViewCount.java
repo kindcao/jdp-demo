@@ -14,21 +14,19 @@ public class MarketEventViewCount implements java.io.Serializable {
 
     private Integer industrySuperiorId;
 
-    private String industrySuperiorName;
-
     private Integer custId;
 
     private String custName;
 
-    private Integer sysCompanyId;
-
-    private Integer marketEventId;
-
-    private Integer occurDate;
-
     private Integer mktevtSuperiorId;
 
     private String mktevtSuperiorName;
+
+    private Integer num;
+
+    private Integer occurDate;
+
+    private Integer sysCompanyId;
 
     // Constructors
 
@@ -37,34 +35,30 @@ public class MarketEventViewCount implements java.io.Serializable {
     }
 
     /** minimal constructor */
-    public MarketEventViewCount(Integer industrySuperiorId, String industrySuperiorName, Integer custId,
-            String custName, Integer sysCompanyId, Integer marketEventId, Integer occurDate, Integer mktevtSuperiorId,
-            String mktevtSuperiorName) {
+    public MarketEventViewCount(Integer industrySuperiorId, Integer custId, String custName,
+            Integer mktevtSuperiorId, String mktevtSuperiorName, Integer num, Integer occurDate, Integer sysCompanyId) {
         this.industrySuperiorId = industrySuperiorId;
-        this.industrySuperiorName = industrySuperiorName;
         this.custId = custId;
         this.custName = custName;
-        this.sysCompanyId = sysCompanyId;
-        this.marketEventId = marketEventId;
-        this.occurDate = occurDate;
         this.mktevtSuperiorId = mktevtSuperiorId;
         this.mktevtSuperiorName = mktevtSuperiorName;
+        this.num = num;
+        this.occurDate = occurDate;
+        this.sysCompanyId = sysCompanyId;
     }
 
     /** full constructor */
-    public MarketEventViewCount(Integer id, Integer industrySuperiorId, String industrySuperiorName, Integer custId,
-            String custName, Integer sysCompanyId, Integer marketEventId, Integer occurDate, Integer mktevtSuperiorId,
-            String mktevtSuperiorName) {
+    public MarketEventViewCount(Integer id, Integer industrySuperiorId, Integer custId, String custName,
+            Integer mktevtSuperiorId, String mktevtSuperiorName, Integer num, Integer occurDate, Integer sysCompanyId) {
         this.id = id;
         this.industrySuperiorId = industrySuperiorId;
-        this.industrySuperiorName = industrySuperiorName;
         this.custId = custId;
         this.custName = custName;
-        this.sysCompanyId = sysCompanyId;
-        this.marketEventId = marketEventId;
-        this.occurDate = occurDate;
         this.mktevtSuperiorId = mktevtSuperiorId;
         this.mktevtSuperiorName = mktevtSuperiorName;
+        this.num = num;
+        this.occurDate = occurDate;
+        this.sysCompanyId = sysCompanyId;
     }
 
     // Property accessors
@@ -85,14 +79,6 @@ public class MarketEventViewCount implements java.io.Serializable {
         this.industrySuperiorId = industrySuperiorId;
     }
 
-    public String getIndustrySuperiorName() {
-        return this.industrySuperiorName;
-    }
-
-    public void setIndustrySuperiorName(String industrySuperiorName) {
-        this.industrySuperiorName = industrySuperiorName;
-    }
-
     public Integer getCustId() {
         return this.custId;
     }
@@ -107,30 +93,6 @@ public class MarketEventViewCount implements java.io.Serializable {
 
     public void setCustName(String custName) {
         this.custName = custName;
-    }
-
-    public Integer getSysCompanyId() {
-        return this.sysCompanyId;
-    }
-
-    public void setSysCompanyId(Integer sysCompanyId) {
-        this.sysCompanyId = sysCompanyId;
-    }
-
-    public Integer getMarketEventId() {
-        return this.marketEventId;
-    }
-
-    public void setMarketEventId(Integer marketEventId) {
-        this.marketEventId = marketEventId;
-    }
-
-    public Integer getOccurDate() {
-        return this.occurDate;
-    }
-
-    public void setOccurDate(Integer occurDate) {
-        this.occurDate = occurDate;
     }
 
     public Integer getMktevtSuperiorId() {
@@ -149,6 +111,30 @@ public class MarketEventViewCount implements java.io.Serializable {
         this.mktevtSuperiorName = mktevtSuperiorName;
     }
 
+    public Integer getNum() {
+        return this.num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public Integer getOccurDate() {
+        return this.occurDate;
+    }
+
+    public void setOccurDate(Integer occurDate) {
+        this.occurDate = occurDate;
+    }
+
+    public Integer getSysCompanyId() {
+        return this.sysCompanyId;
+    }
+
+    public void setSysCompanyId(Integer sysCompanyId) {
+        this.sysCompanyId = sysCompanyId;
+    }
+
     public boolean equals(Object other) {
         if ((this == other))
             return true;
@@ -164,29 +150,24 @@ public class MarketEventViewCount implements java.io.Serializable {
                         .getIndustrySuperiorId() != null
                         && castOther.getIndustrySuperiorId() != null && this.getIndustrySuperiorId().equals(
                         castOther.getIndustrySuperiorId())))
-                && ((this.getIndustrySuperiorName() == castOther.getIndustrySuperiorName()) || (this
-                        .getIndustrySuperiorName() != null
-                        && castOther.getIndustrySuperiorName() != null && this.getIndustrySuperiorName().equals(
-                        castOther.getIndustrySuperiorName())))
                 && ((this.getCustId() == castOther.getCustId()) || (this.getCustId() != null
                         && castOther.getCustId() != null && this.getCustId().equals(castOther.getCustId())))
                 && ((this.getCustName() == castOther.getCustName()) || (this.getCustName() != null
                         && castOther.getCustName() != null && this.getCustName().equals(castOther.getCustName())))
-                && ((this.getSysCompanyId() == castOther.getSysCompanyId()) || (this.getSysCompanyId() != null
-                        && castOther.getSysCompanyId() != null && this.getSysCompanyId().equals(
-                        castOther.getSysCompanyId())))
-                && ((this.getMarketEventId() == castOther.getMarketEventId()) || (this.getMarketEventId() != null
-                        && castOther.getMarketEventId() != null && this.getMarketEventId().equals(
-                        castOther.getMarketEventId())))
-                && ((this.getOccurDate() == castOther.getOccurDate()) || (this.getOccurDate() != null
-                        && castOther.getOccurDate() != null && this.getOccurDate().equals(castOther.getOccurDate())))
                 && ((this.getMktevtSuperiorId() == castOther.getMktevtSuperiorId()) || (this.getMktevtSuperiorId() != null
                         && castOther.getMktevtSuperiorId() != null && this.getMktevtSuperiorId().equals(
                         castOther.getMktevtSuperiorId())))
                 && ((this.getMktevtSuperiorName() == castOther.getMktevtSuperiorName()) || (this
                         .getMktevtSuperiorName() != null
                         && castOther.getMktevtSuperiorName() != null && this.getMktevtSuperiorName().equals(
-                        castOther.getMktevtSuperiorName())));
+                        castOther.getMktevtSuperiorName())))
+                && ((this.getNum() == castOther.getNum()) || (this.getNum() != null && castOther.getNum() != null && this
+                        .getNum().equals(castOther.getNum())))
+                && ((this.getOccurDate() == castOther.getOccurDate()) || (this.getOccurDate() != null
+                        && castOther.getOccurDate() != null && this.getOccurDate().equals(castOther.getOccurDate())))
+                && ((this.getSysCompanyId() == castOther.getSysCompanyId()) || (this.getSysCompanyId() != null
+                        && castOther.getSysCompanyId() != null && this.getSysCompanyId().equals(
+                        castOther.getSysCompanyId())));
     }
 
     public int hashCode() {
@@ -194,14 +175,13 @@ public class MarketEventViewCount implements java.io.Serializable {
 
         result = 37 * result + (getId() == null ? 0 : this.getId().hashCode());
         result = 37 * result + (getIndustrySuperiorId() == null ? 0 : this.getIndustrySuperiorId().hashCode());
-        result = 37 * result + (getIndustrySuperiorName() == null ? 0 : this.getIndustrySuperiorName().hashCode());
         result = 37 * result + (getCustId() == null ? 0 : this.getCustId().hashCode());
         result = 37 * result + (getCustName() == null ? 0 : this.getCustName().hashCode());
-        result = 37 * result + (getSysCompanyId() == null ? 0 : this.getSysCompanyId().hashCode());
-        result = 37 * result + (getMarketEventId() == null ? 0 : this.getMarketEventId().hashCode());
-        result = 37 * result + (getOccurDate() == null ? 0 : this.getOccurDate().hashCode());
         result = 37 * result + (getMktevtSuperiorId() == null ? 0 : this.getMktevtSuperiorId().hashCode());
         result = 37 * result + (getMktevtSuperiorName() == null ? 0 : this.getMktevtSuperiorName().hashCode());
+        result = 37 * result + (getNum() == null ? 0 : this.getNum().hashCode());
+        result = 37 * result + (getOccurDate() == null ? 0 : this.getOccurDate().hashCode());
+        result = 37 * result + (getSysCompanyId() == null ? 0 : this.getSysCompanyId().hashCode());
         return result;
     }
 

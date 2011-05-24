@@ -36,8 +36,11 @@ public class MktEvtCountDto {
     }
 
     public int getItemNum() {
-        itemNum = items.size() + 1;
         return itemNum;
+    }
+
+    public void setItemNum(int itemNum) {
+        this.itemNum = itemNum;
     }
 
     public int getInduId() {

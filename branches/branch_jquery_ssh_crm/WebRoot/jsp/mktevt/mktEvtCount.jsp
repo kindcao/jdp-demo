@@ -112,7 +112,9 @@
 		<table cellpadding="0" cellspacing="0" border="0">
 			<tr>
 				<td width="10%" nowrap="nowrap">
-					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_def">默认统计</a>
+					<!--
+					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_def">默认统计</a>					
+					-->
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_tab">统计表</a>
 				</td>
 				<td width="5%" nowrap="nowrap" align="center">
@@ -195,7 +197,7 @@
 	});
 	
 	$('#_cal_tab').click(function(){		
-		$('#_cal_def').linkbutton('enable');
+		//$('#_cal_def').linkbutton('enable');
 		$('#_cal_tab').linkbutton('disable');
 		document.getElementById('div-cont-search-def').style.display='none';
 		document.getElementById('div-cont-search-tab').style.display='inline';		

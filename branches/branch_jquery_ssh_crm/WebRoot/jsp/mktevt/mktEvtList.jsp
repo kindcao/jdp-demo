@@ -172,33 +172,40 @@
 						日期:
 					</td>
 					<td width="20%">
-						<input type="text" id="occurDateStr" name="occurDateStr"
+						<input type="text" id="occurDateStrBegin" name="occurDateStrBegin"
 							class="easyui-datebox">
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
-						开始时间:
+						至
 					</td>
 					<td width="20%">
-						<input type="text" id="beginTimeStr" name="beginTimeStr"
-							class="easyui-timespinner">
+						<input type="text" id="occurDateStrEnd" name="occurDateStrEnd"
+							class="easyui-datebox">
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
-						结束时间:
-					</td>
-					<td width="20%">
-						<input type="text" id="endTimeStr" name="endTimeStr"
-							class="easyui-timespinner">
-					</td>
-				</tr>
-				<tr height="30px">
-					<td nowrap="nowrap" align="center">
 						大类:
 					</td>
-					<td>
+					<td width="20%">
 						<input id="mktevtSuperiorId" name="mktevtSuperiorId"
 							class="easyui-combobox" url="" valueField="id" textField="name"
 							multiple="false" editable="false" panelHeight="auto"
 							style="width: 134px;">
+					</td>
+				</tr>
+				<tr height="30px">
+					<td nowrap="nowrap" align="center" width="10%">
+						开始时间:
+					</td>
+					<td>
+						<input type="text" id="beginTimeStr" name="beginTimeStr"
+							class="easyui-timespinner">
+					</td>
+					<td nowrap="nowrap" align="center">
+						结束时间:
+					</td>
+					<td>
+						<input type="text" id="endTimeStr" name="endTimeStr"
+							class="easyui-timespinner">
 					</td>
 					<td nowrap="nowrap" align="center">
 						实施状态:
@@ -216,6 +223,8 @@
 							</option>
 						</select>
 					</td>
+				</tr>
+				<tr>
 					<td nowrap="nowrap" align="center">
 						主题:
 					</td>
@@ -223,10 +232,8 @@
 						<input type="text" id="subject" name="subject" maxlength="200"
 							class="easyui-validatebox">
 					</td>
-				</tr>
-				<tr>
 					<td nowrap="nowrap" align="center">
-						我方人员
+						我方人员：
 					</td>
 					<td>
 						<input id="sysCompUseIds" name="sysCompUseIds"
@@ -349,7 +356,8 @@
 	
 	//for search begin	
 	$('#_reset_search').click(function(){
-		$("#occurDateStr").datebox('clear');
+		$("#occurDateStrBegin").datebox('clear');
+		$("#occurDateStrEnd").datebox('clear');
 		$("#beginTimeStr").timespinner('clear');
 		$("#endTimeStr").timespinner('clear');
 		$('#mktevtSuperiorId').combobox('clear');
@@ -360,7 +368,8 @@
 	
 	$("#_search").click(function() {
 		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
-		queryParams.occurDateStr = $("#occurDateStr").datebox('getValue');
+		queryParams.occurDateStrBegin = $("#occurDateStrBegin").datebox('getValue');
+		queryParams.occurDateStrEnd = $("#occurDateStrEnd").datebox('getValue');
 		queryParams.beginTimeStr = $("#beginTimeStr").timespinner('getValue');
 		queryParams.endTimeStr = $("#endTimeStr").timespinner('getValue');		
 		queryParams.mktevtSuperiorId = $("#mktevtSuperiorId").combobox('getValue');

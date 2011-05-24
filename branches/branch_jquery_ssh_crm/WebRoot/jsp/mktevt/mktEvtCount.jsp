@@ -39,7 +39,7 @@
 
 <script type="text/javascript">
 <!--	
-	function getCountTabData(inc){
+	function getCountTabData(){		
 		var options = {
 			url : 'getMktEvtCountTab.action',
 			dataType : 'json',
@@ -64,26 +64,40 @@
 		_tabHTML+='<td>活动</td>';
 		_tabHTML+='<td>其他</td>';
 		_tabHTML+='</tr>';
-		$.each(data.rows, function(i, ele) {
-			//
+		$.each(data.rows, function(i, ele) {		
 			_tabHTML+='<tr>';
 			_tabHTML+='<td class="title-left" rowspan='+ele.itemNum +'>'+ele.induName+'</td>';
-			$.each(ele.items, function(i, ele2) {
-				_tabHTML+='<td width="30%" nowrap="nowrap">'+ele2.custName +'</td>';
-				_tabHTML+='<td width="15%">'+ele2.visitNum +'</td>';
-				_tabHTML+='<td width="15%">'+ele2.trainingNum +'</td>';
-				_tabHTML+='<td width="15%">'+ele2.activityNum +'</td>';
-				_tabHTML+='<td width="15%">'+ele2.othersNum +'</td>';
-			});
-			_tabHTML+='</tr>';			
 			//
-			_tabHTML+='<tr id="sum">';			
-			_tabHTML+='<td >小计</td>';
-			_tabHTML+='<td>'+ele.sum.visitNum +'</td>';
-			_tabHTML+='<td>'+ele.sum.trainingNum +'</td>';
-			_tabHTML+='<td>'+ele.sum.activityNum +'</td>';
-			_tabHTML+='<td>'+ele.sum.othersNum +'</td>';
-			_tabHTML+='</tr>';
+			$.each(ele.items, function(i, ele2) {
+				if(i>0){
+					_tabHTML+='<tr>';					
+				}
+				_tabHTML+='<td width="30%" nowrap="nowrap">'+ele2.custName +'</td>';
+				_tabHTML+='<td width="15%">'+(ele2.visitNum==0?"&nbsp;":ele2.visitNum)+'</td>';
+				_tabHTML+='<td width="15%">'+(ele2.trainingNum==0?"&nbsp;":ele2.trainingNum)+'</td>';
+				_tabHTML+='<td width="15%">'+(ele2.activityNum==0?"&nbsp;":ele2.activityNum)+'</td>';
+				_tabHTML+='<td width="15%">'+(ele2.othersNum==0?"&nbsp;":ele2.othersNum)+'</td>';
+				if(i>0){
+					_tabHTML+='</tr>';
+				}
+			});
+			//
+			if(ele.items.length>0){
+				_tabHTML+='<tr id="sum">';
+				_tabHTML+='<td >小计</td>';
+				_tabHTML+='<td>'+(ele.sum.visitNum==0?"&nbsp;":ele.sum.visitNum) +'</td>';
+				_tabHTML+='<td>'+(ele.sum.trainingNum==0?"&nbsp;":ele.sum.trainingNum) +'</td>';
+				_tabHTML+='<td>'+(ele.sum.activityNum==0?"&nbsp;":ele.sum.activityNum) +'</td>';
+				_tabHTML+='<td>'+(ele.sum.othersNum==0?"&nbsp;":ele.sum.othersNum) +'</td>';
+				_tabHTML+='</tr>';
+			}else{
+				_tabHTML+='<td>&nbsp;</td>';
+				_tabHTML+='<td>&nbsp;</td>';
+				_tabHTML+='<td>&nbsp;</td>';
+				_tabHTML+='<td>&nbsp;</td>';
+				_tabHTML+='<td>&nbsp;</td>';
+			}			
+			_tabHTML+='</tr>';						
 		});
 		_tabHTML+='</table>';	
 		$('#div-count-tab').html(_tabHTML);		
@@ -105,13 +119,15 @@
 					日期：
 				</td>
 				<td width="10%">
-					<input>
+					<input type="text" id="countExtDt_occurDateStart"
+						name="countExtDto.occurDateStart" class="easyui-datebox">
 				</td>
 				<td width="5%" nowrap="nowrap" align="center">
 					至
 				</td>
 				<td width="10%">
-					<input>
+					<input type="text" id="countExtDt_occurDateEnd"
+						name="countExtDto.occurDateEnd" class="easyui-datebox">
 				</td>
 				<td width="30%">
 					<div id="div-cont-search-tab" style="display: none;">
@@ -121,8 +137,8 @@
 									所属公司:
 								</td>
 								<td>
-									<input id="calExtDto_compId" class="easyui-combobox"
-										name="calExtDto.compId" url="getSysComp.action"
+									<input id="countExtDto_sysCompIds" class="easyui-combobox"
+										name="countExtDto.sysCompIds" url="getSysComp.action"
 										valueField="id" textField="companyName" multiple="true"
 										editable="false" panelHeight="auto" style="width: 200px;">
 								</td>
@@ -174,49 +190,36 @@
 		$('#_cal_tab').linkbutton('enable');
 		document.getElementById('div-cont-search-def').style.display='inline';
 		document.getElementById('div-cont-search-tab').style.display='none';	
-		//$('#_reset').click();
-		//$('#_search').click();			
+		$('#_reset').click();
+		$('#_search').click();			
 	});
 	
 	$('#_cal_tab').click(function(){		
 		$('#_cal_def').linkbutton('enable');
 		$('#_cal_tab').linkbutton('disable');
 		document.getElementById('div-cont-search-def').style.display='none';
-		document.getElementById('div-cont-search-tab').style.display='inline';
-		
-		//$('#_reset').click();
-		//$('#_search').click();
+		document.getElementById('div-cont-search-tab').style.display='inline';		
+		$('#_reset').click();
+		$('#_search').click();
 	});
 	
-	$('#_search').click(function(){		
-		if($('#calExtDto_year').val()){			
-			getCalYearData(0);
-		}else{
-			getCalMonthData();
-			var _url='getMktEvtCal.action?calExtDto.year=false';
-			_url+='&calExtDto.occurDate='+$('#calExtDto_occurDate').val();
-			_url+='&calExtDto.compId='+$("#calExtDto_compId").combobox('getValues');
-			_url+='&calExtDto.mktevtSuperiorId='+$("#calExtDto_mktevtSuperiorId").combobox('getValue');
-			$('#grid-datalist').datagrid('options').url=_url;			
-			$('#grid-datalist').datagrid('reload');					
-		}
+	$('#_search').click(function(){
+		if(document.getElementById('div-cont-search-tab').style.display=='inline'){
+			getCountTabData();
+		}	
 	});
 	
 	$('#_reset').click(function(){
-		$('#calExtDto_compId').combobox('clear');		
-		if(!$('#calExtDto_year').val()){
-			$('#calExtDto_mktevtSuperiorId').combobox('clear');
-		}
+		if(document.getElementById('div-cont-search-tab').style.display=='inline'){
+			$('#countExtDto_sysCompIds').combobox('clear');	
+		}			
 		resetForm('mktevtCountForm');
 	});   
 	
 	$(document).ready(function() {
 		$('#_add').linkbutton('disable');	
 		$('#_delete').linkbutton('disable');	
-		$('#_cal_tab').click();
-		
-		//
-		getCountTabData();
+		$('#_cal_tab').click();		
 	});
 //-->
 </script>

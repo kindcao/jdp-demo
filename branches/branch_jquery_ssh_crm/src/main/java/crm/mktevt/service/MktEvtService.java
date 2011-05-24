@@ -11,4 +11,6 @@ import crm.base.service.BaseService;
 public interface MktEvtService extends BaseService {
 
     List<?> findMktEvtCal(Object object) throws Exception;
+    
+    List<?> findMktEvtCountTab(Object object) throws Exception;
 }

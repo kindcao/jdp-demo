@@ -13,29 +13,26 @@
 		<property name="industrySuperiorId" type="java.lang.Integer">
 			<column name="industry_superior_id" />
 		</property>
-		<property name="industrySuperiorName" type="java.lang.String">
-			<column name="industry_superior_name" length="20" />
-		</property>
 		<property name="custId" type="java.lang.Integer">
 			<column name="cust_id" />
 		</property>
 		<property name="custName" type="java.lang.String">
 			<column name="cust_name" length="50" />
 		</property>
-		<property name="sysCompanyId" type="java.lang.Integer">
-			<column name="sys_company_id" />
-		</property>
-		<property name="marketEventId" type="java.lang.Integer">
-			<column name="market_event_id" />
-		</property>
-		<property name="occurDate" type="java.lang.Integer">
-			<column name="occur_date" />
-		</property>
 		<property name="mktevtSuperiorId" type="java.lang.Integer">
 			<column name="mktevt_superior_id" />
 		</property>
 		<property name="mktevtSuperiorName" type="java.lang.String">
 			<column name="mktevt_superior_name" length="20" />
+		</property>
+		<property name="num" type="java.lang.Integer">
+			<column name="num" />
+		</property>
+		<property name="occurDate" type="java.lang.Integer">
+			<column name="occur_date" />
+		</property>
+		<property name="sysCompanyId" type="java.lang.Integer">
+			<column name="sys_company_id" />
 		</property>
 	</class>
 </hibernate-mapping>

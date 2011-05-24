@@ -85,8 +85,7 @@
 		<put-attribute name="bodyhead" value="市场工作" />
 		<put-attribute name="body" value="/jsp/mktevt/mktEvtList.jsp" />
 	</definition>
-	<definition name="mktevt.info" extends="mktevt.layout">
-		<put-attribute name="bodyhead" value="市场工作" />
+	<definition name="mktevt.info" extends="mktevt.list">
 		<put-attribute name="body" value="/jsp/mktevt/mktEvtInfo.jsp" />
 	</definition>
 	<definition name="mktevt.cal" extends="mktevt.layout">
@@ -96,6 +95,28 @@
 	<definition name="mktevt.count" extends="mktevt.layout">
 		<put-attribute name="bodyhead" value="统计" />
 		<put-attribute name="body" value="/jsp/mktevt/mktEvtCount.jsp" />
+	</definition>
+	<!-- market monitor -->
+	<definition name="monitor.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="市场监控" />
+	</definition>
+	<definition name="publish.list" extends="monitor.layout">
+		<put-attribute name="bodyhead" value="发布监控" />
+		<put-attribute name="body" value="/jsp/monitor/publishList.jsp" />
+	</definition>
+	<definition name="news.list" extends="monitor.layout">
+		<put-attribute name="bodyhead" value="新闻专访" />
+		<put-attribute name="body" value="/jsp/monitor/newsList.jsp" />
+	</definition>
+	<definition name="news.info" extends="news.list">
+		<put-attribute name="body" value="/jsp/monitor/newsInfo.jsp" />
+	</definition>
+	<definition name="industry.list" extends="monitor.layout">
+		<put-attribute name="bodyhead" value="行业监控" />
+		<put-attribute name="body" value="/jsp/monitor/industryList.jsp" />
+	</definition>
+	<definition name="industry.info" extends="industry.list">
+		<put-attribute name="body" value="/jsp/monitor/industryInfo.jsp" />
 	</definition>
 	<!-- sysuser layout -->
 	<definition name="syscompuser.login" extends="nomenu.layout">

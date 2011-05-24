@@ -2,67 +2,104 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
+<style>
+<!--
+#div-publish-date img {
+	cursor: hand;
+}
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+	function getPublishData(inc){
+		var labTxt=$('#_labPublishDate').text();
+		var d=new Date();	
+		if(labTxt){
+			var arr=$('#publishView_publishDateStr').val().split('-');			
+			d=new Date(arr[0],parseInt(arr[1],10)-1,1);		
+			d.addMonths(inc);				
+		}
+		var dateStr=d.Format('yyyy-MM-dd');				
+		$('#_labPublishDate').text(dateStr.substr(0,7));
+		$('#publishView_publishDateStr').val(dateStr);
+		
+		//		
+		var _url='getPublishList.action?publishView.publishDateStr='+$('#publishView_publishDateStr').val();		
+		$('#grid-datalist').datagrid('options').url=_url;			
+		$('#grid-datalist').datagrid('reload');	
+	}
+//-->
+</script>
+
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
-<div id="div_search" style="display: inline;">
+<div id="div-search" style="margin-top: 5px;">
 	<form id="searchForm" name="searchForm">
-		<fieldset style="margin-top: 5px;">
-			<legend>
-				查询条件
-			</legend>
-			<table cellpadding="0" cellspacing="0" width="800" border="0"
-				style="margin: 10px;">
-				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						时段:
-					</td>
-					<td width="20%">
-						<input type="text" id="occurDateStrBegin" name="occurDateStrBegin"
-							class="easyui-datebox">
-					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						至
-					</td>
-					<td width="20%">
-						<input type="text" id="occurDateStrEnd" name="occurDateStrEnd"
-							class="easyui-datebox">
-					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						所属公司:
-					</td>
-					<td width="30%">
-						<input id="countExtDto_sysCompIds" class="easyui-combobox"
-							name="countExtDto.sysCompIds" url="getSysComp.action"
-							valueField="id" textField="companyName" multiple="true"
-							editable="false" panelHeight="auto" style="width: 250px;">
-					</td>
-				</tr>
-				<tr height="30px">
-					<td colspan="5">
-						&nbsp;
-					</td>
-					<td align="right">
-						<a href="#" class="easyui-linkbutton" plain="true"
-							iconCls="icon-search" id="_search">查询</a>
-						<a href="#" class="easyui-linkbutton" plain="true"
-							iconCls="icon-remove" id="_reset_search">重置</a>
-					</td>
-				</tr>
-			</table>
-		</fieldset>
+		<input type="hidden" id="publishView_publishDateStr"
+			name="publishView.publishDateStr">
+		<table cellpadding="0" cellspacing="0" border="0" width="30%">
+			<tr>
+				<td nowrap="nowrap" width="15%">
+					时段：
+				</td>
+				<td id="div-publish-date" width="85%">
+					<img src="images/calendar_prevyear.gif"
+						onclick="getPublishData(-1)">
+					&nbsp;
+					<label id="_labPublishDate"></label>
+					&nbsp;
+					<img src="images/calendar_nextyear.gif" onclick="getPublishData(1)">
+				</td>
+			</tr>
+		</table>
 	</form>
-	<div style="height: 30px;">
-		&nbsp;
-	</div>
-	<div align="left">
-		<table id="grid-datalist"></table>
-	</div>
+</div>
+<div align="left" style="margin-top: 10px;">
+	<table id="grid-datalist"></table>
 </div>
 
 <script type="text/javascript" defer="defer">
 <!--
 	$(document).ready(function() {
 		$('#_add').linkbutton('disable');
-		$('#_delete').linkbutton('disable');		
+		$('#_delete').linkbutton('disable');
+		//
+		var frozenColumns = [[{
+					field : 'publishDateStr',
+					title : '发布日期',
+					width : 100,
+					sortable : true					
+				}]];
+		var columns = [[{
+			field : 'publishTimeStr',
+			title : '发布时间',
+			width : 100
+		},{
+			field : 'website',
+			title : '网站',
+			width : 200,
+			formatter : function(value, rec) {				
+				return cutstr(value,20);
+			}
+		},{
+			field : 'url',
+			title : '网址',
+			width : 200,
+			formatter : function(value, rec) {				
+				return "<a href='#' onclick=window.open('" + value+ "');>" + cutstr(value,20) + "</a>";				
+			}
+		},{
+			field : 'subject',
+			title : '标题',
+			width : 300,
+			formatter : function(value, rec) {				
+				return cutstr(value,50);
+			}
+		}]];	
+	
+		//		
+		showDatagrid('grid-datalist','',frozenColumns,columns);
+		getPublishData();
 	});
 //-->
 </script>

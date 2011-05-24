@@ -111,7 +111,7 @@
 			</td>
 			<td>
 				<s:if test="%{#_cust.website.trim().length()>0}">
-					<a href='<s:property value="#_cust.website" />'><s:property
+					<a href="#" onclick=window.open('<s:property value="#_cust.website" />')><s:property
 							value="#_cust.website" /> </a>
 				</s:if>
 			</td>

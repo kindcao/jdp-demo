@@ -208,6 +208,14 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
             map.put("sysCompUseIds", "%" + map.get("sysCompUseIds") + "%");
         }
 
+        if (null != map.get("occurDateStrBegin") && null != map.get("occurDateStrEnd")) {
+            sb.append(" and (mev.occurDate between :occurDateStrBegin and :occurDateStrEnd) ");
+        } else if (null != map.get("occurDateStrBegin")) {
+            sb.append(" and mev.occurDate = :occurDateStrBegin ");
+        } else if (null != map.get("occurDateStrEnd")) {
+            sb.append(" and mev.occurDate = :occurDateStrEnd ");
+        }
+
         if (null != map.get("occurDate")) {
             sb.append(" and mev.occurDate = :occurDate ");
         }

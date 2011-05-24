@@ -47,7 +47,9 @@ public class MktEvtAction extends BaseAction {
 
     private String contIds;
 
-    private String occurDateStr;
+    private String occurDateStrBegin;
+
+    private String occurDateStrEnd;
 
     private String beginTimeStr;
 
@@ -110,8 +112,11 @@ public class MktEvtAction extends BaseAction {
         if (StringUtils.isNotBlank(compCustName)) {
             map.put("compCustName", compCustName);
         }
-        if (StringUtils.isNotBlank(occurDateStr)) {
-            map.put("occurDate", Integer.valueOf(occurDateStr));
+        if (StringUtils.isNotBlank(occurDateStrBegin)) {
+            map.put("occurDateStrBegin", Integer.valueOf(occurDateStrBegin));
+        }
+        if (StringUtils.isNotBlank(occurDateStrEnd)) {
+            map.put("occurDateStrEnd", Integer.valueOf(occurDateStrEnd));
         }
         if (StringUtils.isNotBlank(beginTimeStr)) {
             map.put("beginTime", Integer.valueOf(beginTimeStr));
@@ -298,17 +303,6 @@ public class MktEvtAction extends BaseAction {
         }
     }
 
-    public String getOccurDateStr() {
-        return occurDateStr;
-    }
-
-    public void setOccurDateStr(String occurDateStr) {
-        this.occurDateStr = occurDateStr;
-        if (StringUtils.isNotBlank(occurDateStr)) {
-            this.occurDateStr = occurDateStr.replaceAll("-", "");
-        }
-    }
-
     public String getBeginTimeStr() {
         return beginTimeStr;
     }
@@ -377,6 +371,28 @@ public class MktEvtAction extends BaseAction {
 
     public void setCountExtDto(MktEvtCountExtDto countExtDto) {
         this.countExtDto = countExtDto;
+    }
+
+    public String getOccurDateStrBegin() {
+        return occurDateStrBegin;
+    }
+
+    public void setOccurDateStrBegin(String occurDateStrBegin) {
+        this.occurDateStrBegin = occurDateStrBegin;
+        if (StringUtils.isNotBlank(occurDateStrBegin)) {
+            this.occurDateStrBegin = occurDateStrBegin.replaceAll("-", "");
+        }
+    }
+
+    public String getOccurDateStrEnd() {
+        return occurDateStrEnd;
+    }
+
+    public void setOccurDateStrEnd(String occurDateStrEnd) {
+        this.occurDateStrEnd = occurDateStrEnd;
+        if (StringUtils.isNotBlank(occurDateStrEnd)) {
+            this.occurDateStrEnd = occurDateStrEnd.replaceAll("-", "");
+        }
     }
 
 }

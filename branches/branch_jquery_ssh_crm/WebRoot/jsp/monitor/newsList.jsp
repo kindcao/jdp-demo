@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.text.*,java.util.*"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <style>
@@ -37,8 +37,7 @@
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" id="newsExtDto_interviewDateStr"
 						name="newsExtDto.interviewDateStr" class="easyui-datebox"
-						required="true"
-						value='<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>'>
+						required="true">
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					发布日期:
@@ -46,8 +45,7 @@
 				<td width="40%">
 					<input type="text" id="newsExtDto_publishDateStr"
 						name="newsExtDto.publishDateStr" class="easyui-datebox"
-						required="true"
-						value='<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>'>
+						required="true">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -235,7 +233,7 @@
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {						
 						$("#_back").click();
-						//$("#_search").click();					
+						$("#_search").click();					
 					}
 				}
 			};
@@ -251,7 +249,7 @@
 	
 	//for delete begin
 	$("#_delete").click(function() {
-		deleteRecord('grid-datalist','deleteCust.action');
+		deleteRecord('grid-datalist','deleteNews.action');
 	});
 	//fore delte end
 	

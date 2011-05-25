@@ -59,6 +59,7 @@
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.media" />
+				&nbsp;
 			</td>
 			<td nowrap="nowrap" align="center" width="10%">
 				标题:
@@ -73,6 +74,7 @@
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.reporter" />
+				&nbsp;
 			</td>
 			<td nowrap="nowrap" align="center" width="10%">
 				截图URI:
@@ -90,6 +92,7 @@
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.participant" />
+				&nbsp;
 			</td>
 			<td nowrap="nowrap" align="center" width="10%">
 				网址:
@@ -107,6 +110,7 @@
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.content" />
+				&nbsp;
 			</td>
 			<td colspan="2">
 				&nbsp;
@@ -118,6 +122,7 @@
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.remark" />
+				&nbsp;
 			</td>
 			<td>
 				&nbsp;
@@ -136,8 +141,7 @@
 		<input type="hidden" name="newsExtDto.id"
 			value='<s:property value="#session.MONITOR_NEWS_VIEW_SESSION_KEY.id" />' />
 		<s:hidden name="actionFlag" value="U" />
-		<table cellpadding="0" cellspacing="0" width="900" border="0"
-			style="margin: 10px;">
+		<table cellpadding="0" cellspacing="0" width="900" border="0">
 			<tr height="30px">
 				<th width="50%" colspan="2" style="border-right: 1px solid #A4BED4;">
 					采访情况

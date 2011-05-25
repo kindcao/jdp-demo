@@ -396,7 +396,7 @@
 				}, {
 					field : 'occurDateStr',
 					title : '日期',
-					width : 80,
+					width : 100,
 					sortable : false,			
 					formatter : function(value, rec) {
 						return "<a href='#' onclick='editMktEvt(" + rec.id+ ");'>" + value + "</a>";

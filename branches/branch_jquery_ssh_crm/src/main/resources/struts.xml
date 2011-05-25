@@ -111,6 +111,7 @@
 		</action>
 		<action name="getNewsList" class="monitorAction" method="getNewsList" />
 		<action name="saveNewsInfo" class="monitorAction" method="saveNewsInfo" />
+		<action name="deleteNews" class="monitorAction" method="deleteNews" />
 		<!-- market monitor industry -->
 		<action name="showIndustryList" class="monitorAction" method="showIndustryList">
 			<result name="industry.list" type="tiles">industry.list</result>

@@ -16,10 +16,11 @@
 }
 
 #cal-year-tab td {
-	width: "33%";
+	width: 33%;
 	border-top: 1px solid #A4BED4;
 	overflow: hidden;
 	vertical-align: top;
+	border-top: 1px solid #A4BED4;
 }
 
 #cal-year-tab td div {
@@ -28,8 +29,10 @@
 
 #cal-year-tab td div hr {
 	border: solid #A4BED4;
+	border-width: 1px;
 	width: 80%;
 	text-align: left;
+	width: 80%;
 }
 
 #cal-year-tab td div span {
@@ -190,22 +193,22 @@
 		<input type="hidden" id="calExtDto_year" name="calExtDto.year">
 		<input type="hidden" id="calExtDto_occurDate"
 			name="calExtDto.occurDate">
-		<table cellpadding="0" cellspacing="0" border="0">
+		<table cellpadding="0" cellspacing="0" border="0" width="800">
 			<tr>
-				<td width="5%" nowrap="nowrap">
+				<td width="10%" nowrap="nowrap">
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_year">年</a>
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_month">月</a>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					所属公司:
 				</td>
-				<td width="20%">
+				<td width="30%">
 					<input id="calExtDto_compId" class="easyui-combobox"
 						name="calExtDto.compId" url="getSysComp.action" valueField="id"
 						textField="companyName" multiple="true" editable="false"
 						panelHeight="auto" style="width: 250px;">
 				</td>
-				<td width="25%">
+				<td width="40%">
 					<div id="div-cal-search-month" style="display: none;">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
@@ -217,7 +220,7 @@
 										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
 										url="getMarketEventType.action?eventTypeId=0" valueField="id"
 										textField="name" multiple="false" editable="false"
-										panelHeight="auto" style="width: 120px;">
+										panelHeight="auto" style="width: 150px;">
 								</td>
 							</tr>
 						</table>
@@ -228,9 +231,6 @@
 						iconCls="icon-search" id="_search">查询</a>
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-remove" id="_reset">重置</a>
-				</td>
-				<td width="30%">
-					&nbsp;
 				</td>
 			</tr>
 			<tr height="5px">
@@ -263,12 +263,7 @@
 </div>
 <div id="div_cal-month" style="margin-top: 0px; display: none;">
 	<table cellpadding="0" cellspacing="0" border="0" width="99%">
-		<tr height="20px">
-			<td colspan="3">
-				&nbsp;
-			</td>
-		</tr>
-		<tr valign="top" height="380px">
+		<tr valign="top" height="400px">
 			<td width="20%">
 				<div id="div-cal-ui" class="easyui-calendar"
 					style="width: 200px; height: 200px;"></div>
@@ -322,7 +317,7 @@
 			var _url='getMktEvtCal.action?calExtDto.year=false';
 			_url+='&calExtDto.occurDate='+$('#calExtDto_occurDate').val();
 			_url+='&calExtDto.compId='+$("#calExtDto_compId").combobox('getValues');
-			_url+='&calExtDto.mktevtSuperiorId='+$("#calExtDto_mktevtSuperiorId").combobox('getValue');
+			_url+='&calExtDto.mktevtSuperiorId='+$("#calExtDto_mktevtSuperiorId").combobox('getValues');
 			$('#grid-datalist').datagrid('options').url=_url;			
 			$('#grid-datalist').datagrid('reload');					
 		}

@@ -20,6 +20,7 @@ import crm.model.MonitorNews;
 import crm.model.MonitorNewsView;
 import crm.model.MonitorPublishView;
 import crm.monitor.service.MonitorService;
+import crm.util.Utils;
 
 /**
  * @author Kind Cao
@@ -101,19 +102,39 @@ public class MonitorAction extends BaseAction {
     }
 
     public String saveNewsInfo() throws Exception {
-        JsonValidateResult jvr = new JsonValidateResult();
         MonitorNews obj = new MonitorNews();
         BeanUtils.copyProperties(obj, newsExtDto);
-        //
         if (StringUtils.isBlank(getActionFlag())) {
             obj.setId(null);
         }
+        //
+        saveInfo(obj);
+        newsExtDto = new MonitorNewsExtDto();
+        return NONE;
+    }
+
+    public String deleteNews() throws Exception {
+        delete(new MonitorNews());
+        return NONE;
+    }
+
+    private void saveInfo(Object obj) throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
         monitorService.saveOrUpdate(obj);
         jvr.setSuccess(true);
         responseJsonData(jvr);
-        //
-        newsExtDto = new MonitorNewsExtDto();
-        return NONE;
+    }
+
+    private void delete(Object object) throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
+        if (StringUtils.isNotBlank(getIds())) {
+            monitorService.deleteAll(object, Utils.getIds(getIds()));
+            jvr.setSuccess(true);
+        } else {
+            log.info("delete ids is null");
+            jvr.setErrors("delete ids is null");
+        }
+        responseJsonData(jvr);
     }
 
     private void getList(Map<String, Object> map) throws Exception {

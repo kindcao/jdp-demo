@@ -27,6 +27,8 @@ public class Constants {
 
     public static final String MARKET_EVENT_VIEW_SESSION_KEY = "MARKET_EVENT_VIEW_SESSION_KEY";
 
+    public static final String MONITOR_NEWS_VIEW_SESSION_KEY = "MONITOR_NEWS_VIEW_SESSION_KEY";
+
     // public static final String MARKET_EVENT_TYPE_ID_SESSION_KEY =
     // "MARKET_EVENT_TYPE_ID_SESSION_KEY";
 

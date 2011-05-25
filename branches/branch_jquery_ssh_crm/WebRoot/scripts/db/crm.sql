@@ -63,6 +63,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_sysuser` AS select `me`.`id` AS `id`,group_concat(cast(`scu`.`id` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_id`,group_concat(cast(`scu`.`name` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_name` from ((`market_event` `me` join `market_event_sys_user_rel` `mesur`) join `sys_company_user` `scu`) where ((`me`.`id` = `mesur`.`market_event_id`) and (`mesur`.`sys_company_user_id` = `scu`.`id`)) group by `me`.`id`;
 
 -- ----------------------------
+-- View structure for monitor_news_view
+-- ----------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor_news_view` AS select `mn`.`id` AS `id`,`mn`.`publish_date` AS `publish_date`,`mn`.`media` AS `media`,`mn`.`interview_date` AS `interview_date`,`mn`.`participant` AS `participant`,`mn`.`reporter` AS `reporter`,`mn`.`url` AS `url`,`mn`.`subject` AS `subject`,`mn`.`content` AS `content`,`mn`.`remark` AS `remark`,`mn`.`picture` AS `picture`,date_format(`mn`.`publish_date`,_utf8'%Y-%m-%d') AS `publish_date_str`,date_format(`mn`.`interview_date`,_utf8'%Y-%m-%d') AS `interview_date_str` from `monitor_news` `mn`;
+
+-- ----------------------------
 -- View structure for monitor_publish_view
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor_publish_view` AS select `mp`.`id` AS `id`,`mp`.`publish_date` AS `publish_date`,date_format(`mp`.`publish_date`,_utf8'%Y-%m-%d') AS `publish_date_str`,`mp`.`publish_time` AS `publish_time`,time_format(`mp`.`publish_time`,_utf8'%i:%s') AS `publish_time_str`,`mp`.`subject` AS `subject`,`mp`.`website` AS `website`,`mp`.`url` AS `url` from `monitor_publish` `mp`;

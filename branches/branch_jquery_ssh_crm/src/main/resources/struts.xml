@@ -109,6 +109,8 @@
 		<action name="showNewsInfo" class="monitorAction" method="showNewsInfo">
 			<result name="news.info" type="tiles">news.info</result>
 		</action>
+		<action name="getNewsList" class="monitorAction" method="getNewsList" />
+		<action name="saveNewsInfo" class="monitorAction" method="saveNewsInfo" />
 		<!-- market monitor industry -->
 		<action name="showIndustryList" class="monitorAction" method="showIndustryList">
 			<result name="industry.list" type="tiles">industry.list</result>

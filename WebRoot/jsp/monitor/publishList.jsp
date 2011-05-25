@@ -39,10 +39,10 @@
 			name="publishView.publishDateStr">
 		<table cellpadding="0" cellspacing="0" border="0" width="30%">
 			<tr>
-				<td nowrap="nowrap" width="15%">
-					时段：
+				<td nowrap="nowrap" width="25%">
+					发布时段：
 				</td>
-				<td id="div-publish-date" width="85%">
+				<td id="div-publish-date" width="75%">
 					<img src="images/calendar_prevyear.gif"
 						onclick="getPublishData(-1)">
 					&nbsp;

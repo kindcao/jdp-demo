@@ -66,8 +66,7 @@
 				</td>
 				<td colspan="3">
 					<textarea name="sysComp.descript" rows="5" style="width: 402px;"
-						class="easyui-validatebox" validType="length[0,100]"> 
-					</textarea>
+						class="easyui-validatebox" validType="length[0,100]"></textarea>
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;

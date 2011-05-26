@@ -68,24 +68,18 @@ public class ContServiceImpl extends BaseServiceImpl implements ContService {
 
     @Override
     public void deleteAll(Object object, Collection ids) throws Exception {
-        if (object instanceof CustomerContact) {
-            if (null != ids && ids.size() > 0) {
-                List<?> list = getBaseDaoImpl().findByIds(object.getClass(), ids);
-                if (null != list) {
-                    CustomerContact contObj = (CustomerContact) object;
-                    for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-                        CustomerContact ele = (CustomerContact) iterator.next();
-                        ele.setDeletedBy(contObj.getDeletedBy());
-                        ele.setDeletedTime(contObj.getDeletedTime());
-                        ele.setDeleteFlag(contObj.getDeleteFlag());
-                    }
-                    getBaseDaoImpl().saveOrUpdateAll(list);
+        if (null != ids && ids.size() > 0) {
+            List<?> list = getBaseDaoImpl().findByIds(object.getClass(), ids);
+            if (null != list) {
+                CustomerContact contObj = (CustomerContact) object;
+                for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+                    CustomerContact ele = (CustomerContact) iterator.next();
+                    ele.setDeletedBy(contObj.getDeletedBy());
+                    ele.setDeletedTime(contObj.getDeletedTime());
+                    ele.setDeleteFlag(contObj.getDeleteFlag());
                 }
-            } else {
-                log.warn("delete ids collection is null");
+                getBaseDaoImpl().saveOrUpdateAll(list);
             }
-        } else {
-            log.error("object not instanceof CustomerContact,object type :" + object.getClass().getSimpleName());
         }
     }
 }

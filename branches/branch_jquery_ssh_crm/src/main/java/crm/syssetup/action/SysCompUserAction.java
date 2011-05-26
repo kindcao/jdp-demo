@@ -17,7 +17,9 @@ import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.model.SysCompany;
 import crm.model.SysCompanyUser;
+import crm.model.SysCompanyUserView;
 import crm.syssetup.service.SysCompUserService;
+import crm.util.Utils;
 
 /**
  * 
@@ -26,24 +28,27 @@ import crm.syssetup.service.SysCompUserService;
  *          Dec 4, 2010 9:09:55 PM
  */
 
+@SuppressWarnings("serial")
 public class SysCompUserAction extends BaseAction {
-
-    private static final long serialVersionUID = -2322517524694073991L;
 
     protected Logger log = LoggerFactory.getLogger(SysCompUserAction.class);
 
-    private SysCompanyUser sysCompUser;
-
     private SysCompUserService sysCompUserService;
 
-    private String name;
+    private SysCompanyUser sysCompUser;
 
-    private String loginId;
-
-    private String status;
+    private SysCompanyUserView sysCompUserView;
 
     public String showLogin() throws Exception {
         return LOGIN;
+    }
+
+    public String showSysCompUserList() throws Exception {
+        return "syscompuser.list";
+    }
+
+    public String showSysCompUserInfo() throws Exception {
+        return "syscompuser.Info";
     }
 
     @SuppressWarnings("unchecked")
@@ -92,15 +97,12 @@ public class SysCompUserAction extends BaseAction {
         return LOGIN;
     }
 
-    public String addUser() throws Exception {
+    public String saveSysCompUserInfo() throws Exception {
         JsonValidateResult jvr = new JsonValidateResult();
-        sysCompUser.setStatus(Constants.STATUS_A);
         sysCompUser.setDeleteFlag(Constants.STATUS_N);
-        if ("U".equals(getActionFlag())) {
-            sysCompUser.setId(sysCompUser.getId());
-            sysCompUserService.saveOrUpdate(sysCompUser);
-            jvr.setSuccess(true);
-        } else {
+        if (StringUtils.isBlank(getActionFlag())) {
+            sysCompUser.setId(null);
+            //
             SysCompanyUser _sysCompUser = new SysCompanyUser();
             _sysCompUser.setLoginId(sysCompUser.getLoginId());
             if (null == sysCompUserService.findByExample(_sysCompUser)) {
@@ -110,58 +112,57 @@ public class SysCompUserAction extends BaseAction {
                 jvr.setSuccess(false);
                 jvr.setErrors("User name has exist!");
             }
+        } else {
+            sysCompUserService.saveOrUpdate(sysCompUser);
+            jvr.setSuccess(true);
+        }
+        responseJsonData(jvr);
+        //      
+        sysCompUser = new SysCompanyUser();
+        return NONE;
+    }
+
+    public String deleteSysCompUser() throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
+        if (StringUtils.isNotBlank(getIds())) {
+            sysCompUserService.deleteAll(new SysCompanyUser(), Utils.getIds(getIds()));
+            jvr.setSuccess(true);
+        } else {
+            log.info("delete ids is null");
+            jvr.setErrors("delete ids is null");
         }
         responseJsonData(jvr);
         return NONE;
     }
 
-    public String editUser() throws Exception {
-        // if (Integer.parseInt(id) > 0) {
-        // SysUser sysUser = (SysUser)
-        // sysCompUserService.getObject(SysUser.class, Integer.valueOf(id));
-        // jor.setObj(sysUser);
-        // }
-        // responseJsonData(jor);
-        return NONE;
-    }
-
-    public String delUser() throws Exception {
-        // if (id != null) {
-        // List<Integer> ids = new ArrayList<Integer>();
-        // String[] _idStr = id.split(",");
-        // for (int i = 0; i < _idStr.length; i++) {
-        // ids.add(Integer.valueOf(_idStr[i]));
-        // }
-        // sysCompUserService.deleteAll(SysUser.class, ids);
-        // jvr.setSuccess(true);
-        // responseJsonData(jvr);
-        // }
-        return NONE;
-    }
-
-    public String showSysCompUserList() throws Exception {
-        return "syscompuser.list";
-    }
-
     @SuppressWarnings("unchecked")
     public String getSysCompUserList() throws Exception {
-        JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
-        if (StringUtils.isNotBlank(name)) {
-            map.put("name", name);
+        if (null != sysCompUserView) {
+            if (StringUtils.isNotBlank(sysCompUserView.getName())) {
+                map.put("name", sysCompUserView.getName());
+            }
+            if (StringUtils.isNotBlank(sysCompUserView.getLoginId())) {
+                map.put("loginId", sysCompUserView.getLoginId());
+            }
+            if (StringUtils.isNotBlank(sysCompUserView.getStatus())) {
+                map.put("status", sysCompUserView.getStatus());
+            }
+            if (null != sysCompUserView.getSysCompanyId() && sysCompUserView.getSysCompanyId() > 0) {
+                map.put("sysCompanyId", sysCompUserView.getSysCompanyId());
+            }
+            if (null != sysCompUserView.getSuperiorId() && sysCompUserView.getSuperiorId() > 0) {
+                map.put("superiorId", sysCompUserView.getSuperiorId());
+            }
         }
-        if (StringUtils.isNotBlank(loginId)) {
-            map.put("loginId", loginId);
-        }
-        if (StringUtils.isNotBlank(status)) {
-            map.put("status", status);
-        }
-
         int totalCount = sysCompUserService.getTotalCount(map);
         List<?> userList = sysCompUserService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
+        JsonListResult jlr = new JsonListResult();
         jlr.setTotal(totalCount);
         jlr.setRows(userList);
         responseJsonData(jlr);
+        //
+        sysCompUserView = new SysCompanyUserView();
         return NONE;
     }
 
@@ -178,28 +179,11 @@ public class SysCompUserAction extends BaseAction {
         this.sysCompUser = sysCompUser;
     }
 
-    public String getName() {
-        return name;
+    public SysCompanyUserView getSysCompUserView() {
+        return sysCompUserView;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSysCompUserView(SysCompanyUserView sysCompUserView) {
+        this.sysCompUserView = sysCompUserView;
     }
-
-    public String getLoginId() {
-        return loginId;
-    }
-
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 }

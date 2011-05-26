@@ -15,8 +15,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
 import crm.mktevt.dto.MktEvtCalExtDto;
@@ -39,89 +37,77 @@ import crm.util.Utils;
  */
 public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService {
 
-    private final Logger log = LoggerFactory.getLogger(MktEvtServiceImpl.class);
-
     @Override
     public void saveOrUpdate(Object object) throws Exception {
-        if (object instanceof MktEvtExtDto) {
-            MktEvtExtDto mktEvtExtDto = (MktEvtExtDto) object;
-            MarketEvent mktEvtObj = new MarketEvent();
-            BeanUtils.copyProperties(mktEvtObj, mktEvtExtDto);
-            if (mktEvtObj.getId() == 0) {
-                mktEvtObj.setId(null);
-            } else {
-                // for update ,delete rels
-                deleteAllRel(Utils.getIds(mktEvtObj.getId().toString()));
-            }
-            super.saveOrUpdate(mktEvtObj);
-            //
-            if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompIds())) {
-                Set<MarketEventCompanyRel> mktEvtCompRels = new HashSet<MarketEventCompanyRel>();
-                List<Integer> compIds = Utils.getIds(mktEvtExtDto.getSysCompIds());
-                MarketEventCompanyRelId _relId = null;
-                for (Iterator<Integer> iterator = compIds.iterator(); iterator.hasNext();) {
-                    Integer ele = (Integer) iterator.next();
-                    _relId = new MarketEventCompanyRelId();
-                    _relId.setMarketEventId(mktEvtObj.getId());
-                    _relId.setSysCompanyId(ele);
-                    mktEvtCompRels.add(new MarketEventCompanyRel(_relId));
-                }
-                super.saveOrUpdateAll(mktEvtCompRels);
-            } else {
-                log.warn("syscomp ids is null");
-            }
-            //
-            if (StringUtils.isNotBlank(mktEvtExtDto.getCustomerIds())) {
-                Set<MarketEventCustomerRel> mktEvtCustRels = new HashSet<MarketEventCustomerRel>();
-                List<Integer> custIs = Utils.getIds(mktEvtExtDto.getCustomerIds());
-                MarketEventCustomerRelId _relId = null;
-                for (Iterator<Integer> iterator = custIs.iterator(); iterator.hasNext();) {
-                    Integer ele = (Integer) iterator.next();
-                    _relId = new MarketEventCustomerRelId();
-                    _relId.setMarketEventId(mktEvtObj.getId());
-                    _relId.setCustomerId(ele);
-                    mktEvtCustRels.add(new MarketEventCustomerRel(_relId));
-                }
-                super.saveOrUpdateAll(mktEvtCustRels);
-            } else {
-                log.warn("customer ids is null");
-            }
-            // 
-            // if (StringUtils.isNotBlank(mktEvtExtDto.getContIds())) {
-            // Set<MarketEventContactRel> mktEvtContRels = new
-            // HashSet<MarketEventContactRel>();
-            // List<Integer> contIds = Utils.getIds(mktEvtExtDto.getContIds());
-            // MarketEventContactRelId _relId = null;
-            // for (Iterator<Integer> iterator = contIds.iterator();
-            // iterator.hasNext();) {
-            // Integer ele = (Integer) iterator.next();
-            // _relId = new MarketEventContactRelId();
-            // _relId.setMarketEventId(mktEvtObj.getId());
-            // _relId.setCustomerContactId(ele);
-            // mktEvtContRels.add(new MarketEventContactRel(_relId));
-            // }
-            // super.saveOrUpdateAll(mktEvtContRels);
-            // } else {
-            // log.warn("contact ids is null");
-            // }
-            //
-            if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompUseIds())) {
-                Set<MarketEventSysUserRel> mktEvtSysUserRels = new HashSet<MarketEventSysUserRel>();
-                List<Integer> sysUserIds = Utils.getIds(mktEvtExtDto.getSysCompUseIds());
-                MarketEventSysUserRelId _relId = null;
-                for (Iterator<Integer> iterator = sysUserIds.iterator(); iterator.hasNext();) {
-                    Integer ele = (Integer) iterator.next();
-                    _relId = new MarketEventSysUserRelId();
-                    _relId.setMarketEventId(mktEvtObj.getId());
-                    _relId.setSysCompanyUserId(ele);
-                    mktEvtSysUserRels.add(new MarketEventSysUserRel(_relId));
-                }
-                super.saveOrUpdateAll(mktEvtSysUserRels);
-            } else {
-                log.warn("sysuser ids is null");
-            }
+        MktEvtExtDto mktEvtExtDto = (MktEvtExtDto) object;
+        MarketEvent mktEvtObj = new MarketEvent();
+        BeanUtils.copyProperties(mktEvtObj, mktEvtExtDto);
+        if (mktEvtObj.getId() == 0) {
+            mktEvtObj.setId(null);
         } else {
-            log.error("object not instanceof MktEvtExtDto,object type :" + object.getClass().getSimpleName());
+            // for update ,delete rels
+            deleteAllRel(Utils.getIds(mktEvtObj.getId().toString()));
+        }
+        super.saveOrUpdate(mktEvtObj);
+        //
+        if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompIds())) {
+            Set<MarketEventCompanyRel> mktEvtCompRels = new HashSet<MarketEventCompanyRel>();
+            List<Integer> compIds = Utils.getIds(mktEvtExtDto.getSysCompIds());
+            MarketEventCompanyRelId _relId = null;
+            for (Iterator<Integer> iterator = compIds.iterator(); iterator.hasNext();) {
+                Integer ele = (Integer) iterator.next();
+                _relId = new MarketEventCompanyRelId();
+                _relId.setMarketEventId(mktEvtObj.getId());
+                _relId.setSysCompanyId(ele);
+                mktEvtCompRels.add(new MarketEventCompanyRel(_relId));
+            }
+            super.saveOrUpdateAll(mktEvtCompRels);
+        }
+        //
+        if (StringUtils.isNotBlank(mktEvtExtDto.getCustomerIds())) {
+            Set<MarketEventCustomerRel> mktEvtCustRels = new HashSet<MarketEventCustomerRel>();
+            List<Integer> custIs = Utils.getIds(mktEvtExtDto.getCustomerIds());
+            MarketEventCustomerRelId _relId = null;
+            for (Iterator<Integer> iterator = custIs.iterator(); iterator.hasNext();) {
+                Integer ele = (Integer) iterator.next();
+                _relId = new MarketEventCustomerRelId();
+                _relId.setMarketEventId(mktEvtObj.getId());
+                _relId.setCustomerId(ele);
+                mktEvtCustRels.add(new MarketEventCustomerRel(_relId));
+            }
+            super.saveOrUpdateAll(mktEvtCustRels);
+        }
+        // 
+        // if (StringUtils.isNotBlank(mktEvtExtDto.getContIds())) {
+        // Set<MarketEventContactRel> mktEvtContRels = new
+        // HashSet<MarketEventContactRel>();
+        // List<Integer> contIds = Utils.getIds(mktEvtExtDto.getContIds());
+        // MarketEventContactRelId _relId = null;
+        // for (Iterator<Integer> iterator = contIds.iterator();
+        // iterator.hasNext();) {
+        // Integer ele = (Integer) iterator.next();
+        // _relId = new MarketEventContactRelId();
+        // _relId.setMarketEventId(mktEvtObj.getId());
+        // _relId.setCustomerContactId(ele);
+        // mktEvtContRels.add(new MarketEventContactRel(_relId));
+        // }
+        // super.saveOrUpdateAll(mktEvtContRels);
+        // } else {
+        // log.warn("contact ids is null");
+        // }
+        //
+        if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompUseIds())) {
+            Set<MarketEventSysUserRel> mktEvtSysUserRels = new HashSet<MarketEventSysUserRel>();
+            List<Integer> sysUserIds = Utils.getIds(mktEvtExtDto.getSysCompUseIds());
+            MarketEventSysUserRelId _relId = null;
+            for (Iterator<Integer> iterator = sysUserIds.iterator(); iterator.hasNext();) {
+                Integer ele = (Integer) iterator.next();
+                _relId = new MarketEventSysUserRelId();
+                _relId.setMarketEventId(mktEvtObj.getId());
+                _relId.setSysCompanyUserId(ele);
+                mktEvtSysUserRels.add(new MarketEventSysUserRel(_relId));
+            }
+            super.saveOrUpdateAll(mktEvtSysUserRels);
         }
     }
 
@@ -130,8 +116,6 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         if (null != ids && ids.size() > 0) {
             deleteAllRel(ids);
             super.deleteAll(object, ids);
-        } else {
-            log.error("deleteAll fail, ids is null");
         }
     }
 
@@ -145,8 +129,6 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                                 Expression.eq("id.marketEventId", ele)));
                 if (null != compRelList && compRelList.size() > 0) {
                     super.deleteAll(compRelList);
-                } else {
-                    log.warn("deleteAllRel compRelList is null");
                 }
                 //
                 List<?> custRelList = getBaseDaoImpl().findByCriteria(
@@ -154,8 +136,6 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                                 Expression.eq("id.marketEventId", ele)));
                 if (null != custRelList && custRelList.size() > 0) {
                     super.deleteAll(custRelList);
-                } else {
-                    log.warn("deleteAllRel custRelList is null");
                 }
                 //
                 // List<?> contRelList = getBaseDaoImpl().findByCriteria(
@@ -172,12 +152,8 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
                                 Expression.eq("id.marketEventId", ele)));
                 if (null != sysUserList && sysUserList.size() > 0) {
                     super.deleteAll(sysUserList);
-                } else {
-                    log.warn("deleteAllRel sysUserList is null");
                 }
             }
-        } else {
-            log.error("deleteAllRel fail, ids is null");
         }
     }
 
@@ -247,78 +223,66 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
 
     @Override
     public List<?> findMktEvtCal(Object object) throws Exception {
-        if (object instanceof MktEvtCalExtDto) {
-            MktEvtCalExtDto dto = (MktEvtCalExtDto) object;
-            // MarketEventViewCal _mevc = new MarketEventViewCal();
-            // BeanUtils.copyProperties(_mevc, dto);
-            DetachedCriteria criteria = DetachedCriteria.forClass(MarketEventViewCal.class);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            Calendar cal = Calendar.getInstance();
-            if (null != dto.getOccurDate() && dto.getOccurDate() > 0) {
-                cal.setTime(sdf.parse(dto.getOccurDate().toString()));
-            } else {
-                cal.set(Calendar.DAY_OF_MONTH, 1);
-                log.warn("occurDate is null,set occurDate to first day of current month");
-            }
-            //
-            if (dto.isYear()) {
-                int beginMonth = cal.get(Calendar.YEAR) * 10000 + 101;
-                int endMonth = cal.get(Calendar.YEAR) * 10000 + 1231;
-                criteria.add(Restrictions.between("occurDate", beginMonth, endMonth));
-            } else {
-                cal.set(Calendar.DAY_OF_MONTH, 1);
-                int beginDay = Integer.valueOf(sdf.format(cal.getTime()));
-                cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);
-                cal.add(Calendar.DAY_OF_MONTH, -1);
-                int endDay = Integer.valueOf(sdf.format(cal.getTime()));
-                criteria.add(Restrictions.between("occurDate", beginDay, endDay));
-            }
-            if (StringUtils.isNotBlank(dto.getCompId())) {
-                criteria.add(Restrictions.like("compId", dto.getCompId(), MatchMode.ANYWHERE));
-            }
-            if (null != dto.getMktevtSuperiorId() && dto.getMktevtSuperiorId() > 0) {
-                criteria.add(Restrictions.eq("mktevtSuperiorId", dto.getMktevtSuperiorId()));
-            }
-            return getBaseDaoImpl().findByCriteria(criteria);
+        MktEvtCalExtDto dto = (MktEvtCalExtDto) object;
+        DetachedCriteria criteria = DetachedCriteria.forClass(MarketEventViewCal.class);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = Calendar.getInstance();
+        if (null != dto.getOccurDate() && dto.getOccurDate() > 0) {
+            cal.setTime(sdf.parse(dto.getOccurDate().toString()));
         } else {
-            log.error("object not instanceof MktEvtCalExtDto,object type :" + object.getClass().getSimpleName());
+            // occurDate is null,set occurDate to first day of current month
+            cal.set(Calendar.DAY_OF_MONTH, 1);
         }
-        return null;
+        //
+        if (dto.isYear()) {
+            int beginMonth = cal.get(Calendar.YEAR) * 10000 + 101;
+            int endMonth = cal.get(Calendar.YEAR) * 10000 + 1231;
+            criteria.add(Restrictions.between("occurDate", beginMonth, endMonth));
+        } else {
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            int beginDay = Integer.valueOf(sdf.format(cal.getTime()));
+            cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+            int endDay = Integer.valueOf(sdf.format(cal.getTime()));
+            criteria.add(Restrictions.between("occurDate", beginDay, endDay));
+        }
+        if (StringUtils.isNotBlank(dto.getCompId())) {
+            criteria.add(Restrictions.like("compId", dto.getCompId(), MatchMode.ANYWHERE));
+        }
+        if (null != dto.getMktevtSuperiorId() && dto.getMktevtSuperiorId() > 0) {
+            criteria.add(Restrictions.eq("mktevtSuperiorId", dto.getMktevtSuperiorId()));
+        }
+        return getBaseDaoImpl().findByCriteria(criteria);
     }
 
     @Override
     public List<?> findMktEvtCountTab(Object object) throws Exception {
-        if (object instanceof MktEvtCountExtDto) {
-            MktEvtCountExtDto dto = (MktEvtCountExtDto) object;
-            DetachedCriteria criteria = DetachedCriteria.forClass(MarketEventViewCount.class);
-            //
-            if (null != dto.getIndustrySuperiorId() && dto.getIndustrySuperiorId() > 0) {
-                criteria.add(Restrictions.eq("industrySuperiorId", dto.getIndustrySuperiorId()));
-            }
-            if (StringUtils.isNotBlank(dto.getOccurDateStart()) && StringUtils.isNotBlank(dto.getOccurDateEnd())) {
-                criteria.add(Restrictions.between("occurDate", Integer.valueOf(dto.getOccurDateStart()), Integer
-                        .valueOf(dto.getOccurDateEnd())));
-            } else if (StringUtils.isNotBlank(dto.getOccurDateStart())) {
-                criteria.add(Restrictions.eq("occurDate", Integer.valueOf(dto.getOccurDateStart())));
-            } else if (StringUtils.isNotBlank(dto.getOccurDateEnd())) {
-                criteria.add(Restrictions.eq("occurDate", Integer.valueOf(dto.getOccurDateEnd())));
-            } else {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-                Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.DAY_OF_MONTH, 1);
-                int beginDay = Integer.valueOf(sdf.format(cal.getTime()));
-                cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);
-                cal.add(Calendar.DAY_OF_MONTH, -1);
-                int endDay = Integer.valueOf(sdf.format(cal.getTime()));
-                criteria.add(Restrictions.between("occurDate", beginDay, endDay));
-            }
-            if (StringUtils.isNotBlank(dto.getSysCompIds())) {
-                criteria.add(Restrictions.in("sysCompanyId", Utils.getIds(dto.getSysCompIds())));
-            }
-            return getBaseDaoImpl().findByCriteria(criteria);
-        } else {
-            log.error("object not instanceof findMktEvtCountTab,object type :" + object.getClass().getSimpleName());
+        MktEvtCountExtDto dto = (MktEvtCountExtDto) object;
+        DetachedCriteria criteria = DetachedCriteria.forClass(MarketEventViewCount.class);
+        //
+        if (null != dto.getIndustrySuperiorId() && dto.getIndustrySuperiorId() > 0) {
+            criteria.add(Restrictions.eq("industrySuperiorId", dto.getIndustrySuperiorId()));
         }
-        return null;
+        if (StringUtils.isNotBlank(dto.getOccurDateStart()) && StringUtils.isNotBlank(dto.getOccurDateEnd())) {
+            criteria.add(Restrictions.between("occurDate", Integer.valueOf(dto.getOccurDateStart()), Integer
+                    .valueOf(dto.getOccurDateEnd())));
+        } else if (StringUtils.isNotBlank(dto.getOccurDateStart())) {
+            criteria.add(Restrictions.eq("occurDate", Integer.valueOf(dto.getOccurDateStart())));
+        } else if (StringUtils.isNotBlank(dto.getOccurDateEnd())) {
+            criteria.add(Restrictions.eq("occurDate", Integer.valueOf(dto.getOccurDateEnd())));
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            int beginDay = Integer.valueOf(sdf.format(cal.getTime()));
+            cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+            int endDay = Integer.valueOf(sdf.format(cal.getTime()));
+            criteria.add(Restrictions.between("occurDate", beginDay, endDay));
+        }
+        if (StringUtils.isNotBlank(dto.getSysCompIds())) {
+            criteria.add(Restrictions.in("sysCompanyId", Utils.getIds(dto.getSysCompIds())));
+        }
+        return getBaseDaoImpl().findByCriteria(criteria);
     }
 }

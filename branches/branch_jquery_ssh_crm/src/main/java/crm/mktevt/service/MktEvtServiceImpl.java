@@ -19,9 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
-import crm.dto.MktEvtCalExtDto;
-import crm.dto.MktEvtCountExtDto;
-import crm.dto.MktEvtExtDto;
+import crm.mktevt.dto.MktEvtCalExtDto;
+import crm.mktevt.dto.MktEvtCountExtDto;
+import crm.mktevt.dto.MktEvtExtDto;
 import crm.model.MarketEvent;
 import crm.model.MarketEventCompanyRel;
 import crm.model.MarketEventCompanyRelId;

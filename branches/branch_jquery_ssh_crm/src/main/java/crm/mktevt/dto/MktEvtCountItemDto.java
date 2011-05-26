@@ -1,4 +1,4 @@
-package crm.dto;
+package crm.mktevt.dto;
 
 /**
  * @author Kind Cao

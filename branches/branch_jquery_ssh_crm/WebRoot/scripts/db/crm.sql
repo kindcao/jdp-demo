@@ -3,6 +3,28 @@ alter table customer add short_name varchar(50) not null;
 alter table market_event add status char not null default 'N';
 
 -- ----------------------------
+-- Function structure for rno
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`user`@`%` FUNCTION `rno`() RETURNS int(11)
+BEGIN 
+SET @rno = @rno + 1; 
+ RETURN @rno; 
+END;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for rno_reset
+-- ----------------------------
+DELIMITER ;;
+CREATE DEFINER=`user`@`%` FUNCTION `rno_reset`() RETURNS int(11)
+BEGIN 
+SET @rno = 0; 
+RETURN 1; 
+END;;
+DELIMITER ;
+
+-- ----------------------------
 -- View structure for customer_contact_view
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `customer_contact_view` AS select `cc`.`id` AS `id`,`cc`.`customer_id` AS `customer_id`,`cc`.`name` AS `name`,`cc`.`department` AS `department`,`cc`.`posit` AS `posit`,`cc`.`phone` AS `phone`,`cc`.`fax` AS `fax`,`cc`.`mobile` AS `mobile`,`cc`.`email` AS `email`,`cc`.`address` AS `address`,`cc`.`is_primary` AS `is_primary`,`cc`.`remark` AS `remark`,`cc`.`im` AS `im`,`cc`.`picture` AS `picture`,`cc`.`created_by` AS `created_by`,`cc`.`created_time` AS `created_time`,`cc`.`last_updated_by` AS `last_updated_by`,`cc`.`last_updated_time` AS `last_updated_time`,`cc`.`delete_flag` AS `delete_flag`,`cc`.`deleted_by` AS `deleted_by`,`cc`.`deleted_time` AS `deleted_time` from `customer_contact` `cc` where (`cc`.`delete_flag` = _utf8'N');
@@ -63,6 +85,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_sysuser` AS select `me`.`id` AS `id`,group_concat(cast(`scu`.`id` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_id`,group_concat(cast(`scu`.`name` as char charset utf8) order by `scu`.`id` ASC separator ',') AS `sys_comp_user_name` from ((`market_event` `me` join `market_event_sys_user_rel` `mesur`) join `sys_company_user` `scu`) where ((`me`.`id` = `mesur`.`market_event_id`) and (`mesur`.`sys_company_user_id` = `scu`.`id`)) group by `me`.`id`;
 
 -- ----------------------------
+-- View structure for monitor_industry_view
+-- ----------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor_industry_view` AS select `mi`.`id` AS `id`,`mi`.`publish_date` AS `publish_date`,`mi`.`industry_news_type_id` AS `industry_news_type_id`,`mi`.`customer_id` AS `customer_id`,`mi`.`url` AS `url`,`mi`.`subject` AS `subject`,`mi`.`content` AS `content`,date_format(`mi`.`publish_date`,_utf8'%Y-%m-%d') AS `publish_date_str`,`nt`.`name` AS `industry_news_type_name`,`cust`.`cust_name` AS `cust_name` from ((`monitor_industry` `mi` join `industry_news_type` `nt`) join `customer` `cust`) where ((`mi`.`industry_news_type_id` = `nt`.`id`) and (`mi`.`customer_id` = `cust`.`id`));
+
+-- ----------------------------
 -- View structure for monitor_news_view
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor_news_view` AS select `mn`.`id` AS `id`,`mn`.`publish_date` AS `publish_date`,`mn`.`media` AS `media`,`mn`.`interview_date` AS `interview_date`,`mn`.`participant` AS `participant`,`mn`.`reporter` AS `reporter`,`mn`.`url` AS `url`,`mn`.`subject` AS `subject`,`mn`.`content` AS `content`,`mn`.`remark` AS `remark`,`mn`.`picture` AS `picture`,date_format(`mn`.`publish_date`,_utf8'%Y-%m-%d') AS `publish_date_str`,date_format(`mn`.`interview_date`,_utf8'%Y-%m-%d') AS `interview_date_str` from `monitor_news` `mn`;
@@ -71,25 +98,3 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor
 -- View structure for monitor_publish_view
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor_publish_view` AS select `mp`.`id` AS `id`,`mp`.`publish_date` AS `publish_date`,date_format(`mp`.`publish_date`,_utf8'%Y-%m-%d') AS `publish_date_str`,`mp`.`publish_time` AS `publish_time`,time_format(`mp`.`publish_time`,_utf8'%i:%s') AS `publish_time_str`,`mp`.`subject` AS `subject`,`mp`.`website` AS `website`,`mp`.`url` AS `url` from `monitor_publish` `mp`;
-
--- ----------------------------
--- Function structure for rno
--- ----------------------------
-DELIMITER ;;
-CREATE DEFINER=`user`@`%` FUNCTION `rno`() RETURNS int(11)
-BEGIN 
-SET @rno = @rno + 1; 
- RETURN @rno; 
-END;;
-DELIMITER ;
-
--- ----------------------------
--- Function structure for rno_reset
--- ----------------------------
-DELIMITER ;;
-CREATE DEFINER=`user`@`%` FUNCTION `rno_reset`() RETURNS int(11)
-BEGIN 
-SET @rno = 0; 
-RETURN 1; 
-END;;
-DELIMITER ;

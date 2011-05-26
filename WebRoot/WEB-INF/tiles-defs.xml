@@ -126,7 +126,7 @@
 		<put-attribute name="menutitle" value="系统设定" />
 	</definition>
 	<definition name="syscomp.list" extends="syssetup.layout">
-		<put-attribute name="bodyhead" value="用户公司" />
+		<put-attribute name="bodyhead" value="所属公司" />
 		<put-attribute name="body" value="/jsp/syssetup/sysCompList.jsp" />
 	</definition>
 	<definition name="syscompuser.list" extends="syssetup.layout">

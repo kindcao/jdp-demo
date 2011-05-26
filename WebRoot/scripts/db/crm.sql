@@ -98,3 +98,8 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor
 -- View structure for monitor_publish_view
 -- ----------------------------
 CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `monitor_publish_view` AS select `mp`.`id` AS `id`,`mp`.`publish_date` AS `publish_date`,date_format(`mp`.`publish_date`,_utf8'%Y-%m-%d') AS `publish_date_str`,`mp`.`publish_time` AS `publish_time`,time_format(`mp`.`publish_time`,_utf8'%i:%s') AS `publish_time_str`,`mp`.`subject` AS `subject`,`mp`.`website` AS `website`,`mp`.`url` AS `url` from `monitor_publish` `mp`;
+
+-- ----------------------------
+-- View structure for sys_company_user_view
+-- ----------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `sys_company_user_view` AS select `scu`.`id` AS `id`,`scu`.`sys_company_id` AS `sys_company_id`,`scu`.`name` AS `name`,`scu`.`login_id` AS `login_id`,`scu`.`passwd` AS `passwd`,`scu`.`superior_id` AS `superior_id`,`scu`.`email` AS `email`,`scu`.`status` AS `status`,`scu`.`delete_flag` AS `delete_flag`,`sc`.`company_name` AS `company_name`,`scu2`.`name` AS `superior_name` from ((`sys_company_user` `scu` join `sys_company` `sc` on((`scu`.`sys_company_id` = `sc`.`id`))) left join `sys_company_user` `scu2` on((`scu`.`superior_id` = `scu2`.`id`)));

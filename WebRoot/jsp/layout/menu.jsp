@@ -73,7 +73,7 @@
 	</div>
 	<div title="系统设定">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showSysCompList.action');">用户公司</a>
+			<a href="#" onclick="clickMenu('showSysCompList.action');">所属公司</a>
 		</div>
 		<div style="margin: 10px;">
 			<a href="#" onclick="clickMenu('showSysCompUserList.action');">系统用户</a>

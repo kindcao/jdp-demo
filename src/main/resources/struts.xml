@@ -37,6 +37,7 @@
 		<action name="getMarketEventType" class="commAction" method="getMarketEventType" />
 		<action name="getSysCompUserByCompIds" class="commAction" method="getSysCompUserByCompIds" />
 		<action name="getSysCompUserByUserIds" class="commAction" method="getSysCompUserByUserIds" />
+		<action name="getIndustryNewsType" class="commAction" method="getIndustryNewsType" />
 		<!-- cust -->
 		<action name="showCustList" class="custAction" method="showCustList">
 			<result name="cust.broker.list" type="tiles">cust.broker.list</result>
@@ -97,28 +98,31 @@
 			<result name="mktevt.count" type="tiles">mktevt.count</result>
 		</action>
 		<action name="getMktEvtCountTab" class="mktEvtAction" method="getMktEvtCountTab" />
-		<!-- market monitor -->
-		<action name="showPublishList" class="monitorAction" method="showPublishList">
+		<!-- market monitor publish-->
+		<action name="showPublishList" class="publishAction" method="showPublishList">
 			<result name="publish.list" type="tiles">publish.list</result>
 		</action>
-		<action name="getPublishList" class="monitorAction" method="getPublishList" />
+		<action name="getPublishList" class="publishAction" method="getPublishList" />
 		<!-- market monitor news -->
-		<action name="showNewsList" class="monitorAction" method="showNewsList">
+		<action name="showNewsList" class="newsAction" method="showNewsList">
 			<result name="news.list" type="tiles">news.list</result>
 		</action>
-		<action name="showNewsInfo" class="monitorAction" method="showNewsInfo">
+		<action name="showNewsInfo" class="newsAction" method="showNewsInfo">
 			<result name="news.info" type="tiles">news.info</result>
 		</action>
-		<action name="getNewsList" class="monitorAction" method="getNewsList" />
-		<action name="saveNewsInfo" class="monitorAction" method="saveNewsInfo" />
-		<action name="deleteNews" class="monitorAction" method="deleteNews" />
+		<action name="getNewsList" class="newsAction" method="getNewsList" />
+		<action name="saveNewsInfo" class="newsAction" method="saveNewsInfo" />
+		<action name="deleteNews" class="newsAction" method="deleteNews" />
 		<!-- market monitor industry -->
-		<action name="showIndustryList" class="monitorAction" method="showIndustryList">
+		<action name="showIndustryList" class="industryAction" method="showIndustryList">
 			<result name="industry.list" type="tiles">industry.list</result>
 		</action>
-		<action name="showIndustryInfo" class="monitorAction" method="showIndustryInfo">
+		<action name="showIndustryInfo" class="industryAction" method="showIndustryInfo">
 			<result name="industry.info" type="tiles">industry.info</result>
 		</action>
+		<action name="getIndustryList" class="industryAction" method="getIndustryList" />
+		<action name="saveIndustryInfo" class="industryAction" method="saveIndustryInfo" />
+		<action name="deleteIndustry" class="industryAction" method="deleteIndustry" />
 		<!-- syssetup company -->
 		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>

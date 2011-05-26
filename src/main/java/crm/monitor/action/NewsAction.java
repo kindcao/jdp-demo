@@ -13,13 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
-import crm.dto.MonitorNewsExtDto;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.model.MonitorNews;
 import crm.model.MonitorNewsView;
-import crm.model.MonitorPublishView;
-import crm.monitor.service.MonitorService;
+import crm.monitor.dto.NewsExtDto;
+import crm.monitor.service.NewsService;
 import crm.util.Utils;
 
 /**
@@ -27,31 +26,21 @@ import crm.util.Utils;
  * @version $Rev$, May 24, 2011 4:30:56 PM
  */
 @SuppressWarnings("serial")
-public class MonitorAction extends BaseAction {
+public class NewsAction extends BaseAction {
 
-    private final Logger log = LoggerFactory.getLogger(MonitorAction.class);
+    private final Logger log = LoggerFactory.getLogger(NewsAction.class);
 
-    private MonitorService monitorService;
+    private NewsService newsService;
 
-    private MonitorPublishView publishView;
-
-    private MonitorNewsExtDto newsExtDto;
-
-    public String showPublishList() throws Exception {
-        return "publish.list";
-    }
+    private NewsExtDto newsExtDto;
 
     public String showNewsList() throws Exception {
         return "news.list";
     }
 
-    public String showIndustryList() throws Exception {
-        return "industry.list";
-    }
-
     public String showNewsInfo() throws Exception {
         if (null != newsExtDto && newsExtDto.getId() > 0) {
-            session.put(Constants.MONITOR_NEWS_VIEW_SESSION_KEY, monitorService.getObject(MonitorNewsView.class,
+            session.put(Constants.MONITOR_NEWS_VIEW_SESSION_KEY, newsService.getObject(MonitorNewsView.class,
                     newsExtDto.getId()));
         } else {
             log.warn("newsExtDto is null or newsExtDto.getId() is 0");
@@ -59,25 +48,8 @@ public class MonitorAction extends BaseAction {
         return "news.info";
     }
 
-    public String showIndustryInfo() throws Exception {
-        return "industry.info";
-    }
-
-    public String getPublishList() throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("_class_name_", MonitorPublishView.class.getName());
-        if (null != publishView && StringUtils.isNotBlank(publishView.getPublishDateStr())) {
-            map.put("publishDateStr", publishView.getPublishDateStr());
-        }
-        //
-        getList(map);
-        publishView = new MonitorPublishView();
-        return NONE;
-    }
-
     public String getNewsList() throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("_class_name_", MonitorNewsView.class.getName());
         if (null != newsExtDto) {
             if (null != newsExtDto.getPublishDateBegin() && newsExtDto.getPublishDateBegin() > 0) {
                 map.put("publishDateBegin", newsExtDto.getPublishDateBegin());
@@ -96,8 +68,14 @@ public class MonitorAction extends BaseAction {
             }
         }
         //
-        getList(map);
-        newsExtDto = new MonitorNewsExtDto();
+        JsonListResult jlr = new JsonListResult();
+        int totalCount = newsService.getTotalCount(map);
+        List<?> mktEvtList = newsService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
+        jlr.setTotal(totalCount);
+        jlr.setRows(mktEvtList);
+        responseJsonData(jlr);
+        //      
+        newsExtDto = new NewsExtDto();
         return NONE;
     }
 
@@ -107,63 +85,40 @@ public class MonitorAction extends BaseAction {
         if (StringUtils.isBlank(getActionFlag())) {
             obj.setId(null);
         }
+        newsService.saveOrUpdate(obj);
         //
-        saveInfo(obj);
-        newsExtDto = new MonitorNewsExtDto();
+        JsonValidateResult jvr = new JsonValidateResult();
+        jvr.setSuccess(true);
+        responseJsonData(jvr);
+        //       
+        newsExtDto = new NewsExtDto();
         return NONE;
     }
 
     public String deleteNews() throws Exception {
-        delete(new MonitorNews());
-        return NONE;
-    }
-
-    private void saveInfo(Object obj) throws Exception {
-        JsonValidateResult jvr = new JsonValidateResult();
-        monitorService.saveOrUpdate(obj);
-        jvr.setSuccess(true);
-        responseJsonData(jvr);
-    }
-
-    private void delete(Object object) throws Exception {
         JsonValidateResult jvr = new JsonValidateResult();
         if (StringUtils.isNotBlank(getIds())) {
-            monitorService.deleteAll(object, Utils.getIds(getIds()));
+            newsService.deleteAll(new MonitorNews(), Utils.getIds(getIds()));
             jvr.setSuccess(true);
         } else {
             log.info("delete ids is null");
             jvr.setErrors("delete ids is null");
         }
         responseJsonData(jvr);
-    }
-
-    private void getList(Map<String, Object> map) throws Exception {
-        JsonListResult jlr = new JsonListResult();
-        int totalCount = monitorService.getTotalCount(map);
-        List<?> mktEvtList = monitorService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
-        jlr.setTotal(totalCount);
-        jlr.setRows(mktEvtList);
-        responseJsonData(jlr);
+        return NONE;
     }
 
     @Resource
-    public void setMonitorService(MonitorService monitorService) {
-        this.monitorService = monitorService;
+    public void setNewsService(NewsService newsService) {
+        this.newsService = newsService;
     }
 
-    public MonitorPublishView getPublishView() {
-        return publishView;
-    }
-
-    public void setPublishView(MonitorPublishView publishView) {
-        this.publishView = publishView;
-    }
-
-    public MonitorNewsExtDto getNewsExtDto() {
+    public NewsExtDto getNewsExtDto() {
         return newsExtDto;
     }
 
-    public void setNewsExtDto(MonitorNewsExtDto newsExtDto) {
+    public void setNewsExtDto(NewsExtDto newsExtDto) {
         this.newsExtDto = newsExtDto;
     }
+
 }

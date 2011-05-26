@@ -1,4 +1,4 @@
-package crm.dto;
+package crm.monitor.dto;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -9,7 +9,7 @@ import crm.model.MonitorNews;
  * @version $Rev$, May 25, 2011 10:51:18 AM
  */
 @SuppressWarnings("serial")
-public class MonitorNewsExtDto extends MonitorNews {
+public class NewsExtDto extends MonitorNews {
 
     private String publishDateStr;
 

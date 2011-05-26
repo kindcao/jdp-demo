@@ -13,6 +13,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import crm.base.service.BaseService;
 import crm.model.CustomerIndustry;
+import crm.model.IndustryNewsType;
 import crm.model.MarketEventType;
 import crm.model.SysCompany;
 import crm.model.SysCompanyUser;
@@ -37,8 +38,30 @@ public class MstDataLoader {
         loadCustomerIndustry(ctx);
         loadSysCompany(ctx);
         loadMarketEventType(ctx);
-        loadSysCompanyUser(ctx);
+        loadSysCompanyUser(ctx);    
+        loadIndustryNewsType(ctx);   
         log.info("loadMstData end.");
+    }
+    
+    public static void loadIndustryNewsType(ServletContext ctx) {
+        log.info("loadIndustryNewsType begin...");
+        try {
+            List<?> list = baseServiceImpl.loadAll(IndustryNewsType.class);
+            if (null != list) {
+                Map<String, Object> map = new TreeMap<String, Object>();
+                for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+                    IndustryNewsType object = (IndustryNewsType) iterator.next();
+                    map.put(object.getId().toString(), object);
+                }
+                ctx.setAttribute(IndustryNewsType.class.getName(), map);
+                log.info("loadIndustryNewsType map size " + map.size());
+            } else {
+                log.warn("loadIndustryNewsType result is null");
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        log.info("loadIndustryNewsType end");
     }
 
     public static void loadMarketEventType(ServletContext ctx) {

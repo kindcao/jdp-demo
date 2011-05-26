@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
+import crm.cust.dto.CustExtDto;
 import crm.cust.service.ContService;
-import crm.dto.CustExtDto;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.model.CustomerContact;

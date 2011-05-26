@@ -8,8 +8,6 @@ import java.util.Set;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
 import crm.cust.dto.CustDto;
@@ -23,36 +21,28 @@ import crm.model.CustomerSysCompanyRelId;
  */
 public class CustServiceImpl extends BaseServiceImpl implements CustService {
 
-    private final Logger log = LoggerFactory.getLogger(CustServiceImpl.class);
-
     @Override
     public void saveOrUpdate(Object object) throws Exception {
-        if (object instanceof CustDto) {
-            CustDto custDto = (CustDto) object;
-            Customer custObj = custDto.getCustObj();
-            // save customer
-            super.saveOrUpdate(custObj);
-            // set customer id and save CustomerSysCompanyRel
-            Set<CustomerSysCompanyRel> custSysCompRels = custDto.getCustSysCompRels();
-            if (null != custSysCompRels) {
-                // for delete
-                CustomerSysCompanyRelId _relId = new CustomerSysCompanyRelId();
-                _relId.setCustomerId(custObj.getId());
-                List<?> _list = findCustSysCompRel(_relId);
-                if (null != _list && _list.size() > 0) {
-                    super.deleteAll(_list);
-                }
-                // for add
-                for (Iterator<CustomerSysCompanyRel> iterator = custSysCompRels.iterator(); iterator.hasNext();) {
-                    CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
-                    ele.getId().setCustomerId(custObj.getId());
-                    super.saveOrUpdate(ele);
-                }
-            } else {
-                log.warn("custSysCompRels is null");
+        CustDto custDto = (CustDto) object;
+        Customer custObj = custDto.getCustObj();
+        // save customer
+        super.saveOrUpdate(custObj);
+        // set customer id and save CustomerSysCompanyRel
+        Set<CustomerSysCompanyRel> custSysCompRels = custDto.getCustSysCompRels();
+        if (null != custSysCompRels) {
+            // for delete
+            CustomerSysCompanyRelId _relId = new CustomerSysCompanyRelId();
+            _relId.setCustomerId(custObj.getId());
+            List<?> _list = findCustSysCompRel(_relId);
+            if (null != _list && _list.size() > 0) {
+                super.deleteAll(_list);
             }
-        } else {
-            log.error("object not instanceof CustDto,object type :" + object.getClass().getSimpleName());
+            // for add
+            for (Iterator<CustomerSysCompanyRel> iterator = custSysCompRels.iterator(); iterator.hasNext();) {
+                CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
+                ele.getId().setCustomerId(custObj.getId());
+                super.saveOrUpdate(ele);
+            }
         }
     }
 
@@ -110,24 +100,18 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
 
     @Override
     public void deleteAll(Object object, Collection ids) throws Exception {
-        if (object instanceof Customer) {
-            if (null != ids && ids.size() > 0) {
-                List<?> list = getBaseDaoImpl().findByIds(object.getClass(), ids);
-                if (null != list) {
-                    Customer custObj = (Customer) object;
-                    for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-                        Customer ele = (Customer) iterator.next();
-                        ele.setDeletedBy(custObj.getDeletedBy());
-                        ele.setDeletedTime(custObj.getDeletedTime());
-                        ele.setDeleteFlag(custObj.getDeleteFlag());
-                    }
-                    getBaseDaoImpl().saveOrUpdateAll(list);
+        if (null != ids && ids.size() > 0) {
+            List<?> list = getBaseDaoImpl().findByIds(object.getClass(), ids);
+            if (null != list) {
+                Customer custObj = (Customer) object;
+                for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+                    Customer ele = (Customer) iterator.next();
+                    ele.setDeletedBy(custObj.getDeletedBy());
+                    ele.setDeletedTime(custObj.getDeletedTime());
+                    ele.setDeleteFlag(custObj.getDeleteFlag());
                 }
-            } else {
-                log.warn("delete ids collection is null");
+                getBaseDaoImpl().saveOrUpdateAll(list);
             }
-        } else {
-            log.error("object not instanceof Customer,object type :" + object.getClass().getSimpleName());
         }
     }
 

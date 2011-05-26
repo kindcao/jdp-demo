@@ -1,6 +1,9 @@
 package crm.syssetup.service;
 
+import java.util.List;
+
 import crm.base.service.BaseService;
+import crm.model.SysCompanyUserRel;
 
 /**
  * 
@@ -10,4 +13,5 @@ import crm.base.service.BaseService;
  */
 public interface SysCompUserService extends BaseService {
 
+    List<?> findSysCompanyUserRel(SysCompanyUserRel object) throws Exception;
 }

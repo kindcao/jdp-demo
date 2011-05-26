@@ -8,14 +8,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
 import crm.base.service.BaseService;
 import crm.common.Constants;
 import crm.json.JsonSysStatusResult;
 import crm.model.CustomerIndustry;
+import crm.model.IndustryNewsType;
 import crm.model.MarketEventType;
 import crm.model.SysCompany;
 import crm.model.SysCompanyUser;
@@ -28,7 +27,7 @@ public class CommAction extends BaseAction {
 
     private static final long serialVersionUID = 7374356470643624209L;
 
-    private final Logger log = LoggerFactory.getLogger(CommAction.class);
+    // private final Logger log = LoggerFactory.getLogger(CommAction.class);
 
     private BaseService baseServiceImpl;
 
@@ -54,6 +53,22 @@ public class CommAction extends BaseAction {
             jssr.setOnlineUserNum(Constants.SYS_USER_MAP.size());
         }
         responseJsonData(jssr);
+        return NONE;
+    }
+
+    public String getIndustryNewsType() throws Exception {
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(IndustryNewsType.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getIndustryNewsType map from servlet context is null.");
+        }
+
+        List<IndustryNewsType> list = new ArrayList<IndustryNewsType>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            IndustryNewsType value = (IndustryNewsType) map.get(key);
+            list.add(value);
+        }
+        responseJsonData(list);
         return NONE;
     }
 

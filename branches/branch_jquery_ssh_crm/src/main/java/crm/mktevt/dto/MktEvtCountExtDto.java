@@ -1,4 +1,4 @@
-package crm.dto;
+package crm.mktevt.dto;
 
 import org.apache.commons.lang.StringUtils;
 

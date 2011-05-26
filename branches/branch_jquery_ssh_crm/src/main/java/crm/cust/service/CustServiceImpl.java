@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import crm.base.service.BaseServiceImpl;
-import crm.dto.CustDto;
+import crm.cust.dto.CustDto;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;

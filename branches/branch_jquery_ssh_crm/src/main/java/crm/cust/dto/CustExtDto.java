@@ -1,4 +1,4 @@
-package crm.dto;
+package crm.cust.dto;
 
 import crm.model.Customer;
 

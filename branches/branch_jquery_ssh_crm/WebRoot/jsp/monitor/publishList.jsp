@@ -85,8 +85,10 @@
 			field : 'url',
 			title : '网址',
 			width : 200,
-			formatter : function(value, rec) {				
-				return "<a href='#' onclick=window.open('" + value+ "');>" + cutstr(value,20) + "</a>";				
+			formatter : function(value, rec) {
+				if(value){	
+					return "<a href='#' onclick=window.open('" + value+ "');>" + cutstr(value,30) + "</a>";
+				}			
 			}
 		},{
 			field : 'subject',

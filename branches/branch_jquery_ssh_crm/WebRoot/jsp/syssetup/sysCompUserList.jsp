@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
-<div id="div_info" style="margin-top: 10px; display: inline;">
+<div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
 		<table cellpadding="0" cellspacing="0" width="800" border="0">
 			<tr height="30px">
@@ -11,14 +11,27 @@
 					用户姓名：
 				</td>
 				<td width="20%">
-					<input type="text" name="sysComp.companyName"
+					<input type="text" name="sysCompUser.name"
 						class="easyui-validatebox" required="true"
-						validType="length[1,50]">
+						validType="length[1,40]">
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					所属公司：
 				</td>
+				<td>
+					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
+						name="sysCompUser.sysCompanyId" url="getSysComp.action"
+						valueField="id" textField="companyName" editable="false"
+						panelHeight="100" required="true" style="width: 134px;">
+				</td>
+				<td nowrap="nowrap" align="center" width="10%">
+					用户领导：
+				</td>
 				<td width="20%">
+					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
+						url='' class="easyui-combobox" valueField="id" textField="name"
+						multiple="false" editable="false" panelHeight="100"
+						style="width: 134px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -26,39 +39,23 @@
 					登录账号：
 				</td>
 				<td>
-					<input type="text" name="sysComp.companyName"
-						class="easyui-validatebox" required="true"
-						validType="length[1,50]">
+					<input type="text" name="sysCompUser.loginId"
+						class="easyui-validatebox" required="true" validType="loginName"
+						maxlength="20">
 				</td>
 				<td nowrap="nowrap" align="center">
 					登录密码：
 				</td>
 				<td width="20%">
-					<input type="text" name="sysComp.companyName"
-						class="easyui-validatebox" required="true"
-						validType="length[1,50]">
-				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					用户领导：
-				</td>
-				<td width="20%">
-
-				</td>
-			</tr>
-			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					用户邮箱：
-				</td>
-				<td>
-					<input type="text" name="sysComp.companyName"
-						class="easyui-validatebox" required="true"
-						validType="length[1,50]">
+					<input type="text" name="sysCompUser.passwd"
+						class="easyui-validatebox" required="true" validType="safepass"
+						maxlength="50">
 				</td>
 				<td nowrap="nowrap" align="center">
 					用户状态：
 				</td>
 				<td>
-					<select id="sysComp_status" name="sysComp.status"
+					<select id="sysCompUser_status" name="sysCompUser.status"
 						class="easyui-combobox" panelHeight="auto" required="true"
 						editable="false">
 						<option value="A">
@@ -68,6 +65,23 @@
 							禁用
 						</option>
 					</select>
+				</td>
+			</tr>
+			<tr height="30px">
+				<td nowrap="nowrap" align="center">
+					用户邮箱：
+				</td>
+				<td>
+					<input type="text" name="sysCompUser.email"
+						class="easyui-validatebox" validType="email" maxlength="50">
+				</td>
+				<td colspan="4">
+					&nbsp;
+				</td>
+			</tr>
+			<tr height="30px" valign="top">
+				<td colspan="4" align="center">
+					&nbsp;
 				</td>
 				<td colspan="2" align="center" valign="bottom">
 					<a href="#" class="easyui-linkbutton" plain="true"
@@ -94,20 +108,22 @@
 						用户名称：
 					</td>
 					<td width="20%">
-						<input type="text" id="name" name="name" />
+						<input type="text" id="sysCompUser_name" name="sysCompUser.name"
+							maxlength="40" />
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
 						登录账号：
 					</td>
 					<td width="20%">
-						<input type="text" id="loginId" name="loginId" />
+						<input type="text" id="sysCompUser_loginId"
+							name="sysCompUser.loginId" maxlength="20" />
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
 						用户状态：
 					</td>
 					<td width="20%">
-						<select id="status" name="status" class="easyui-combobox"
-							panelHeight="auto" editable="false">
+						<select id="sysCompUser_status_search" name="sysCompUser.status"
+							class="easyui-combobox" panelHeight="auto" editable="false">
 							<option value="">
 								---请选择---
 							</option>
@@ -121,10 +137,28 @@
 					</td>
 				</tr>
 				<tr height="30px">
-					<td colspan="5">
+					<td nowrap="nowrap" align="center">
+						所属公司：
+					</td>
+					<td>
+						<input id="sysCompUser_sysCompanyId_search"
+							class="easyui-combobox" name="sysCompUser.sysCompanyId"
+							url="getSysComp.action" valueField="id" textField="companyName"
+							editable="false" panelHeight="100" style="width: 134px;">
+					</td>
+					<td nowrap="nowrap" align="center">
+						用户领导：
+					</td>
+					<td width="20%">
+						<input id="sysCompUser_superiorId_search"
+							name="sysCompUser.superiorId" url='' class="easyui-combobox"
+							valueField="id" textField="name" multiple="false"
+							editable="false" panelHeight="100" style="width: 134px;">
+					</td>
+					<td>
 						&nbsp;
 					</td>
-					<td align="right">
+					<td align="center" valign="bottom">
 						<a href="javascript:void(0);" class="easyui-linkbutton"
 							plain="true" iconCls="icon-search" id="_search">查询</a>
 						<a href="javascript:void(0);" class="easyui-linkbutton"
@@ -134,15 +168,26 @@
 			</table>
 		</fieldset>
 	</form>
+	<div style="height: 30px;">
+		&nbsp;
+	</div>
+	<div align="left">
+		<table id="grid-datalist"></table>
+	</div>
 </div>
-<div style="height: 30px;">
-	&nbsp;
-</div>
-<div align="left">
-	<table id="grid-datalist"></table>
-</div>
+
 <script type="text/javascript" defer="defer">
 	//for add begin
+	$('#sysCompUser_sysCompanyId').combobox({
+		url:'getSysComp.action',	
+		onChange:function(rec){
+		 	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#sysCompUser_superiorId').combobox({
+		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
+		 	}).combobox('clear');
+		}
+	});	
+	
 	$("#_add").click(function() {
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
@@ -161,7 +206,7 @@
 		var isValid = $('#infoForm').form('validate');	
 		if (isValid) {
 			var options = {
-				url : 'saveSysCompInfo.action',
+				url : 'saveSysCompUserInfo.action',
 				dataType : 'json',
 				type: 'post',
 				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
@@ -170,7 +215,7 @@
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {						
 						$("#_back").click();
-						reloadDatagrid('grid-datalist');
+						$("#_search").click();
 					}
 				}
 			};
@@ -178,28 +223,48 @@
 		}
 	});
 	
-	$("#_reset").click(function() {
+	$("#_reset").click(function() {		
+		$('#sysCompUser_sysCompanyId').combobox('clear');
+		$('#sysCompUser_superiorId').combobox('clear');
 		$('#sysComp_status').combobox('clear');		
 		resetForm('infoForm');
 	});	
-	
-	
+		
 	$("#_delete").click(function() {
 		 deleteRecord('grid-datalist', 'deleteSysCompUser.action');
 	});	
 	
 	$("#_search").click(function() {			
-		var queryParams = $('#grid-datalist').datagrid('options').queryParams;
-		queryParams.name = $("#name").val();   
-	    queryParams.loginId = $("#loginId").val();
-	    queryParams.status = $('#status').combobox('getValue');
+		var queryParams = $('#grid-datalist').datagrid('options').queryParams={
+			'sysCompUser.name':$("#sysCompUser_name").val(),
+			'sysCompUser.loginId':$("#sysCompUser_loginId").val(),
+			'sysCompUser.sysCompanyId':$("#sysCompUser_sysCompanyId_search").combobox('getValue'),
+			'sysCompUser.superiorId':$("#sysCompUser_superiorId_search").combobox('getValue'),
+			'sysCompUser.status':$("#sysCompUser_status_search").combobox('getValue')
+		};
 	    reloadDatagrid('grid-datalist');
 	});
 	
 	$("#_reset_search").click(function() {
-		$('#status').combobox('clear');		
+		$('#sysCompUser_sysCompanyId_search').combobox('clear');
+		$('#sysCompUser_superiorId_search').combobox('clear');
+		$('#sysCompUser_status_search').combobox('clear');
 		resetForm('searchFrom');
-	});
+	});	
+
+	$('#sysCompUser_sysCompanyId_search').combobox({
+		url:'getSysComp.action',	
+		onChange:function(rec){
+		 	var _sysUserIds=$(this).combobox("getValues");		 	
+		 	$('#sysCompUser_superiorId_search').combobox({
+		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
+		 	}).combobox('clear');
+		}
+	});	
+	
+	function editUser(id){	
+		window.location.href='showSysCompUserInfo.action?sysCompUser.id='+id;			
+	}
 	
 	//
 	$(document).ready(function() {
@@ -212,7 +277,7 @@
 					width : 120,
 					sortable : true,
 					formatter : function(value, rec) {
-						return "<a href='javascript:void(0);' onclick='editUser(" + rec.id+ ");'>" + value + "</a>";
+						return "<a href='#' onclick='editUser(" + rec.id+ ");'>" + value + "</a>";
 					}
 				}]];
 		var columns = [[{
@@ -222,15 +287,11 @@
 		}, {
 			field : 'passwd',
 			title : '登录密码',
-			width : 120
-		}, {
-			field : 'email',
-			title : '用户邮箱',
 			width : 150
 		}, {
 			field : 'status',
 			title : '用户状态',
-			width : 100,
+			width : 80,
 			formatter : function(value, rec) {
 				if(value=='A'){
 					value='正常';
@@ -242,7 +303,7 @@
 		},{
 			field : 'deleteFlag',
 			title : '删除标记',
-			width : 100,
+			width : 80,
 			formatter : function(value, rec) {
 				if(value=='Y'){
 					value='已删除';
@@ -251,6 +312,14 @@
 				}
 				return value;
 			}
+		},{
+			field : 'companyName',
+			title : '所属公司',
+			width : 120
+		},{
+			field : 'superiorName',
+			title : '用户领导',
+			width : 120
 		}]];
 					
 		//

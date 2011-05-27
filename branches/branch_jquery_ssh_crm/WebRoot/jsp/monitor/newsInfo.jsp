@@ -139,7 +139,7 @@
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
 		<input type="hidden" name="newsExtDto.id"
-			value='<s:property value="#session.MONITOR_NEWS_VIEW_SESSION_KEY.id" />' />
+			value='<s:property value="#_news.id" />' />
 		<s:hidden name="actionFlag" value="U" />
 		<table cellpadding="0" cellspacing="0" width="900" border="0">
 			<tr height="30px">

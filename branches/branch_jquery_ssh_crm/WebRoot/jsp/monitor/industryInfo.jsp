@@ -78,8 +78,8 @@
 </div>
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
-		<input type="hidden" name="mktEvt.customerIds"
-			value='<s:property value="#session.CUSTOMER_SESSION_KEY.id" />' />
+		<input type="hidden" name="industryExtDto.id"
+			value='<s:property value="#_induView.id" />' />
 		<s:hidden name="actionFlag" value="U" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">

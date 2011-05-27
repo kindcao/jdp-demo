@@ -133,4 +133,7 @@
 		<put-attribute name="bodyhead" value="系统用户" />
 		<put-attribute name="body" value="/jsp/syssetup/sysCompUserList.jsp" />
 	</definition>
+	<definition name="syscompuser.info" extends="syscompuser.list">
+		<put-attribute name="body" value="/jsp/syssetup/sysCompUserInfo.jsp" />
+	</definition>
 </tiles-definitions>

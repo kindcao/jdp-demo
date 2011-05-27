@@ -139,6 +139,9 @@
 		<action name="showSysCompUserList" class="sysCompUserAction" method="showSysCompUserList">
 			<result name="syscompuser.list" type="tiles">syscompuser.list</result>
 		</action>
+		<action name="showSysCompUserInfo" class="sysCompUserAction" method="showSysCompUserInfo">
+			<result name="syscompuser.info" type="tiles">syscompuser.info</result>
+		</action>
 		<action name="getSysCompUserList" class="sysCompUserAction" method="getSysCompUserList" />
 		<action name="saveSysCompUserInfo" class="sysCompUserAction" method="saveSysCompUserInfo" />
 		<action name="deleteSysCompUser" class="sysCompUserAction" method="deleteSysCompUser" />

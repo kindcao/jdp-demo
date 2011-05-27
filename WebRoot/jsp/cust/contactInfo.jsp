@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:hidden id="contId" name="cont.id" />
+
 <s:set name="_cont" value="#session.CUSTOMER_CONTACT_SESSION_KEY" />
 <div id="div_info_read-only_contact"
 	style="margin-top: 10px; display: inline;">
@@ -119,6 +119,8 @@
 </div>
 <div id="div_info_contact" style="margin-top: 10px; display: none;">
 	<form id="infoFormContantEdit" name="infoFormContantEdit">
+		<input type="hidden" name="cont.id"
+			value='<s:property value="#_cont.id" />' />
 		<s:hidden name="actionFlag" value="U" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
@@ -286,7 +288,7 @@
 					if (!data.success) {
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {
-						editCont($('#contId').val());						
+						editCont('<s:property value="#_cont.id" />');						
 					}
 				}
 			};

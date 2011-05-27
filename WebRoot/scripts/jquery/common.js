@@ -108,6 +108,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 	},
 	safepass : {
 		validator : function(value, param) {
+			//return /^\s*[.A-Za-z0-9_-]{6,50}\s*$/.test(value);
 			return safePassword(value);
 		},
 		message : '密码由字母和数字组成，至少6位'

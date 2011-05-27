@@ -10,9 +10,6 @@
 			<column name="id" />
 			<generator class="native" />
 		</id>
-		<property name="id" type="java.lang.Integer">
-			<column name="id" />
-		</property>
 		<property name="sysCompanyId" type="java.lang.Integer">
 			<column name="sys_company_id" />
 		</property>

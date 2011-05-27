@@ -71,6 +71,7 @@ public class SysCompAction extends BaseAction {
         responseJsonData(jvr);
         //
         MstDataLoader.loadSysCompany(getCtx());
+        sysComp = new SysCompany();
         return Action.NONE;
     }
 

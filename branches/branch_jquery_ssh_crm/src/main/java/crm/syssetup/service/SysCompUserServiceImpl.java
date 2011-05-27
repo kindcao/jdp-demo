@@ -113,7 +113,7 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
 
     private void getUserSuperiorIds(Set<Integer> set, Integer id) throws Exception {
         SysCompanyUser _obj = (SysCompanyUser) getObject(SysCompanyUser.class, id);
-        if (null != _obj) {
+        if (null != _obj && null != _obj.getSuperiorId() && _obj.getSuperiorId() > 0) {
             set.add(_obj.getSuperiorId());
             getUserSuperiorIds(set, _obj.getSuperiorId());
         }

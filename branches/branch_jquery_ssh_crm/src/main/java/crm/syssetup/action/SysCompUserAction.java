@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
+import crm.common.MstDataLoader;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.model.SysCompany;
@@ -37,8 +38,6 @@ public class SysCompUserAction extends BaseAction {
 
     private SysCompanyUser sysCompUser;
 
-    private SysCompanyUserView sysCompUserView;
-
     public String showLogin() throws Exception {
         return LOGIN;
     }
@@ -48,7 +47,13 @@ public class SysCompUserAction extends BaseAction {
     }
 
     public String showSysCompUserInfo() throws Exception {
-        return "syscompuser.Info";
+        if (null != sysCompUser && sysCompUser.getId() > 0) {
+            session.put(Constants.SYS_COMP_USER_VIEW_SESSION_KEY, sysCompUserService.getObject(
+                    SysCompanyUserView.class, sysCompUser.getId()));
+        } else {
+            log.warn("sysCompUser is null or sysCompUser.getId() is 0");
+        }
+        return "syscompuser.info";
     }
 
     @SuppressWarnings("unchecked")
@@ -85,6 +90,8 @@ public class SysCompUserAction extends BaseAction {
             jvr.setErrors("Error username or password");
         }
         responseJsonData(jvr);
+        //
+        sysCompUser = new SysCompanyUser();
         return NONE;
     }
 
@@ -105,7 +112,8 @@ public class SysCompUserAction extends BaseAction {
             //
             SysCompanyUser _sysCompUser = new SysCompanyUser();
             _sysCompUser.setLoginId(sysCompUser.getLoginId());
-            if (null == sysCompUserService.findByExample(_sysCompUser)) {
+            List<?> _list = sysCompUserService.findByExample(_sysCompUser);
+            if (null == _list || _list.size() == 0) {
                 sysCompUserService.saveOrUpdate(sysCompUser);
                 jvr.setSuccess(true);
             } else {
@@ -117,7 +125,8 @@ public class SysCompUserAction extends BaseAction {
             jvr.setSuccess(true);
         }
         responseJsonData(jvr);
-        //      
+        // 
+        MstDataLoader.loadSysCompanyUser(getCtx());
         sysCompUser = new SysCompanyUser();
         return NONE;
     }
@@ -138,21 +147,21 @@ public class SysCompUserAction extends BaseAction {
     @SuppressWarnings("unchecked")
     public String getSysCompUserList() throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        if (null != sysCompUserView) {
-            if (StringUtils.isNotBlank(sysCompUserView.getName())) {
-                map.put("name", sysCompUserView.getName());
+        if (null != sysCompUser) {
+            if (StringUtils.isNotBlank(sysCompUser.getName())) {
+                map.put("name", sysCompUser.getName());
             }
-            if (StringUtils.isNotBlank(sysCompUserView.getLoginId())) {
-                map.put("loginId", sysCompUserView.getLoginId());
+            if (StringUtils.isNotBlank(sysCompUser.getLoginId())) {
+                map.put("loginId", sysCompUser.getLoginId());
             }
-            if (StringUtils.isNotBlank(sysCompUserView.getStatus())) {
-                map.put("status", sysCompUserView.getStatus());
+            if (StringUtils.isNotBlank(sysCompUser.getStatus())) {
+                map.put("status", sysCompUser.getStatus());
             }
-            if (null != sysCompUserView.getSysCompanyId() && sysCompUserView.getSysCompanyId() > 0) {
-                map.put("sysCompanyId", sysCompUserView.getSysCompanyId());
+            if (null != sysCompUser.getSysCompanyId() && sysCompUser.getSysCompanyId() > 0) {
+                map.put("sysCompanyId", sysCompUser.getSysCompanyId());
             }
-            if (null != sysCompUserView.getSuperiorId() && sysCompUserView.getSuperiorId() > 0) {
-                map.put("superiorId", sysCompUserView.getSuperiorId());
+            if (null != sysCompUser.getSuperiorId() && sysCompUser.getSuperiorId() > 0) {
+                map.put("superiorId", sysCompUser.getSuperiorId());
             }
         }
         int totalCount = sysCompUserService.getTotalCount(map);
@@ -162,7 +171,7 @@ public class SysCompUserAction extends BaseAction {
         jlr.setRows(userList);
         responseJsonData(jlr);
         //
-        sysCompUserView = new SysCompanyUserView();
+        sysCompUser = new SysCompanyUser();
         return NONE;
     }
 
@@ -177,13 +186,5 @@ public class SysCompUserAction extends BaseAction {
 
     public void setSysCompUser(SysCompanyUser sysCompUser) {
         this.sysCompUser = sysCompUser;
-    }
-
-    public SysCompanyUserView getSysCompUserView() {
-        return sysCompUserView;
-    }
-
-    public void setSysCompUserView(SysCompanyUserView sysCompUserView) {
-        this.sysCompUserView = sysCompUserView;
     }
 }

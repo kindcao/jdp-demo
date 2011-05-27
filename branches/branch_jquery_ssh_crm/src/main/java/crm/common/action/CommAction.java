@@ -136,9 +136,7 @@ public class CommAction extends BaseAction {
                     list.add(value);
                 }
             } else {
-                if (Constants.STATUS_O.equals(value.getType())) {
-                    list.add(value);
-                }
+                list.add(value);
             }
         }
         responseJsonData(list);

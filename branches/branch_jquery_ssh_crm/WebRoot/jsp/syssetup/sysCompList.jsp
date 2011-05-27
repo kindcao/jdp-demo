@@ -68,14 +68,6 @@
 					<textarea name="sysComp.descript" rows="5" style="width: 402px;"
 						class="easyui-validatebox" validType="length[0,100]"></textarea>
 				</td>
-				<td colspan="2" align="center">
-					&nbsp;
-				</td>
-			</tr>
-			<tr height="30px" valign="top">
-				<td colspan="4" align="center">
-					&nbsp;
-				</td>
 				<td colspan="2" align="center" valign="bottom">
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-save" id="_save">保存</a>
@@ -164,7 +156,7 @@
 					width : 200,
 					sortable : true,			
 					formatter : function(value, rec) {
-						return "<a href='javascript:void(0);' onclick='editComp(" + rec.id+ ");'>" + value + "</a>";
+						return "<a href='#' onclick='editComp(" + rec.id+ ");'>" + value + "</a>";
 					}
 				}]];
 		var columns = [[{

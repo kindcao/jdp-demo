@@ -3,7 +3,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <s:hidden id="induId" name="induId" />
-<s:hidden id="custId" name="cust.id" />
 <s:set name="_cust" value="#session.CUSTOMER_SESSION_KEY" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
@@ -134,6 +133,8 @@
 </div>
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
+		<input type="hidden" name="cust.id"
+			value='<s:property value="#_cust.id" />' />
 		<s:hidden name="actionFlag" value="U" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
@@ -337,7 +338,7 @@
 						$.messager.alert('提示信息', data.errors, 'error');
 					} else {
 						var _href='showCustInfo.action?induId='+$('#induId').val()
-						+'&cust.id='+$('#custId').val();						
+						+'&cust.id=<s:property value="#_cust.id" />';						
 						window.location.href=_href;
 					}
 				}

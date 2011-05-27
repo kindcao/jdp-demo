@@ -2,7 +2,77 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<script type="text/javascript">	
+<style>
+<!--
+#tab-footer td {
+	padding-left: 10px;
+	padding-right: 10px;
+	white-space: nowrap;
+}
+
+.split-line {
+	border-right: 1px solid white;
+	width: 1px;
+}
+-->
+</style>
+
+<div style="height: 30px; overflow: hidden;">
+	<table cellpadding="0" cellspacing="0" height="30px" width="100%"
+		style="background-color: #A4BED4;" align="left">
+		<tr valign="middle">
+			<td style="width: 199px; border: 1px solid white;" nowrap="nowrap">
+				<span id="labtime" style="margin: 0 10px 0 10px;"></span>
+			</td>
+			<td style="border: 1px solid white;" nowrap="nowrap">
+				<table id="tab-footer" cellpadding="0" cellspacing="0" border="0">
+					<tr valign="middle" align="left">
+						<td nowrap="nowrap" width="100px">
+							<label>
+								在线用户数：
+							</label>
+							<span id="labOnlineUserNum"></span>
+						</td>
+						<td width="1px" class="split-line">
+							&nbsp;
+						</td>
+						<td nowrap="nowrap" width="120px">
+							<label>
+								当前用户：
+							</label>
+							<s:property value="#session._sysUser.loginId" />
+						</td>
+						<td class="split-line">
+							&nbsp;
+						</td>
+						<td nowrap="nowrap" width="150px">
+							<label>
+								所属公司：
+							</label>
+							<s:property value="#session._sysUserComp.companyName" />
+						</td>
+						<td class="split-line">
+							&nbsp;
+						</td>
+						<td>
+							&nbsp;
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="width: 70px; border: 1px solid white;" nowrap="nowrap"
+				align="right">
+				<div style="margin-right: 5px;">
+					<a id="logoutAction" href="#" class="easyui-linkbutton"
+						plain="true" iconCls="icon-back"
+						onclick='document.location = "logout.action"'>注销</a>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<script type="text/javascript" defer="defer">	
 	function clockon() {
 		var now = new Date();
 		var year = now.getFullYear();
@@ -73,45 +143,3 @@
 		setInterval("innerTask();", 60*1000);
 	});
 </script>
-
-<div style="height: 30px; overflow: hidden;">
-	<table cellpadding="0" cellspacing="0" height="30px" width="100%"
-		style="background-color: #A4BED4;" align="left">
-		<tr valign="middle">
-			<td style="width: 199px; border: 1px solid white;" nowrap="nowrap">
-				<span id="labtime" style="margin: 0 10px 0 10px;"></span>
-			</td>
-			<td style="border: 1px solid white;" nowrap="nowrap">
-				<table cellpadding="0" cellspacing="0" border="0">
-					<tr valign="middle" align="center">
-						<td nowrap="nowrap" width="120px">
-							当前用户:
-							<s:property value="#session._sysUser.loginId" />
-						</td>
-						<td width="1px" style="border-right: 1px solid white">
-							&nbsp;
-						</td>
-						<td nowrap="nowrap" width="120px">
-							在线用户数:
-							<span id="labOnlineUserNum"></span>
-						</td>
-						<td width="1px" style="border-right: 1px solid white">
-							&nbsp;
-						</td>
-						<td>
-							&nbsp;
-						</td>
-					</tr>
-				</table>
-			</td>
-			<td style="width: 70px; border: 1px solid white;" nowrap="nowrap"
-				align="right">
-				<div style="margin-right: 5px;">
-					<a id="logoutAction" href="#" class="easyui-linkbutton"
-						plain="true" iconCls="icon-back"
-						onclick='document.location = "logout.action"'>注销</a>
-				</div>
-			</td>
-		</tr>
-	</table>
-</div>

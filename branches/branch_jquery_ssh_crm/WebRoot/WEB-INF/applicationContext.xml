@@ -73,7 +73,7 @@
 		<!-- 下面列出所有需要生成权限检查代理的控制器 -->
 		<property name="beanNames">
 			<list>
-				<value>*Service</value>
+				<value>*Service*</value>
 			</list>
 		</property>
 		<!-- 下面列出所有需要生成权限检查代理的控制器 -->

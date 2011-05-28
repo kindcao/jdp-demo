@@ -186,7 +186,7 @@
 		 		url:'getSysCompUserByCompIds?sysCompIds='+_sysUserIds
 		 	}).combobox('clear');
 		}
-	});	
+	});
 	
 	$("#_add").click(function() {
 		document.getElementById('div_info').style.display='inline';
@@ -324,6 +324,20 @@
 					
 		//
 		showDatagrid('grid-datalist','getSysCompUserList.action',frozenColumns,columns);
+		
+		$('#grid-datalist').datagrid('options').onClickRow=function(rowIndex, rowData){
+			if('Y'==rowData.deleteFlag){			
+				$('#grid-datalist').datagrid('unselectRow',rowIndex);
+			}			
+		};
+		
+		$('#grid-datalist').datagrid('options').onSelectAll=function(rows){
+			$.each(rows, function(i, ele) {				
+				if('Y'==ele.deleteFlag){
+					$('#grid-datalist').datagrid('unselectRow',i);				
+				}		    
+			});
+		};
 	});	
 	//	
 </script>

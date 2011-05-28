@@ -108,7 +108,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 	},
 	safepass : {
 		validator : function(value, param) {
-			//return /^\s*[.A-Za-z0-9_-]{6,50}\s*$/.test(value);
+			// return /^\s*[.A-Za-z0-9_-]{6,50}\s*$/.test(value);
 			return safePassword(value);
 		},
 		message : '密码由字母和数字组成，至少6位'
@@ -167,7 +167,11 @@ function showDatagrid(datagridIdStr, url, frozenColumns, columns) {
 				pageSize : 3,
 				pageList : [3, 10],
 				frozenColumns : frozenColumns,
-				columns : columns
+				columns : columns,
+				onClickRow : function(rowIndex, rowData) {
+				},
+				onSelectAll : function(rows) {
+				}
 			});
 }
 

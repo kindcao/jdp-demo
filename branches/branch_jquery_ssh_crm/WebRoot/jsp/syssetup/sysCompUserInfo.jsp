@@ -62,7 +62,18 @@
 							value="#_sysCompUser.email" /> </a>
 				</s:if>
 			</td>
-			<td colspan="4">
+			<td nowrap="nowrap" align="center">
+				删除标记：
+			</td>
+			<td>
+				<s:if test='%{"N"==#_sysCompUser.deleteFlag}'>
+				未删除
+				</s:if>
+				<s:else>
+				已删除
+				</s:else>
+			</td>
+			<td colspan="2">
 				&nbsp;
 			</td>
 		</tr>
@@ -112,7 +123,7 @@
 				<td width="20%">
 					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
 						url='' class="easyui-combobox" valueField="id" textField="name"
-						multiple="false" editable="false" panelHeight="100"
+						multiple="false" editable="true" panelHeight="100"
 						style="width: 134px;"
 						value='<s:property value="#_sysCompUser.superiorId" />'>
 				</td>
@@ -160,7 +171,22 @@
 						class="easyui-validatebox" validType="email" maxlength="50"
 						value='<s:property value="#_sysCompUser.email" />'>
 				</td>
-				<td colspan="4">
+				<td nowrap="nowrap" align="center">
+					删除标记：
+				</td>
+				<td>
+					<select id="sysCompUser_deleteFlag" name="sysCompUser.deleteFlag"
+						class="easyui-combobox" panelHeight="auto" required="true"
+						editable="false">
+						<option value="N">
+							未删除
+						</option>
+						<option value="Y">
+							已删除
+						</option>
+					</select>
+				</td>
+				<td colspan="2">
 					&nbsp;
 				</td>
 			</tr>
@@ -192,6 +218,14 @@
 		}
 	});
 	
+	$('#sysCompUser_superiorId').combobox({
+		onSelect:function(rec){
+			if(rec.name=='<s:property value="#_sysCompUser.name" />'){
+				$(this).combobox("unselect",rec.id);
+			}
+		}
+	});
+	
 	$("#_back").click(function() {
 		window.location.href='showSysCompUserList.action';			
 	});	
@@ -208,12 +242,15 @@
 		$('#sysCompUser_sysCompanyId').combobox('select','<s:property value="#_sysCompUser.sysCompanyId" />');
 		$('#sysCompUser_superiorId').combobox('setValue','<s:property value="#_sysCompUser.superiorId" />');
 		$('#sysCompUser_status').combobox('setValue','<s:property value="#_sysCompUser.status" />');
+		$('#sysCompUser_deleteFlag').combobox('setValue','<s:property value="#_sysCompUser.deleteFlag" />');
+		
 	});
 		
 	$("#_reset").click(function() {
 		$("#sysCompUser_sysCompanyId").datebox('clear');
 		$('#sysCompUser_superiorId').combobox('clear');
 		$('#sysCompUser_status').combobox('clear');
+		$('#sysCompUser_deleteFlag').combobox('clear');
 		resetForm('infoForm');
 	});
 	

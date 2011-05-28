@@ -78,16 +78,19 @@ public class SysCompUserAction extends BaseAction {
         List<?> list = sysCompUserService.findByExample(_sysCompUser);
         if (list != null && list.size() > 0) {
             SysCompanyUser _currUser = (SysCompanyUser) list.get(0);
-            log.info("user " + _currUser.getLoginId() + " login.");
-            session.put(Constants.CURR_SYS_USER_SESSION_KEY, _currUser);
-            Constants.SYS_USER_MAP.put(_currUser.getLoginId(), request.getSession());
-            //
             Map<?, ?> _compMap = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
-            session.put(Constants.CURR_SYS_USER_COMP_SESSION_KEY, _compMap.get(_currUser.getSysCompanyId().toString()));
-            jvr.setSuccess(true);
+            SysCompany _currSysComp = (SysCompany) _compMap.get(_currUser.getSysCompanyId().toString());
+            if (Constants.STATUS_A.equals(_currSysComp.getStatus())) {
+                log.info("user " + _currUser.getLoginId() + " login.");
+                session.put(Constants.CURR_SYS_USER_SESSION_KEY, _currUser);
+                session.put(Constants.CURR_SYS_USER_COMP_SESSION_KEY, _currSysComp);
+                Constants.SYS_USER_MAP.put(_currUser.getLoginId(), request.getSession());
+                jvr.setSuccess(true);
+            } else {
+                jvr.setErrors("Sys company access prohibited!");
+            }
         } else {
-            jvr.setSuccess(false);
-            jvr.setErrors("Error username or password");
+            jvr.setErrors("Login name and password invalid!");
         }
         responseJsonData(jvr);
         //
@@ -118,7 +121,7 @@ public class SysCompUserAction extends BaseAction {
                 jvr.setSuccess(true);
             } else {
                 jvr.setSuccess(false);
-                jvr.setErrors("User name has exist!");
+                jvr.setErrors("Login id already exists!");
             }
         } else {
             sysCompUserService.saveOrUpdate(sysCompUser);

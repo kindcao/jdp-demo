@@ -31,6 +31,7 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
         SysCompanyUser sysCompUser = (SysCompanyUser) object;
         if (null != sysCompUser.getId() && sysCompUser.getId() > 0) {
             // for update
+            setChildSuperiorIdToNull(sysCompUser.getId());
             deleteSysCompanyUserRel(sysCompUser.getId());
         }
         // for add or update
@@ -57,7 +58,9 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
                 SysCompanyUser ele = (SysCompanyUser) iterator.next();
                 ele.setDeleteFlag(Constants.STATUS_Y);
                 ele.setStatus(Constants.STATUS_D);
+                ele.setSuperiorId(null);
                 //
+                setChildSuperiorIdToNull(ele.getId());
                 deleteSysCompanyUserRel(ele.getId());
             }
             super.saveOrUpdateAll(list);
@@ -116,7 +119,8 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
 
     private void getUserSuperiorIds(Set<Integer> set, Integer id) throws Exception {
         SysCompanyUser _obj = (SysCompanyUser) getObject(SysCompanyUser.class, id);
-        if (null != _obj && null != _obj.getSuperiorId() && _obj.getSuperiorId() > 0) {
+        if (null != _obj && null != _obj.getSuperiorId() && _obj.getSuperiorId() > 0
+                && _obj.getId() != _obj.getSuperiorId()) {
             set.add(_obj.getSuperiorId());
             getUserSuperiorIds(set, _obj.getSuperiorId());
         }
@@ -143,10 +147,16 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
     @SuppressWarnings("unchecked")
     private void deleteSysCompanyUserRel(Integer id) throws Exception {
         List rels = new ArrayList();
-        rels.addAll(findSysCompanyUserRel(new SysCompanyUserRel(new SysCompanyUserRelId(id, null))));
+        List childList = findSysCompanyUserRel(new SysCompanyUserRel(new SysCompanyUserRelId(id, null)));
+        if (null != childList && childList.size() > 0) {
+            rels.addAll(childList);
+            for (Iterator<?> iterator = childList.iterator(); iterator.hasNext();) {
+                SysCompanyUserRel ele = (SysCompanyUserRel) iterator.next();
+                deleteSysCompanyUserRel(ele.getId().getChildUserId());
+            }
+        }
         rels.addAll(findSysCompanyUserRel(new SysCompanyUserRel(new SysCompanyUserRelId(null, id))));
         if (rels.size() > 0) {
-            setChildSuperiorIdToNull(id);
             super.deleteAll(rels);
         }
     }

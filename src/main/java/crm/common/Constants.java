@@ -33,6 +33,8 @@ public class Constants {
 
     public static final String SYS_COMP_USER_VIEW_SESSION_KEY = "SYS_COMP_USER_VIEW_SESSION_KEY";
 
+    public static final String SYS_COMP_SESSION_KEY = "SYS_COMP_SESSION_KEY";
+
     public static final String RESULT_TRANSFORMER_DTO = "RESULT_TRANSFORMER_DTO";
 
     public static final String STATUS_Y = "Y";

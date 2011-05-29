@@ -10,9 +10,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opensymphony.xwork2.Action;
-
 import crm.base.action.BaseAction;
+import crm.common.Constants;
 import crm.common.MstDataLoader;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
@@ -35,22 +34,29 @@ public class SysCompAction extends BaseAction {
 
     private SysCompany sysComp;
 
-    private String companyName;
-
-    private String status;
-
     public String showSysCompList() throws Exception {
         return "syscomp.list";
+    }
+
+    public String showSysCompInfo() throws Exception {
+        if (null != sysComp && sysComp.getId() > 0) {
+            session.put(Constants.SYS_COMP_SESSION_KEY, sysCompService.getObject(SysCompany.class, sysComp.getId()));
+        } else {
+            log.warn("SysCompany is null or sysComp.getId() is 0");
+        }
+        return "syscomp.info";
     }
 
     public String getSysCompList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
-        if (StringUtils.isNotBlank(companyName)) {
-            map.put("companyName", companyName);
-        }
-        if (StringUtils.isNotBlank(status)) {
-            map.put("status", status);
+        if (null != sysComp) {
+            if (StringUtils.isNotBlank(sysComp.getCompanyName())) {
+                map.put("companyName", sysComp.getCompanyName());
+            }
+            if (StringUtils.isNotBlank(sysComp.getStatus())) {
+                map.put("status", sysComp.getStatus());
+            }
         }
 
         int totalCount = sysCompService.getTotalCount(map);
@@ -58,7 +64,9 @@ public class SysCompAction extends BaseAction {
         jlr.setTotal(totalCount);
         jlr.setRows(results);
         responseJsonData(jlr);
-        return Action.NONE;
+        //
+        sysComp = new SysCompany();
+        return NONE;
     }
 
     public String saveSysCompInfo() throws Exception {
@@ -72,7 +80,7 @@ public class SysCompAction extends BaseAction {
         //
         MstDataLoader.loadSysCompany(getCtx());
         sysComp = new SysCompany();
-        return Action.NONE;
+        return NONE;
     }
 
     @Resource
@@ -86,22 +94,6 @@ public class SysCompAction extends BaseAction {
 
     public void setSysComp(SysCompany sysComp) {
         this.sysComp = sysComp;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
 }

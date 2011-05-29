@@ -57,7 +57,7 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
             for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
                 SysCompanyUser ele = (SysCompanyUser) iterator.next();
                 ele.setDeleteFlag(Constants.STATUS_Y);
-                ele.setStatus(Constants.STATUS_D);
+                // ele.setStatus(Constants.STATUS_D);
                 ele.setSuperiorId(null);
                 //
                 setChildSuperiorIdToNull(ele.getId());

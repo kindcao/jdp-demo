@@ -129,9 +129,11 @@
 		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>
 		</action>
+		<action name="showSysCompInfo" class="sysCompAction" method="showSysCompInfo">
+			<result name="syscomp.info" type="tiles">syscomp.info</result>
+		</action>
 		<action name="getSysCompList" class="sysCompAction" method="getSysCompList" />
 		<action name="saveSysCompInfo" class="sysCompAction" method="saveSysCompInfo" />
-		<action name="deleteSysCompInfo" class="sysCompAction" method="deleteSysCompInfo" />
 		<!-- syssetup user -->
 		<action name="showLogin" class="sysCompUserAction" method="showLogin" />
 		<action name="login" class="sysCompUserAction" method="login" />

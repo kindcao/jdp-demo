@@ -9,7 +9,7 @@
 			style="margin: 10px;">
 			<tr height="30px">
 				<td nowrap="nowrap" align="center" width="10%">
-					公司名称:
+					公司名称：
 				</td>
 				<td width="20%">
 					<input type="text" name="sysComp.companyName"
@@ -17,12 +17,11 @@
 						validType="length[1,50]">
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
-					公司类型:
+					公司类型：
 				</td>
 				<td width="20%">
-					<select id="sysComp.type" name="sysComp.type"
-						class="easyui-combobox" panelHeight="auto" required="true"
-						editable="false">
+					<select name="sysComp.type" class="easyui-combobox"
+						panelHeight="auto" required="true" editable="false">
 						<option value="R">
 							融聚公司
 						</option>
@@ -32,7 +31,7 @@
 					</select>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
-					公司状态:
+					公司状态：
 				</td>
 				<td width="20%">
 					<select id="sysComp_status" name="sysComp.status"
@@ -49,7 +48,7 @@
 			</tr>
 			<tr height="30px">
 				<td nowrap="nowrap" align="center">
-					Logo图URI:
+					Logo图URI：
 				</td>
 				<td colspan="3">
 					<input type="text" name="sysComp.logo" style="width: 402px;"
@@ -62,7 +61,7 @@
 			</tr>
 			<tr height="30px" valign="top">
 				<td nowrap="nowrap" align="center">
-					备注:
+					备注：
 				</td>
 				<td colspan="3">
 					<textarea name="sysComp.descript" rows="5" style="width: 402px;"
@@ -90,18 +89,18 @@
 				style="margin: 10px;">
 				<tr height="30px">
 					<td nowrap="nowrap" align="center" width="10%">
-						公司名称:
+						公司名称：
 					</td>
 					<td width="20%">
-						<input id="companyName" name="companyName" type="text"
-							maxlength="50" />
+						<input id="sysComp_companyName" name="sysComp.companyName"
+							type="text" maxlength="50" />
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
-						公司状态:
+						公司状态：
 					</td>
 					<td width="20%">
-						<select id="status" name="status" class="easyui-combobox"
-							panelHeight="auto" editable="false">
+						<select id="sysComp_status_search" name="sysComp.status"
+							class="easyui-combobox" panelHeight="auto" editable="false">
 							<option value="">
 								---请选择---
 							</option>
@@ -131,11 +130,6 @@
 			</table>
 		</fieldset>
 	</form>
-	<div id="div-log-img" icon="icon-search"
-		style="padding: 5px; width: 300px; height: 200px;">
-		<img id="logoImg" width="200" height="100"
-			style="border: 1px #987cb9 dotted">
-	</div>
 	<div style="height: 30px;">
 		&nbsp;
 	</div>
@@ -145,7 +139,66 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--
+<!--	
+	//for add begin
+	$("#_add").click(function() {
+		document.getElementById('div_info').style.display='inline';
+		document.getElementById('div_search').style.display='none';
+		//$('#_delete').linkbutton('disable');	
+		$("#_reset").click();	
+	});	
+	
+	$("#_back").click(function() {
+		document.getElementById('div_info').style.display='none';
+		document.getElementById('div_search').style.display='inline';
+		//$('#_delete').linkbutton('enable');
+		$("#_reset").click();
+	});	
+	
+	$("#_save").click(function() {
+		var isValid = $('#infoForm').form('validate');	
+		if (isValid) {
+			var options = {
+				url : 'saveSysCompInfo.action',
+				dataType : 'json',
+				type: 'post',
+				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data){
+					if (!data.success) {
+						$.messager.alert('提示信息', data.errors, 'error');
+					} else {						
+						$("#_back").click();
+						$("#_search").click();
+					}
+				}
+			};
+			$('#infoForm').ajaxSubmit(options);
+		}
+	});
+	
+	$("#_reset").click(function() {
+		$('#sysComp_status').combobox('clear');		
+		resetForm('infoForm');
+	});	
+	
+	//for search
+	$("#_search").click(function() {		
+		var queryParams = $('#grid-datalist').datagrid('options').queryParams={
+			'sysComp.companyName':$("#sysComp_companyName").val(),
+			'sysComp.status':$("#sysComp_status_search").combobox('getValue')
+		};	    
+	    reloadDatagrid('grid-datalist');
+	});	
+	
+	$("#_reset_search").click(function() {
+		$('#sysComp_status_search').combobox('clear');		
+		resetForm('searchFrom');
+	});
+		
+	function editComp(id){
+		window.location.href='showSysCompInfo.action?sysComp.id='+id;
+	}
+	
 	$(document).ready(function() {
 		var frozenColumns = [[{
 					field : 'ck',
@@ -187,13 +240,18 @@
 			field : 'logo',
 			title : '公司Logo图URI',
 			width : 250,
-			formatter : function(value, rec) {					
-				return "<a href='#' onclick=viewLogo('"+value+"')>" + value + "</a>";							
+			formatter : function(value, rec) {
+				if(value){	
+					return "<a href='#' onclick=window.open('" + value+ "');>" + cutstr(value,30) + "</a>";
+				}									
 			}
 		}, {
 			field : 'descript',
 			title : '备注',
-			width : 250
+			width : 300,
+			formatter : function(value, rec) {
+				return cutstr(value,50);
+			}
 		}]];
 			
 		//		
@@ -201,84 +259,6 @@
 		//
 		$('#div-log-img').dialog('close');
 		$('#_delete').linkbutton('disable');				
-	});	
-	
-	//for add begin
-	$("#_add").click(function() {
-		document.getElementById('div_info').style.display='inline';
-		document.getElementById('div_search').style.display='none';
-		//$('#_delete').linkbutton('disable');	
-		$("#_reset").click();	
-	});	
-	
-	$("#_back").click(function() {
-		document.getElementById('div_info').style.display='none';
-		document.getElementById('div_search').style.display='inline';
-		//$('#_delete').linkbutton('enable');
-		$("#_reset").click();
-	});	
-	
-	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {
-			var options = {
-				url : 'saveSysCompInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {						
-						$("#_back").click();
-						reloadDatagrid('grid-datalist');
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);
-		}
-	});
-	
-	$("#_reset").click(function() {
-		$('#sysComp_status').combobox('clear');		
-		resetForm('infoForm');
-	});	
-	
-	//for search
-	$("#_search").click(function() {		
-		var queryParams = $('#grid-datalist').datagrid('options').queryParams;	
-	    queryParams.companyName = $("#companyName").val();
-	    queryParams.status = $('#status').combobox('getValue'); 
-	    reloadDatagrid('grid-datalist');
-	});	
-	
-	$('#div-log-img').dialog({
-		title:'Logo图片预览',
-		modal:true,			
-		buttons:[{
-			text:'Ok',
-			iconCls:'icon-ok',
-			handler:function(){
-				$('#div-log-img').dialog('close');
-			}
-		}]
-	});
-	
-	$("#_reset_search").click(function() {
-		$('#status').combobox('clear');		
-		resetForm('searchFrom');
-	});
-	
-	function viewLogo(logoUrl){
-		if(logoUrl){
-			document.getElementById('logoImg').src=logoUrl;
-			$('#div-log-img').dialog('open');
-		}		
-	}
-	
-	function editComp(id){
-		alert(id);
-	}
-	
+	});		
 //-->
 </script>

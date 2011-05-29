@@ -38,11 +38,11 @@ public class MstDataLoader {
         loadCustomerIndustry(ctx);
         loadSysCompany(ctx);
         loadMarketEventType(ctx);
-        loadSysCompanyUser(ctx);    
-        loadIndustryNewsType(ctx);   
+        loadSysCompanyUser(ctx);
+        loadIndustryNewsType(ctx);
         log.info("loadMstData end.");
     }
-    
+
     public static void loadIndustryNewsType(ServletContext ctx) {
         log.info("loadIndustryNewsType begin...");
         try {
@@ -89,7 +89,7 @@ public class MstDataLoader {
         log.info("loadSysCompanyUser begin...");
         try {
             SysCompanyUser sysCompUser = new SysCompanyUser();
-            sysCompUser.setStatus(Constants.STATUS_A);
+            // sysCompUser.setStatus(Constants.STATUS_A);
             sysCompUser.setDeleteFlag(Constants.STATUS_N);
             List<?> list = baseServiceImpl.findByExample(sysCompUser);
             if (null != list) {
@@ -113,7 +113,7 @@ public class MstDataLoader {
         log.info("loadSysCompany begin...");
         try {
             SysCompany sysComp = new SysCompany();
-            sysComp.setStatus(Constants.STATUS_A);
+            // sysComp.setStatus(Constants.STATUS_A);
             List<?> list = baseServiceImpl.findByExample(sysComp);
             if (null != list) {
                 Map<String, Object> map = new TreeMap<String, Object>();

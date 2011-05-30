@@ -127,15 +127,15 @@ public class CommAction extends BaseAction {
         }
 
         //
+        SysCompany _currSysComp = getCurrSysComp();
         List<SysCompany> list = new ArrayList<SysCompany>();
         for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
             String key = (String) iterator.next();
             SysCompany value = (SysCompany) map.get(key);
-            if (StringUtils.isNotBlank(sysCompType)) {
-                if (sysCompType.equals(value.getType())) {
-                    list.add(value);
-                }
-            } else {
+            //           
+            if (currSysCompTypeIsR()) {
+                list.add(value);
+            } else if (_currSysComp.getId().intValue() == value.getId().intValue()) {
                 list.add(value);
             }
         }
@@ -143,26 +143,29 @@ public class CommAction extends BaseAction {
         return NONE;
     }
 
-    public String getSysCompUserByUserIds() throws Exception {
-        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompanyUser.class.getName());
-        if (null == map) {
-            throw new RuntimeException("getSysCompUserByUserIds map from servlet context is null.");
-        }
-
-        //
-        List<SysCompanyUser> list = new ArrayList<SysCompanyUser>();
-        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
-            String key = (String) iterator.next();
-            SysCompanyUser value = (SysCompanyUser) map.get(key);
-            if (StringUtils.isNotBlank(sysUserIds)) {
-                if (sysUserIds.contains(value.getId().toString())) {
-                    list.add(value);
-                }
-            }
-        }
-        responseJsonData(list);
-        return NONE;
-    }
+    // public String getSysCompUserByUserIds() throws Exception {
+    // Map<?, ?> map = (Map<?, ?>)
+    // getCtx().getAttribute(SysCompanyUser.class.getName());
+    // if (null == map) {
+    // throw new RuntimeException("getSysCompUserByUserIds map from servlet
+    // context is null.");
+    // }
+    //
+    // //
+    // List<SysCompanyUser> list = new ArrayList<SysCompanyUser>();
+    // for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();)
+    // {
+    // String key = (String) iterator.next();
+    // SysCompanyUser value = (SysCompanyUser) map.get(key);
+    // if (StringUtils.isNotBlank(sysUserIds)) {
+    // if (sysUserIds.contains(value.getId().toString())) {
+    // list.add(value);
+    // }
+    // }
+    // }
+    // responseJsonData(list);
+    // return NONE;
+    // }
 
     public String getSysCompUserByCompIds() throws Exception {
         Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompanyUser.class.getName());
@@ -171,12 +174,17 @@ public class CommAction extends BaseAction {
         }
 
         //
+        String childUserIds = getCurrSysUserChild();
         List<SysCompanyUser> list = new ArrayList<SysCompanyUser>();
         for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
             String key = (String) iterator.next();
             SysCompanyUser value = (SysCompanyUser) map.get(key);
             if (StringUtils.isNotBlank(sysCompIds)) {
                 if (sysCompIds.contains(value.getSysCompanyId().toString())) {
+                    list.add(value);
+                }
+            } else {
+                if (childUserIds.contains(value.getId().toString())) {
                     list.add(value);
                 }
             }

@@ -3,6 +3,7 @@ package crm.mktevt.dto;
 import org.apache.commons.lang.StringUtils;
 
 import crm.model.MarketEventViewCount;
+import crm.util.Utils;
 
 /**
  * @author Kind Cao
@@ -45,6 +46,9 @@ public class MktEvtCountExtDto extends MarketEventViewCount {
 
     public void setSysCompIds(String sysCompIds) {
         this.sysCompIds = sysCompIds;
+        if (StringUtils.isNotBlank(sysCompIds)) {
+            this.sysCompIds = Utils.fmtAndSortIds(sysCompIds);
+        }
     }
 
 }

@@ -48,7 +48,7 @@ function login(formIdStr) {
 					登录密码 :
 				</td>
 				<td>
-					<input name="sysCompUser.passwd" type="text"
+					<input name="sysCompUser.passwd" type="password"
 						class="easyui-validatebox" required="true"
 						validType="length[1,20]" value="123456" />
 				</td>

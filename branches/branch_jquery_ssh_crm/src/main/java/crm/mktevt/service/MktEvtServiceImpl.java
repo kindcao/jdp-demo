@@ -173,15 +173,14 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         StringBuilder sb = new StringBuilder();
         sb.append(" from MarketEventView mev where 1=1 ");
 
+        if (null != map.get("sysCompUseIds")) {
+            sb.append(" and mev.sysCompUserId in (:sysCompUseIds) ");
+            map.put("sysCompUseIds", map.get("sysCompUseIds"));
+        }
+
         if (null != map.get("compCustName")) {
             sb.append(" and mev.compCustName like :compCustName ");
             map.put("compCustName", "%" + map.get("compCustName") + "%");
-
-        }
-
-        if (null != map.get("sysCompUseIds")) {
-            sb.append(" and mev.sysCompUserId like :sysCompUseIds ");
-            map.put("sysCompUseIds", "%" + map.get("sysCompUseIds") + "%");
         }
 
         if (null != map.get("occurDateStrBegin") && null != map.get("occurDateStrEnd")) {

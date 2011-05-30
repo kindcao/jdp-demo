@@ -214,7 +214,9 @@
 	$('#_reset').click(function(){
 		if(document.getElementById('div-cont-search-tab').style.display=='inline'){
 			$('#countExtDto_sysCompIds').combobox('clear');	
-		}			
+		}
+		$("#countExtDt_occurDateStart").datebox('clear');
+		$("#countExtDt_occurDateEnd").datebox('clear');
 		resetForm('mktevtCountForm');
 	});   
 	

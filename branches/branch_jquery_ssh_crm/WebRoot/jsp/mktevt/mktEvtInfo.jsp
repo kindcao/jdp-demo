@@ -182,10 +182,9 @@
 				</td>
 				<td>
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
-						url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
-						class="easyui-combobox" required="true" valueField="id"
-						textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 134px;"
+						url='getSysCompUserByCompIds.action' class="easyui-combobox"
+						required="true" valueField="id" textField="name" multiple="false"
+						editable="false" panelHeight="auto" style="width: 134px;"
 						value='<s:property value="#_mktEvtView.sysCompUserName" />'>
 				</td>
 			</tr>

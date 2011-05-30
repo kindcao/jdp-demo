@@ -4,6 +4,7 @@ import java.util.List;
 
 import crm.base.service.BaseService;
 import crm.model.CustomerSysCompanyRelId;
+import crm.model.CustomerView;
 
 /**
  * @author Kind Cao
@@ -12,4 +13,6 @@ import crm.model.CustomerSysCompanyRelId;
 public interface CustService extends BaseService {
 
     List<?> findCustSysCompRel(CustomerSysCompanyRelId id) throws Exception;
+    
+    List<?> getCustNameList(CustomerView object)throws Exception;
 }

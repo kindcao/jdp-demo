@@ -6,14 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
 
 import crm.base.service.BaseServiceImpl;
 import crm.cust.dto.CustDto;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;
+import crm.model.CustomerView;
 
 /**
  * @author Kind Cao
@@ -119,6 +122,15 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
     public List<?> findCustSysCompRel(CustomerSysCompanyRelId id) throws Exception {
         DetachedCriteria criteria = DetachedCriteria.forClass(CustomerSysCompanyRel.class);
         criteria.add(Expression.eq("id.customerId", id.getCustomerId()));
+        return getBaseDaoImpl().findByCriteria(criteria);
+    }
+
+    @Override
+    public List<?> getCustNameList(CustomerView object) throws Exception {
+        DetachedCriteria criteria = DetachedCriteria.forClass(CustomerView.class);
+        if (StringUtils.isNotBlank(object.getSysCompanyId())) {
+            criteria.add(Expression.ilike("sysCompanyId", object.getSysCompanyId(), MatchMode.ANYWHERE));
+        }
         return getBaseDaoImpl().findByCriteria(criteria);
     }
 }

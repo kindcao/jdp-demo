@@ -105,9 +105,17 @@ public class MktEvtAction extends BaseAction {
     public String getMktEvtList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
-
+        //
+        if (!currSysCompTypeIsR()) {
+            if (StringUtils.isNotBlank(sysCompUseIds)) {
+                sysCompUseIds += ",";
+            } else {
+                sysCompUseIds = "";
+            }
+            sysCompUseIds += getCurrSysUserChild();
+        }
         if (StringUtils.isNotBlank(sysCompUseIds)) {
-            map.put("sysCompUseIds", sysCompUseIds);
+            map.put("sysCompUseIds", sysCompUseIds.split(","));
         }
         if (StringUtils.isNotBlank(compCustName)) {
             map.put("compCustName", compCustName);
@@ -139,6 +147,8 @@ public class MktEvtAction extends BaseAction {
         jlr.setTotal(totalCount);
         jlr.setRows(mktEvtList);
         responseJsonData(jlr);
+        //
+        reset();
         return NONE;
     }
 
@@ -157,6 +167,14 @@ public class MktEvtAction extends BaseAction {
 
     public String getMktEvtCal() throws Exception {
         JsonListResult jlr = new JsonListResult();
+        if (!currSysCompTypeIsR()) {
+            String _compIds = StringUtils.isNotBlank(calExtDto.getCompId()) ? calExtDto.getCompId() + "," : "";
+            if (!_compIds.contains(getCurrSysComp().getId().toString())) {
+                _compIds += getCurrSysComp().getId();
+            }
+            calExtDto.setCompId(_compIds);
+        }
+
         List<?> list = mktEvtService.findMktEvtCal(calExtDto);
         if (null != list && list.size() > 0) {
             jlr.setTotal(list.size());
@@ -186,6 +204,14 @@ public class MktEvtAction extends BaseAction {
                 dto.setInduId(value.getId());
                 list.add(dto);
                 //             
+                if (!currSysCompTypeIsR()) {
+                    String _compIds = StringUtils.isNotBlank(countExtDto.getSysCompIds()) ? countExtDto.getSysCompIds()
+                            + "," : "";
+                    if (!_compIds.contains(getCurrSysComp().getId().toString())) {
+                        _compIds += getCurrSysComp().getId();
+                    }
+                    countExtDto.setSysCompIds(_compIds);
+                }
                 countExtDto.setIndustrySuperiorId(dto.getInduId());
                 List<?> _numList = mktEvtService.findMktEvtCountTab(countExtDto);
                 if (null != _numList) {
@@ -251,6 +277,20 @@ public class MktEvtAction extends BaseAction {
             return null;
         }
         return result;
+    }
+
+    private void reset() {
+        customerIds = "";
+        sysCompUseIds = "";
+        contIds = "";
+        occurDateStrBegin = "";
+        occurDateStrEnd = "";
+        beginTimeStr = "";
+        endTimeStr = "";
+        subject = "";
+        status = "";
+        compCustName = "";
+        mktevtSuperiorId = null;
     }
 
     public MktEvtService getMktEvtService() {

@@ -3,8 +3,11 @@ package crm.base.action;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +29,11 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.ActionSupport;
 
 import crm.common.Constants;
+import crm.model.SysCompany;
 import crm.model.SysCompanyUser;
+import crm.model.SysCompanyUserRel;
+import crm.model.SysCompanyUserRelId;
+import crm.syssetup.service.SysCompUserService;
 import crm.util.Utils;
 
 public class BaseAction extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware,
@@ -53,6 +60,13 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     private String actionFlag;
 
     private String ids;
+
+    private SysCompUserService sysCompUserService;
+
+    @Resource
+    public void setSysCompUserService(SysCompUserService sysCompUserService) {
+        this.sysCompUserService = sysCompUserService;
+    }
 
     protected void responseJsonData(String data) throws IOException {
         response.setContentType("text/json;charset=UTF-8");
@@ -96,6 +110,34 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
 
     protected SysCompanyUser getCurrSysCompUser() {
         return (SysCompanyUser) session.get(Constants.CURR_SYS_USER_SESSION_KEY);
+    }
+
+    protected SysCompany getCurrSysComp() {
+        return (SysCompany) session.get(Constants.CURR_SYS_USER_COMP_SESSION_KEY);
+    }
+
+    protected boolean currSysCompTypeIsR() {
+        SysCompany _currSysComp = getCurrSysComp();
+        return Constants.STATUS_R.equals(_currSysComp.getType());
+    }
+
+    protected String getCurrSysUserChild() throws Exception {
+        StringBuilder sb = new StringBuilder();
+        SysCompanyUser _sysUser = getCurrSysCompUser();
+        List<?> rels = sysCompUserService.findSysCompanyUserRel(new SysCompanyUserRel(new SysCompanyUserRelId(_sysUser
+                .getId(), null)));
+        sb.append(_sysUser.getId());
+        if (null != rels) {
+            sb.append(",");
+            for (Iterator<?> iterator = rels.iterator(); iterator.hasNext();) {
+                SysCompanyUserRel ele = (SysCompanyUserRel) iterator.next();
+                sb.append(ele.getId().getChildUserId());
+                if (iterator.hasNext()) {
+                    sb.append(",");
+                }
+            }
+        }
+        return sb.toString();
     }
 
     protected Date getCurrDate() {

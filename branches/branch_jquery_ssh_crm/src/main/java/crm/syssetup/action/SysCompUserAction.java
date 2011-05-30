@@ -101,8 +101,8 @@ public class SysCompUserAction extends BaseAction {
     public String logout() throws Exception {
         SysCompanyUser _sysCompUser = (SysCompanyUser) session.remove(Constants.CURR_SYS_USER_SESSION_KEY);
         if (_sysCompUser != null) {
-            Constants.SYS_USER_MAP.remove(sysCompUser.getLoginId());
-            log.info("user " + sysCompUser.getLoginId() + " logout.");
+            Constants.SYS_USER_MAP.remove(_sysCompUser.getLoginId());
+            log.info("user " + _sysCompUser.getLoginId() + " logout.");
         }
         return LOGIN;
     }

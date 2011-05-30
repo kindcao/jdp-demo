@@ -25,6 +25,7 @@ import crm.model.Customer;
 import crm.model.CustomerIndustry;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;
+import crm.model.CustomerView;
 import crm.model.SysCompany;
 import crm.util.JsonUtils;
 import crm.util.Utils;
@@ -41,7 +42,7 @@ public class CustAction extends BaseAction {
 
     private Integer induId;
 
-    private String custSysCompIds = "";
+    private String custSysCompIds;
 
     // private String custSysUserIds = "";
     //
@@ -60,7 +61,6 @@ public class CustAction extends BaseAction {
     private CustService custService;
 
     public String showCustList() throws Exception {
-        reset();
         switch (induId) {
         case 1: {
             return "cust.broker.list";
@@ -214,6 +214,15 @@ public class CustAction extends BaseAction {
         if (StringUtils.isNotBlank(address)) {
             map.put("address", address);
         }
+
+        //
+        if (!currSysCompTypeIsR()) {
+            String _compIds = StringUtils.isNotBlank(custSysCompIds) ? custSysCompIds + "," : "";
+            if (!_compIds.contains(getCurrSysComp().getId().toString())) {
+                _compIds += getCurrSysComp().getId();
+            }
+            this.setCustSysCompIds(_compIds);
+        }
         if (StringUtils.isNotBlank(custSysCompIds)) {
             map.put("custSysCompIds", custSysCompIds);
         }
@@ -223,6 +232,8 @@ public class CustAction extends BaseAction {
         jlr.setTotal(totalCount);
         jlr.setRows(custList);
         responseJsonData(jlr);
+        //
+        reset();
         return NONE;
     }
 
@@ -244,20 +255,22 @@ public class CustAction extends BaseAction {
     }
 
     public String getCustNameList() throws Exception {
-        Customer _obj = new Customer();
-        _obj.setDeleteFlag(Constants.STATUS_N);
-        List<?> custList = custService.findByExample(_obj);
+        CustomerView _obj = new CustomerView();
+        if (!currSysCompTypeIsR()) {
+            _obj.setSysCompanyId(getCurrSysComp().getId().toString());
+        }
+        List<?> custList = custService.getCustNameList(_obj);
         String[] filedName = new String[] { "id", "custName" };
-        responseJsonData(custList, JsonUtils.setIncludes(Customer.class, filedName));
+        responseJsonData(custList, JsonUtils.setIncludes(CustomerView.class, filedName));
         return NONE;
     }
 
     private void reset() {
-        this.custSysCompIds = null;
-        this.custName = null;
-        this.custCode = null;
+        this.custSysCompIds = "";
+        this.custName = "";
+        this.custCode = "";
+        this.address = "";
         this.industryId = null;
-        this.address = null;
     }
 
     public int getInduId() {

@@ -60,10 +60,9 @@
 				</td>
 				<td>
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
-						url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
-						class="easyui-combobox" required="true" valueField="id"
-						textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 134px;">
+						url='getSysCompUserByCompIds.action' class="easyui-combobox"
+						required="true" valueField="id" textField="name" multiple="false"
+						editable="false" panelHeight="auto" style="width: 134px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -237,10 +236,9 @@
 					</td>
 					<td>
 						<input id="sysCompUseIds" name="sysCompUseIds"
-							url='getSysCompUserByCompIds.action?sysCompIds=<s:property value="#session._sysUser.sysCompanyId" />'
-							class="easyui-combobox" valueField="id" textField="name"
-							multiple="false" editable="false" panelHeight="auto"
-							style="width: 134px;">
+							url='getSysCompUserByCompIds.action' class="easyui-combobox"
+							valueField="id" textField="name" multiple="false"
+							editable="false" panelHeight="auto" style="width: 134px;">
 					</td>
 					<td nowrap="nowrap" align="center">
 						参与机构:

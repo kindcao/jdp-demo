@@ -6,7 +6,7 @@
 <div align="center">
 	<form id="loginForm">
 		<table cellspacing="0" cellpadding="0" width="400" height="150"
-			style="border: 1px solid #A4BED4;" align="center">
+			style="border: 1px solid #A4BED4; margin-top: 150px;" align="center">
 			<tr height="20px">
 				<th width="30%" align="left" bgcolor="#A4BED4" colspan="2">
 					<div style="margin: 5px;">

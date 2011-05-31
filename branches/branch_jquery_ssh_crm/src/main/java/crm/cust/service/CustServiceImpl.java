@@ -27,21 +27,19 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
 
     @Override
     public void saveOrUpdate(Object object) throws Exception {
+        List<Object> delList = new ArrayList<Object>();
+        List<Object> saveList = new ArrayList<Object>();
         CustDto custDto = (CustDto) object;
         Customer custObj = custDto.getCustObj();
         // save customer
         super.saveOrUpdate(custObj);
         // set customer id and save CustomerSysCompanyRel
         Set<CustomerSysCompanyRel> custSysCompRels = custDto.getCustSysCompRels();
+        List<?> compRels = findCustSysCompRel(new CustomerSysCompanyRelId(custObj.getId(), null));
         if (null != custSysCompRels) {
-            CustomerSysCompanyRelId _relId = new CustomerSysCompanyRelId();
-            _relId.setCustomerId(custObj.getId());
-            List<?> _list = findCustSysCompRel(_relId);
-            if (null != _list && _list.size() > 0) {
-                List<CustomerSysCompanyRel> _delList = new ArrayList<CustomerSysCompanyRel>();
-                for (Iterator<?> iterator = _list.iterator(); iterator.hasNext();) {
+            if (null != compRels && compRels.size() > 0) {
+                for (Iterator<?> iterator = compRels.iterator(); iterator.hasNext();) {
                     CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
-                    //
                     boolean isFind = false;
                     for (Iterator<CustomerSysCompanyRel> iterator2 = custSysCompRels.iterator(); iterator2.hasNext();) {
                         CustomerSysCompanyRel ele2 = (CustomerSysCompanyRel) iterator2.next();
@@ -53,21 +51,27 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
                     }
                     // for delete
                     if (!isFind) {
-                        _delList.add(ele);
+                        delList.add(ele);
                     }
                 }
-                if (_delList.size() > 0) {
-                    super.deleteAll(_delList);
-                }
             }
-            // for add
+            // add
             if (custSysCompRels.size() > 0) {
                 for (Iterator<CustomerSysCompanyRel> iterator = custSysCompRels.iterator(); iterator.hasNext();) {
                     CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
                     ele.getId().setCustomerId(custObj.getId());
                 }
-                super.saveOrUpdateAll(custSysCompRels);
+                saveList.addAll(custSysCompRels);
             }
+        } else {
+            delList.addAll(compRels);
+        }
+        //
+        if (delList.size() > 0) {
+            super.deleteAll(delList);
+        }
+        if (saveList.size() > 0) {
+            super.saveOrUpdateAll(saveList);
         }
     }
 
@@ -135,7 +139,7 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
                     ele.setDeletedTime(custObj.getDeletedTime());
                     ele.setDeleteFlag(custObj.getDeleteFlag());
                 }
-                getBaseDaoImpl().saveOrUpdateAll(list);
+                super.saveOrUpdateAll(list);
             }
         }
     }
@@ -144,7 +148,7 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
     public List<?> findCustSysCompRel(CustomerSysCompanyRelId id) throws Exception {
         DetachedCriteria criteria = DetachedCriteria.forClass(CustomerSysCompanyRel.class);
         criteria.add(Expression.eq("id.customerId", id.getCustomerId()));
-        return getBaseDaoImpl().findByCriteria(criteria);
+        return super.findByCriteria(criteria);
     }
 
     @Override
@@ -153,6 +157,6 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
         if (StringUtils.isNotBlank(object.getSysCompanyId())) {
             criteria.add(Expression.ilike("sysCompanyId", object.getSysCompanyId(), MatchMode.ANYWHERE));
         }
-        return getBaseDaoImpl().findByCriteria(criteria);
+        return super.findByCriteria(criteria);
     }
 }

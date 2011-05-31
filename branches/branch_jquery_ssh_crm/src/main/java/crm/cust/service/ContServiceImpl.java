@@ -73,7 +73,7 @@ public class ContServiceImpl extends BaseServiceImpl implements ContService {
                     ele.setDeletedTime(contObj.getDeletedTime());
                     ele.setDeleteFlag(contObj.getDeleteFlag());
                 }
-                getBaseDaoImpl().saveOrUpdateAll(list);
+                super.saveOrUpdateAll(list);
             }
         }
     }

@@ -50,6 +50,10 @@ public class IndustryAction extends BaseAction {
 
     public String getIndustryList() throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
+        if (!currSysCompTypeIsR()) {
+            map.put("sysCompId", Utils.fmtAndSortIds(getCurrSysComp().getId().toString()));
+        }
+
         if (null != industryExtDto) {
             if (null != industryExtDto.getPublishDateBegin() && industryExtDto.getPublishDateBegin() > 0) {
                 map.put("publishDateBegin", industryExtDto.getPublishDateBegin());

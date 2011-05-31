@@ -31,11 +31,17 @@
 		<property name="publishDateStr" type="java.lang.String">
 			<column name="publish_date_str" />
 		</property>
-		<property name="industryNewsTypeName" type="java.lang.String">
-			<column name="industry_news_type_name" length="20" />
+		<property name="induNewsTypeName" type="java.lang.String">
+			<column name="indu_news_type_name" length="20" />
 		</property>
 		<property name="custName" type="java.lang.String">
 			<column name="cust_name" length="50" />
+		</property>
+		<property name="sysCompId" type="java.lang.String">
+			<column name="sys_comp_id" length="341" />
+		</property>
+		<property name="sysCompName" type="java.lang.String">
+			<column name="sys_comp_name" length="341" />
 		</property>
 	</class>
 </hibernate-mapping>

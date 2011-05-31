@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set name="_sysComp" value="#session.SYS_COMP_SESSION_KEY" />
+<s:set name="_sysCompany" value="#session.SYS_COMP_SESSION_KEY" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
@@ -11,13 +11,13 @@
 				公司名称：
 			</td>
 			<td width="20%">
-				<s:property value="#_sysComp.companyName" />
+				<s:property value="#_sysCompany.companyName" />
 			</td>
 			<td nowrap="nowrap" align="center" width="10%">
 				公司类型：
 			</td>
 			<td width="20%">
-				<s:if test='%{"R"==#_sysComp.type}'>
+				<s:if test='%{"R"==#_sysCompany.type}'>
 				融聚公司
 				</s:if>
 				<s:else>
@@ -28,7 +28,7 @@
 				公司状态：
 			</td>
 			<td width="20%">
-				<s:if test='%{"A"==#_sysComp.status}'>
+				<s:if test='%{"A"==#_sysCompany.status}'>
 				正常
 				</s:if>
 				<s:else>
@@ -41,9 +41,9 @@
 				Logo图URI：
 			</td>
 			<td colspan="3">
-				<s:if test="%{#_sysComp.logo.trim().length()>0}">
-					<a href="#" onclick=window.open('<s:property value="#_sysComp.logo" />')><s:property
-							value="#_sysComp.logo" /> </a>
+				<s:if test="%{#_sysCompany.logo.trim().length()>0}">
+					<a href="#" onclick=window.open('<s:property value="#_sysCompany.logo" />')><s:property
+							value="#_sysCompany.logo" /> </a>
 				</s:if>
 			</td>
 			<td colspan="2" align="center">
@@ -55,7 +55,7 @@
 				备注：
 			</td>
 			<td colspan="3">
-				<s:property value="#_sysComp.descript" />
+				<s:property value="#_sysCompany.descript" />
 			</td>
 			<td colspan="2" align="center" valign="bottom">
 				<a href="#" class="easyui-linkbutton" plain="true"
@@ -68,8 +68,8 @@
 </div>
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
-		<input type="hidden" name="sysComp.id"
-			value='<s:property value="#_sysComp.id" />' />
+		<input type="hidden" name="sysCompany.id"
+			value='<s:property value="#_sysCompany.id" />' />
 		<s:hidden name="actionFlag" value="U" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
@@ -78,16 +78,16 @@
 					公司名称：
 				</td>
 				<td width="20%">
-					<input type="text" name="sysComp.companyName"
+					<input type="text" name="sysCompany.companyName"
 						class="easyui-validatebox" required="true"
 						validType="length[1,50]"
-						value='<s:property value="#_sysComp.companyName" />'>
+						value='<s:property value="#_sysCompany.companyName" />'>
 				</td>
 				<td nowrap="nowrap" align="center" width="10%">
 					公司类型：
 				</td>
 				<td width="20%">
-					<select id="sysComp_type" name="sysComp.type"
+					<select id="sysCompany_type" name="sysCompany.type"
 						class="easyui-combobox" panelHeight="auto" required="true"
 						editable="false">
 						<option value="R">
@@ -102,7 +102,7 @@
 					公司状态：
 				</td>
 				<td width="20%">
-					<select id="sysComp_status" name="sysComp.status"
+					<select id="sysCompany_status" name="sysCompany.status"
 						class="easyui-combobox" panelHeight="auto" required="true"
 						editable="false">
 						<option value="A">
@@ -119,9 +119,9 @@
 					Logo图URI：
 				</td>
 				<td colspan="3">
-					<input type="text" name="sysComp.logo" style="width: 402px;"
+					<input type="text" name="sysCompany.logo" style="width: 402px;"
 						maxlength="100" class="easyui-validatebox" required="true"
-						validType="url" value='<s:property value="#_sysComp.logo" />' />
+						validType="url" value='<s:property value="#_sysCompany.logo" />' />
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;
@@ -132,8 +132,8 @@
 					备注：
 				</td>
 				<td colspan="3">
-					<textarea id="sysComp_descript" name="sysComp.descript" rows="5"
-						style="width: 402px;" class="easyui-validatebox"
+					<textarea id="sysCompany_descript" name="sysCompany.descript"
+						rows="5" style="width: 402px;" class="easyui-validatebox"
 						validType="length[0,100]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
@@ -163,15 +163,15 @@
 		document.getElementById('div_info_read-only').style.display='none';
 		document.getElementById('div_info').style.display='inline';
 		//	
-		$('#sysComp_type').combobox('setValue','<s:property value="#_sysComp.type" />');
-		$('#sysComp_status').combobox('setValue','<s:property value="#_sysComp.status" />');
-		document.getElementById('_sysComp_descript').value='<s:property value="#_sysComp.descript" escape="false" />';
+		$('#sysCompany_type').combobox('setValue','<s:property value="#_sysCompany.type" />');
+		$('#sysCompany_status').combobox('setValue','<s:property value="#_sysCompany.status" />');
+		document.getElementById('sysCompany_descript').value='<s:property value="#_sysCompany.descript" escape="false" />';
 		
 	});
 		
 	$("#_reset").click(function() {
-		$("#sysComp_type").datebox('clear');
-		$('#sysComp_status').combobox('clear');
+		$("#sysCompany_type").datebox('clear');
+		$('#sysCompany_status').combobox('clear');
 		resetForm('infoForm');
 	});
 	
@@ -180,7 +180,7 @@
 			'saveSysCompInfo.action',
 			true,
 			function(){
-				window.location.href='showSysCompInfo.action?sysComp.id=<s:property value="#_sysComp.id" />';
+				window.location.href='showSysCompInfo.action?sysCompany.id=<s:property value="#_sysCompany.id" />';
 			}
 		);		
 	});	

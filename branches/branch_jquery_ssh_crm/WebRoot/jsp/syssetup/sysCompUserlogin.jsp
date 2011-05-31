@@ -50,7 +50,7 @@ function login(formIdStr) {
 				<td>
 					<input name="sysCompUser.passwd" type="password"
 						class="easyui-validatebox" required="true"
-						validType="length[1,20]" value="123456" />
+						validType="length[6,50]" value="123456" />
 				</td>
 			</tr>
 			<tr>

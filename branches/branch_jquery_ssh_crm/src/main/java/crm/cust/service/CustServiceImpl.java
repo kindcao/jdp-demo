@@ -66,7 +66,7 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
                     CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
                     ele.getId().setCustomerId(custObj.getId());
                 }
-                saveOrUpdateAll(custSysCompRels);
+                super.saveOrUpdateAll(custSysCompRels);
             }
         }
     }

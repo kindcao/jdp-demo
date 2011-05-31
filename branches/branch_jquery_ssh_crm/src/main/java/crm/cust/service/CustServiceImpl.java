@@ -1,5 +1,6 @@
 package crm.cust.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -33,18 +34,39 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
         // set customer id and save CustomerSysCompanyRel
         Set<CustomerSysCompanyRel> custSysCompRels = custDto.getCustSysCompRels();
         if (null != custSysCompRels) {
-            // for delete
             CustomerSysCompanyRelId _relId = new CustomerSysCompanyRelId();
             _relId.setCustomerId(custObj.getId());
             List<?> _list = findCustSysCompRel(_relId);
             if (null != _list && _list.size() > 0) {
-                super.deleteAll(_list);
+                List<CustomerSysCompanyRel> _delList = new ArrayList<CustomerSysCompanyRel>();
+                for (Iterator<?> iterator = _list.iterator(); iterator.hasNext();) {
+                    CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
+                    //
+                    boolean isFind = false;
+                    for (Iterator<CustomerSysCompanyRel> iterator2 = custSysCompRels.iterator(); iterator2.hasNext();) {
+                        CustomerSysCompanyRel ele2 = (CustomerSysCompanyRel) iterator2.next();
+                        if (ele.getId().getSysCompanyId().intValue() == ele2.getId().getSysCompanyId()) {
+                            iterator2.remove();
+                            isFind = true;
+                            break;
+                        }
+                    }
+                    // for delete
+                    if (!isFind) {
+                        _delList.add(ele);
+                    }
+                }
+                if (_delList.size() > 0) {
+                    super.deleteAll(_delList);
+                }
             }
             // for add
-            for (Iterator<CustomerSysCompanyRel> iterator = custSysCompRels.iterator(); iterator.hasNext();) {
-                CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
-                ele.getId().setCustomerId(custObj.getId());
-                super.saveOrUpdate(ele);
+            if (custSysCompRels.size() > 0) {
+                for (Iterator<CustomerSysCompanyRel> iterator = custSysCompRels.iterator(); iterator.hasNext();) {
+                    CustomerSysCompanyRel ele = (CustomerSysCompanyRel) iterator.next();
+                    ele.getId().setCustomerId(custObj.getId());
+                }
+                saveOrUpdateAll(custSysCompRels);
             }
         }
     }

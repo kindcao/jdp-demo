@@ -54,7 +54,9 @@
 		$('#loginForm').submitForm(
 			'login.action',
 			true,
-			function(){window.location.href='welcome.action';}
+			function(){
+				window.location.href='welcome.action';
+			}
 		);	
 	});
 //-->

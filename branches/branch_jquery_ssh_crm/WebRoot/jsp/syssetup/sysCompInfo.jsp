@@ -176,23 +176,13 @@
 	});
 	
 	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {			
-			var options = {
-				url : 'saveSysCompInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {
-						window.location.href='showSysCompInfo.action?sysComp.id=<s:property value="#_sysComp.id" />';
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);			
-		}
+		$('#infoForm').submitForm(
+			'saveSysCompInfo.action',
+			true,
+			function(){
+				window.location.href='showSysCompInfo.action?sysComp.id=<s:property value="#_sysComp.id" />';
+			}
+		);		
 	});	
 //-->
 </script>

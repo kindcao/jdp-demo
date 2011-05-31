@@ -203,24 +203,14 @@
 	});	
 	
 	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {
-			var options = {
-				url : 'saveSysCompUserInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {						
-						$("#_back").click();
-						$("#_search").click();
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);
-		}
+		$('#infoForm').submitForm(
+			'saveSysCompUserInfo.action',
+			true,
+			function(){
+				$("#_back").click();
+				$("#_search").click();
+			}
+		);		
 	});
 	
 	$("#_reset").click(function() {		

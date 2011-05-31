@@ -259,6 +259,26 @@ $.fn.clearForm = function() {
 					this.selectedIndex = -1;
 			});
 };
+
+$.fn.submitForm = function(url, validFlag, successFn) {
+	var isValid = this.form('validate');
+	if (isValid && validFlag) {
+		var options = {
+			url : url,
+			dataType : 'json',
+			type : 'post',
+			success : function(data) {
+				if (!data.success) {
+					$.messager.alert('提示信息', data.errors, 'error');
+				} else {
+					successFn();
+				}
+			}
+		};
+		this.ajaxSubmit(options);
+	}
+}
+
 //
 function cutstr(str, len) {
 	var str_length = 0;

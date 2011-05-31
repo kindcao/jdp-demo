@@ -96,9 +96,9 @@
 		var options = {
 			url : 'getMktEvtCal.action',
 			dataType : 'json',
+			type : 'post',
 			success : function(data){				
-				cleanCalYearData();
-				//
+				cleanCalYearData();				
 				if (data.total>0) {
 					parserCalYearData(data);	
 				}

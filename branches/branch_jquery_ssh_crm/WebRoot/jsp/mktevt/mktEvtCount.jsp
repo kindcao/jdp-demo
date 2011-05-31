@@ -43,9 +43,8 @@
 		var options = {
 			url : 'getMktEvtCountTab.action',
 			dataType : 'json',
-			success : function(data){				
-				//cleanCalYearData();
-				//
+			type : 'post',
+			success : function(data){
 				if (data.total>0) {
 					parserCountTabData(data);	
 				}

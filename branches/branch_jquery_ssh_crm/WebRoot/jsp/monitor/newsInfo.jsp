@@ -286,23 +286,13 @@
 	});
 	
 	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {			
-			var options = {
-				url : 'saveNewsInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {
-						window.location.href='showNewsInfo.action?newsExtDto.id=<s:property value="#_news.id" />';
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);			
-		}
+		$('#infoForm').submitForm(
+			'saveNewsInfo.action',
+			true,
+			function(){
+				window.location.href='showNewsInfo.action?newsExtDto.id=<s:property value="#_news.id" />';
+			}
+		);		
 	});		
 //-->
 </script>

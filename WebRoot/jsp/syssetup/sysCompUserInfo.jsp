@@ -255,23 +255,13 @@
 	});
 	
 	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {			
-			var options = {
-				url : 'saveSysCompUserInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {
-						window.location.href='showSysCompUserInfo.action?sysCompUser.id=<s:property value="#_sysCompUser.id" />';
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);			
-		}
+		$('#infoForm').submitForm(
+			'saveSysCompUserInfo.action',
+			true,
+			function(){
+				window.location.href='showSysCompUserInfo.action?sysCompUser.id=<s:property value="#_sysCompUser.id" />';
+			}
+		);		
 	});	
 //-->
 </script>

@@ -277,23 +277,13 @@
 	});
 	
 	$("#_save_edit_contact").click(function() {
-		var isValid = $('#infoFormContantEdit').form('validate');	
-		if (isValid) {			
-			var options = {
-				url : 'saveContInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {
-						editCont('<s:property value="#_cont.id" />');						
-					}
-				}
-			};
-			$('#infoFormContantEdit').ajaxSubmit(options);			
-		}
+		$('#infoFormContantEdit').submitForm(
+			'saveContInfo.action',
+			true,
+			function(){
+				editCont('<s:property value="#_cont.id" />');
+			}
+		);
 	});	
 //-->
 </script>

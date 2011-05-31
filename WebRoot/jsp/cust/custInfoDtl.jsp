@@ -326,25 +326,15 @@
 	});
 	
 	$("#_save").click(function() {
-		var isValid = $('#infoForm').form('validate');	
-		if (isValid) {			
-			var options = {
-				url : 'saveCustInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {
-						var _href='showCustInfo.action?induId='+$('#induId').val()
-						+'&cust.id=<s:property value="#_cust.id" />';						
-						window.location.href=_href;
-					}
-				}
-			};
-			$('#infoForm').ajaxSubmit(options);			
-		}
-	});	
+		$('#infoForm').submitForm(
+			'saveCustInfo.action',
+			true,
+			function(){
+				var _href='showCustInfo.action?induId='+$('#induId').val()
+				+'&cust.id=<s:property value="#_cust.id" />';						
+				window.location.href=_href;
+			}
+		);
+	});
 //-->
 </script>

@@ -201,24 +201,14 @@
 	});	
 	
 	$("#_save_contact").click(function() {
-		var isValid = $('#infoFormContact').form('validate');	
-		if (isValid) {
-			var options = {
-				url : 'saveContInfo.action',
-				dataType : 'json',
-				type: 'post',
-				//contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data){
-					if (!data.success) {
-						$.messager.alert('提示信息', data.errors, 'error');
-					} else {						
-						$("#_back_contact").click();
-						$("#_search_contact").click();
-					}
-				}
-			};
-			$('#infoFormContact').ajaxSubmit(options);
-		}
+		$('#infoFormContact').submitForm(
+			'saveContInfo.action',
+			true,
+			function(){
+				$("#_back_contact").click();
+				$("#_search_contact").click();
+			}
+		);		
 	});
 	
 	$("#_reset_contact").click(function() {

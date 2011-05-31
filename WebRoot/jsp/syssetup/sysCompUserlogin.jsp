@@ -2,29 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<script type="text/javascript">
-<!--
-function login(formIdStr) {
-	var isValid = $('#' + formIdStr).form('validate');	
-	if (isValid) {
-		var options = {
-			url : 'login.action',
-			dataType : 'json',
-			success : function(data){
-				if (!data.success) {
-					$.messager.alert('提示信息', data.errors, 'error');
-				} else {
-					window.location.href="welcome.action";
-				}
-			}
-		};
-		$('#'+formIdStr).ajaxSubmit(options);
-	}
-}
-//-->
-</script>
+
 <div align="center">
-	<s:form id="loginForm">
+	<form id="loginForm">
 		<table cellspacing="0" cellpadding="0" width="400" height="150"
 			style="border: 1px solid #A4BED4;" align="center">
 			<tr height="20px">
@@ -49,8 +29,8 @@ function login(formIdStr) {
 				</td>
 				<td>
 					<input name="sysCompUser.passwd" type="password"
-						class="easyui-validatebox" required="true"
-						validType="length[6,50]" value="123456" />
+						class="easyui-validatebox" required="true" validType="safepass"
+						maxlength="50" value="sunny123" />
 				</td>
 			</tr>
 			<tr>
@@ -61,9 +41,21 @@ function login(formIdStr) {
 				</td>
 				<td align="center">
 					<a href="#" class="easyui-linkbutton" iconCls="icon-ok"
-						plain="true" onclick="login('loginForm');">登录</a>
+						plain="true" id="_login">登录</a>
 				</td>
 			</tr>
 		</table>
-	</s:form>
+	</form>
 </div>
+
+<script type="text/javascript" defer="defer">
+<!--
+	$("#_login").click(function() {
+		$('#loginForm').submitForm(
+			'login.action',
+			true,
+			function(){window.location.href='welcome.action';}
+		);	
+	});
+//-->
+</script>

@@ -25,6 +25,11 @@ public class IndustryServiceImpl extends BaseServiceImpl implements IndustryServ
     private String getQueryHQL(Map<String, Object> map) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" from MonitorIndustryView miv where 1=1 ");
+
+        if (null != map.get("sysCompId")) {
+            sb.append(" and miv.sysCompId like :sysCompId ");
+            map.put("sysCompId", "%" + map.get("sysCompId") + "%");
+        }
         if (null != map.get("publishDateBegin") && null != map.get("publishDateEnd")) {
             sb.append(" and miv.publishDate between :publishDateBegin and :publishDateEnd ");
             map.put("publishDateBegin", Integer.valueOf(map.get("publishDateBegin").toString()));

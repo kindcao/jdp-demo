@@ -5,9 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import crm.base.service.BaseServiceImpl;
 import crm.model.CustomerContact;
 
@@ -18,8 +15,6 @@ import crm.model.CustomerContact;
  *          May 9, 2011 10:52:14 PM
  */
 public class ContServiceImpl extends BaseServiceImpl implements ContService {
-
-    private final Logger log = LoggerFactory.getLogger(ContServiceImpl.class);
 
     @Override
     public List<?> findPageByQuery(int pageNo, int pageSize, Map<String, Object> map) throws Exception {

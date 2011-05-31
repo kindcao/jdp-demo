@@ -32,15 +32,15 @@ public class SysCompAction extends BaseAction {
 
     private SysCompService sysCompService;
 
-    private SysCompany sysComp;
+    private SysCompany sysCompany;
 
     public String showSysCompList() throws Exception {
         return "syscomp.list";
     }
 
     public String showSysCompInfo() throws Exception {
-        if (null != sysComp && sysComp.getId() > 0) {
-            session.put(Constants.SYS_COMP_SESSION_KEY, sysCompService.getObject(SysCompany.class, sysComp.getId()));
+        if (null != sysCompany && sysCompany.getId() > 0) {
+            session.put(Constants.SYS_COMP_SESSION_KEY, sysCompService.getObject(SysCompany.class, sysCompany.getId()));
         } else {
             log.warn("SysCompany is null or sysComp.getId() is 0");
         }
@@ -50,12 +50,12 @@ public class SysCompAction extends BaseAction {
     public String getSysCompList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
-        if (null != sysComp) {
-            if (StringUtils.isNotBlank(sysComp.getCompanyName())) {
-                map.put("companyName", sysComp.getCompanyName());
+        if (null != sysCompany) {
+            if (StringUtils.isNotBlank(sysCompany.getCompanyName())) {
+                map.put("companyName", sysCompany.getCompanyName());
             }
-            if (StringUtils.isNotBlank(sysComp.getStatus())) {
-                map.put("status", sysComp.getStatus());
+            if (StringUtils.isNotBlank(sysCompany.getStatus())) {
+                map.put("status", sysCompany.getStatus());
             }
         }
 
@@ -65,21 +65,21 @@ public class SysCompAction extends BaseAction {
         jlr.setRows(results);
         responseJsonData(jlr);
         //
-        sysComp = new SysCompany();
+        sysCompany = new SysCompany();
         return NONE;
     }
 
     public String saveSysCompInfo() throws Exception {
         JsonValidateResult jvr = new JsonValidateResult();
         if (StringUtils.isBlank(getActionFlag())) {
-            sysComp.setId(null);
+            sysCompany.setId(null);
         }
-        sysCompService.saveOrUpdate(sysComp);
+        sysCompService.saveOrUpdate(sysCompany);
         jvr.setSuccess(true);
         responseJsonData(jvr);
         //
         MstDataLoader.loadSysCompany(getCtx());
-        sysComp = new SysCompany();
+        sysCompany = new SysCompany();
         return NONE;
     }
 
@@ -88,12 +88,15 @@ public class SysCompAction extends BaseAction {
         this.sysCompService = sysCompService;
     }
 
-    public SysCompany getSysComp() {
-        return sysComp;
+    
+    public SysCompany getSysCompany() {
+        return sysCompany;
     }
 
-    public void setSysComp(SysCompany sysComp) {
-        this.sysComp = sysComp;
+    
+    public void setSysCompany(SysCompany sysCompany) {
+        this.sysCompany = sysCompany;
     }
 
+   
 }

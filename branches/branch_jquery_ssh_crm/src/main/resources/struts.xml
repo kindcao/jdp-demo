@@ -27,19 +27,17 @@
 		<global-exception-mappings>
 			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
-		<!-- comm -->
-		<action name="welcome" class="commAction" method="welcome">
+		<!-- base -->
+		<action name="welcome" class="baseAction" method="welcome">
 			<result name="welcome" type="tiles">welcome</result>
 		</action>
-		<action name="error" class="commAction" method="error" />
-		<action name="getSysStatus" class="commAction" method="getSysStatus" />
-		<action name="getStatusYN" class="commAction" method="getStatusYN" />
-		<action name="getSysComp" class="commAction" method="getSysComp" />
-		<action name="getCustIndu" class="commAction" method="getCustIndu" />
-		<action name="getMarketEventType" class="commAction" method="getMarketEventType" />
-		<action name="getSysCompUserByCompIds" class="commAction" method="getSysCompUserByCompIds" />
-		<action name="getSysCompUserByUserIds" class="commAction" method="getSysCompUserByUserIds" />
-		<action name="getIndustryNewsType" class="commAction" method="getIndustryNewsType" />
+		<action name="getSysStatus" class="baseAction" method="getSysStatus" />
+		<action name="getStatusYN" class="baseAction" method="getStatusYN" />
+		<action name="getSysComp" class="baseAction" method="getSysComp" />
+		<action name="getCustIndu" class="baseAction" method="getCustIndu" />
+		<action name="getMarketEventType" class="baseAction" method="getMarketEventType" />
+		<action name="getSysCompUserByCompIds" class="baseAction" method="getSysCompUserByCompIds" />	
+		<action name="getIndustryNewsType" class="baseAction" method="getIndustryNewsType" />
 		<!-- cust -->
 		<action name="showCustList" class="custAction" method="showCustList">
 			<result name="cust.broker.list" type="tiles">cust.broker.list</result>

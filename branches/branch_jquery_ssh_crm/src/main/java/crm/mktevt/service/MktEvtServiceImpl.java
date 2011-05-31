@@ -1,13 +1,12 @@
 package crm.mktevt.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -39,122 +38,152 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
 
     @Override
     public void saveOrUpdate(Object object) throws Exception {
+        List<Object> delList = new ArrayList<Object>();
+        List<Object> saveList = new ArrayList<Object>();
         MktEvtExtDto mktEvtExtDto = (MktEvtExtDto) object;
         MarketEvent mktEvtObj = new MarketEvent();
         BeanUtils.copyProperties(mktEvtObj, mktEvtExtDto);
         if (mktEvtObj.getId() == 0) {
             mktEvtObj.setId(null);
-        } else {
-            // for update ,delete rels
-            deleteAllRel(Utils.getIds(mktEvtObj.getId().toString()));
         }
         super.saveOrUpdate(mktEvtObj);
         //
+        List<Integer> compIds = null;
+        List<?> compRels = getCompRels(mktEvtObj.getId());
         if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompIds())) {
-            Set<MarketEventCompanyRel> mktEvtCompRels = new HashSet<MarketEventCompanyRel>();
-            List<Integer> compIds = Utils.getIds(mktEvtExtDto.getSysCompIds());
-            MarketEventCompanyRelId _relId = null;
-            for (Iterator<Integer> iterator = compIds.iterator(); iterator.hasNext();) {
-                Integer ele = (Integer) iterator.next();
-                _relId = new MarketEventCompanyRelId();
-                _relId.setMarketEventId(mktEvtObj.getId());
-                _relId.setSysCompanyId(ele);
-                mktEvtCompRels.add(new MarketEventCompanyRel(_relId));
+            compIds = Utils.getIds(mktEvtExtDto.getSysCompIds());
+            if (null != compRels && compRels.size() > 0) {
+                for (Iterator<?> iterator = compRels.iterator(); iterator.hasNext();) {
+                    MarketEventCompanyRel ele = (MarketEventCompanyRel) iterator.next();
+                    boolean isFind = false;
+                    for (Iterator<?> iterator2 = compIds.iterator(); iterator2.hasNext();) {
+                        Integer ele2 = (Integer) iterator2.next();
+                        if (ele.getId().getSysCompanyId().intValue() == ele2.intValue()) {
+                            iterator2.remove();
+                            isFind = true;
+                            break;
+                        }
+                    }
+                    if (!isFind) {
+                        delList.add(ele);
+                    }
+                }
             }
-            super.saveOrUpdateAll(mktEvtCompRels);
+            // add
+            if (null != compIds && compIds.size() > 0) {
+                for (Iterator<Integer> iterator = compIds.iterator(); iterator.hasNext();) {
+                    Integer ele = (Integer) iterator.next();
+                    saveList.add(new MarketEventCompanyRel(new MarketEventCompanyRelId(mktEvtObj.getId(), ele)));
+                }
+            }
+        } else {
+            delList.addAll(compRels);
         }
+
         //
+        List<Integer> custIds = null;
+        List<?> custRels = getCustRels(mktEvtObj.getId());
         if (StringUtils.isNotBlank(mktEvtExtDto.getCustomerIds())) {
-            Set<MarketEventCustomerRel> mktEvtCustRels = new HashSet<MarketEventCustomerRel>();
-            List<Integer> custIs = Utils.getIds(mktEvtExtDto.getCustomerIds());
-            MarketEventCustomerRelId _relId = null;
-            for (Iterator<Integer> iterator = custIs.iterator(); iterator.hasNext();) {
-                Integer ele = (Integer) iterator.next();
-                _relId = new MarketEventCustomerRelId();
-                _relId.setMarketEventId(mktEvtObj.getId());
-                _relId.setCustomerId(ele);
-                mktEvtCustRels.add(new MarketEventCustomerRel(_relId));
+            custIds = Utils.getIds(mktEvtExtDto.getCustomerIds());
+            if (null != custRels && custRels.size() > 0) {
+                for (Iterator<?> iterator = custRels.iterator(); iterator.hasNext();) {
+                    MarketEventCustomerRel ele = (MarketEventCustomerRel) iterator.next();
+                    boolean isFind = false;
+                    for (Iterator<?> iterator2 = custIds.iterator(); iterator2.hasNext();) {
+                        Integer ele2 = (Integer) iterator2.next();
+                        if (ele.getId().getCustomerId().intValue() == ele2.intValue()) {
+                            iterator2.remove();
+                            isFind = true;
+                            break;
+                        }
+                    }
+                    if (!isFind) {
+                        delList.add(ele);
+                    }
+                }
             }
-            super.saveOrUpdateAll(mktEvtCustRels);
+            // add
+            if (null != custIds && custIds.size() > 0) {
+                for (Iterator<Integer> iterator = custIds.iterator(); iterator.hasNext();) {
+                    Integer ele = (Integer) iterator.next();
+                    saveList.add(new MarketEventCustomerRel(new MarketEventCustomerRelId(mktEvtObj.getId(), ele)));
+                }
+            }
+        } else {
+            delList.addAll(custRels);
         }
-        // 
-        // if (StringUtils.isNotBlank(mktEvtExtDto.getContIds())) {
-        // Set<MarketEventContactRel> mktEvtContRels = new
-        // HashSet<MarketEventContactRel>();
-        // List<Integer> contIds = Utils.getIds(mktEvtExtDto.getContIds());
-        // MarketEventContactRelId _relId = null;
-        // for (Iterator<Integer> iterator = contIds.iterator();
-        // iterator.hasNext();) {
-        // Integer ele = (Integer) iterator.next();
-        // _relId = new MarketEventContactRelId();
-        // _relId.setMarketEventId(mktEvtObj.getId());
-        // _relId.setCustomerContactId(ele);
-        // mktEvtContRels.add(new MarketEventContactRel(_relId));
-        // }
-        // super.saveOrUpdateAll(mktEvtContRels);
-        // } else {
-        // log.warn("contact ids is null");
-        // }
+
         //
+        List<Integer> sysUserIds = null;
+        List<?> sysUserRels = getSysUserRels(mktEvtObj.getId());
         if (StringUtils.isNotBlank(mktEvtExtDto.getSysCompUseIds())) {
-            Set<MarketEventSysUserRel> mktEvtSysUserRels = new HashSet<MarketEventSysUserRel>();
-            List<Integer> sysUserIds = Utils.getIds(mktEvtExtDto.getSysCompUseIds());
-            MarketEventSysUserRelId _relId = null;
-            for (Iterator<Integer> iterator = sysUserIds.iterator(); iterator.hasNext();) {
-                Integer ele = (Integer) iterator.next();
-                _relId = new MarketEventSysUserRelId();
-                _relId.setMarketEventId(mktEvtObj.getId());
-                _relId.setSysCompanyUserId(ele);
-                mktEvtSysUserRels.add(new MarketEventSysUserRel(_relId));
+            sysUserIds = Utils.getIds(mktEvtExtDto.getSysCompUseIds());
+            if (null != sysUserRels && sysUserRels.size() > 0) {
+                for (Iterator<?> iterator = sysUserRels.iterator(); iterator.hasNext();) {
+                    MarketEventSysUserRel ele = (MarketEventSysUserRel) iterator.next();
+                    boolean isFind = false;
+                    for (Iterator<?> iterator2 = sysUserIds.iterator(); iterator2.hasNext();) {
+                        Integer ele2 = (Integer) iterator2.next();
+                        if (ele.getId().getSysCompanyUserId().intValue() == ele2.intValue()) {
+                            iterator2.remove();
+                            isFind = true;
+                            break;
+                        }
+                    }
+                    if (!isFind) {
+                        delList.add(ele);
+                    }
+                }
             }
-            super.saveOrUpdateAll(mktEvtSysUserRels);
+            // add
+            if (null != sysUserIds && sysUserIds.size() > 0) {
+                for (Iterator<Integer> iterator = sysUserIds.iterator(); iterator.hasNext();) {
+                    Integer ele = (Integer) iterator.next();
+                    saveList.add(new MarketEventSysUserRel(new MarketEventSysUserRelId(mktEvtObj.getId(), ele)));
+                }
+            }
+        } else {
+            delList.addAll(sysUserRels);
+        }
+        //
+        if (delList.size() > 0) {
+            super.deleteAll(delList);
+        }
+        if (saveList.size() > 0) {
+            super.saveOrUpdateAll(saveList);
         }
     }
 
     @Override
     public void deleteAll(Object object, Collection ids) throws Exception {
         if (null != ids && ids.size() > 0) {
-            deleteAllRel(ids);
+            List<Object> _list = new ArrayList<Object>();
+            for (Iterator<?> iterator = ids.iterator(); iterator.hasNext();) {
+                Integer ele = (Integer) iterator.next();
+                _list.addAll(getCompRels(ele));
+                _list.addAll(getCustRels(ele));
+                _list.addAll(getSysUserRels(ele));
+            }
+            if (_list.size() > 0) {
+                super.deleteAll(_list);
+            }
             super.deleteAll(object, ids);
         }
     }
 
-    private void deleteAllRel(Collection ids) throws Exception {
-        if (null != ids && ids.size() > 0) {
-            for (Iterator<?> iterator = ids.iterator(); iterator.hasNext();) {
-                Integer ele = (Integer) iterator.next();
-                //
-                List<?> compRelList = getBaseDaoImpl().findByCriteria(
-                        DetachedCriteria.forClass(MarketEventCompanyRel.class).add(
-                                Expression.eq("id.marketEventId", ele)));
-                if (null != compRelList && compRelList.size() > 0) {
-                    super.deleteAll(compRelList);
-                }
-                //
-                List<?> custRelList = getBaseDaoImpl().findByCriteria(
-                        DetachedCriteria.forClass(MarketEventCustomerRel.class).add(
-                                Expression.eq("id.marketEventId", ele)));
-                if (null != custRelList && custRelList.size() > 0) {
-                    super.deleteAll(custRelList);
-                }
-                //
-                // List<?> contRelList = getBaseDaoImpl().findByCriteria(
-                // DetachedCriteria.forClass(MarketEventContactRel.class).add(
-                // Expression.eq("id.marketEventId", ele)));
-                // if (null != contRelList && contRelList.size() > 0) {
-                // super.deleteAll(contRelList);
-                // } else {
-                // log.warn("deleteAllRel contRelList is null");
-                // }
-                //
-                List<?> sysUserList = getBaseDaoImpl().findByCriteria(
-                        DetachedCriteria.forClass(MarketEventSysUserRel.class).add(
-                                Expression.eq("id.marketEventId", ele)));
-                if (null != sysUserList && sysUserList.size() > 0) {
-                    super.deleteAll(sysUserList);
-                }
-            }
-        }
+    private List<?> getCompRels(int id) throws Exception {
+        return super.findByCriteria(DetachedCriteria.forClass(MarketEventCompanyRel.class).add(
+                Expression.eq("id.marketEventId", id)));
+    }
+
+    private List<?> getCustRels(int id) throws Exception {
+        return super.findByCriteria(DetachedCriteria.forClass(MarketEventCustomerRel.class).add(
+                Expression.eq("id.marketEventId", id)));
+    }
+
+    private List<?> getSysUserRels(int id) throws Exception {
+        return super.findByCriteria(DetachedCriteria.forClass(MarketEventSysUserRel.class).add(
+                Expression.eq("id.marketEventId", id)));
     }
 
     @Override
@@ -251,7 +280,7 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         if (null != dto.getMktevtSuperiorId() && dto.getMktevtSuperiorId() > 0) {
             criteria.add(Restrictions.eq("mktevtSuperiorId", dto.getMktevtSuperiorId()));
         }
-        return getBaseDaoImpl().findByCriteria(criteria);
+        return super.findByCriteria(criteria);
     }
 
     @Override
@@ -282,6 +311,6 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         if (StringUtils.isNotBlank(dto.getSysCompIds())) {
             criteria.add(Restrictions.in("sysCompanyId", Utils.getIds(dto.getSysCompIds())));
         }
-        return getBaseDaoImpl().findByCriteria(criteria);
+        return super.findByCriteria(criteria);
     }
 }

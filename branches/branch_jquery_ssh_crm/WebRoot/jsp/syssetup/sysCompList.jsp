@@ -12,7 +12,7 @@
 					公司名称：
 				</td>
 				<td width="20%">
-					<input type="text" name="sysComp.companyName"
+					<input type="text" name="sysCompany.companyName"
 						class="easyui-validatebox" required="true"
 						validType="length[1,50]">
 				</td>
@@ -20,7 +20,7 @@
 					公司类型：
 				</td>
 				<td width="20%">
-					<select name="sysComp.type" class="easyui-combobox"
+					<select name="sysCompany.type" class="easyui-combobox"
 						panelHeight="auto" required="true" editable="false">
 						<option value="R">
 							融聚公司
@@ -34,7 +34,7 @@
 					公司状态：
 				</td>
 				<td width="20%">
-					<select id="sysComp_status" name="sysComp.status"
+					<select id="sysCompany_status" name="sysCompany.status"
 						class="easyui-combobox" panelHeight="auto" required="true"
 						editable="false">
 						<option value="A">
@@ -51,7 +51,7 @@
 					Logo图URI：
 				</td>
 				<td colspan="3">
-					<input type="text" name="sysComp.logo" style="width: 402px;"
+					<input type="text" name="sysCompany.logo" style="width: 402px;"
 						maxlength="100" class="easyui-validatebox" required="true"
 						validType="url" />
 				</td>
@@ -64,7 +64,7 @@
 					备注：
 				</td>
 				<td colspan="3">
-					<textarea name="sysComp.descript" rows="5" style="width: 402px;"
+					<textarea name="sysCompany.descript" rows="5" style="width: 402px;"
 						class="easyui-validatebox" validType="length[0,100]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
@@ -92,14 +92,14 @@
 						公司名称：
 					</td>
 					<td width="20%">
-						<input id="sysComp_companyName" name="sysComp.companyName"
+						<input id="sysCompany_companyName" name="sysCompany.companyName"
 							type="text" maxlength="50" />
 					</td>
 					<td nowrap="nowrap" align="center" width="10%">
 						公司状态：
 					</td>
 					<td width="20%">
-						<select id="sysComp_status_search" name="sysComp.status"
+						<select id="sysCompany_status_search" name="sysCompany.status"
 							class="easyui-combobox" panelHeight="auto" editable="false">
 							<option value="">
 								---请选择---
@@ -167,26 +167,26 @@
 	});
 	
 	$("#_reset").click(function() {
-		$('#sysComp_status').combobox('clear');		
+		$('#sysCompany_status').combobox('clear');		
 		resetForm('infoForm');
 	});	
 	
 	//for search
 	$("#_search").click(function() {		
 		var queryParams = $('#grid-datalist').datagrid('options').queryParams={
-			'sysComp.companyName':$("#sysComp_companyName").val(),
-			'sysComp.status':$("#sysComp_status_search").combobox('getValue')
+			'sysCompany.companyName':$("#sysCompany_companyName").val(),
+			'sysCompany.status':$("#sysCompany_status_search").combobox('getValue')
 		};	    
 	    reloadDatagrid('grid-datalist');
 	});	
 	
 	$("#_reset_search").click(function() {
-		$('#sysComp_status_search').combobox('clear');		
+		$('#sysCompany_status_search').combobox('clear');		
 		resetForm('searchFrom');
 	});
 		
 	function editComp(id){
-		window.location.href='showSysCompInfo.action?sysComp.id='+id;
+		window.location.href='showSysCompInfo.action?sysCompany.id='+id;
 	}
 	
 	$(document).ready(function() {

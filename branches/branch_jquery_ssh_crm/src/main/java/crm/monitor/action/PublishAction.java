@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
 import crm.json.JsonListResult;
@@ -17,6 +18,7 @@ import crm.monitor.service.PublishService;
  * @author Kind Cao
  * @version $Rev$, May 24, 2011 4:30:56 PM
  */
+@Scope("prototype")
 @SuppressWarnings("serial")
 public class PublishAction extends BaseAction {
 

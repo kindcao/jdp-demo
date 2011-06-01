@@ -62,7 +62,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_
 -- ----------------------------
 -- View structure for market_event_view_count
 -- ----------------------------
-CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_count` AS select sql_no_cache `test`.`rno`() AS `id`,`sub`.`industry_superior_id` AS `industry_superior_id`,`sub`.`cust_id` AS `cust_id`,`sub`.`cust_name` AS `cust_name`,`sub`.`mktevt_superior_id` AS `mktevt_superior_id`,`sub`.`mktevt_superior_name` AS `mktevt_superior_name`,count(0) AS `num`,`sub`.`occur_date` AS `occur_date`,`sub`.`sys_company_id` AS `sys_company_id` from `market_event_view_count_sub` `sub` where (`test`.`rno_reset`() = 1) group by `sub`.`industry_superior_id`,`sub`.`cust_id`,`sub`.`mktevt_superior_id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`%` SQL SECURITY DEFINER VIEW `market_event_view_count` AS select sql_no_cache `test`.`rno`() AS `id`,`sub`.`industry_superior_id` AS `industry_superior_id`,`sub`.`cust_id` AS `cust_id`,`sub`.`cust_name` AS `cust_name`,`sub`.`mktevt_superior_id` AS `mktevt_superior_id`,`sub`.`mktevt_superior_name` AS `mktevt_superior_name`,count(0) AS `num`,`sub`.`occur_date` AS `occur_date`,`sub`.`sys_company_id` AS `sys_company_id` from `market_event_view_count_sub` `sub` where (`test`.`rno_reset`() = 1) group by `sub`.`industry_superior_id`,`sub`.`cust_id`,`sub`.`mktevt_superior_id` ,`sub`.`occur_date`;
 
 -- ----------------------------
 -- View structure for market_event_view_count_sub

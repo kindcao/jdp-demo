@@ -22,7 +22,7 @@
 		src="${pageContext.request.contextPath}/scripts/jquery/common.js"></script>
 
 	<script type="text/javascript">
-		 <!--
+	<!--
 		 $.ajaxSetup ({
 			cache: true //关闭AJAX相应的缓存			
 		 });
@@ -34,6 +34,7 @@
 				document.location = "logout.action";
 				// window.event.returnValue = ""; //这里可以放置你想做的操作代码
 			}
-		 }		
+		 }
+	//-->		
 	</script>
 </head>

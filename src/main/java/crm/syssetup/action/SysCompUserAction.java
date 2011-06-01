@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
@@ -28,7 +29,7 @@ import crm.util.Utils;
  * @version 1.0 <br>
  *          Dec 4, 2010 9:09:55 PM
  */
-
+@Scope("prototype")
 @SuppressWarnings("serial")
 public class SysCompUserAction extends BaseAction {
 

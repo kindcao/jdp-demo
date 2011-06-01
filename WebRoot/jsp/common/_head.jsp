@@ -15,8 +15,6 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/jquery-1.4.4.min.js"></script>
 	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/scripts/jquery/jquery.lazyload.min.js"></script>
-	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/jquery.form.min.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/jquery.easyui.min.js"></script>
@@ -36,15 +34,6 @@
 				document.location = "logout.action";
 				// window.event.returnValue = ""; //这里可以放置你想做的操作代码
 			}
-		 }
-		 //
-		 jQuery(document).ready(  
-			 function($){  
-			 $("img").lazyload({  
-			      placeholder : "../images/grey.gif",  
-			      effec:"fadeIn"
-			 });  
-		 });
-		//-->
-		</script>
+		 }		
+	</script>
 </head>

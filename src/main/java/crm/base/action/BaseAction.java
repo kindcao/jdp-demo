@@ -27,6 +27,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -42,6 +43,13 @@ import crm.model.SysCompanyUserRelId;
 import crm.syssetup.service.SysCompUserService;
 import crm.util.Utils;
 
+/**
+ * 
+ * @author Kind Cao
+ * @version 1.0 <br>
+ *          Jun 1, 2011 11:37:21 PM
+ */
+@Scope("prototype")
 @SuppressWarnings("serial")
 public class BaseAction extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware,
         ApplicationAware, CookiesAware {

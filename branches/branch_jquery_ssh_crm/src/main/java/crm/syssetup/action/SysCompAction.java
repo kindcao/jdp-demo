@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
@@ -24,9 +25,9 @@ import crm.syssetup.service.SysCompService;
  * @version 1.0 <br>
  *          May 3, 2011 9:45:30 PM
  */
+@Scope("prototype")
+@SuppressWarnings("serial")
 public class SysCompAction extends BaseAction {
-
-    private static final long serialVersionUID = 6451848871854370991L;
 
     protected Logger log = LoggerFactory.getLogger(SysCompAction.class);
 
@@ -88,15 +89,12 @@ public class SysCompAction extends BaseAction {
         this.sysCompService = sysCompService;
     }
 
-    
     public SysCompany getSysCompany() {
         return sysCompany;
     }
 
-    
     public void setSysCompany(SysCompany sysCompany) {
         this.sysCompany = sysCompany;
     }
 
-   
 }

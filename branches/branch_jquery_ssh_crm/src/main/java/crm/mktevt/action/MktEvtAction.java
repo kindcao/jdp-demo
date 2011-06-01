@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
@@ -32,6 +33,7 @@ import crm.util.Utils;
  * @author Kind Cao
  * @version $Rev$, May 11, 2011 2:44:42 PM
  */
+@Scope("prototype")
 @SuppressWarnings("serial")
 public class MktEvtAction extends BaseAction {
 

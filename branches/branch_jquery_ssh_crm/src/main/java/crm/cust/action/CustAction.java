@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
@@ -34,6 +35,7 @@ import crm.util.Utils;
  * @author Kind Cao
  * @version $Rev$, Apr 28, 2011 2:30:19 PM
  */
+@Scope("prototype")
 public class CustAction extends BaseAction {
 
     private static final long serialVersionUID = -8111161784038216123L;

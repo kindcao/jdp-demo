@@ -4,7 +4,6 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="Content-Style-Type" content="text/css" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="expires" content="0" />
@@ -24,7 +23,7 @@
 	<script type="text/javascript">
 	<!--
 		 $.ajaxSetup ({
-			cache: true //关闭AJAX相应的缓存			
+			cache: false //关闭AJAX相应的缓存			
 		 });
 		 
 		 window.onbeforeunload = function() {

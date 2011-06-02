@@ -69,7 +69,7 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     private SysCompUserService sysCompUserService;
 
     // for search list paging
-    private Integer rows = 3;
+    private Integer rows = 15;
 
     private Integer page = 1;
 
@@ -80,8 +80,6 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     private String ids;
 
     //
-    private int induId;
-
     private int eventTypeId;
 
     private String sysCompIds;
@@ -145,28 +143,6 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
         return NONE;
     }
 
-    public String getCustIndu() throws Exception {
-        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(CustomerIndustry.class.getName());
-        if (null == map) {
-            throw new RuntimeException("getCustIndu map from servlet context is null.");
-        }
-        //
-        List<CustomerIndustry> list = new ArrayList<CustomerIndustry>();
-        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
-            String key = (String) iterator.next();
-            CustomerIndustry value = (CustomerIndustry) map.get(key);
-            if (induId > 0) {
-                if (null != value.getSuperiorId() && value.getSuperiorId().intValue() == induId) {
-                    list.add(value);
-                }
-            } else {
-                list.add(value);
-            }
-        }
-        responseJsonData(list);
-        return NONE;
-    }
-
     public String getSysComp() throws Exception {
         Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
         if (null == map) {
@@ -217,11 +193,9 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     }
 
     protected void responseJsonData(String data) throws IOException {
-        response.setContentType("text/json;charset=UTF-8");
+        response.setContentType("text/json;charset=utf-8");
         response.setHeader("Pragma", "no-cache");
-        response.addHeader("Cache-Control", "must-revalidate");
         response.addHeader("Cache-Control", "no-cache");
-        response.addHeader("Cache-Control", "no-store");
         response.setDateHeader("Expires", 0);
         response.getWriter().write(data);
         response.getWriter().flush();
@@ -244,11 +218,9 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
             sb.append(JSONObject.fromObject(obj, cfg));
         }
         if (sb.toString().length() > 0) {
-            response.setContentType("text/json;charset=UTF-8");
+            response.setContentType("text/json;charset=utf-8");
             response.setHeader("Pragma", "no-cache");
-            response.addHeader("Cache-Control", "must-revalidate");
             response.addHeader("Cache-Control", "no-cache");
-            response.addHeader("Cache-Control", "no-store");
             response.setDateHeader("Expires", 0);
             response.getWriter().write(sb.toString());
             response.getWriter().flush();
@@ -358,14 +330,6 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
 
     public void setIds(String ids) {
         this.ids = Utils.fmtAndSortIds(ids);
-    }
-
-    public int getInduId() {
-        return induId;
-    }
-
-    public void setInduId(int induId) {
-        this.induId = induId;
     }
 
     public int getEventTypeId() {

@@ -38,6 +38,9 @@
 	<listener>
 		<listener-class>crm.listener.InitServletContextListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
 	<!--listener>
 		<listener-class>
 		org.springframework.security.ui.session.HttpSessionEventPublisher
@@ -70,7 +73,7 @@
 	</filter-mapping>
 	<!--session-config>
 		<session-timeout>1</session-timeout>
-	</session-config-->
+		</session-config-->
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

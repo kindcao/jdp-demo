@@ -7,6 +7,7 @@
 	<constant name="struts.custom.i18n.resources" value="messageResource" />
 	<constant name="struts.devMode" value="false" />
 	<!--constant name="struts.ui.theme" value="css_xhtml" /-->
+	<constant name="struts.objectFactory" value="spring" />
 	<package name="default" extends="tiles-default" namespace="/">
 		<interceptors>
 			<interceptor name="exceptionInterceptor" class="crm.interceptor.ExceptionInterceptor" />
@@ -38,7 +39,8 @@
 		<action name="getSysCompUserByCompIds" class="baseAction" method="getSysCompUserByCompIds" />
 		<action name="getIndustryNewsType" class="baseAction" method="getIndustryNewsType" />
 		<!-- cust -->
-		<action name="showCustList" class="custAction" method="showCustList">
+		<action name="*Cust*" class="custAction" method="{0}">
+			<!-- list -->
 			<result name="cust.broker.list" type="tiles">cust.broker.list</result>
 			<result name="cust.bank.list" type="tiles">cust.bank.list</result>
 			<result name="cust.invest.list" type="tiles">cust.invest.list</result>
@@ -46,8 +48,7 @@
 			<result name="cust.info.list" type="tiles">cust.info.list</result>
 			<result name="cust.listed.list" type="tiles">cust.listed.list</result>
 			<result name="cust.others.list" type="tiles">cust.others.list</result>
-		</action>
-		<action name="showCustInfo" class="custAction" method="showCustInfo">
+			<!-- info -->
 			<result name="cust.broker.info" type="tiles">cust.broker.info</result>
 			<result name="cust.bank.info" type="tiles">cust.bank.info</result>
 			<result name="cust.invest.info" type="tiles">cust.invest.info</result>
@@ -55,26 +56,14 @@
 			<result name="cust.info.info" type="tiles">cust.info.info</result>
 			<result name="cust.listed.info" type="tiles">cust.listed.info</result>
 			<result name="cust.others.info" type="tiles">cust.others.info</result>
-		</action>
-		<action name="showCustInfoDtl" class="custAction" method="showCustInfoDtl">
+			<!-- dtl -->
 			<result name="cust.info.dtl">/jsp/cust/custInfoDtl.jsp</result>
 		</action>
-		<action name="getCustList" class="custAction" method="getCustList" />
-		<action name="getCustNameList" class="custAction" method="getCustNameList" />
-		<action name="getCustIndu" class="custAction" method="getCustIndu" />
-		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
-		<action name="deleteCust" class="custAction" method="deleteCust" />
 		<!-- cust - contact  -->
-		<action name="showContList" class="contAction" method="showContList">
+		<action name="*Cont*" class="contAction" method="{0}">
 			<result name="contact.list">/jsp/cust/contactList.jsp</result>
-		</action>
-		<action name="showContInfo" class="contAction" method="showContInfo">
 			<result name="contact.info">/jsp/cust/contactInfo.jsp</result>
 		</action>
-		<action name="getContList" class="contAction" method="getContList" />
-		<action name="getContByCustIds" class="contAction" method="getContByCustIds" />
-		<action name="saveContInfo" class="contAction" method="saveContInfo" />
-		<action name="deleteCont" class="contAction" method="deleteCont" />
 		<!-- market event  -->
 		<action name="showMktEvtList" class="mktEvtAction" method="showMktEvtList">
 			<result name="mktevt.list" type="tiles">mktevt.list</result>

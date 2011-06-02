@@ -18,7 +18,7 @@ import crm.monitor.service.PublishService;
  * @author Kind Cao
  * @version $Rev$, May 24, 2011 4:30:56 PM
  */
-@Scope("prototype")
+@Scope("session")
 @SuppressWarnings("serial")
 public class PublishAction extends BaseAction {
 

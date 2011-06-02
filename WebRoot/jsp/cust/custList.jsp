@@ -47,7 +47,7 @@
 					<input id="cust_indu" class="easyui-combobox"
 						name="cust.industryId" required="true" url="getCustIndu.action"
 						valueField="id" textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 160px;">
+						panelHeight="auto" style="width: 159px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -175,7 +175,7 @@
 						<input id="cust_indu_search" class="easyui-combobox"
 							name="industryId" url="getCustIndu.action" valueField="id"
 							textField="name" multiple="false" editable="false"
-							panelHeight="auto" style="width: 160px;">
+							panelHeight="auto" style="width: 159px;">
 					</td>
 				</tr>
 				<tr height="30px">

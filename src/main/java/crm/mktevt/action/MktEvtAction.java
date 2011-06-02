@@ -33,7 +33,7 @@ import crm.util.Utils;
  * @author Kind Cao
  * @version $Rev$, May 11, 2011 2:44:42 PM
  */
-@Scope("prototype")
+@Scope("session")
 @SuppressWarnings("serial")
 public class MktEvtAction extends BaseAction {
 

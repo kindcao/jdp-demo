@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set name="_cust" value="#session.CUSTOMER_SESSION_KEY" />
+<s:set name="_cust" value="cust" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
@@ -170,7 +170,7 @@
 					<input id="cust_sys_comp" class="easyui-combobox"
 						name="custSysCompIds" required="true" url="getSysComp.action"
 						valueField="id" textField="companyName" multiple="true"
-						editable="false" panelHeight="auto" style="width: 400px;"
+						editable="false" panelHeight="auto" style="width: 425px;"
 						value='<s:property value="#_cust.custSysCompNames" />'>
 
 				</td>
@@ -181,7 +181,7 @@
 					<input id="cust_indu" class="easyui-combobox"
 						name="cust.industryId" required="true" url="getCustIndu.action"
 						valueField="id" textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 135px;"
+						panelHeight="auto" style="width: 159px;"
 						value='<s:property value="#_cust.industryName" />'>
 				</td>
 			</tr>
@@ -239,7 +239,7 @@
 				</td>
 				<td colspan="3">
 					<input type="text" name="cust.address" maxlength="200"
-						style="width: 402px;"
+						style="width: 427px;"
 						value='<s:property value="#_cust.address" />' />
 				</td>
 				<td class="label-title">
@@ -257,7 +257,7 @@
 				</td>
 				<td colspan="3">
 					<textarea id="cust.descript" name="cust.descript" rows="5"
-						style="width: 402px;" class="easyui-validatebox"
+						style="width: 427px;" class="easyui-validatebox"
 						validType="length[0,500]"> 			
 					</textarea>
 				</td>
@@ -275,7 +275,7 @@
 					备注：
 				</td>
 				<td colspan="3">
-					<textarea name="cust.remark" rows="5" style="width: 402px;"
+					<textarea name="cust.remark" rows="5" style="width: 427px;"
 						class="easyui-validatebox" validType="length[0,500]"
 						value='<s:property value="#_cust.remark" />'></textarea>
 				</td>
@@ -295,7 +295,7 @@
 <script type="text/javascript" defer="defer">
 <!--
 	$("#_back").click(function() {
-		window.location.href='showCustList.action?induId=<s:property value="#session.induId" />';
+		window.location.href='showCustList.action';
 	});	
 	
 	$("#_back_edit").click(function() {

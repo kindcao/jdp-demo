@@ -34,9 +34,8 @@
 		<action name="getSysStatus" class="baseAction" method="getSysStatus" />
 		<action name="getStatusYN" class="baseAction" method="getStatusYN" />
 		<action name="getSysComp" class="baseAction" method="getSysComp" />
-		<action name="getCustIndu" class="baseAction" method="getCustIndu" />
 		<action name="getMarketEventType" class="baseAction" method="getMarketEventType" />
-		<action name="getSysCompUserByCompIds" class="baseAction" method="getSysCompUserByCompIds" />	
+		<action name="getSysCompUserByCompIds" class="baseAction" method="getSysCompUserByCompIds" />
 		<action name="getIndustryNewsType" class="baseAction" method="getIndustryNewsType" />
 		<!-- cust -->
 		<action name="showCustList" class="custAction" method="showCustList">
@@ -62,6 +61,7 @@
 		</action>
 		<action name="getCustList" class="custAction" method="getCustList" />
 		<action name="getCustNameList" class="custAction" method="getCustNameList" />
+		<action name="getCustIndu" class="custAction" method="getCustIndu" />
 		<action name="saveCustInfo" class="custAction" method="saveCustInfo" />
 		<action name="deleteCust" class="custAction" method="deleteCust" />
 		<!-- cust - contact  -->

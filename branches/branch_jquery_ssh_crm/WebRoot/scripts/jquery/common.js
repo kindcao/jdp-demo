@@ -164,8 +164,8 @@ function showDatagrid(datagridIdStr, url, frozenColumns, columns) {
 				rownumbers : false,
 				pagination : true,
 				pageNumber : 1,
-				pageSize : 3,
-				pageList : [3, 10],
+				pageSize : 15,
+				pageList : [15,30,60],
 				frozenColumns : frozenColumns,
 				columns : columns,
 				onClickRow : function(rowIndex, rowData) {

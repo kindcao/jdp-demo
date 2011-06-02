@@ -3,70 +3,69 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
-<s:hidden id="induId" name="induId" />
 <div id="div_info" style="margin-top: 10px; display: none;">
 	<form id="infoForm" name="infoForm">
 		<s:hidden name="actionFlag" value="" />
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					客户名称:
+				<td class="label-title" width="10%">
+					客户名称：
 				</td>
 				<td width="20%">
 					<input type="text" name="cust.custName" class="easyui-validatebox"
 						required="true" validType="length[1,50]">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					简称:
+				<td class="label-title" width="10%">
+					简称：
 				</td>
 				<td width="20%">
 					<input type="text" name="cust.shortName" class="easyui-validatebox"
 						required="true" validType="length[1,50]">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					客户编码:
+				<td class="label-title" width="10%">
+					客户编码：
 				</td>
 				<td width="20%">
 					<input type="text" name="cust.custCode" maxlength="20">
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					所属公司:
+				<td class="label-title">
+					所属公司：
 				</td>
 				<td colspan="3">
 					<input id="cust_sys_comp" class="easyui-combobox"
 						name="custSysCompIds" required="true" url="getSysComp.action"
 						valueField="id" textField="companyName" multiple="true"
-						editable="false" panelHeight="auto" style="width: 400px;">
+						editable="false" panelHeight="auto" style="width: 425px;">
 				</td>
-				<td nowrap="nowrap" align="center">
-					行业:
+				<td class="label-title">
+					行业：
 				</td>
 				<td>
 					<input id="cust_indu" class="easyui-combobox"
-						name="cust.industryId" required="true" url="" valueField="id"
-						textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 135px;">
+						name="cust.industryId" required="true" url="getCustIndu.action"
+						valueField="id" textField="name" multiple="false" editable="false"
+						panelHeight="auto" style="width: 160px;">
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					电话:
+				<td class="label-title">
+					电话：
 				</td>
 				<td>
 					<input type="text" name="cust.phone" class="easyui-validatebox"
 						required="true" validType="phone" maxlength="40">
 				</td>
-				<td nowrap="nowrap" align="center">
-					传真:
+				<td class="label-title">
+					传真：
 				</td>
 				<td>
 					<input type="text" name="cust.fax" maxlength="40">
 				</td>
-				<td nowrap="nowrap" align="center">
-					邮箱:
+				<td class="label-title">
+					邮箱：
 				</td>
 				<td>
 					<input type="text" name="cust.email" maxlength="40"
@@ -74,35 +73,35 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					国家:
+				<td class="label-title">
+					国家：
 				</td>
 				<td>
 					<input type="text" name="cust.country" maxlength="20">
 				</td>
-				<td nowrap="nowrap" align="center">
-					省份:
+				<td class="label-title">
+					省份：
 				</td>
 				<td>
 					<input type="text" name="cust.province" maxlength="20">
 				</td>
-				<td nowrap="nowrap" align="center">
-					城市:
+				<td class="label-title">
+					城市：
 				</td>
 				<td>
 					<input type="text" name="cust.city" maxlength="20">
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					地址:
+				<td class="label-title">
+					地址：
 				</td>
 				<td colspan="3">
 					<input type="text" name="cust.address" maxlength="200"
-						style="width: 402px;" />
+						style="width: 427px;" />
 				</td>
-				<td nowrap="nowrap" align="center">
-					邮编:
+				<td class="label-title">
+					邮编：
 				</td>
 				<td>
 					<input type="text" name="cust.postcode" class="easyui-validatebox"
@@ -110,15 +109,15 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					简介:
+				<td class="label-title">
+					简介：
 				</td>
 				<td colspan="3">
-					<textarea name="cust.descript" rows="5" style="width: 402px;"
+					<textarea name="cust.descript" rows="5" style="width: 427px;"
 						class="easyui-validatebox" validType="length[0,500]"></textarea>
 				</td>
-				<td nowrap="nowrap" align="center">
-					网站:
+				<td class="label-title">
+					网站：
 				</td>
 				<td>
 					<input type="text" name="cust.website" class="easyui-validatebox"
@@ -126,11 +125,11 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					备注:
+				<td class="label-title">
+					备注：
 				</td>
 				<td colspan="3">
-					<textarea name="cust.remark" rows="5" style="width: 402px;"
+					<textarea name="cust.remark" rows="5" style="width: 427px;"
 						class="easyui-validatebox" validType="length[0,500]"> 				
 					</textarea>
 				</td>
@@ -156,54 +155,52 @@
 			<table cellpadding="0" cellspacing="0" width="800" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						客户名称:
+					<td class="label-title" width="10%">
+						客户名称：
 					</td>
 					<td width="20%">
 						<input type="text" id="custName" name="custName"
 							class="easyui-validatebox" validType="length[1,50]">
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						客户编码:
+					<td class="label-title" width="10%">
+						客户编码：
 					</td>
 					<td width="20%">
 						<input type="text" id="custCode" name="custCode" maxlength="20">
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						行业:
+					<td class="label-title" width="10%">
+						行业：
 					</td>
 					<td width="20%">
 						<input id="cust_indu_search" class="easyui-combobox"
-							name="industryId" url="" valueField="id" textField="name"
-							multiple="false" editable="false" panelHeight="auto"
-							style="width: 135px;">
+							name="industryId" url="getCustIndu.action" valueField="id"
+							textField="name" multiple="false" editable="false"
+							panelHeight="auto" style="width: 160px;">
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center">
-						所属公司:
+					<td class="label-title">
+						所属公司：
 					</td>
 					<td colspan="3">
 						<input id="cust_sys_comp_search" class="easyui-combobox"
 							name="custSysCompIds" url="getSysComp.action" valueField="id"
 							textField="companyName" multiple="true" editable="false"
-							panelHeight="auto" style="width: 400px;">
+							panelHeight="auto" style="width: 424px;">
+					</td>
+					<td colspan="2">
+						&nbsp;
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center">
-						地址:
+					<td class="label-title">
+						地址：
 					</td>
 					<td colspan="3">
 						<input type="text" id="address" name="address" maxlength="200"
-							style="width: 402px;" />
+							style="width: 426px;" />
 					</td>
-				</tr>
-				<tr height="30px">
-					<td colspan="5">
-						&nbsp;
-					</td>
-					<td align="right">
+					<td colspan="2" align="center" valign="middle">
 						<a href="#" class="easyui-linkbutton" plain="true"
 							iconCls="icon-search" id="_search">查询</a>
 						<a href="#" class="easyui-linkbutton" plain="true"
@@ -223,11 +220,7 @@
 
 <script type="text/javascript" defer="defer">
 <!--	
-	//for add begin	
-	$('#cust_indu').combobox({
-		url:'getCustIndu.action?induId='+$('#induId').val()				
-	});	
-
+	//for add begin
 	$("#_add").click(function() {		
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
@@ -317,8 +310,8 @@
 		reloadDatagrid('grid-datalist');
 	});	
 	
-	function editComp(cId){	
-		window.location.href='showCustInfo.action?induId='+$('#induId').val()+'&cust.id='+cId;
+	function editComp(id){		
+		window.location.href='showCustInfo.action?cust.id='+id;
 	}	
 		
 	//	
@@ -368,12 +361,7 @@
 		}]];
 			
 		//		
-		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);			
-		
-		//	
-		$('#cust_indu_search').combobox({
-			url:'getCustIndu.action?induId='+$('#induId').val()			
-		});				
+		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);		
 	});	
 	//for search end  
 //-->

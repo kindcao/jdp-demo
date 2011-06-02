@@ -25,7 +25,7 @@ import crm.syssetup.service.SysCompService;
  * @version 1.0 <br>
  *          May 3, 2011 9:45:30 PM
  */
-@Scope("prototype")
+@Scope("session")
 @SuppressWarnings("serial")
 public class SysCompAction extends BaseAction {
 

@@ -9,42 +9,42 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					姓名:
+				<td class="label-title" width="10%">
+					姓名：
 				</td>
 				<td width="20%">
 					<input type="text" name="cont.name" class="easyui-validatebox"
 						required="true" validType="length[1,40]">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					部门:
+				<td class="label-title" width="10%">
+					部门：
 				</td>
 				<td width="20%">
 					<input type="text" name="cont.department" maxlength="40">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					职位:
+				<td class="label-title" width="10%">
+					职位：
 				</td>
 				<td width="20%">
 					<input type="text" name="cont.posit" maxlength="40">
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					座机:
+				<td class="label-title">
+					座机：
 				</td>
 				<td>
 					<input type="text" name="cont.phone" class="easyui-validatebox"
 						validType="phone" maxlength="40">
 				</td>
-				<td nowrap="nowrap" align="center">
-					传真:
+				<td class="label-title">
+					传真：
 				</td>
 				<td>
 					<input type="text" name="cont.fax" maxlength="40">
 				</td>
-				<td nowrap="nowrap" align="center">
-					移动电话:
+				<td class="label-title">
+					移动电话：
 				</td>
 				<td>
 					<input type="text" name="cont.mobile" class="easyui-validatebox"
@@ -52,59 +52,59 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					邮箱:
+				<td class="label-title">
+					邮箱：
 				</td>
 				<td>
 					<input type="text" name="cont.email" maxlength="50"
 						class="easyui-validatebox" validType="email">
 				</td>
-				<td nowrap="nowrap" align="center">
-					是否主要:
+				<td class="label-title">
+					是否主要：
 				</td>
 				<td>
 					<input id="cont.isPrimary" name="cont.isPrimary"
 						class="easyui-combobox" url="getStatusYN.action" valueField="id"
 						textField="text" panelHeight="auto" editable="false"
-						style="width: 135px;">
+						style="width: 159px;">
 				</td>
-				<td nowrap="nowrap" align="center">
-					MSN/QQ:
+				<td class="label-title">
+					MSN/QQ：
 				</td>
 				<td>
 					<input type="text" name="cont.im" maxlength="50">
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					照片URI:
+				<td class="label-title">
+					照片URI：
 				</td>
 				<td colspan="3">
 					<input type="text" name="cont.picture" maxlength="100"
-						style="width: 402px;" class="easyui-validatebox" validType="url" />
+						style="width: 428px;" class="easyui-validatebox" validType="url" />
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					地址:
+				<td class="label-title">
+					地址：
 				</td>
 				<td colspan="3">
 					<input type="text" name="cont.address" maxlength="200"
-						style="width: 402px;" />
+						style="width: 428px;" />
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					备注:
+				<td class="label-title">
+					备注：
 				</td>
 				<td colspan="3">
-					<textarea name="cont.remark" rows="5" style="width: 402px;"
+					<textarea name="cont.remark" rows="5" style="width: 428px;"
 						class="easyui-validatebox" validType="length[0,500]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
@@ -128,34 +128,34 @@
 			<table cellpadding="0" cellspacing="0" width="800" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						姓名:
+					<td class="label-title" width="10%">
+						姓名：
 					</td>
 					<td width="20%">
 						<input type="text" id="name" name="name" maxlength="40">
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						职位:
+					<td class="label-title" width="10%">
+						职位：
 					</td>
 					<td width="20%">
 						<input type="text" id="posit" name="posit" maxlength="40">
 					</td>
-					<td nowrap="nowrap" align="center">
-						是否主要:
+					<td class="label-title">
+						是否主要：
 					</td>
 					<td>
 						<input id="isPrimary" name="isPrimary" class="easyui-combobox"
 							url="getStatusYN.action" valueField="id" textField="text"
-							panelHeight="auto" editable="false" style="width: 135px;">
+							panelHeight="auto" editable="false" style="width:159px;">
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center">
-						地址:
+					<td class="label-title">
+						地址：
 					</td>
 					<td colspan="3">
 						<input type="text" id="address" name="address" maxlength="200"
-							style="width: 376px;" />
+							style="width: 400px;" />
 					</td>
 					<td colspan="2" align="center">
 						&nbsp;

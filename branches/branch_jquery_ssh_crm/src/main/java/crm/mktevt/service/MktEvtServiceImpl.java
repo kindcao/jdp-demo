@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
@@ -42,10 +42,7 @@ public class MktEvtServiceImpl extends BaseServiceImpl implements MktEvtService 
         List<Object> saveList = new ArrayList<Object>();
         MktEvtExtDto mktEvtExtDto = (MktEvtExtDto) object;
         MarketEvent mktEvtObj = new MarketEvent();
-        BeanUtils.copyProperties(mktEvtObj, mktEvtExtDto);
-        if (mktEvtObj.getId() == 0) {
-            mktEvtObj.setId(null);
-        }
+        PropertyUtils.copyProperties(mktEvtObj, mktEvtExtDto);
         super.saveOrUpdate(mktEvtObj);
         //
         List<Integer> compIds = null;

@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.MatchMode;
 
 import crm.base.service.BaseServiceImpl;
-import crm.cust.dto.CustDto;
+import crm.cust.dto.CustExtDto;
 import crm.model.Customer;
 import crm.model.CustomerSysCompanyRel;
 import crm.model.CustomerSysCompanyRelId;
@@ -29,9 +30,10 @@ public class CustServiceImpl extends BaseServiceImpl implements CustService {
     public void saveOrUpdate(Object object) throws Exception {
         List<Object> delList = new ArrayList<Object>();
         List<Object> saveList = new ArrayList<Object>();
-        CustDto custDto = (CustDto) object;
-        Customer custObj = custDto.getCustObj();
+        CustExtDto custDto = (CustExtDto) object;
         // save customer
+        Customer custObj = new Customer();
+        PropertyUtils.copyProperties(custObj, custDto);
         super.saveOrUpdate(custObj);
         // set customer id and save CustomerSysCompanyRel
         Set<CustomerSysCompanyRel> custSysCompRels = custDto.getCustSysCompRels();

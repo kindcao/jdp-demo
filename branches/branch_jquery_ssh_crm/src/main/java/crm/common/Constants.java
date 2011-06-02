@@ -19,9 +19,10 @@ public class Constants {
 
     public static final String CURR_SYS_USER_COMP_SESSION_KEY = "CURR_SYS_USER_COMP_SESSION_KEY";
 
-    public static final String CUSTOMER_SESSION_KEY = "CUSTOMER_SESSION_KEY";
+    // public static final String CUSTOMER_SESSION_KEY = "CUSTOMER_SESSION_KEY";
 
-    public static final String CUSTOMER_CONTACT_SESSION_KEY = "CUSTOMER_CONTACT_SESSION_KEY";
+    // public static final String CUSTOMER_CONTACT_SESSION_KEY =
+    // "CUSTOMER_CONTACT_SESSION_KEY";
 
     public static final String MARKET_EVENT_SESSION_KEY = "MARKET_EVENT_SESSION_KEY";
 

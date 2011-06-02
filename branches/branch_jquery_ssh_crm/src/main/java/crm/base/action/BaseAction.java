@@ -33,7 +33,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import crm.common.Constants;
 import crm.json.JsonSysStatusResult;
-import crm.model.CustomerIndustry;
 import crm.model.IndustryNewsType;
 import crm.model.MarketEventType;
 import crm.model.SysCompany;
@@ -49,7 +48,7 @@ import crm.util.Utils;
  * @version 1.0 <br>
  *          Jun 1, 2011 11:37:21 PM
  */
-@Scope("prototype")
+@Scope("session")
 @SuppressWarnings("serial")
 public class BaseAction extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware,
         ApplicationAware, CookiesAware {

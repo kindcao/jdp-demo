@@ -29,7 +29,7 @@ import crm.util.Utils;
  * @version 1.0 <br>
  *          Dec 4, 2010 9:09:55 PM
  */
-@Scope("prototype")
+@Scope("session")
 @SuppressWarnings("serial")
 public class SysCompUserAction extends BaseAction {
 

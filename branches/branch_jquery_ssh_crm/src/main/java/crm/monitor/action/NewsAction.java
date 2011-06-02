@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ import crm.util.Utils;
  * @author Kind Cao
  * @version $Rev$, May 24, 2011 4:30:56 PM
  */
-@Scope("prototype")
+@Scope("session")
 @SuppressWarnings("serial")
 public class NewsAction extends BaseAction {
 
@@ -83,10 +83,7 @@ public class NewsAction extends BaseAction {
 
     public String saveNewsInfo() throws Exception {
         MonitorNews obj = new MonitorNews();
-        BeanUtils.copyProperties(obj, newsExtDto);
-        if (StringUtils.isBlank(getActionFlag())) {
-            obj.setId(null);
-        }
+        PropertyUtils.copyProperties(obj, newsExtDto);
         newsService.saveOrUpdate(obj);
         //
         JsonValidateResult jvr = new JsonValidateResult();

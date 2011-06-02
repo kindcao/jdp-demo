@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
-import crm.cust.dto.CustExtDto;
 import crm.cust.service.ContService;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
@@ -25,7 +24,7 @@ import crm.util.Utils;
  * @author Kind Cao
  * @version $Rev$, May 6, 2011 1:32:11 PM
  */
-@Scope("prototype")
+@Scope("session")
 @SuppressWarnings("serial")
 public class ContAction extends BaseAction {
 
@@ -46,20 +45,12 @@ public class ContAction extends BaseAction {
     private Integer customerId;
 
     public String showContList() throws Exception {
-        CustExtDto custExtDto = (CustExtDto) session.get(Constants.CUSTOMER_SESSION_KEY);
-        if (null == custExtDto) {
-            log.info("get customer object from session is null");
-            throw new RuntimeException("get customer object from session is null");
-        } else {
-            customerId = custExtDto.getId();
-        }
         return "contact.list";
     }
 
     public String showContInfo() throws Exception {
         if (null != cont && null != cont.getId() && cont.getId() > 0) {
             cont = (CustomerContact) contService.getObject(CustomerContact.class, cont.getId());
-            session.put(Constants.CUSTOMER_CONTACT_SESSION_KEY, cont);
         } else {
             log.error("contact id is null or 0");
             return NONE;
@@ -124,6 +115,8 @@ public class ContAction extends BaseAction {
         String[] filedName = new String[] { "id", "name", "department", "posit", "phone", "mobile", "email", "address",
                 "isPrimary" };
         responseJsonData(jlr, JsonUtils.setIncludes(CustomerContact.class, filedName));
+        //
+        reset();
         return NONE;
     }
 
@@ -144,27 +137,28 @@ public class ContAction extends BaseAction {
         return NONE;
     }
 
-    public String getContByCustIds() throws Exception {
-        if (null != customerId && customerId > 0) {
-            CustomerContact _obj = new CustomerContact();
-            _obj.setCustomerId(customerId);
-            _obj.setDeleteFlag(Constants.STATUS_N);
-            List<?> contList = contService.findByExample(_obj);
-            //
-            String[] filedName = new String[] { "id", "name" };
-            responseJsonData(contList, JsonUtils.setIncludes(CustomerContact.class, filedName));
-        } else {
-            log.warn("getContByCustIds customerId is null or 0");
-        }
-        return NONE;
-    }
-
-    // private void reset() {
-    // this.name = null;
-    // this.posit = null;
-    // this.isPrimary = null;
-    // this.address = null;
+    // public String getContByCustIds() throws Exception {
+    // if (null != customerId && customerId > 0) {
+    // CustomerContact _obj = new CustomerContact();
+    // _obj.setCustomerId(customerId);
+    // _obj.setDeleteFlag(Constants.STATUS_N);
+    // List<?> contList = contService.findByExample(_obj);
+    // //
+    // String[] filedName = new String[] { "id", "name" };
+    // responseJsonData(contList, JsonUtils.setIncludes(CustomerContact.class,
+    // filedName));
+    // } else {
+    // log.warn("getContByCustIds customerId is null or 0");
     // }
+    // return NONE;
+    // }
+
+    private void reset() {
+        this.name = null;
+        this.posit = null;
+        this.isPrimary = null;
+        this.address = null;
+    }
 
     @Resource
     public void setContService(ContService contService) {

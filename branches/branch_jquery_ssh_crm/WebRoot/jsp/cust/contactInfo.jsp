@@ -2,27 +2,26 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-
-<s:set name="_cont" value="#session.CUSTOMER_CONTACT_SESSION_KEY" />
+<s:set name="_cont" value="cont" />
 <div id="div_info_read-only_contact"
 	style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				姓名:
+			<td class="label-title" width="10%">
+				姓名：
 			</td>
 			<td width="20%">
 				<s:property value="#_cont.name" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				部门:
+			<td class="label-title" width="10%">
+				部门：
 			</td>
 			<td width="20%">
 				<s:property value="#_cont.department" />
 			</td>
-			<td nowrap="nowrap" align="center" valign="top">
-				照片URI:
+			<td class="label-title" valign="top">
+				照片URI：
 			</td>
 			<td rowspan="3" valign="top">
 				<s:if test="%{#_cont.picture.trim().length()>0}">
@@ -35,36 +34,36 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				职位:
+			<td class="label-title" width="10%">
+				职位：
 			</td>
 			<td width="20%">
 				<s:property value="#_cont.posit" />
 			</td>
-			<td nowrap="nowrap" align="center">
-				座机:
+			<td class="label-title">
+				座机：
 			</td>
 			<td>
 				<s:property value="#_cont.phone" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				传真:
+			<td class="label-title">
+				传真：
 			</td>
 			<td>
 				<s:property value="#_cont.fax" />
 			</td>
-			<td nowrap="nowrap" align="center">
-				移动电话:
+			<td class="label-title">
+				移动电话：
 			</td>
 			<td>
 				<s:property value="#_cont.mobile" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				邮箱:
+			<td class="label-title">
+				邮箱：
 			</td>
 			<td>
 				<s:if test="%{#_cont.email.trim().length()>0}">
@@ -72,8 +71,8 @@
 							value="#_cont.email" /> </a>
 				</s:if>
 			</td>
-			<td nowrap="nowrap" align="center">
-				是否主要:
+			<td class="label-title">
+				是否主要：
 			</td>
 			<td>
 				<s:if test='%{"Y"==#_cont.isPrimary}'>
@@ -83,16 +82,16 @@
 				否
 				</s:else>
 			</td>
-			<td nowrap="nowrap" align="center">
-				MSN/QQ:
+			<td class="label-title">
+				MSN/QQ：
 			</td>
 			<td>
 				<s:property value="#_cont.im" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				地址:
+			<td class="label-title">
+				地址：
 			</td>
 			<td colspan="3">
 				<s:property value="#_cont.address" />
@@ -102,8 +101,8 @@
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center">
-				备注:
+			<td class="label-title">
+				备注：
 			</td>
 			<td colspan="3">
 				<s:property value="#_cont.remark" />
@@ -125,23 +124,23 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					姓名:
+				<td class="label-title" width="10%">
+					姓名：
 				</td>
 				<td width="20%">
 					<input type="text" name="cont.name" class="easyui-validatebox"
 						required="true" validType="length[1,40]"
 						value='<s:property value="#_cont.name" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					部门:
+				<td class="label-title" width="10%">
+					部门：
 				</td>
 				<td width="20%">
 					<input type="text" name="cont.department" maxlength="40"
 						value='<s:property value="#_cont.department" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					职位:
+				<td class="label-title" width="10%">
+					职位：
 				</td>
 				<td width="20%">
 					<input type="text" name="cont.posit" maxlength="40"
@@ -149,23 +148,23 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					座机:
+				<td class="label-title">
+					座机：
 				</td>
 				<td>
 					<input type="text" name="cont.phone" class="easyui-validatebox"
 						validType="phone" maxlength="40"
 						value='<s:property value="#_cont.phone" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
-					传真:
+				<td class="label-title">
+					传真：
 				</td>
 				<td>
 					<input type="text" name="cont.fax" maxlength="40"
 						value='<s:property value="#_cont.fax" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
-					移动电话:
+				<td class="label-title">
+					移动电话：
 				</td>
 				<td>
 					<input type="text" name="cont.mobile" class="easyui-validatebox"
@@ -174,25 +173,25 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					邮箱:
+				<td class="label-title">
+					邮箱：
 				</td>
 				<td>
 					<input type="text" name="cont.email" maxlength="50"
 						class="easyui-validatebox" validType="email"
 						value='<s:property value="#_cont.email" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
-					是否主要:
+				<td class="label-title">
+					是否主要：
 				</td>
 				<td>
 					<input id="_cont_isPrimary" name="cont.isPrimary"
 						class="easyui-combobox" url="getStatusYN.action" valueField="id"
 						textField="text" panelHeight="auto" editable="false"
-						style="width: 133px;">
+						style="width: 158px;">
 				</td>
-				<td nowrap="nowrap" align="center">
-					MSN/QQ:
+				<td class="label-title">
+					MSN/QQ：
 				</td>
 				<td>
 					<input type="text" name="cont.im" maxlength="50"
@@ -200,12 +199,12 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					照片URI:
+				<td class="label-title">
+					照片URI：
 				</td>
 				<td colspan="3">
 					<input type="text" name="cont.picture" maxlength="100"
-						style="width: 402px;" class="easyui-validatebox" validType="url"
+						style="width: 427px;" class="easyui-validatebox" validType="url"
 						value='<s:property value="#_cont.picture" />' />
 				</td>
 				<td colspan="2" align="center">
@@ -213,12 +212,12 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					地址:
+				<td class="label-title">
+					地址：
 				</td>
 				<td colspan="3">
 					<input type="text" name="cont.address" maxlength="200"
-						style="width: 402px;"
+						style="width: 427px;"
 						value='<s:property value="#_cont.address" />' />
 				</td>
 				<td colspan="2" align="center">
@@ -226,12 +225,12 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					备注:
+				<td class="label-title">
+					备注：
 				</td>
 				<td colspan="3">
 					<textarea id="_cont_remark" name="cont.remark" rows="5"
-						style="width: 402px;" class="easyui-validatebox"
+						style="width: 427px;" class="easyui-validatebox"
 						validType="length[0,500]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">

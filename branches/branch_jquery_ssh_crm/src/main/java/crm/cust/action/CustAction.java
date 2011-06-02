@@ -1,5 +1,6 @@
 package crm.cust.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,13 +43,8 @@ public class CustAction extends BaseAction {
 
     private final Logger log = LoggerFactory.getLogger(CustAction.class);
 
-    private Integer induId;
-
+    // for cust search
     private String custSysCompIds;
-
-    // private String custSysUserIds = "";
-    //
-    // private String custSysUserPrimIds = "";
 
     private String custName;
 
@@ -63,6 +59,8 @@ public class CustAction extends BaseAction {
     private CustService custService;
 
     public String showCustList() throws Exception {
+        int induId = Integer.valueOf(request.getParameter("induId"));
+        session.put("induId", induId);
         switch (induId) {
         case 1: {
             return "cust.broker.list";
@@ -126,8 +124,8 @@ public class CustAction extends BaseAction {
             log.error("cust id is null");
             return NONE;
         }
-        //
-        switch (induId) {
+        //       
+        switch (Integer.valueOf(session.get("induId").toString())) {
         case 1: {
             return "cust.broker.info";
         }
@@ -167,6 +165,11 @@ public class CustAction extends BaseAction {
             cust.setDeleteFlag(Constants.STATUS_N);
             cust.setCreatedBy(getCurrSysCompUser().getId());
             cust.setCreatedTime(getCurrDate());
+        } else {
+            CustExtDto dto = (CustExtDto) session.get("CUSTOMER_SESSION_KEY");
+            cust.setCreatedBy(dto.getCreatedBy());
+            cust.setCreatedTime(dto.getCreatedTime());
+            cust.setDeleteFlag(dto.getDeleteFlag());
         }
         cust.setLastUpdatedBy(getCurrSysCompUser().getId());
         cust.setLastUpdatedTime(getCurrDate());
@@ -207,8 +210,8 @@ public class CustAction extends BaseAction {
         if (StringUtils.isNotBlank(custCode)) {
             map.put("custCode", custCode);
         }
-        if (null != induId && induId > 0) {
-            map.put("superiorIndustryId", induId);
+        if (null != session.get("induId")) {
+            map.put("superiorIndustryId", Integer.valueOf(session.get("induId").toString()));
         }
         if (null != industryId && industryId > 0) {
             map.put("industryId", industryId);
@@ -256,6 +259,29 @@ public class CustAction extends BaseAction {
         return NONE;
     }
 
+    public String getCustIndu() throws Exception {
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(CustomerIndustry.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getCustIndu map from servlet context is null.");
+        }
+        //
+        int induId = Integer.valueOf(session.get("induId").toString());
+        List<CustomerIndustry> list = new ArrayList<CustomerIndustry>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            CustomerIndustry value = (CustomerIndustry) map.get(key);
+            if (induId > 0) {
+                if (null != value.getSuperiorId() && value.getSuperiorId().intValue() == induId) {
+                    list.add(value);
+                }
+            } else {
+                list.add(value);
+            }
+        }
+        responseJsonData(list);
+        return NONE;
+    }
+
     public String getCustNameList() throws Exception {
         CustomerView _obj = new CustomerView();
         if (!currSysCompTypeIsR()) {
@@ -273,14 +299,6 @@ public class CustAction extends BaseAction {
         this.custCode = "";
         this.address = "";
         this.industryId = null;
-    }
-
-    public int getInduId() {
-        return induId;
-    }
-
-    public void setInduId(int induId) {
-        this.induId = induId;
     }
 
     public Customer getCust() {

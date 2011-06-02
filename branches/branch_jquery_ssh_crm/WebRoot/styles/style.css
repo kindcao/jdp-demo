@@ -6,12 +6,18 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-size: 11px;
+	font-size: 12px;
+	font-family: verdana, arial, helvetica, sans-serif;
 }
 
-body,input,select,textarea {
-	font-family: verdana, arial, helvetica, sans-serif;
-	font-size: 11px;
+input,select {
+	width: 160px;
+	height: 20px;
+	border: 1px solid #A4BED4;
+}
+
+textarea {
+	border: 1px solid #A4BED4;
 }
 
 body {
@@ -81,7 +87,7 @@ h6 {
 
 img {
 	border: 0px;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 p {
@@ -404,4 +410,11 @@ table.tabbedtable label {
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #fff;
 	margin: 1px 1px;
+}
+
+.label-title {
+	white-space: nowrap;
+	text-align: right;
+	padding-right: 10px;
+	color: gray;
 }

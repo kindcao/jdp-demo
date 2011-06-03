@@ -221,18 +221,11 @@
 		}, {
 			field : 'logo',
 			title : '公司Logo图URI',
-			width : 250,
+			width : 400,
 			formatter : function(value, rec) {
 				if(value){	
-					return "<a href='#' onclick=window.open('" + value+ "');>" + cutstr(value,30) + "</a>";
-				}									
-			}
-		}, {
-			field : 'descript',
-			title : '备注',
-			width : 300,
-			formatter : function(value, rec) {
-				return cutstr(value,50);
+					return "<a href='#' onclick=window.open('" + value+ "');>" + cutstr(value,80) + "</a>";
+				}
 			}
 		}]];
 			

@@ -2,18 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set name="_sysCompany" value="#session.SYS_COMP_SESSION_KEY" />
+<s:set name="_sysCompany" value="sysCompany" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
+			<td class="label-title" width="10%">
 				公司名称：
 			</td>
 			<td width="20%">
 				<s:property value="#_sysCompany.companyName" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
+			<td class="label-title" width="10%">
 				公司类型：
 			</td>
 			<td width="20%">
@@ -24,7 +24,7 @@
 				其它公司
 				</s:else>
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
+			<td class="label-title" width="10%">
 				公司状态：
 			</td>
 			<td width="20%">
@@ -37,7 +37,7 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				Logo图URI：
 			</td>
 			<td colspan="3">
@@ -51,7 +51,7 @@
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				备注：
 			</td>
 			<td colspan="3">
@@ -74,7 +74,7 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					公司名称：
 				</td>
 				<td width="20%">
@@ -83,7 +83,7 @@
 						validType="length[1,50]"
 						value='<s:property value="#_sysCompany.companyName" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					公司类型：
 				</td>
 				<td width="20%">
@@ -98,7 +98,7 @@
 						</option>
 					</select>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					公司状态：
 				</td>
 				<td width="20%">
@@ -115,7 +115,7 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					Logo图URI：
 				</td>
 				<td colspan="3">
@@ -128,7 +128,7 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					备注：
 				</td>
 				<td colspan="3">

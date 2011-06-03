@@ -1,6 +1,8 @@
 package crm.syssetup.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +41,10 @@ public class SysCompUserAction extends BaseAction {
 
     private SysCompanyUser sysCompUser;
 
+    private SysCompanyUserView sysCompUserView;
+
+    private String sysCompIds;
+
     public String showLogin() throws Exception {
         return LOGIN;
     }
@@ -49,8 +55,8 @@ public class SysCompUserAction extends BaseAction {
 
     public String showSysCompUserInfo() throws Exception {
         if (null != sysCompUser && sysCompUser.getId() > 0) {
-            session.put(Constants.SYS_COMP_USER_VIEW_SESSION_KEY, sysCompUserService.getObject(
-                    SysCompanyUserView.class, sysCompUser.getId()));
+            sysCompUserView = (SysCompanyUserView) sysCompUserService.getObject(SysCompanyUserView.class, sysCompUser
+                    .getId());
         } else {
             log.warn("sysCompUser is null or sysCompUser.getId() is 0");
         }
@@ -179,6 +185,32 @@ public class SysCompUserAction extends BaseAction {
         return NONE;
     }
 
+    public String getSysCompUserByCompIds() throws Exception {
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompanyUser.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getSysCompUserByCompIds map from servlet context is null.");
+        }
+
+        //
+        String childUserIds = getCurrSysUserChild();
+        List<SysCompanyUser> list = new ArrayList<SysCompanyUser>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            SysCompanyUser value = (SysCompanyUser) map.get(key);
+            if (StringUtils.isNotBlank(sysCompIds)) {
+                if (sysCompIds.contains(value.getSysCompanyId().toString())) {
+                    list.add(value);
+                }
+            } else {
+                if (childUserIds.contains(value.getId().toString())) {
+                    list.add(value);
+                }
+            }
+        }
+        responseJsonData(list);
+        return NONE;
+    }
+
     @Resource
     public void setSysUserService(SysCompUserService sysCompUserService) {
         this.sysCompUserService = sysCompUserService;
@@ -190,5 +222,21 @@ public class SysCompUserAction extends BaseAction {
 
     public void setSysCompUser(SysCompanyUser sysCompUser) {
         this.sysCompUser = sysCompUser;
+    }
+
+    public String getSysCompIds() {
+        return sysCompIds;
+    }
+
+    public void setSysCompIds(String sysCompIds) {
+        this.sysCompIds = sysCompIds;
+    }
+
+    public SysCompanyUserView getSysCompUserView() {
+        return sysCompUserView;
+    }
+
+    public void setSysCompUserView(SysCompanyUserView sysCompUserView) {
+        this.sysCompUserView = sysCompUserView;
     }
 }

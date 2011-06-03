@@ -31,16 +31,16 @@
 				</th>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					采访日期:
+				<td class="label-title" width="10%">
+					采访日期：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" id="newsExtDto_interviewDateStr"
 						name="newsExtDto.interviewDateStr" class="easyui-datebox"
 						required="true">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					发布日期:
+				<td class="label-title" width="10%">
+					发布日期：
 				</td>
 				<td width="40%">
 					<input type="text" id="newsExtDto_publishDateStr"
@@ -49,15 +49,15 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					媒体:
+				<td class="label-title" width="10%">
+					媒体：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" name="newsExtDto.media" maxlength="200"
 						style="width: 350px;" />
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					标题:
+				<td class="label-title" width="10%">
+					标题：
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.subject" maxlength="200"
@@ -65,15 +65,15 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					记者:
+				<td class="label-title" width="10%">
+					记者：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" name="newsExtDto.reporter" maxlength="200"
 						style="width: 350px;" />
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					截图URI:
+				<td class="label-title" width="10%">
+					截图URI：
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.picture" maxlength="200"
@@ -81,15 +81,15 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					受访人:
+				<td class="label-title" width="10%">
+					受访人：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" name="newsExtDto.participant" maxlength="200"
 						style="width: 350px;" />
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					网址:
+				<td class="label-title" width="10%">
+					网址：
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.url" maxlength="200"
@@ -97,8 +97,8 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center" width="10%">
-					采访问题:
+				<td class="label-title" width="10%">
+					采访问题：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<textarea name="newsExtDto.content" rows="5" style="width: 350px;"
@@ -109,8 +109,8 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center" width="10%">
-					其它:
+				<td class="label-title" width="10%">
+					其它：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<textarea name="newsExtDto.remark" rows="5" style="width: 350px;"
@@ -134,22 +134,22 @@
 
 <div id="div_search" style="display: inline;">
 	<form id="searchForm" name="searchForm">
-		<fieldset style="margin-top: 10px;">
+		<fieldset>
 			<legend>
 				查询条件
 			</legend>
 			<table cellpadding="0" cellspacing="0" width="800" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						发布日期:
+					<td class="label-title" width="10%">
+						发布日期：
 					</td>
 					<td width="20%">
 						<input type="text" id="newsExtDto_publishDateStrBegin"
 							name="newsExtDto.publishDateStrBegin" class="easyui-datebox">
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						至
+					<td class="label-title" width="10%">
+						至：
 					</td>
 					<td width="20%">
 						<input type="text" id="newsExtDto_publishDateStrEnd"
@@ -160,15 +160,15 @@
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						采访日期:
+					<td class="label-title" width="10%">
+						采访日期：
 					</td>
 					<td width="20%">
 						<input type="text" id="newsExtDto_interviewDateStrBegin"
 							name="newsExtDto.interviewDateStrBegin" class="easyui-datebox">
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						至
+					<td class="label-title" width="10%">
+						至：
 					</td>
 					<td width="20%">
 						<input type="text" id="newsExtDto_interviewDateStrEnd"
@@ -179,12 +179,12 @@
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						标题:
+					<td class="label-title" width="10%">
+						标题：
 					</td>
 					<td colspan="4">
 						<input type="text" name="newsExtDto.subject" maxlength="200"
-							style="width: 403px;" id="newsExtDto_subject" />
+							style="width: 428px;" id="newsExtDto_subject" />
 					</td>
 					<td align="center">
 						<a href="#" class="easyui-linkbutton" plain="true"

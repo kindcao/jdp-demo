@@ -2,31 +2,30 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set name="_induView"
-	value="#session.MONITOR_INDUSTRY_VIEW_SESSION_KEY" />
+<s:set name="_induView" value="industryView" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				发布日期:
+			<td class="label-title" width="10%">
+				发布日期：
 			</td>
 			<td width="20%">
 				<s:property value="#_induView.publishDateStr" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
+			<td class="label-title" width="10%">
 				属性：
 			</td>
 			<td width="20%">
-				<s:property value="#_induView.industryNewsTypeName" />
+				<s:property value="#_induView.induNewsTypeName" />
 			</td>
 			<td colspan="2">
 				&nbsp;
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				相关机构:
+			<td class="label-title">
+				相关机构：
 			</td>
 			<td colspan="3">
 				<s:property value="#_induView.custName" />
@@ -36,7 +35,7 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				网址：
 			</td>
 			<td colspan="3">
@@ -50,7 +49,7 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				标题：
 			</td>
 			<td colspan="3">
@@ -61,8 +60,8 @@
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center">
-				备注:
+			<td class="label-title">
+				备注：
 			</td>
 			<td colspan="3">
 				<s:property value="#_induView.content" />
@@ -84,8 +83,8 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					发布日期:
+				<td class="label-title" width="10%">
+					发布日期：
 				</td>
 				<td width="20%">
 					<input type="text" id="industryExtDto_publishDateStr"
@@ -93,8 +92,8 @@
 						required="true"
 						value='<s:property value="#_induView.publishDateStr" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					属性:
+				<td class="label-title" width="10%">
+					属性：
 				</td>
 				<td width="20%">
 					<input id="industryExtDto_industryNewsTypeId"
@@ -109,8 +108,8 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					相关机构:
+				<td class="label-title" width="10%">
+					相关机构：
 				</td>
 				<td colspan="3">
 					<input id="industryExtDto_customerId"
@@ -125,7 +124,7 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					网址：
 				</td>
 				<td colspan="3">
@@ -139,7 +138,7 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					标题：
 				</td>
 				<td colspan="3">
@@ -152,8 +151,8 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					相关资料:
+				<td class="label-title">
+					相关资料：
 				</td>
 				<td colspan="3">
 					<textarea id="industryExtDto_content" name="industryExtDto.content"

@@ -9,16 +9,16 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					发布日期:
+				<td class="label-title" width="10%">
+					发布日期：
 				</td>
 				<td width="20%">
 					<input type="text" id="industryExtDto_publishDateStr"
 						name="industryExtDto.publishDateStr" class="easyui-datebox"
 						required="true">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					属性:
+				<td class="label-title" width="10%">
+					属性：
 				</td>
 				<td width="20%">
 					<input id="industryExtDto_industryNewsTypeId"
@@ -32,22 +32,22 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					相关机构:
+				<td class="label-title" width="10%">
+					相关机构：
 				</td>
 				<td colspan="3">
 					<input id="industryExtDto_customerId"
 						name="industryExtDto.customerId" class="easyui-combobox"
 						required="true" url="getCustNameList.action" valueField="id"
 						textField="custName" editable="false" panelHeight="100"
-						style="width: 397px;">
+						style="width: 398px;">
 				</td>
 				<td colspan="2">
 					&nbsp;
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					网址：
 				</td>
 				<td colspan="3">
@@ -60,7 +60,7 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					标题：
 				</td>
 				<td colspan="3">
@@ -72,8 +72,8 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					相关资料:
+				<td class="label-title">
+					相关资料：
 				</td>
 				<td colspan="3">
 					<textarea name="industryExtDto.content" rows="5"
@@ -95,59 +95,59 @@
 
 <div id="div_search" style="display: inline;">
 	<form id="searchForm" name="searchForm">
-		<fieldset style="margin-top: 10px;">
+		<fieldset>
 			<legend>
 				查询条件
 			</legend>
 			<table cellpadding="0" cellspacing="0" width="800" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
-						发布日期:
+					<td class="label-title" width="10%">
+						发布日期：
 					</td>
 					<td width="20%">
 						<input type="text" id="industryExtDto_publishDateStrBegin"
 							name="industryExtDto.publishDateStrBegin" class="easyui-datebox">
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						至
+					<td class="label-title" width="10%">
+						至：
 					</td>
 					<td width="20%">
 						<input type="text" id="industryExtDto_publishDateStrEnd"
 							name="industryExtDto.publishDateStrEnd" class="easyui-datebox">
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
-						属性:
+					<td class="label-title" width="10%">
+						属性：
 					</td>
 					<td width="20%">
 						<input id="industryExtDto_industryNewsTypeId_search"
 							name="industryExtDto.industryNewsTypeId" class="easyui-combobox"
 							url="getIndustryNewsType.action" valueField="id" textField="name"
-							editable="false" panelHeight="auto" style="width: 157px;">
+							editable="false" panelHeight="auto" style="width: 160px;">
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center">
-						相关机构:
+					<td class="label-title">
+						相关机构：
 					</td>
 					<td colspan="3">
 						<input id="industryExtDto_customerId_search"
 							name="industryExtDto.customerId" class="easyui-combobox"
 							url="getCustNameList.action" valueField="id" textField="custName"
-							editable="false" panelHeight="100" style="width: 400px;">
+							editable="false" panelHeight="100" style="width: 427px;">
 					</td>
 					<td colspan="2">
 						&nbsp;
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center">
-						标题:
+					<td class="label-title">
+						标题：
 					</td>
 					<td colspan="3">
 						<input type="text" id="industryExtDto_subject"
 							name="industryExtDto.subject" maxlength="400"
-							style="width: 402px;" />
+							style="width: 429px;" />
 					</td>
 					<td>
 						&nbsp;
@@ -251,7 +251,7 @@
 					}
 				}]];
 		var columns = [[{
-		    field : 'industryNewsTypeName',
+		    field : 'induNewsTypeName',
 			title : '属性',
 			width : 100
 		},{

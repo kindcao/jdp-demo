@@ -13,6 +13,10 @@ public class Constants {
 
     public static final Map<String, Object> SYS_USER_MAP = new HashMap<String, Object>();
 
+    public static final int DEFAULT_ROWS = 15;
+
+    public static final int DEFAULT_PAGE = 1;
+
     public static final String SYS_USER_APPLICATION_KEY = "SYS_USER_APPLICATION_KEY";
 
     public static final String CURR_SYS_USER_SESSION_KEY = "CURR_SYS_USER_SESSION_KEY";
@@ -24,17 +28,22 @@ public class Constants {
     // public static final String CUSTOMER_CONTACT_SESSION_KEY =
     // "CUSTOMER_CONTACT_SESSION_KEY";
 
-    public static final String MARKET_EVENT_SESSION_KEY = "MARKET_EVENT_SESSION_KEY";
+    // public static final String MARKET_EVENT_SESSION_KEY =
+    // "MARKET_EVENT_SESSION_KEY";
 
-    public static final String MARKET_EVENT_VIEW_SESSION_KEY = "MARKET_EVENT_VIEW_SESSION_KEY";
+    // public static final String MARKET_EVENT_VIEW_SESSION_KEY =
+    // "MARKET_EVENT_VIEW_SESSION_KEY";
 
-    public static final String MONITOR_NEWS_VIEW_SESSION_KEY = "MONITOR_NEWS_VIEW_SESSION_KEY";
+    // public static final String MONITOR_NEWS_VIEW_SESSION_KEY =
+    // "MONITOR_NEWS_VIEW_SESSION_KEY";
 
-    public static final String MONITOR_INDUSTRY_VIEW_SESSION_KEY = "MONITOR_INDUSTRY_VIEW_SESSION_KEY";
+    // public static final String MONITOR_INDUSTRY_VIEW_SESSION_KEY =
+    // "MONITOR_INDUSTRY_VIEW_SESSION_KEY";
 
-    public static final String SYS_COMP_USER_VIEW_SESSION_KEY = "SYS_COMP_USER_VIEW_SESSION_KEY";
+    // public static final String SYS_COMP_USER_VIEW_SESSION_KEY =
+    // "SYS_COMP_USER_VIEW_SESSION_KEY";
 
-    public static final String SYS_COMP_SESSION_KEY = "SYS_COMP_SESSION_KEY";
+    // public static final String SYS_COMP_SESSION_KEY = "SYS_COMP_SESSION_KEY";
 
     public static final String RESULT_TRANSFORMER_DTO = "RESULT_TRANSFORMER_DTO";
 

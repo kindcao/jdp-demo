@@ -1,6 +1,8 @@
 package crm.monitor.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
-import crm.common.Constants;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
+import crm.model.IndustryNewsType;
 import crm.model.MonitorIndustry;
 import crm.model.MonitorIndustryView;
 import crm.monitor.dto.IndustryExtDto;
@@ -36,14 +38,16 @@ public class IndustryAction extends BaseAction {
 
     private IndustryExtDto industryExtDto;
 
+    private MonitorIndustryView industryView;
+
     public String showIndustryList() throws Exception {
         return "industry.list";
     }
 
     public String showIndustryInfo() throws Exception {
         if (null != industryExtDto && industryExtDto.getId() > 0) {
-            session.put(Constants.MONITOR_INDUSTRY_VIEW_SESSION_KEY, industryService.getObject(
-                    MonitorIndustryView.class, industryExtDto.getId()));
+            industryView = (MonitorIndustryView) industryService.getObject(MonitorIndustryView.class, industryExtDto
+                    .getId());
         } else {
             log.warn("industryExtDto is null or industryExtDto.getId() is 0");
         }
@@ -110,6 +114,22 @@ public class IndustryAction extends BaseAction {
         return NONE;
     }
 
+    public String getIndustryNewsType() throws Exception {
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(IndustryNewsType.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getIndustryNewsType map from servlet context is null.");
+        }
+
+        List<IndustryNewsType> list = new ArrayList<IndustryNewsType>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            IndustryNewsType value = (IndustryNewsType) map.get(key);
+            list.add(value);
+        }
+        responseJsonData(list);
+        return NONE;
+    }
+
     @Resource
     public void setIndustryService(IndustryService industryService) {
         this.industryService = industryService;
@@ -122,4 +142,13 @@ public class IndustryAction extends BaseAction {
     public void setIndustryExtDto(IndustryExtDto industryExtDto) {
         this.industryExtDto = industryExtDto;
     }
+
+    public MonitorIndustryView getIndustryView() {
+        return industryView;
+    }
+
+    public void setIndustryView(MonitorIndustryView industryView) {
+        this.industryView = industryView;
+    }
+
 }

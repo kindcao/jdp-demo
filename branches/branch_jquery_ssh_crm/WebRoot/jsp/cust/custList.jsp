@@ -148,7 +148,7 @@
 
 <div id="div_search" style="display: inline;">
 	<form id="searchForm" name="searchForm">
-		<fieldset style="margin-top: 10px;">
+		<fieldset>
 			<legend>
 				查询条件
 			</legend>

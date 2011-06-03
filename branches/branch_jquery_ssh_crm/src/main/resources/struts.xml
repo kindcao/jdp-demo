@@ -34,10 +34,6 @@
 		</action>
 		<action name="getSysStatus" class="baseAction" method="getSysStatus" />
 		<action name="getStatusYN" class="baseAction" method="getStatusYN" />
-		<action name="getSysComp" class="baseAction" method="getSysComp" />
-		<action name="getMarketEventType" class="baseAction" method="getMarketEventType" />
-		<action name="getSysCompUserByCompIds" class="baseAction" method="getSysCompUserByCompIds" />
-		<action name="getIndustryNewsType" class="baseAction" method="getIndustryNewsType" />
 		<!-- cust -->
 		<action name="*Cust*" class="custAction" method="{0}">
 			<!-- list -->
@@ -65,53 +61,28 @@
 			<result name="contact.info">/jsp/cust/contactInfo.jsp</result>
 		</action>
 		<!-- market event  -->
-		<action name="showMktEvtList" class="mktEvtAction" method="showMktEvtList">
+		<action name="*MktEvt*" class="mktEvtAction" method="{0}">
 			<result name="mktevt.list" type="tiles">mktevt.list</result>
-		</action>
-		<action name="showMktEvtInfo" class="mktEvtAction" method="showMktEvtInfo">
 			<result name="mktevt.info" type="tiles">mktevt.info</result>
-		</action>
-		<action name="getMktEvtList" class="mktEvtAction" method="getMktEvtList" />
-		<action name="saveMktEvtInfo" class="mktEvtAction" method="saveMktEvtInfo" />
-		<action name="deleteMktEvt" class="mktEvtAction" method="deleteMktEvt" />
-		<!-- market event - cal -->
-		<action name="showMktEvtCal" class="mktEvtAction" method="showMktEvtCal">
 			<result name="mktevt.cal" type="tiles">mktevt.cal</result>
-		</action>
-		<action name="showMktEvtCalDtl" class="mktEvtAction" method="showMktEvtCalDtl">
 			<result name="mktevt.cal.dtl">/jsp/mktevt/mktEvtCalDtl.jsp</result>
-		</action>
-		<action name="getMktEvtCal" class="mktEvtAction" method="getMktEvtCal" />
-		<!-- market event - count -->
-		<action name="showMktEvtCount" class="mktEvtAction" method="showMktEvtCount">
 			<result name="mktevt.count" type="tiles">mktevt.count</result>
 		</action>
-		<action name="getMktEvtCountTab" class="mktEvtAction" method="getMktEvtCountTab" />
 		<!-- market monitor publish-->
-		<action name="showPublishList" class="publishAction" method="showPublishList">
+		<action name="*Publish*" class="publishAction" method="{0}">
 			<result name="publish.list" type="tiles">publish.list</result>
 		</action>
-		<action name="getPublishList" class="publishAction" method="getPublishList" />
 		<!-- market monitor news -->
-		<action name="showNewsList" class="newsAction" method="showNewsList">
+		<action name="*News*" class="newsAction" method="{0}">
 			<result name="news.list" type="tiles">news.list</result>
-		</action>
-		<action name="showNewsInfo" class="newsAction" method="showNewsInfo">
 			<result name="news.info" type="tiles">news.info</result>
 		</action>
-		<action name="getNewsList" class="newsAction" method="getNewsList" />
-		<action name="saveNewsInfo" class="newsAction" method="saveNewsInfo" />
-		<action name="deleteNews" class="newsAction" method="deleteNews" />
 		<!-- market monitor industry -->
-		<action name="showIndustryList" class="industryAction" method="showIndustryList">
+		<action name="*Industry*" class="industryAction" method="{0}">
 			<result name="industry.list" type="tiles">industry.list</result>
-		</action>
-		<action name="showIndustryInfo" class="industryAction" method="showIndustryInfo">
 			<result name="industry.info" type="tiles">industry.info</result>
 		</action>
-		<action name="getIndustryList" class="industryAction" method="getIndustryList" />
-		<action name="saveIndustryInfo" class="industryAction" method="saveIndustryInfo" />
-		<action name="deleteIndustry" class="industryAction" method="deleteIndustry" />
+		<action name="getIndustryNewsType" class="industryAction" method="getIndustryNewsType" />
 		<!-- syssetup company -->
 		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
 			<result name="syscomp.list" type="tiles">syscomp.list</result>
@@ -121,18 +92,14 @@
 		</action>
 		<action name="getSysCompList" class="sysCompAction" method="getSysCompList" />
 		<action name="saveSysCompInfo" class="sysCompAction" method="saveSysCompInfo" />
+		<action name="getSysComp" class="sysCompAction" method="getSysComp" />
 		<!-- syssetup user -->
 		<action name="showLogin" class="sysCompUserAction" method="showLogin" />
 		<action name="login" class="sysCompUserAction" method="login" />
 		<action name="logout" class="sysCompUserAction" method="logout" />
-		<action name="showSysCompUserList" class="sysCompUserAction" method="showSysCompUserList">
+		<action name="*SysCompUser*" class="sysCompUserAction" method="{0}">
 			<result name="syscompuser.list" type="tiles">syscompuser.list</result>
-		</action>
-		<action name="showSysCompUserInfo" class="sysCompUserAction" method="showSysCompUserInfo">
 			<result name="syscompuser.info" type="tiles">syscompuser.info</result>
 		</action>
-		<action name="getSysCompUserList" class="sysCompUserAction" method="getSysCompUserList" />
-		<action name="saveSysCompUserInfo" class="sysCompUserAction" method="saveSysCompUserInfo" />
-		<action name="deleteSysCompUser" class="sysCompUserAction" method="deleteSysCompUser" />
 	</package>
 </struts>

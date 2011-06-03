@@ -2,25 +2,24 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set name="_sysCompUser"
-	value="#session.SYS_COMP_USER_VIEW_SESSION_KEY" />
+<s:set name="_sysCompUser" value="sysCompUserView" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
+			<td class="label-title" width="10%">
 				用户姓名：
 			</td>
 			<td width="20%">
 				<s:property value="#_sysCompUser.name" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
+			<td class="label-title" width="10%">
 				属性：
 			</td>
 			<td width="20%">
 				<s:property value="#_sysCompUser.companyName" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
+			<td class="label-title" width="10%">
 				用户领导：
 			</td>
 			<td width="20%">
@@ -28,19 +27,19 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				登录账号：
 			</td>
 			<td>
 				<s:property value="#_sysCompUser.loginId" />
 			</td>
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				登录密码：
 			</td>
 			<td>
 				<s:property value="#_sysCompUser.passwd" />
 			</td>
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				用户状态：
 			</td>
 			<td>
@@ -53,7 +52,7 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				用户邮箱：
 			</td>
 			<td>
@@ -62,7 +61,7 @@
 							value="#_sysCompUser.email" /> </a>
 				</s:if>
 			</td>
-			<td nowrap="nowrap" align="center">
+			<td class="label-title">
 				删除标记：
 			</td>
 			<td>
@@ -98,7 +97,7 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					用户姓名：
 				</td>
 				<td width="20%">
@@ -107,29 +106,29 @@
 						validType="length[1,40]"
 						value='<s:property value="#_sysCompUser.name" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					所属公司：
 				</td>
 				<td>
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
 						name="sysCompUser.sysCompanyId" url="getSysComp.action"
 						valueField="id" textField="companyName" editable="false"
-						panelHeight="100" required="true" style="width: 134px;"
+						panelHeight="100" required="true" style="width: 158px;"
 						value='<s:property value="#_sysCompUser.sysCompanyId" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					用户领导：
 				</td>
 				<td width="20%">
 					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
 						url='' class="easyui-combobox" valueField="id" textField="name"
 						multiple="false" editable="true" panelHeight="100"
-						style="width: 134px;"
+						style="width: 158px;"
 						value='<s:property value="#_sysCompUser.superiorId" />'>
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					登录账号：
 				</td>
 				<td>
@@ -138,7 +137,7 @@
 						maxlength="20" readonly="readonly"
 						value='<s:property value="#_sysCompUser.loginId" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					登录密码：
 				</td>
 				<td width="20%">
@@ -146,7 +145,7 @@
 						class="easyui-validatebox" required="true" validType="safepass"
 						maxlength="50" value='<s:property value="#_sysCompUser.passwd" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					用户状态：
 				</td>
 				<td>
@@ -163,7 +162,7 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					用户邮箱：
 				</td>
 				<td>
@@ -171,7 +170,7 @@
 						class="easyui-validatebox" validType="email" maxlength="50"
 						value='<s:property value="#_sysCompUser.email" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					删除标记：
 				</td>
 				<td>

@@ -121,7 +121,7 @@
 </div>
 <div id="div_search_contact" style="display: inline;">
 	<form id="searchFormContact" name="searchFormContact">
-		<fieldset style="margin-top: 5px;">
+		<fieldset>
 			<legend>
 				查询条件
 			</legend>
@@ -146,7 +146,7 @@
 					<td>
 						<input id="isPrimary" name="isPrimary" class="easyui-combobox"
 							url="getStatusYN.action" valueField="id" textField="text"
-							panelHeight="auto" editable="false" style="width:159px;">
+							panelHeight="auto" editable="false" style="width: 159px;">
 					</td>
 				</tr>
 				<tr height="30px">

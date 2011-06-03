@@ -110,21 +110,21 @@
 	<form id="mktevtCountForm" name="mktevtCountForm">
 		<table cellpadding="0" cellspacing="0" border="0">
 			<tr>
-				<td width="10%" nowrap="nowrap">
+				<td width="10%" nowrap="nowrap" style="display: none;">
 					<!--
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_def">默认统计</a>					
 					-->
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_tab">统计表</a>
 				</td>
-				<td width="5%" nowrap="nowrap" align="center">
+				<td width="5%" class="label-title">
 					日期：
 				</td>
 				<td width="10%">
 					<input type="text" id="countExtDt_occurDateStart"
 						name="countExtDto.occurDateStart" class="easyui-datebox">
 				</td>
-				<td width="5%" nowrap="nowrap" align="center">
-					至
+				<td width="10%" class="label-title">
+					至：
 				</td>
 				<td width="10%">
 					<input type="text" id="countExtDt_occurDateEnd"
@@ -134,8 +134,8 @@
 					<div id="div-cont-search-tab" style="display: none;">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td nowrap="nowrap" align="center" width="30%">
-									所属公司:
+								<td class="label-title" width="30%">
+									所属公司：
 								</td>
 								<td>
 									<input id="countExtDto_sysCompIds" class="easyui-combobox"
@@ -149,13 +149,13 @@
 					<div id="div-cont-search-def" style="display: none;">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td nowrap="nowrap" align="center" width="30%">
+								<td class="label-title" width="30%">
 									类型:
 								</td>
 								<td>
 									<input id="calExtDto_mktevtSuperiorId"
 										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
-										url="getMarketEventType.action?eventTypeId=0" valueField="id"
+										url="getMktEvtType.action?eventTypeId=0" valueField="id"
 										textField="name" multiple="false" editable="false"
 										panelHeight="auto" style="width: 200px;">
 								</td>
@@ -163,14 +163,11 @@
 						</table>
 					</div>
 				</td>
-				<td nowrap="nowrap" width="10%">
+				<td nowrap="nowrap" style="padding-left: 10px;">
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-search" id="_search">查询</a>
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-remove" id="_reset">重置</a>
-				</td>
-				<td width="20%">
-					&nbsp;
 				</td>
 			</tr>
 			<tr height="5px">

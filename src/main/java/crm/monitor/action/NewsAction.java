@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
-import crm.common.Constants;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.model.MonitorNews;
@@ -36,14 +35,15 @@ public class NewsAction extends BaseAction {
 
     private NewsExtDto newsExtDto;
 
+    private MonitorNewsView newsView;
+
     public String showNewsList() throws Exception {
         return "news.list";
     }
 
     public String showNewsInfo() throws Exception {
         if (null != newsExtDto && newsExtDto.getId() > 0) {
-            session.put(Constants.MONITOR_NEWS_VIEW_SESSION_KEY, newsService.getObject(MonitorNewsView.class,
-                    newsExtDto.getId()));
+            newsView = (MonitorNewsView) newsService.getObject(MonitorNewsView.class, newsExtDto.getId());
         } else {
             log.warn("newsExtDto is null or newsExtDto.getId() is 0");
         }
@@ -118,6 +118,14 @@ public class NewsAction extends BaseAction {
 
     public void setNewsExtDto(NewsExtDto newsExtDto) {
         this.newsExtDto = newsExtDto;
+    }
+
+    public MonitorNewsView getNewsView() {
+        return newsView;
+    }
+
+    public void setNewsView(MonitorNewsView newsView) {
+        this.newsView = newsView;
     }
 
 }

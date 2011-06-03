@@ -199,8 +199,8 @@
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_year">年</a>
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_month">月</a>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					所属公司:
+				<td  class="label-title" width="10%">
+					所属公司：
 				</td>
 				<td width="30%">
 					<input id="calExtDto_compId" class="easyui-combobox"
@@ -212,15 +212,15 @@
 					<div id="div-cal-search-month" style="display: none;">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td nowrap="nowrap" align="center" width="40%">
-									类型:
+								<td  class="label-title" width="40%">
+									类型：
 								</td>
 								<td>
 									<input id="calExtDto_mktevtSuperiorId"
 										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
-										url="getMarketEventType.action?eventTypeId=0" valueField="id"
+										url="getMktEvtType.action?eventTypeId=0" valueField="id"
 										textField="name" multiple="false" editable="false"
-										panelHeight="auto" style="width: 150px;">
+										panelHeight="auto" style="width: 160px;">
 								</td>
 							</tr>
 						</table>

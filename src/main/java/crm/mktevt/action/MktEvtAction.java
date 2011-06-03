@@ -8,13 +8,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
-import crm.common.Constants;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
 import crm.mktevt.dto.MktEvtCalExtDto;
@@ -25,6 +25,7 @@ import crm.mktevt.dto.MktEvtExtDto;
 import crm.mktevt.service.MktEvtService;
 import crm.model.CustomerIndustry;
 import crm.model.MarketEvent;
+import crm.model.MarketEventType;
 import crm.model.MarketEventView;
 import crm.model.MarketEventViewCount;
 import crm.util.Utils;
@@ -43,6 +44,14 @@ public class MktEvtAction extends BaseAction {
 
     private MktEvtExtDto mktEvt;
 
+    private MarketEventView mktEvtView;
+
+    //
+    private MktEvtCalExtDto calExtDto;
+
+    private MktEvtCountExtDto countExtDto;
+
+    //
     private String customerIds;
 
     private String sysCompUseIds;
@@ -66,9 +75,7 @@ public class MktEvtAction extends BaseAction {
     private Integer mktevtSuperiorId;
 
     //
-    private MktEvtCalExtDto calExtDto;
-
-    private MktEvtCountExtDto countExtDto;
+    private int eventTypeId;
 
     public String showMktEvtList() throws Exception {
         return "mktevt.list";
@@ -266,14 +273,36 @@ public class MktEvtAction extends BaseAction {
         return NONE;
     }
 
+    public String getMktEvtType() throws Exception {
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(MarketEventType.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getMarketEventType map from servlet context is null.");
+        }
+
+        List<MarketEventType> list = new ArrayList<MarketEventType>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            MarketEventType value = (MarketEventType) map.get(key);
+            if (eventTypeId == 0 && (null == value.getSuperiorId() || value.getSuperiorId() == 0)) {
+                list.add(value);
+            }
+            if (eventTypeId > 0 && null != value.getSuperiorId() && value.getSuperiorId().intValue() == eventTypeId) {
+                list.add(value);
+            }
+        }
+        responseJsonData(list);
+        return NONE;
+    }
+
     private String _showMktEvtInfo(String result) throws Exception {
         if (null != mktEvt && null != mktEvt.getId() && mktEvt.getId() > 0) {
             MarketEvent _mktEvt = (MarketEvent) mktEvtService.getObject(MarketEvent.class, mktEvt.getId());
-            MarketEventView _mktEvtView = (MarketEventView) mktEvtService.getObject(MarketEventView.class, mktEvt
-                    .getId());
+            PropertyUtils.copyProperties(mktEvt, _mktEvt);
+            mktEvtView = (MarketEventView) mktEvtService.getObject(MarketEventView.class, mktEvt.getId());
             //        
-            session.put(Constants.MARKET_EVENT_SESSION_KEY, _mktEvt);
-            session.put(Constants.MARKET_EVENT_VIEW_SESSION_KEY, _mktEvtView);
+            // session.put(Constants.MARKET_EVENT_SESSION_KEY, _mktEvt);
+            // session.put(Constants.MARKET_EVENT_VIEW_SESSION_KEY,
+            // _mktEvtView);
         } else {
             log.error("mktEvt id is null");
             return null;
@@ -435,6 +464,24 @@ public class MktEvtAction extends BaseAction {
         if (StringUtils.isNotBlank(occurDateStrEnd)) {
             this.occurDateStrEnd = occurDateStrEnd.replaceAll("-", "");
         }
+    }
+
+    public MarketEventView getMktEvtView() {
+        return mktEvtView;
+    }
+
+    public void setMktEvtView(MarketEventView mktEvtView) {
+        this.mktEvtView = mktEvtView;
+    }
+
+    
+    public int getEventTypeId() {
+        return eventTypeId;
+    }
+
+    
+    public void setEventTypeId(int eventTypeId) {
+        this.eventTypeId = eventTypeId;
     }
 
 }

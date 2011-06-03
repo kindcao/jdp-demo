@@ -8,7 +8,7 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					公司名称：
 				</td>
 				<td width="20%">
@@ -16,7 +16,7 @@
 						class="easyui-validatebox" required="true"
 						validType="length[1,50]">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					公司类型：
 				</td>
 				<td width="20%">
@@ -30,7 +30,7 @@
 						</option>
 					</select>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					公司状态：
 				</td>
 				<td width="20%">
@@ -47,11 +47,11 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					Logo图URI：
 				</td>
 				<td colspan="3">
-					<input type="text" name="sysCompany.logo" style="width: 402px;"
+					<input type="text" name="sysCompany.logo" style="width: 428px;"
 						maxlength="100" class="easyui-validatebox" required="true"
 						validType="url" />
 				</td>
@@ -60,11 +60,11 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					备注：
 				</td>
 				<td colspan="3">
-					<textarea name="sysCompany.descript" rows="5" style="width: 402px;"
+					<textarea name="sysCompany.descript" rows="5" style="width: 428px;"
 						class="easyui-validatebox" validType="length[0,100]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
@@ -82,20 +82,20 @@
 <div id="div_search" style="display: inline;">
 	<form id="searchFrom" name="searchFrom">
 		<fieldset>
-			<legend style="margin-top: 10px;">
+			<legend>
 				查询条件
 			</legend>
 			<table cellpadding="0" cellspacing="0" width="800" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
+					<td class="label-title" width="10%">
 						公司名称：
 					</td>
 					<td width="20%">
 						<input id="sysCompany_companyName" name="sysCompany.companyName"
 							type="text" maxlength="50" />
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
+					<td class="label-title" width="10%">
 						公司状态：
 					</td>
 					<td width="20%">
@@ -113,14 +113,6 @@
 						</select>
 					</td>
 					<td colspan="2" align="center">
-						&nbsp;
-					</td>
-				</tr>
-				<tr height="30px">
-					<td colspan="5">
-						&nbsp;
-					</td>
-					<td align="right">
 						<a href="javascript:void(0);" class="easyui-linkbutton"
 							plain="true" iconCls="icon-search" id="_search">查询</a>
 						<a href="javascript:void(0);" class="easyui-linkbutton"

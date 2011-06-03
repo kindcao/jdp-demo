@@ -1,6 +1,8 @@
 package crm.syssetup.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
-import crm.common.Constants;
 import crm.common.MstDataLoader;
 import crm.json.JsonListResult;
 import crm.json.JsonValidateResult;
@@ -36,12 +37,13 @@ public class SysCompAction extends BaseAction {
     private SysCompany sysCompany;
 
     public String showSysCompList() throws Exception {
+        sysCompany = new SysCompany();
         return "syscomp.list";
     }
 
     public String showSysCompInfo() throws Exception {
         if (null != sysCompany && sysCompany.getId() > 0) {
-            session.put(Constants.SYS_COMP_SESSION_KEY, sysCompService.getObject(SysCompany.class, sysCompany.getId()));
+            sysCompany = (SysCompany) sysCompService.getObject(SysCompany.class, sysCompany.getId());
         } else {
             log.warn("SysCompany is null or sysComp.getId() is 0");
         }
@@ -51,13 +53,11 @@ public class SysCompAction extends BaseAction {
     public String getSysCompList() throws Exception {
         JsonListResult jlr = new JsonListResult();
         Map<String, Object> map = new HashMap<String, Object>();
-        if (null != sysCompany) {
-            if (StringUtils.isNotBlank(sysCompany.getCompanyName())) {
-                map.put("companyName", sysCompany.getCompanyName());
-            }
-            if (StringUtils.isNotBlank(sysCompany.getStatus())) {
-                map.put("status", sysCompany.getStatus());
-            }
+        if (StringUtils.isNotBlank(sysCompany.getCompanyName())) {
+            map.put("companyName", sysCompany.getCompanyName());
+        }
+        if (StringUtils.isNotBlank(sysCompany.getStatus())) {
+            map.put("status", sysCompany.getStatus());
         }
 
         int totalCount = sysCompService.getTotalCount(map);
@@ -81,6 +81,28 @@ public class SysCompAction extends BaseAction {
         //
         MstDataLoader.loadSysCompany(getCtx());
         sysCompany = new SysCompany();
+        return NONE;
+    }
+
+    public String getSysComp() throws Exception {
+        Map<?, ?> map = (Map<?, ?>) getCtx().getAttribute(SysCompany.class.getName());
+        if (null == map) {
+            throw new RuntimeException("getSysComp map from servlet context is null.");
+        }
+        //
+        SysCompany _currSysComp = getCurrSysComp();
+        List<SysCompany> list = new ArrayList<SysCompany>();
+        for (Iterator<?> iterator = map.keySet().iterator(); iterator.hasNext();) {
+            String key = (String) iterator.next();
+            SysCompany value = (SysCompany) map.get(key);
+            //           
+            if (currSysCompTypeIsR()) {
+                list.add(value);
+            } else if (_currSysComp.getId().intValue() == value.getId().intValue()) {
+                list.add(value);
+            }
+        }
+        responseJsonData(list);
         return NONE;
     }
 

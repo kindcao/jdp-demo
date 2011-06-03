@@ -7,7 +7,7 @@
 	<form id="infoForm" name="infoForm">
 		<table cellpadding="0" cellspacing="0" width="800" border="0">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					用户姓名：
 				</td>
 				<td width="20%">
@@ -15,27 +15,27 @@
 						class="easyui-validatebox" required="true"
 						validType="length[1,40]">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					所属公司：
 				</td>
 				<td>
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
 						name="sysCompUser.sysCompanyId" url="getSysComp.action"
 						valueField="id" textField="companyName" editable="false"
-						panelHeight="100" required="true" style="width: 134px;">
+						panelHeight="100" required="true" style="width: 158px;">
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					用户领导：
 				</td>
 				<td width="20%">
 					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
 						url='' class="easyui-combobox" valueField="id" textField="name"
 						multiple="false" editable="false" panelHeight="100"
-						style="width: 134px;">
+						style="width: 158px;">
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					登录账号：
 				</td>
 				<td>
@@ -43,7 +43,7 @@
 						class="easyui-validatebox" required="true" validType="loginName"
 						maxlength="20">
 				</td>
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					登录密码：
 				</td>
 				<td width="20%">
@@ -51,7 +51,7 @@
 						class="easyui-validatebox" required="true" validType="safepass"
 						maxlength="50">
 				</td>
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					用户状态：
 				</td>
 				<td>
@@ -68,7 +68,7 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
+				<td class="label-title">
 					用户邮箱：
 				</td>
 				<td>
@@ -104,21 +104,21 @@
 			<table cellpadding="0" cellspacing="0" width="800" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
-					<td nowrap="nowrap" align="center" width="10%">
+					<td class="label-title" width="10%">
 						用户名称：
 					</td>
 					<td width="20%">
 						<input type="text" id="sysCompUser_name" name="sysCompUser.name"
 							maxlength="40" />
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
+					<td class="label-title" width="10%">
 						登录账号：
 					</td>
 					<td width="20%">
 						<input type="text" id="sysCompUser_loginId"
 							name="sysCompUser.loginId" maxlength="20" />
 					</td>
-					<td nowrap="nowrap" align="center" width="10%">
+					<td class="label-title" width="10%">
 						用户状态：
 					</td>
 					<td width="20%">
@@ -137,23 +137,23 @@
 					</td>
 				</tr>
 				<tr height="30px">
-					<td nowrap="nowrap" align="center">
+					<td class="label-title">
 						所属公司：
 					</td>
 					<td>
 						<input id="sysCompUser_sysCompanyId_search"
 							class="easyui-combobox" name="sysCompUser.sysCompanyId"
 							url="getSysComp.action" valueField="id" textField="companyName"
-							editable="false" panelHeight="100" style="width: 134px;">
+							editable="false" panelHeight="100" style="width: 158px;">
 					</td>
-					<td nowrap="nowrap" align="center">
+					<td class="label-title">
 						用户领导：
 					</td>
 					<td width="20%">
 						<input id="sysCompUser_superiorId_search"
 							name="sysCompUser.superiorId" url='' class="easyui-combobox"
 							valueField="id" textField="name" multiple="false"
-							editable="false" panelHeight="100" style="width: 134px;">
+							editable="false" panelHeight="100" style="width: 158px;">
 					</td>
 					<td>
 						&nbsp;

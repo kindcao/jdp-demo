@@ -28,7 +28,7 @@
 -->
 </style>
 
-<s:set name="_news" value="#session.MONITOR_NEWS_VIEW_SESSION_KEY" />
+<s:set name="_news" value="newsView" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="900" border="0">
 		<tr height="30px">
@@ -40,44 +40,44 @@
 			</th>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				采访日期:
+			<td class="label-title" width="10%">
+				采访日期：
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.interviewDateStr" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				发布日期:
+			<td class="label-title" width="10%">
+				发布日期：
 			</td>
 			<td width="40%">
 				<s:property value="#_news.publishDateStr" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				媒体:
+			<td class="label-title" width="10%">
+				媒体：
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.media" />
 				&nbsp;
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				标题:
+			<td class="label-title" width="10%">
+				标题：
 			</td>
 			<td width="40%">
 				<s:property value="#_news.subject" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				记者:
+			<td class="label-title" width="10%">
+				记者：
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.reporter" />
 				&nbsp;
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				截图URI:
+			<td class="label-title" width="10%">
+				截图URI：
 			</td>
 			<td width="40%">
 				<s:if test="%{#_news.picture.trim().length()>0}">
@@ -87,15 +87,15 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				受访人:
+			<td class="label-title" width="10%">
+				受访人：
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.participant" />
 				&nbsp;
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				网址:
+			<td class="label-title" width="10%">
+				网址：
 			</td>
 			<td width="40%">
 				<s:if test="%{#_news.url.trim().length()>0}">
@@ -105,8 +105,8 @@
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center" width="10%">
-				采访问题:
+			<td class="label-title" width="10%">
+				采访问题：
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.content" />
@@ -117,8 +117,8 @@
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center" width="10%">
-				其它:
+			<td class="label-title" width="10%">
+				其它：
 			</td>
 			<td width="40%" style="border-right: 1px solid #A4BED4;">
 				<s:property value="#_news.remark" />
@@ -151,8 +151,8 @@
 				</th>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					采访日期:
+				<td class="label-title" width="10%">
+					采访日期：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" id="newsExtDto_interviewDateStr"
@@ -160,8 +160,8 @@
 						required="true"
 						value='<s:property value="#_news.interviewDateStr" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					发布日期:
+				<td class="label-title" width="10%">
+					发布日期：
 				</td>
 				<td width="40%">
 					<input type="text" id="newsExtDto_publishDateStr"
@@ -171,15 +171,15 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					媒体:
+				<td class="label-title" width="10%">
+					媒体：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" name="newsExtDto.media" maxlength="200"
 						style="width: 350px;" value='<s:property value="#_news.media" />' />
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					标题:
+				<td class="label-title" width="10%">
+					标题：
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.subject" maxlength="200"
@@ -188,7 +188,7 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
+				<td class="label-title" width="10%">
 					记者:
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
@@ -196,8 +196,8 @@
 						style="width: 350px;"
 						value='<s:property value="#_news.reporter" />' />
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					截图URI:
+				<td class="label-title" width="10%">
+					截图URI：
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.picture" maxlength="200"
@@ -206,16 +206,16 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					受访人:
+				<td class="label-title" width="10%">
+					受访人：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<input type="text" name="newsExtDto.participant" maxlength="200"
 						style="width: 350px;"
 						value='<s:property value="#_news.participant" />' />
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					网址:
+				<td class="label-title" width="10%">
+					网址：
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.url" maxlength="200"
@@ -224,8 +224,8 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center" width="10%">
-					采访问题:
+				<td class="label-title" width="10%">
+					采访问题：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<textarea id="newsExtDto_content" name="newsExtDto.content"
@@ -237,8 +237,8 @@
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center" width="10%">
-					其它:
+				<td class="label-title" width="10%">
+					其它：
 				</td>
 				<td width="40%" style="border-right: 1px solid #A4BED4;">
 					<textarea id="newsExtDto_remark" name="newsExtDto.remark" rows="5"

@@ -10,13 +10,14 @@
 			<tr height="20px">
 				<th width="30%" align="left" bgcolor="#A4BED4" colspan="2">
 					<div style="margin: 5px;">
+						<img src="images/lock.png">
 						用户登录
 					</div>
 				</th>
 			</tr>
 			<tr height="40px">
-				<td width="30%" align="center">
-					用户名称 :
+				<td width="30%" class="label-title">
+					用户名称：
 				</td>
 				<td>
 					<input name="sysCompUser.loginId" class="easyui-validatebox"
@@ -24,8 +25,8 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td width="30%" align="center">
-					登录密码 :
+				<td width="30%" class="label-title">
+					登录密码：
 				</td>
 				<td>
 					<input name="sysCompUser.passwd" type="password"

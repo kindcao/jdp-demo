@@ -2,60 +2,60 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set name="_mktEvt" value="#session.MARKET_EVENT_SESSION_KEY" />
-<s:set name="_mktEvtView" value="#session.MARKET_EVENT_VIEW_SESSION_KEY" />
+<s:set name="_mktEvt" value="mktEvt" />
+<s:set name="_mktEvtView" value="mktEvtView" />
 <div id="div_info_read-only" style="margin-top: 10px; display: inline;">
 	<table cellpadding="0" cellspacing="0" width="800" border="0"
 		style="margin: 10px;">
 		<tr height="30px">
-			<td nowrap="nowrap" align="center" width="10%">
-				日期:
+			<td class="label-title" width="10%">
+				日期：
 			</td>
 			<td width="20%">
 				<s:property value="#_mktEvtView.occurDateStr" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				开始时间:
+			<td class="label-title" width="10%">
+				开始时间：
 			</td>
 			<td width="20%">
 				<s:property value="#_mktEvtView.beginTimeStr" />
 			</td>
-			<td nowrap="nowrap" align="center" width="10%">
-				结束时间:
+			<td class="label-title" width="10%">
+				结束时间：
 			</td>
 			<td width="20%">
 				<s:property value="#_mktEvtView.endTimeStr" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				大类:
+			<td class="label-title">
+				大类：
 			</td>
 			<td>
 				<s:property value="#_mktEvtView.mktevtSuperiorName" />
 			</td>
-			<td nowrap="nowrap" align="center">
-				小类:
+			<td class="label-title">
+				小类：
 			</td>
 			<td>
 				<s:property value="#_mktEvtView.mktevtName" />
 			</td>
-			<td nowrap="nowrap" align="center">
-				我方人员
+			<td class="label-title">
+				我方人员：
 			</td>
 			<td>
 				<s:property value="#_mktEvtView.sysCompUserName" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				所属公司:
+			<td class="label-title">
+				所属公司：
 			</td>
 			<td colspan="3">
 				<s:property value="#_mktEvtView.compName" />
 			</td>
-			<td nowrap="nowrap" align="center">
-				实施状态:
+			<td class="label-title">
+				实施状态：
 			</td>
 			<td>
 				<s:if test='%{"Y"==#_mktEvt.status}'>
@@ -67,48 +67,48 @@
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				客户名称:
+			<td class="label-title">
+				客户名称：
 			</td>
 			<td colspan="5">
 				<s:property value="#_mktEvtView.custName" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				主题:
+			<td class="label-title">
+				主题：
 			</td>
 			<td colspan="5">
 				<s:property value="#_mktEvt.subject" />
 			</td>
 		</tr>
 		<tr height="30px">
-			<td nowrap="nowrap" align="center">
-				规模:
+			<td class="label-title">
+				规模：
 			</td>
 			<td colspan="5">
 				<s:property value="#_mktEvt.trainScale" />
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center">
-				情况描述:
+			<td class="label-title">
+				情况描述：
 			</td>
 			<td colspan="5">
 				<s:property value="#_mktEvt.situation" />
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center">
-				物料:
+			<td class="label-title">
+				物料：
 			</td>
 			<td colspan="5">
 				<s:property value="#_mktEvt.goods" />
 			</td>
 		</tr>
 		<tr height="30px" valign="top">
-			<td nowrap="nowrap" align="center">
-				备注:
+			<td class="label-title">
+				备注：
 			</td>
 			<td colspan="3">
 				<s:property value="#_mktEvt.remark" />
@@ -130,24 +130,24 @@
 		<table cellpadding="0" cellspacing="0" width="800" border="0"
 			style="margin: 10px;">
 			<tr height="30px">
-				<td nowrap="nowrap" align="center" width="10%">
-					日期:
+				<td class="label-title" width="10%">
+					日期：
 				</td>
 				<td width="20%">
 					<input type="text" id="mktEvt_occurDateStr"
 						name="mktEvt.occurDateStr" class="easyui-datebox" required="true"
 						value='<s:property value="#_mktEvtView.occurDateStr" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					开始时间:
+				<td class="label-title" width="10%">
+					开始时间：
 				</td>
 				<td width="20%">
 					<input type="text" id="mktEvt_beginTimeStr" required="true"
 						name="mktEvt.beginTimeStr" class="easyui-timespinner"
 						value='<s:property value="#_mktEvtView.beginTimeStr" />'>
 				</td>
-				<td nowrap="nowrap" align="center" width="10%">
-					结束时间:
+				<td class="label-title" width="10%">
+					结束时间：
 				</td>
 				<td width="20%">
 					<input type="text" id="mktEvt_endTimeStr" name="mktEvt.endTimeStr"
@@ -156,56 +156,56 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					大类:
+				<td class="label-title">
+					大类：
 				</td>
 				<td>
 					<input id="_marketEventTypeId" name="_marketEventTypeId"
 						class="easyui-combobox" required="true" url="" valueField="id"
 						textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 134px;"
+						panelHeight="auto" style="width: 160px;"
 						value='<s:property value="#_mktEvtView.mktevtSuperiorName" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
-					小类:
+				<td class="label-title">
+					小类：
 				</td>
 				<td>
 					<input id="mktEvt_marketEventTypeId"
 						name="mktEvt.marketEventTypeId" class="easyui-combobox"
 						required="true" url="" valueField="id" textField="name"
 						multiple="false" editable="false" panelHeight="auto"
-						style="width: 134px;"
+						style="width: 160px;"
 						value='<s:property value="#_mktEvtView.mktevtName" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
-					我方人员
+				<td class="label-title">
+					我方人员：
 				</td>
 				<td>
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
 						url='getSysCompUserByCompIds.action' class="easyui-combobox"
 						required="true" valueField="id" textField="name" multiple="false"
-						editable="false" panelHeight="auto" style="width: 134px;"
+						editable="false" panelHeight="auto" style="width: 160px;"
 						value='<s:property value="#_mktEvtView.sysCompUserName" />'>
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					所属公司:
+				<td class="label-title">
+					所属公司：
 				</td>
 				<td colspan="3">
 					<input id="mktEvt_sysCompIds" class="easyui-combobox"
 						name="mktEvt.sysCompIds" url="getSysComp.action" valueField="id"
 						textField="companyName" multiple="true" editable="false"
-						panelHeight="auto" style="width: 401px;"
+						panelHeight="auto" style="width: 426px;"
 						value='<s:property value="#_mktEvtView.compName" />'>
 				</td>
-				<td nowrap="nowrap" align="center">
-					实施状态:
+				<td class="label-title">
+					实施状态：
 				</td>
 				<td>
 					<select id="mktEvt_status" name="mktEvt.status"
 						class="easyui-combobox" required="true" panelHeight="auto"
-						editable="false" style="width: 133px;">
+						editable="false" style="width: 160px;">
 						<option value="N" selected="selected">
 							未实施
 						</option>
@@ -216,64 +216,64 @@
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					客户名称:
+				<td class="label-title">
+					客户名称：
 				</td>
 				<td colspan="5">
 					<input id="mktEvt_customerIds" class="easyui-combobox"
 						name="mktEvt.customerIds" url="getCustNameList.action"
 						valueField="id" textField="custName" multiple="true"
-						editable="false" panelHeight="100" style="width: 401px;"
+						editable="false" panelHeight="100" style="width: 426px;"
 						value='<s:property value="#_mktEvtView.custName" />'>
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					主题:
+				<td class="label-title">
+					主题：
 				</td>
 				<td colspan="5">
 					<input type="text" name="mktEvt.subject" maxlength="200"
-						style="width: 404px;" class="easyui-validatebox"
+						style="width: 426px;" class="easyui-validatebox"
 						value='<s:property value="#_mktEvt.subject" />'>
 				</td>
 			</tr>
 			<tr height="30px">
-				<td nowrap="nowrap" align="center">
-					规模:
+				<td class="label-title">
+					规模：
 				</td>
 				<td colspan="5">
 					<input type="text" name="mktEvt.trainScale" maxlength="200"
-						style="width: 404px;" class="easyui-validatebox"
+						style="width: 426px;" class="easyui-validatebox"
 						value='<s:property value="#_mktEvt.trainScale" />'>
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					情况描述:
+				<td class="label-title">
+					情况描述：
 				</td>
 				<td colspan="5">
 					<textarea id="mktEvt_situation" name="mktEvt.situation" rows="5"
-						style="width: 404px;" class="easyui-validatebox"
+						style="width: 426px;" class="easyui-validatebox"
 						validType="length[0,6000]"></textarea>
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					物料:
+				<td class="label-title">
+					物料：
 				</td>
 				<td colspan="5">
 					<textarea id="mktEvt_goods" name="mktEvt.goods" rows="5"
-						style="width: 404px;" class="easyui-validatebox"
+						style="width: 426px;" class="easyui-validatebox"
 						validType="length[0,1000]"></textarea>
 				</td>
 			</tr>
 			<tr height="30px" valign="top">
-				<td nowrap="nowrap" align="center">
-					备注:
+				<td class="label-title">
+					备注：
 				</td>
 				<td colspan="3">
 					<textarea id="mktEvt_remark" name="mktEvt.remark" rows="5"
-						style="width: 404px;" class="easyui-validatebox"
+						style="width: 426px;" class="easyui-validatebox"
 						validType="length[0,2000]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
@@ -340,11 +340,11 @@
 	});	
 	
 	$('#_marketEventTypeId').combobox({
-		url:'getMarketEventType.action?eventTypeId=0',		
+		url:'getMktEvtType.action?eventTypeId=0',		
 		onChange:function(rec){
 		 	var _eventTypeId=$(this).combobox("getValue");		 	 	
 		 	$('#mktEvt_marketEventTypeId').combobox({
-		 		url:'getMarketEventType.action?eventTypeId='+_eventTypeId
+		 		url:'getMktEvtType.action?eventTypeId='+_eventTypeId
 		 	}).combobox('clear');
 		}
 	});	

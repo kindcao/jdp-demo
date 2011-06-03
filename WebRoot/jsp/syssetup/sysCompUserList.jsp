@@ -277,7 +277,7 @@
 		}, {
 			field : 'passwd',
 			title : '登录密码',
-			width : 150
+			width : 200
 		}, {
 			field : 'status',
 			title : '用户状态',
@@ -305,7 +305,7 @@
 		},{
 			field : 'companyName',
 			title : '所属公司',
-			width : 120
+			width : 200
 		},{
 			field : 'superiorName',
 			title : '用户领导',
@@ -315,10 +315,10 @@
 		//
 		showDatagrid('grid-datalist','getSysCompUserList.action',frozenColumns,columns);
 		
-		$('#grid-datalist').datagrid('options').onClickRow=function(rowIndex, rowData){
+		$('#grid-datalist').datagrid('options').onSelect=function(rowIndex, rowData){
 			if('Y'==rowData.deleteFlag){			
 				$('#grid-datalist').datagrid('unselectRow',rowIndex);
-			}			
+			}
 		};
 		
 		$('#grid-datalist').datagrid('options').onSelectAll=function(rows){

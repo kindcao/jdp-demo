@@ -165,12 +165,12 @@ function showDatagrid(datagridIdStr, url, frozenColumns, columns) {
 				pagination : true,
 				pageNumber : 1,
 				pageSize : 15,
-				pageList : [15,30,60],
+				pageList : [15, 30, 60],
 				frozenColumns : frozenColumns,
 				columns : columns,
-				onClickRow : function(rowIndex, rowData) {
-				},
 				onSelectAll : function(rows) {
+				},
+				onSelect : function(rowIndex, rowData) {
 				}
 			});
 }

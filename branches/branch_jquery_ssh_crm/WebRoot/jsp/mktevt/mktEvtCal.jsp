@@ -102,7 +102,15 @@
 				if (data.total>0) {
 					parserCalYearData(data);	
 				}
-			}
+			}, 
+			beforeSend: function(XMLHttpRequest) {
+				var wrap=$("#cal-year-tab");							
+				$("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍待。。。")
+				.appendTo(wrap).css({display:"block",left:(wrap.width())/2,top:(wrap.height())/2});
+			},
+			complete: function(XMLHttpRequest, textStatus) {				
+				$("#cal-year-tab").children("div.datagrid-mask-msg").remove();
+			}			
 		};		
 		$('#mktevtCalForm').ajaxSubmit(options);
 	}
@@ -199,7 +207,7 @@
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_year">年</a>
 					<a href="#" class="easyui-linkbutton" plain="true" id="_cal_month">月</a>
 				</td>
-				<td  class="label-title" width="10%">
+				<td class="label-title" width="10%">
 					所属公司：
 				</td>
 				<td width="30%">
@@ -212,7 +220,7 @@
 					<div id="div-cal-search-month" style="display: none;">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td  class="label-title" width="40%">
+								<td class="label-title" width="40%">
 									类型：
 								</td>
 								<td>

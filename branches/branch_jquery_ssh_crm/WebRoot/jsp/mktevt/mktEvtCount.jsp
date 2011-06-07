@@ -10,6 +10,10 @@
 	font-size: 10px;
 }
 
+#count-tab tr {
+	height: 20px;
+}
+
 #count-tab td {
 	border-top: 1px solid #A4BED4;
 	border-right: 1px solid #A4BED4;
@@ -48,6 +52,14 @@
 				if (data.total>0) {
 					parserCountTabData(data);	
 				}
+			}, 
+			beforeSend: function(XMLHttpRequest) {
+				var wrap=$("#count-tab");								
+				$("<div class=\"datagrid-mask-msg\"></div>").html("正在处理，请稍待。。。")
+				.appendTo(wrap).css({display:"block",left:(wrap.width())/2,top:(wrap.height())/2});				
+			},
+			complete: function(XMLHttpRequest, textStatus) {				
+				$("#count-tab").children("div.datagrid-mask-msg").remove();
 			}
 		};		
 		$('#mktevtCountForm').ajaxSubmit(options);

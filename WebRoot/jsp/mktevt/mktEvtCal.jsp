@@ -12,7 +12,7 @@
 }
 
 #cal-year-tab tr {
-	height: 120px;
+	height: 140px;
 }
 
 #cal-year-tab td {

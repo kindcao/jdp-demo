@@ -25,7 +25,7 @@
 		$('#publishView_publishDateStr').val(dateStr);
 		
 		//		
-		var _url='getPublishList.action?publishView.publishDateStr='+$('#publishView_publishDateStr').val();		
+		var _url='getPublishList?publishView.publishDateStr='+$('#publishView_publishDateStr').val();		
 		$('#grid-datalist').datagrid('options').url=_url;			
 		$('#grid-datalist').datagrid('reload');	
 	}

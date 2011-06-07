@@ -59,7 +59,7 @@
 				</td>
 				<td>
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
-						url='getSysCompUserByCompIds.action' class="easyui-combobox"
+						url='getSysCompUserByCompIds' class="easyui-combobox"
 						required="true" valueField="id" textField="name" multiple="false"
 						editable="false" panelHeight="auto" style="width: 160px;">
 				</td>
@@ -70,7 +70,7 @@
 				</td>
 				<td colspan="3">
 					<input id="mktEvt_sysCompIds" class="easyui-combobox"
-						name="mktEvt.sysCompIds" url="getSysComp.action" valueField="id"
+						name="mktEvt.sysCompIds" url="getSysComp" valueField="id"
 						textField="companyName" multiple="true" editable="false"
 						panelHeight="auto" style="width: 425px;">
 				</td>
@@ -96,7 +96,7 @@
 				</td>
 				<td colspan="5">
 					<input id="mktEvt_customerIds" class="easyui-combobox"
-						name="mktEvt.customerIds" url="getCustNameList.action"
+						name="mktEvt.customerIds" url="getCustNameList"
 						valueField="id" textField="custName" multiple="true"
 						editable="false" panelHeight="100" style="width: 425px;">
 				</td>
@@ -235,7 +235,7 @@
 					</td>
 					<td>
 						<input id="sysCompUseIds" name="sysCompUseIds"
-							url='getSysCompUserByCompIds.action' class="easyui-combobox"
+							url='getSysCompUserByCompIds' class="easyui-combobox"
 							valueField="id" textField="name" multiple="false"
 							editable="false" panelHeight="auto" style="width: 160px;">
 					</td>
@@ -287,7 +287,7 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveMktEvtInfo.action',
+			'saveMktEvtInfo',
 			validateForm(),
 			function(){
 				$("#_back").click();
@@ -336,7 +336,7 @@
 	
 	//for delete begin
 	$("#_delete").click(function() {
-		deleteRecord('grid-datalist','deleteMktEvt.action');
+		deleteRecord('grid-datalist','deleteMktEvt');
 	});
 	//fore delte end
 	
@@ -368,11 +368,11 @@
 	});	
 	
 	$('#mktevtSuperiorId').combobox({
-		url:'getMktEvtType.action?eventTypeId=0'
+		url:'getMktEvtType?eventTypeId=0'
 	});
 	
 	function editMktEvt(id){	
-		window.location.href='showMktEvtInfo.action?mktEvt.id='+id;			
+		window.location.href='showMktEvtInfo?mktEvt.id='+id;			
 	}
 		
 	//	
@@ -435,14 +435,14 @@
 		}]];			
 	
 		//		
-		showDatagrid('grid-datalist','getMktEvtList.action',frozenColumns,columns);
+		showDatagrid('grid-datalist','getMktEvtList',frozenColumns,columns);
 		//		
 		$('#_marketEventTypeId').combobox({
-			url:'getMktEvtType.action?eventTypeId=0',		
+			url:'getMktEvtType?eventTypeId=0',		
 			onChange:function(rec){
 			 	var _eventTypeId=$(this).combobox("getValue");		 	 	
 			 	$('#mktEvt_marketEventTypeId').combobox({
-			 		url:'getMktEvtType.action?eventTypeId='+_eventTypeId
+			 		url:'getMktEvtType?eventTypeId='+_eventTypeId
 			 	}).combobox('clear');
 			}
 		});	

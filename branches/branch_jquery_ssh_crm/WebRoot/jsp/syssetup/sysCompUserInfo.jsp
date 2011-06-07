@@ -111,7 +111,7 @@
 				</td>
 				<td>
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
-						name="sysCompUser.sysCompanyId" url="getSysComp.action"
+						name="sysCompUser.sysCompanyId" url="getSysComp"
 						valueField="id" textField="companyName" editable="false"
 						panelHeight="100" required="true" style="width: 158px;"
 						value='<s:property value="#_sysCompUser.sysCompanyId" />'>
@@ -208,7 +208,7 @@
 <script type="text/javascript" defer="defer">
 <!--
 	$('#sysCompUser_sysCompanyId').combobox({
-		url:'getSysComp.action',	
+		url:'getSysComp',	
 		onSelect:function(rec){
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
 		 	$('#sysCompUser_superiorId').combobox({
@@ -226,7 +226,7 @@
 	});
 	
 	$("#_back").click(function() {
-		window.location.href='showSysCompUserList.action';			
+		window.location.href='showSysCompUserList';			
 	});	
 	
 	$("#_back_edit").click(function() {
@@ -255,10 +255,10 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveSysCompUserInfo.action',
+			'saveSysCompUserInfo',
 			true,
 			function(){
-				window.location.href='showSysCompUserInfo.action?sysCompUser.id=<s:property value="#_sysCompUser.id" />';
+				window.location.href='showSysCompUserInfo?sysCompUser.id=<s:property value="#_sysCompUser.id" />';
 			}
 		);		
 	});	

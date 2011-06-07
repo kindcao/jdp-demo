@@ -98,7 +98,7 @@
 				<td width="20%">
 					<input id="industryExtDto_industryNewsTypeId"
 						name="industryExtDto.industryNewsTypeId" class="easyui-combobox"
-						required="true" url="getIndustryNewsType.action" valueField="id"
+						required="true" url="getIndustryNewsType" valueField="id"
 						textField="name" editable="false" panelHeight="auto"
 						style="width: 157px;"
 						value='<s:property value="#_induView.industryNewsTypeId" />'>
@@ -114,7 +114,7 @@
 				<td colspan="3">
 					<input id="industryExtDto_customerId"
 						name="industryExtDto.customerId" class="easyui-combobox"
-						required="true" url="getCustNameList.action" valueField="id"
+						required="true" url="getCustNameList" valueField="id"
 						textField="custName" editable="false" panelHeight="100"
 						style="width: 397px;"
 						value='<s:property value="#_induView.customerId" />'>
@@ -174,7 +174,7 @@
 <script type="text/javascript" defer="defer">
 <!--	
 	$("#_back").click(function() {
-		window.location.href='showIndustryList.action';			
+		window.location.href='showIndustryList';			
 	});	
 	
 	$("#_back_edit").click(function() {
@@ -200,10 +200,10 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveIndustryInfo.action',
+			'saveIndustryInfo',
 			true,
 			function(){
-				window.location.href='showIndustryInfo.action?industryExtDto.id=<s:property value="#_induView.id" />';
+				window.location.href='showIndustryInfo?industryExtDto.id=<s:property value="#_induView.id" />';
 			}
 		);		
 	});	

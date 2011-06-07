@@ -151,7 +151,7 @@
 <script type="text/javascript" defer="defer">
 <!--	
 	$("#_back").click(function() {
-		window.location.href='showSysCompList.action';			
+		window.location.href='showSysCompList';			
 	});	
 	
 	$("#_back_edit").click(function() {
@@ -177,10 +177,10 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveSysCompInfo.action',
+			'saveSysCompInfo',
 			true,
 			function(){
-				window.location.href='showSysCompInfo.action?sysCompany.id=<s:property value="#_sysCompany.id" />';
+				window.location.href='showSysCompInfo?sysCompany.id=<s:property value="#_sysCompany.id" />';
 			}
 		);		
 	});	

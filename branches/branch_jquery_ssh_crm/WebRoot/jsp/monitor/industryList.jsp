@@ -23,7 +23,7 @@
 				<td width="20%">
 					<input id="industryExtDto_industryNewsTypeId"
 						name="industryExtDto.industryNewsTypeId" class="easyui-combobox"
-						required="true" url="getIndustryNewsType.action" valueField="id"
+						required="true" url="getIndustryNewsType" valueField="id"
 						textField="name" editable="false" panelHeight="auto"
 						style="width: 157px;">
 				</td>
@@ -38,7 +38,7 @@
 				<td colspan="3">
 					<input id="industryExtDto_customerId"
 						name="industryExtDto.customerId" class="easyui-combobox"
-						required="true" url="getCustNameList.action" valueField="id"
+						required="true" url="getCustNameList" valueField="id"
 						textField="custName" editable="false" panelHeight="100"
 						style="width: 398px;">
 				</td>
@@ -122,7 +122,7 @@
 					<td width="20%">
 						<input id="industryExtDto_industryNewsTypeId_search"
 							name="industryExtDto.industryNewsTypeId" class="easyui-combobox"
-							url="getIndustryNewsType.action" valueField="id" textField="name"
+							url="getIndustryNewsType" valueField="id" textField="name"
 							editable="false" panelHeight="auto" style="width: 160px;">
 					</td>
 				</tr>
@@ -133,7 +133,7 @@
 					<td colspan="3">
 						<input id="industryExtDto_customerId_search"
 							name="industryExtDto.customerId" class="easyui-combobox"
-							url="getCustNameList.action" valueField="id" textField="custName"
+							url="getCustNameList" valueField="id" textField="custName"
 							editable="false" panelHeight="100" style="width: 427px;">
 					</td>
 					<td colspan="2">
@@ -189,7 +189,7 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveIndustryInfo.action',
+			'saveIndustryInfo',
 			true,
 			function(){
 				$("#_back").click();
@@ -208,7 +208,7 @@
 	
 	//for delete begin
 	$("#_delete").click(function() {
-		deleteRecord('grid-datalist','deleteIndustry.action');
+		deleteRecord('grid-datalist','deleteIndustry');
 	});
 	//fore delte end
 	
@@ -233,7 +233,7 @@
 	});	
 	
 	function editIndustry(id){	
-		window.location.href='showIndustryInfo.action?industryExtDto.id='+id;
+		window.location.href='showIndustryInfo?industryExtDto.id='+id;
 	}
 		
 	//	
@@ -277,7 +277,7 @@
 		}]];
 			
 		//		
-		showDatagrid('grid-datalist','getIndustryList.action',frozenColumns,columns);					
+		showDatagrid('grid-datalist','getIndustryList',frozenColumns,columns);					
 	});	
 	//for search end  
 //-->

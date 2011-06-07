@@ -36,7 +36,7 @@
 				</td>
 				<td colspan="3">
 					<input id="cust_sys_comp" class="easyui-combobox"
-						name="custSysCompIds" required="true" url="getSysComp.action"
+						name="custSysCompIds" required="true" url="getSysComp"
 						valueField="id" textField="companyName" multiple="true"
 						editable="false" panelHeight="auto" style="width: 425px;">
 				</td>
@@ -45,7 +45,7 @@
 				</td>
 				<td>
 					<input id="cust_indu" class="easyui-combobox"
-						name="cust.industryId" required="true" url="getCustIndu.action"
+						name="cust.industryId" required="true" url="getCustIndu"
 						valueField="id" textField="name" multiple="false" editable="false"
 						panelHeight="auto" style="width: 159px;">
 				</td>
@@ -173,7 +173,7 @@
 					</td>
 					<td width="20%">
 						<input id="cust_indu_search" class="easyui-combobox"
-							name="industryId" url="getCustIndu.action" valueField="id"
+							name="industryId" url="getCustIndu" valueField="id"
 							textField="name" multiple="false" editable="false"
 							panelHeight="auto" style="width: 159px;">
 					</td>
@@ -184,7 +184,7 @@
 					</td>
 					<td colspan="3">
 						<input id="cust_sys_comp_search" class="easyui-combobox"
-							name="custSysCompIds" url="getSysComp.action" valueField="id"
+							name="custSysCompIds" url="getSysComp" valueField="id"
 							textField="companyName" multiple="true" editable="false"
 							panelHeight="auto" style="width: 424px;">
 					</td>
@@ -237,7 +237,7 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveCustInfo.action',
+			'saveCustInfo',
 			true,
 			function(){
 				$("#_back").click();
@@ -256,7 +256,7 @@
 	
 	/**
 	$('#cust_sys_comp').combobox({
-		url:'getSysComp.action',		
+		url:'getSysComp',		
 		onChange:function(rec){
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
 		 	$('#cust_sys_user').combobox({
@@ -277,14 +277,14 @@
 	
 	//for delete begin
 	$("#_delete").click(function() {
-		deleteRecord('grid-datalist','deleteCust.action');
+		deleteRecord('grid-datalist','deleteCust');
 	});
 	//fore delte end
 	
 	//for search begin	
 	/**
 	$('#cust_sys_comp_search').combobox({
-		url:'getSysComp.action',	
+		url:'getSysComp',	
 		onChange:function(rec){
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
 		 	$('#cust_sys_user_search').combobox({
@@ -311,7 +311,7 @@
 	});	
 	
 	function editComp(id){		
-		window.location.href='showCustInfo.action?cust.id='+id;
+		window.location.href='showCustInfo?cust.id='+id;
 	}	
 		
 	//	
@@ -361,7 +361,7 @@
 		}]];
 			
 		//		
-		showDatagrid('grid-datalist','getCustList.action',frozenColumns,columns);		
+		showDatagrid('grid-datalist','getCustList',frozenColumns,columns);		
 	});	
 	//for search end  
 //-->

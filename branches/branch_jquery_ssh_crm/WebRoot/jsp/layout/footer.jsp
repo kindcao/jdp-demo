@@ -65,7 +65,7 @@
 				<div style="margin-right: 5px;">
 					<a id="logoutAction" href="#" class="easyui-linkbutton"
 						plain="true" iconCls="icon-back"
-						onclick='document.location = "logout.action"'>注销</a>
+						onclick='document.location = "logout"'>注销</a>
 				</div>
 			</td>
 		</tr>
@@ -108,12 +108,12 @@
 			timeout:15*1000,
 			showType:'slide'
 		});	
-		setTimeout("window.location.href='showLogin.action'",15*1000);		
+		setTimeout("window.location.href='showLogin'",15*1000);		
 	}
 	
 	function sysStatus() {	
 		var options = {
-			url : 'getSysStatus.action',
+			url : 'getSysStatus',
 			dataType : 'json',
 			//timeout : 30*1000,
 			success : function(data,textStatus){			

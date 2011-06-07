@@ -20,7 +20,7 @@
 				</td>
 				<td>
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
-						name="sysCompUser.sysCompanyId" url="getSysComp.action"
+						name="sysCompUser.sysCompanyId" url="getSysComp"
 						valueField="id" textField="companyName" editable="false"
 						panelHeight="100" required="true" style="width: 158px;">
 				</td>
@@ -143,7 +143,7 @@
 					<td>
 						<input id="sysCompUser_sysCompanyId_search"
 							class="easyui-combobox" name="sysCompUser.sysCompanyId"
-							url="getSysComp.action" valueField="id" textField="companyName"
+							url="getSysComp" valueField="id" textField="companyName"
 							editable="false" panelHeight="100" style="width: 158px;">
 					</td>
 					<td class="label-title">
@@ -179,7 +179,7 @@
 <script type="text/javascript" defer="defer">
 	//for add begin
 	$('#sysCompUser_sysCompanyId').combobox({
-		url:'getSysComp.action',	
+		url:'getSysComp',	
 		onChange:function(rec){
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
 		 	$('#sysCompUser_superiorId').combobox({
@@ -204,7 +204,7 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveSysCompUserInfo.action',
+			'saveSysCompUserInfo',
 			true,
 			function(){
 				$("#_back").click();
@@ -221,7 +221,7 @@
 	});	
 		
 	$("#_delete").click(function() {
-		 deleteRecord('grid-datalist', 'deleteSysCompUser.action');
+		 deleteRecord('grid-datalist', 'deleteSysCompUser');
 	});	
 	
 	$("#_search").click(function() {			
@@ -243,7 +243,7 @@
 	});	
 
 	$('#sysCompUser_sysCompanyId_search').combobox({
-		url:'getSysComp.action',	
+		url:'getSysComp',	
 		onChange:function(rec){
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
 		 	$('#sysCompUser_superiorId_search').combobox({
@@ -253,7 +253,7 @@
 	});	
 	
 	function editUser(id){	
-		window.location.href='showSysCompUserInfo.action?sysCompUser.id='+id;			
+		window.location.href='showSysCompUserInfo?sysCompUser.id='+id;			
 	}
 	
 	//
@@ -313,7 +313,7 @@
 		}]];
 					
 		//
-		showDatagrid('grid-datalist','getSysCompUserList.action',frozenColumns,columns);
+		showDatagrid('grid-datalist','getSysCompUserList',frozenColumns,columns);
 		
 		$('#grid-datalist').datagrid('options').onSelect=function(rowIndex, rowData){
 			if('Y'==rowData.deleteFlag){			

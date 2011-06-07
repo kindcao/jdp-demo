@@ -94,7 +94,7 @@
 		
 		//
 		var options = {
-			url : 'getMktEvtCal.action',
+			url : 'getMktEvtCal',
 			dataType : 'json',
 			type : 'post',
 			success : function(data){				
@@ -188,7 +188,7 @@
 	function viewMktEvt(id,str){		
 		$('#div-view-dtl').window({
 			title:str,
-			href:'showMktEvtCalDtl.action?mktEvt.id='+id		
+			href:'showMktEvtCalDtl?mktEvt.id='+id		
 		});		
 		//		
 		$('#div-view-dtl').window('open');		
@@ -212,7 +212,7 @@
 				</td>
 				<td width="30%">
 					<input id="calExtDto_compId" class="easyui-combobox"
-						name="calExtDto.compId" url="getSysComp.action" valueField="id"
+						name="calExtDto.compId" url="getSysComp" valueField="id"
 						textField="companyName" multiple="true" editable="false"
 						panelHeight="auto" style="width: 250px;">
 				</td>
@@ -226,7 +226,7 @@
 								<td>
 									<input id="calExtDto_mktevtSuperiorId"
 										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
-										url="getMktEvtType.action?eventTypeId=0" valueField="id"
+										url="getMktEvtType?eventTypeId=0" valueField="id"
 										textField="name" multiple="false" editable="false"
 										panelHeight="auto" style="width: 160px;">
 								</td>
@@ -322,7 +322,7 @@
 			getCalYearData(0);
 		}else{
 			getCalMonthData();
-			var _url='getMktEvtCal.action?calExtDto.year=false';
+			var _url='getMktEvtCal?calExtDto.year=false';
 			_url+='&calExtDto.occurDate='+$('#calExtDto_occurDate').val();
 			_url+='&calExtDto.compId='+$("#calExtDto_compId").combobox('getValues');
 			_url+='&calExtDto.mktevtSuperiorId='+$("#calExtDto_mktevtSuperiorId").combobox('getValues');

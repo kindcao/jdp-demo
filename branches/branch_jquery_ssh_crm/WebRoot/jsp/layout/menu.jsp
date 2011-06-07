@@ -18,52 +18,52 @@
 	style="overflow: hidden;" fit="true">
 	<div title="系统默认">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('welcome.action');">欢迎版面</a>
+			<a href="#" onclick="clickMenu('welcome');">欢迎版面</a>
 		</div>
 	</div>
 	<div title="客户管理">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showCustList.action?induId=1');">券商</a>
+			<a href="#" onclick="clickMenu('showCustList?induId=1');">券商</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showCustList.action?induId=2');">银行</a>
+			<a href="#" onclick="clickMenu('showCustList?induId=2');">银行</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showCustList.action?induId=3');">投资</a>
+			<a href="#" onclick="clickMenu('showCustList?induId=3');">投资</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showCustList.action?induId=4');">媒体</a>
+			<a href="#" onclick="clickMenu('showCustList?induId=4');">媒体</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showCustList.action?induId=5');">资讯</a>
+			<a href="#" onclick="clickMenu('showCustList?induId=5');">资讯</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showCustList.action?induId=6');">上市</a>
+			<a href="#" onclick="clickMenu('showCustList?induId=6');">上市</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showCustList.action?induId=7');">其他</a>
+			<a href="#" onclick="clickMenu('showCustList?induId=7');">其他</a>
 		</div>
 	</div>
 	<div title="市场工作">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showMktEvtList.action');">市场工作</a>
+			<a href="#" onclick="clickMenu('showMktEvtList');">市场工作</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showMktEvtCal.action');">日历</a>
+			<a href="#" onclick="clickMenu('showMktEvtCal');">日历</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showMktEvtCount.action');">统计</a>
+			<a href="#" onclick="clickMenu('showMktEvtCount');">统计</a>
 		</div>
 	</div>
 	<div title="市场监控">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showPublishList.action');">发布监控</a>
+			<a href="#" onclick="clickMenu('showPublishList');">发布监控</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showNewsList.action');">新闻专访</a>
+			<a href="#" onclick="clickMenu('showNewsList');">新闻专访</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showIndustryList.action');">行业监控</a>
+			<a href="#" onclick="clickMenu('showIndustryList');">行业监控</a>
 		</div>
 	</div>
 	<div title="开户工作">
@@ -73,10 +73,10 @@
 	</div>
 	<div title="系统设定">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showSysCompList.action');">所属公司</a>
+			<a href="#" onclick="clickMenu('showSysCompList');">所属公司</a>
 		</div>
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('showSysCompUserList.action');">系统用户</a>
+			<a href="#" onclick="clickMenu('showSysCompUserList');">系统用户</a>
 		</div>
 		<div style="margin: 10px;">
 			<a href="#" onclick="clickMenu('#');">行业设定</a>

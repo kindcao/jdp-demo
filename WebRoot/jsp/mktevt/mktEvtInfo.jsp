@@ -182,7 +182,7 @@
 				</td>
 				<td>
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
-						url='getSysCompUserByCompIds.action' class="easyui-combobox"
+						url='getSysCompUserByCompIds' class="easyui-combobox"
 						required="true" valueField="id" textField="name" multiple="false"
 						editable="false" panelHeight="auto" style="width: 160px;"
 						value='<s:property value="#_mktEvtView.sysCompUserName" />'>
@@ -194,7 +194,7 @@
 				</td>
 				<td colspan="3">
 					<input id="mktEvt_sysCompIds" class="easyui-combobox"
-						name="mktEvt.sysCompIds" url="getSysComp.action" valueField="id"
+						name="mktEvt.sysCompIds" url="getSysComp" valueField="id"
 						textField="companyName" multiple="true" editable="false"
 						panelHeight="auto" style="width: 426px;"
 						value='<s:property value="#_mktEvtView.compName" />'>
@@ -221,7 +221,7 @@
 				</td>
 				<td colspan="5">
 					<input id="mktEvt_customerIds" class="easyui-combobox"
-						name="mktEvt.customerIds" url="getCustNameList.action"
+						name="mktEvt.customerIds" url="getCustNameList"
 						valueField="id" textField="custName" multiple="true"
 						editable="false" panelHeight="100" style="width: 426px;"
 						value='<s:property value="#_mktEvtView.custName" />'>
@@ -291,7 +291,7 @@
 <script type="text/javascript" defer="defer">
 <!--	
 	$("#_back").click(function() {
-		window.location.href='showMktEvtList.action';			
+		window.location.href='showMktEvtList';			
 	});	
 	
 	$("#_back_edit").click(function() {
@@ -331,20 +331,20 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveMktEvtInfo.action',
+			'saveMktEvtInfo',
 			validateForm(),
 			function(){
-				window.location.href='showMktEvtInfo.action?mktEvt.id=<s:property value="#_mktEvt.id" />';
+				window.location.href='showMktEvtInfo?mktEvt.id=<s:property value="#_mktEvt.id" />';
 			}
 		);
 	});	
 	
 	$('#_marketEventTypeId').combobox({
-		url:'getMktEvtType.action?eventTypeId=0',		
+		url:'getMktEvtType?eventTypeId=0',		
 		onChange:function(rec){
 		 	var _eventTypeId=$(this).combobox("getValue");		 	 	
 		 	$('#mktEvt_marketEventTypeId').combobox({
-		 		url:'getMktEvtType.action?eventTypeId='+_eventTypeId
+		 		url:'getMktEvtType?eventTypeId='+_eventTypeId
 		 	}).combobox('clear');
 		}
 	});	

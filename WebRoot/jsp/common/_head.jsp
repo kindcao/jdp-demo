@@ -30,7 +30,7 @@
 			var n = window.event.screenX - window.screenLeft;
 			var b = n > document.documentElement.scrollWidth - 20;
 			if (b && window.event.clientY < 0 || window.event.altKey) {
-				document.location = "logout.action";
+				document.location = "logout";
 				// window.event.returnValue = ""; //这里可以放置你想做的操作代码
 			}
 		 }

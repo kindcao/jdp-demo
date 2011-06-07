@@ -168,7 +168,7 @@
 				</td>
 				<td colspan="3">
 					<input id="cust_sys_comp" class="easyui-combobox"
-						name="custSysCompIds" required="true" url="getSysComp.action"
+						name="custSysCompIds" required="true" url="getSysComp"
 						valueField="id" textField="companyName" multiple="true"
 						editable="false" panelHeight="auto" style="width: 425px;"
 						value='<s:property value="#_cust.custSysCompNames" />'>
@@ -179,7 +179,7 @@
 				</td>
 				<td>
 					<input id="cust_indu" class="easyui-combobox"
-						name="cust.industryId" required="true" url="getCustIndu.action"
+						name="cust.industryId" required="true" url="getCustIndu"
 						valueField="id" textField="name" multiple="false" editable="false"
 						panelHeight="auto" style="width: 159px;"
 						value='<s:property value="#_cust.industryName" />'>
@@ -295,7 +295,7 @@
 <script type="text/javascript" defer="defer">
 <!--
 	$("#_back").click(function() {
-		window.location.href='showCustList.action';
+		window.location.href='showCustList';
 	});	
 	
 	$("#_back_edit").click(function() {
@@ -322,10 +322,10 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveCustInfo.action',
+			'saveCustInfo',
 			true,
 			function(){
-				var _href='showCustInfo.action?cust.id=<s:property value="#_cust.id" />';					
+				var _href='showCustInfo?cust.id=<s:property value="#_cust.id" />';					
 				window.location.href=_href;
 			}
 		);

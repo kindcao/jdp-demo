@@ -222,7 +222,7 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveNewsInfo.action',
+			'saveNewsInfo',
 			true,
 			function(){
 				$("#_back").click();
@@ -239,7 +239,7 @@
 	
 	//for delete begin
 	$("#_delete").click(function() {
-		deleteRecord('grid-datalist','deleteNews.action');
+		deleteRecord('grid-datalist','deleteNews');
 	});
 	//fore delte end
 	
@@ -264,7 +264,7 @@
 	});	
 	
 	function editNews(id){		
-		window.location.href='showNewsInfo.action?newsExtDto.id='+id;
+		window.location.href='showNewsInfo?newsExtDto.id='+id;
 	}
 	
 	//	
@@ -316,7 +316,7 @@
 		}]];
 			
 		//		
-		showDatagrid('grid-datalist','getNewsList.action',frozenColumns,columns);						
+		showDatagrid('grid-datalist','getNewsList',frozenColumns,columns);						
 	});	
 //-->
 </script>

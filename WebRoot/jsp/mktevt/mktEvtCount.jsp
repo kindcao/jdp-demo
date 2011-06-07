@@ -45,7 +45,7 @@
 <!--	
 	function getCountTabData(){		
 		var options = {
-			url : 'getMktEvtCountTab.action',
+			url : 'getMktEvtCountTab',
 			dataType : 'json',
 			type : 'post',
 			success : function(data){
@@ -151,7 +151,7 @@
 								</td>
 								<td>
 									<input id="countExtDto_sysCompIds" class="easyui-combobox"
-										name="countExtDto.sysCompIds" url="getSysComp.action"
+										name="countExtDto.sysCompIds" url="getSysComp"
 										valueField="id" textField="companyName" multiple="true"
 										editable="false" panelHeight="auto" style="width: 200px;">
 								</td>
@@ -167,7 +167,7 @@
 								<td>
 									<input id="calExtDto_mktevtSuperiorId"
 										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
-										url="getMktEvtType.action?eventTypeId=0" valueField="id"
+										url="getMktEvtType?eventTypeId=0" valueField="id"
 										textField="name" multiple="false" editable="false"
 										panelHeight="auto" style="width: 200px;">
 								</td>

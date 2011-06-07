@@ -175,7 +175,7 @@
 			</table>
 		</fieldset>
 	</form>
-	<div style="height: 30px;">
+	<div style="height: 10px;">
 		&nbsp;
 	</div>
 	<div align="left">

@@ -190,7 +190,7 @@
 		</table>
 	</form>
 </div>
-<div id="div-count-tab" style="margin-top: 10px;">
+<div id="div-count-tab">
 </div>
 
 <script type="text/javascript" defer="defer">

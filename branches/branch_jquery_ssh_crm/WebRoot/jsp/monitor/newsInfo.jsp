@@ -263,7 +263,7 @@
 <script type="text/javascript" defer="defer">
 <!--	
 	$("#_back").click(function() {
-		window.location.href='showNewsList.action';			
+		window.location.href='showNewsList';			
 	});	
 	
 	$("#_back_edit").click(function() {
@@ -287,10 +287,10 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveNewsInfo.action',
+			'saveNewsInfo',
 			true,
 			function(){
-				window.location.href='showNewsInfo.action?newsExtDto.id=<s:property value="#_news.id" />';
+				window.location.href='showNewsInfo?newsExtDto.id=<s:property value="#_news.id" />';
 			}
 		);		
 	});		

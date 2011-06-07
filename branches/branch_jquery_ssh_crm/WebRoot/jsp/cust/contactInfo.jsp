@@ -186,7 +186,7 @@
 				</td>
 				<td>
 					<input id="_cont_isPrimary" name="cont.isPrimary"
-						class="easyui-combobox" url="getStatusYN.action" valueField="id"
+						class="easyui-combobox" url="getStatusYN" valueField="id"
 						textField="text" panelHeight="auto" editable="false"
 						style="width: 158px;">
 				</td>
@@ -252,7 +252,7 @@
 		$('#tabs-container').tabs('update', {
 			tab: tab,
 			options:{
-				href:'showContList.action'		
+				href:'showContList'		
 			}
 		});	
 	});	
@@ -277,7 +277,7 @@
 	
 	$("#_save_edit_contact").click(function() {
 		$('#infoFormContantEdit').submitForm(
-			'saveContInfo.action',
+			'saveContInfo',
 			true,
 			function(){
 				editCont('<s:property value="#_cont.id" />');

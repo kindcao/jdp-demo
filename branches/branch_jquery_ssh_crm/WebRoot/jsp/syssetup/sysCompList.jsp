@@ -149,7 +149,7 @@
 	
 	$("#_save").click(function() {
 		$('#infoForm').submitForm(
-			'saveSysCompInfo.action',
+			'saveSysCompInfo',
 			true,
 			function(){
 				$("#_back").click();
@@ -178,7 +178,7 @@
 	});
 		
 	function editComp(id){
-		window.location.href='showSysCompInfo.action?sysCompany.id='+id;
+		window.location.href='showSysCompInfo?sysCompany.id='+id;
 	}
 	
 	$(document).ready(function() {
@@ -230,7 +230,7 @@
 		}]];
 			
 		//		
-		showDatagrid('grid-datalist','getSysCompList.action',frozenColumns,columns);
+		showDatagrid('grid-datalist','getSysCompList',frozenColumns,columns);
 		//
 		$('#div-log-img').dialog('close');
 		$('#_delete').linkbutton('disable');				

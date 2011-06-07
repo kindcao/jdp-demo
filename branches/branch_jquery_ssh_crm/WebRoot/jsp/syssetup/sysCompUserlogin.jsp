@@ -53,10 +53,10 @@
 <!--
 	$("#_login").click(function() {
 		$('#loginForm').submitForm(
-			'login.action',
+			'login',
 			true,
 			function(){
-				window.location.href='welcome.action';
+				window.location.href='welcome';
 			}
 		);	
 	});

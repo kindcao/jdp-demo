@@ -8,12 +8,12 @@
 <div id="tabs-container" class="easyui-tabs" border="false" fit="true"
 	style="margin-top: 5px; overflow: hidden; width: 500px; height: 500px;">
 	<div title="客户资料" style="margin-left: 5px;"
-		href="showCustInfoDtl.action">
+		href="showCustInfoDtl">
 	</div>
 	<div title="联系人" style="margin-left: 5px;" cache="false"
-		href='showContList.action?customerId=<s:property value="cust.id" />'>
+		href='showContList?customerId=<s:property value="cust.id" />'>
 	</div>
 	<!--div title="市场工作" style="margin-left: 5px;" cache="false"
-		href="showMktEvtList.action">
+		href="showMktEvtList">
 	</div-->
 </div>

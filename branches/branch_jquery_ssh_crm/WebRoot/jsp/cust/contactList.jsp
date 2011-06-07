@@ -64,7 +64,7 @@
 				</td>
 				<td>
 					<input id="cont.isPrimary" name="cont.isPrimary"
-						class="easyui-combobox" url="getStatusYN.action" valueField="id"
+						class="easyui-combobox" url="getStatusYN" valueField="id"
 						textField="text" panelHeight="auto" editable="false"
 						style="width: 159px;">
 				</td>
@@ -145,7 +145,7 @@
 					</td>
 					<td>
 						<input id="isPrimary" name="isPrimary" class="easyui-combobox"
-							url="getStatusYN.action" valueField="id" textField="text"
+							url="getStatusYN" valueField="id" textField="text"
 							panelHeight="auto" editable="false" style="width: 159px;">
 					</td>
 				</tr>
@@ -202,7 +202,7 @@
 	
 	$("#_save_contact").click(function() {
 		$('#infoFormContact').submitForm(
-			'saveContInfo.action',
+			'saveContInfo',
 			true,
 			function(){
 				$("#_back_contact").click();
@@ -219,7 +219,7 @@
 	
 	//for delete begin
 	$("#_delete").click(function() {
-		deleteRecord('grid-datalist-contact','deleteCont.action');
+		deleteRecord('grid-datalist-contact','deleteCont');
 	});
 	//fore delte end
 	
@@ -243,7 +243,7 @@
 		$('#tabs-container').tabs('update', {
 			tab: tab,
 			options:{
-				href:'showContInfo.action?cont.id='+id			
+				href:'showContInfo?cont.id='+id			
 			}
 		});			
 	}
@@ -303,7 +303,7 @@
 		}]];
 			
 		//		
-		showDatagrid('grid-datalist-contact','getContList.action',frozenColumns,columns);				
+		showDatagrid('grid-datalist-contact','getContList',frozenColumns,columns);				
 	});	
 	//for search end
 //-->

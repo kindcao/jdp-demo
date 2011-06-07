@@ -6,7 +6,7 @@
 <div style="margin: 10px">
 	<h3>
 		系统出现异常，请联系管理员或重新
-		<a href="showLogin.action">登录</a>
+		<a href="showLogin">登录</a>
 	</h3>
 	<hr>
 	<h5>

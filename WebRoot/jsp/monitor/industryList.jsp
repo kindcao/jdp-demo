@@ -39,7 +39,7 @@
 					<input id="industryExtDto_customerId"
 						name="industryExtDto.customerId" class="easyui-combobox"
 						required="true" url="getCustNameList" valueField="id"
-						textField="custName" editable="false" panelHeight="100"
+						textField="custName" editable="false" panelHeight="auto"
 						style="width: 398px;">
 				</td>
 				<td colspan="2">
@@ -134,7 +134,7 @@
 						<input id="industryExtDto_customerId_search"
 							name="industryExtDto.customerId" class="easyui-combobox"
 							url="getCustNameList" valueField="id" textField="custName"
-							editable="false" panelHeight="100" style="width: 427px;">
+							editable="false" panelHeight="auto" style="width: 427px;">
 					</td>
 					<td colspan="2">
 						&nbsp;

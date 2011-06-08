@@ -98,7 +98,7 @@
 					<input id="mktEvt_customerIds" class="easyui-combobox"
 						name="mktEvt.customerIds" url="getCustNameList"
 						valueField="id" textField="custName" multiple="true"
-						editable="false" panelHeight="100" style="width: 425px;">
+						editable="false" panelHeight="auto" style="width: 425px;">
 				</td>
 			</tr>
 			<tr height="30px">

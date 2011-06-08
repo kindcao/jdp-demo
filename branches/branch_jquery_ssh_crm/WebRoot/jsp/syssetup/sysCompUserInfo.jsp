@@ -113,7 +113,7 @@
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
 						name="sysCompUser.sysCompanyId" url="getSysComp"
 						valueField="id" textField="companyName" editable="false"
-						panelHeight="100" required="true" style="width: 158px;"
+						panelHeight="auto" required="true" style="width: 158px;"
 						value='<s:property value="#_sysCompUser.sysCompanyId" />'>
 				</td>
 				<td class="label-title" width="10%">
@@ -122,7 +122,7 @@
 				<td width="20%">
 					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
 						url='' class="easyui-combobox" valueField="id" textField="name"
-						multiple="false" editable="true" panelHeight="100"
+						multiple="false" editable="true" panelHeight="auto"
 						style="width: 158px;"
 						value='<s:property value="#_sysCompUser.superiorId" />'>
 				</td>

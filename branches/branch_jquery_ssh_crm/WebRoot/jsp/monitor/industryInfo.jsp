@@ -115,7 +115,7 @@
 					<input id="industryExtDto_customerId"
 						name="industryExtDto.customerId" class="easyui-combobox"
 						required="true" url="getCustNameList" valueField="id"
-						textField="custName" editable="false" panelHeight="100"
+						textField="custName" editable="false" panelHeight="auto"
 						style="width: 397px;"
 						value='<s:property value="#_induView.customerId" />'>
 				</td>

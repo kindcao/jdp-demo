@@ -22,7 +22,7 @@
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
 						name="sysCompUser.sysCompanyId" url="getSysComp"
 						valueField="id" textField="companyName" editable="false"
-						panelHeight="100" required="true" style="width: 158px;">
+						panelHeight="auto" required="true" style="width: 158px;">
 				</td>
 				<td class="label-title" width="10%">
 					用户领导：
@@ -30,7 +30,7 @@
 				<td width="20%">
 					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
 						url='' class="easyui-combobox" valueField="id" textField="name"
-						multiple="false" editable="false" panelHeight="100"
+						multiple="false" editable="false" panelHeight="auto"
 						style="width: 158px;">
 				</td>
 			</tr>
@@ -144,7 +144,7 @@
 						<input id="sysCompUser_sysCompanyId_search"
 							class="easyui-combobox" name="sysCompUser.sysCompanyId"
 							url="getSysComp" valueField="id" textField="companyName"
-							editable="false" panelHeight="100" style="width: 158px;">
+							editable="false" panelHeight="auto" style="width: 158px;">
 					</td>
 					<td class="label-title">
 						用户领导：
@@ -153,7 +153,7 @@
 						<input id="sysCompUser_superiorId_search"
 							name="sysCompUser.superiorId" url='' class="easyui-combobox"
 							valueField="id" textField="name" multiple="false"
-							editable="false" panelHeight="100" style="width: 158px;">
+							editable="false" panelHeight="auto" style="width: 158px;">
 					</td>
 					<td>
 						&nbsp;

@@ -223,7 +223,7 @@
 					<input id="mktEvt_customerIds" class="easyui-combobox"
 						name="mktEvt.customerIds" url="getCustNameList"
 						valueField="id" textField="custName" multiple="true"
-						editable="false" panelHeight="100" style="width: 426px;"
+						editable="false" panelHeight="auto" style="width: 426px;"
 						value='<s:property value="#_mktEvtView.custName" />'>
 				</td>
 			</tr>

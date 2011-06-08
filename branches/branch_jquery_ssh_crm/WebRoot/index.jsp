@@ -1,4 +1,4 @@
 
 <%
-    response.sendRedirect("showLogin.action");
+    response.sendRedirect("showLogin");
 %>

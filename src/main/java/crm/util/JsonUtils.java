@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import crm.model.CustomerContact;
-
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
 import net.sf.json.util.CycleDetectionStrategy;
@@ -19,13 +17,6 @@ import net.sf.json.util.CycleDetectionStrategy;
  *          May 10, 2011 10:27:54 AM
  */
 public class JsonUtils {
-
-    public static void main(String[] args) {
-        String[] filedName = new String[] { "name", "department", "posit", "phone", "mobile", "email", "address",
-                "isPrimary" };
-        JsonConfig cfg = JsonUtils.setIncludes(CustomerContact.class, filedName);
-        System.out.println(11);
-    }
 
     public static JsonConfig setIncludes(Class c, String... p) {
         JsonConfig config = new JsonConfig();

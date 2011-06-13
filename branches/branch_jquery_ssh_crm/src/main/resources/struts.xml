@@ -5,6 +5,7 @@
 <struts>
 	<constant name="struts.custom.i18n.resources" value="messageResource" />
 	<constant name="struts.devMode" value="true" />
+	<constant name="struts.ui.theme" value="simple" />
 	<package name="default" extends="tiles-default" namespace="/">
 		<interceptors>
 			<interceptor name="exceptionInterceptor" class="crm.interceptor.ExceptionInterceptor" />

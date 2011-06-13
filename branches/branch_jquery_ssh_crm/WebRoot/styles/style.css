@@ -431,3 +431,7 @@ table.tabbedtable label {
 	padding-right: 10px;
 	color: gray;
 }
+
+.datagrid-row-selected,.datagrid-row-over {
+	background: transparent;
+}

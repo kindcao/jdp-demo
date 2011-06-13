@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.custom.i18n.resources" value="messageResource" />
+	<constant name="struts.devMode" value="true" />
+	<package name="default" extends="tiles-default" namespace="/">
+		<interceptors>
+			<interceptor name="exceptionInterceptor" class="crm.interceptor.ExceptionInterceptor" />
+			<interceptor name="checkLoginInterceptor" class="crm.interceptor.CheckLoginInterceptor" />
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="checkLoginInterceptor">
+					<param name="excludeMethods">showLogin,login,getSysStatus</param>
+				</interceptor-ref>
+				<interceptor-ref name="exceptionInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack" />
+		<global-results>
+			<result name="login" type="tiles">syscompuser.login</result>
+			<result name="error" type="tiles">error</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		<!-- base -->
+		<action name="welcome" class="baseAction" method="welcome">
+			<result name="welcome" type="tiles">welcome</result>
+		</action>
+		<action name="getSysStatus" class="baseAction" method="getSysStatus" />
+		<action name="getStatusYN" class="baseAction" method="getStatusYN" />
+		<!-- cust -->
+		<action name="*Cust*" class="custAction" method="{0}">
+			<!-- list -->
+			<result name="cust.broker.list" type="tiles">cust.broker.list</result>
+			<result name="cust.bank.list" type="tiles">cust.bank.list</result>
+			<result name="cust.invest.list" type="tiles">cust.invest.list</result>
+			<result name="cust.media.list" type="tiles">cust.media.list</result>
+			<result name="cust.info.list" type="tiles">cust.info.list</result>
+			<result name="cust.listed.list" type="tiles">cust.listed.list</result>
+			<result name="cust.others.list" type="tiles">cust.others.list</result>
+			<!-- info -->
+			<result name="cust.broker.info" type="tiles">cust.broker.info</result>
+			<result name="cust.bank.info" type="tiles">cust.bank.info</result>
+			<result name="cust.invest.info" type="tiles">cust.invest.info</result>
+			<result name="cust.media.info" type="tiles">cust.media.info</result>
+			<result name="cust.info.info" type="tiles">cust.info.info</result>
+			<result name="cust.listed.info" type="tiles">cust.listed.info</result>
+			<result name="cust.others.info" type="tiles">cust.others.info</result>
+			<!-- dtl -->
+			<result name="cust.info.dtl">/jsp/cust/custInfoDtl.jsp</result>
+		</action>
+		<!-- cust - contact  -->
+		<action name="*Cont*" class="contAction" method="{0}">
+			<result name="contact.list">/jsp/cust/contactList.jsp</result>
+			<result name="contact.info">/jsp/cust/contactInfo.jsp</result>
+		</action>
+		<!-- market event  -->
+		<action name="*MktEvt*" class="mktEvtAction" method="{0}">
+			<result name="mktevt.list" type="tiles">mktevt.list</result>
+			<result name="mktevt.info" type="tiles">mktevt.info</result>
+			<result name="mktevt.cal" type="tiles">mktevt.cal</result>
+			<result name="mktevt.cal.dtl">/jsp/mktevt/mktEvtCalDtl.jsp</result>
+			<result name="mktevt.count" type="tiles">mktevt.count</result>
+		</action>
+		<!-- market monitor publish-->
+		<action name="*Publish*" class="publishAction" method="{0}">
+			<result name="publish.list" type="tiles">publish.list</result>
+		</action>
+		<!-- market monitor news -->
+		<action name="*News*" class="newsAction" method="{0}">
+			<result name="news.list" type="tiles">news.list</result>
+			<result name="news.info" type="tiles">news.info</result>
+		</action>
+		<!-- market monitor industry -->
+		<action name="*Industry*" class="industryAction" method="{0}">
+			<result name="industry.list" type="tiles">industry.list</result>
+			<result name="industry.info" type="tiles">industry.info</result>
+		</action>
+		<action name="getIndustryNewsType" class="industryAction" method="getIndustryNewsType" />
+		<!-- syssetup company -->
+		<action name="showSysCompList" class="sysCompAction" method="showSysCompList">
+			<result name="syscomp.list" type="tiles">syscomp.list</result>
+		</action>
+		<action name="showSysCompInfo" class="sysCompAction" method="showSysCompInfo">
+			<result name="syscomp.info" type="tiles">syscomp.info</result>
+		</action>
+		<action name="getSysCompList" class="sysCompAction" method="getSysCompList" />
+		<action name="saveSysCompInfo" class="sysCompAction" method="saveSysCompInfo" />
+		<action name="getSysComp" class="sysCompAction" method="getSysComp" />
+		<!-- syssetup user -->
+		<action name="showLogin" class="sysCompUserAction" method="showLogin" />
+		<action name="login" class="sysCompUserAction" method="login" />
+		<action name="logout" class="sysCompUserAction" method="logout" />
+		<action name="*SysCompUser*" class="sysCompUserAction" method="{0}">
+			<result name="syscompuser.list" type="tiles">syscompuser.list</result>
+			<result name="syscompuser.info" type="tiles">syscompuser.info</result>
+		</action>
+	</package>
+</struts>

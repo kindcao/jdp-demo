@@ -20,9 +20,9 @@
 				</td>
 				<td>
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
-						name="sysCompUser.sysCompanyId" url="getSysComp"
-						valueField="id" textField="companyName" editable="false"
-						panelHeight="auto" required="true" style="width: 158px;">
+						name="sysCompUser.sysCompanyId" url="getSysComp" valueField="id"
+						textField="companyName" editable="false" panelHeight="auto"
+						required="true" style="width: 158px;">
 				</td>
 				<td class="label-title" width="10%">
 					用户领导：
@@ -30,7 +30,7 @@
 				<td width="20%">
 					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
 						url='' class="easyui-combobox" valueField="id" textField="name"
-						multiple="false" editable="false" panelHeight="auto"
+						panelHeight="auto" editable="false" panelHeight="auto"
 						style="width: 158px;">
 				</td>
 			</tr>
@@ -55,16 +55,10 @@
 					用户状态：
 				</td>
 				<td>
-					<select id="sysCompUser_status" name="sysCompUser.status"
-						class="easyui-combobox" panelHeight="auto" required="true"
-						editable="false">
-						<option value="A">
-							正常
-						</option>
-						<option value="D">
-							禁用
-						</option>
-					</select>
+					<input id="sysCompUser_status" name="sysCompUser.status"
+						class="easyui-combobox" url="getStatusYN?statusFlag=3"
+						valueField="id" textField="text" panelHeight="auto"
+						required="true" editable="false" style="width: 158px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -122,18 +116,10 @@
 						用户状态：
 					</td>
 					<td width="20%">
-						<select id="sysCompUser_status_search" name="sysCompUser.status"
-							class="easyui-combobox" panelHeight="auto" editable="false">
-							<option value="">
-								---请选择---
-							</option>
-							<option value="A">
-								正常
-							</option>
-							<option value="D">
-								禁用
-							</option>
-						</select>
+						<input id="sysCompUser_status_search" name="sysCompUser.status"
+							class="easyui-combobox" url="getStatusYN?statusFlag=3"
+							valueField="id" textField="text" panelHeight="auto"
+							editable="false" style="width: 160px;">
 					</td>
 				</tr>
 				<tr height="30px">
@@ -152,7 +138,7 @@
 					<td width="20%">
 						<input id="sysCompUser_superiorId_search"
 							name="sysCompUser.superiorId" url='' class="easyui-combobox"
-							valueField="id" textField="name" multiple="false"
+							valueField="id" textField="name" panelHeight="auto"
 							editable="false" panelHeight="auto" style="width: 158px;">
 					</td>
 					<td>

@@ -180,7 +180,7 @@
 				<td>
 					<input id="cust_indu" class="easyui-combobox"
 						name="cust.industryId" required="true" url="getCustIndu"
-						valueField="id" textField="name" multiple="false" editable="false"
+						valueField="id" textField="name" panelHeight="auto" editable="false"
 						panelHeight="auto" style="width: 159px;"
 						value='<s:property value="#_cust.industryName" />'>
 				</td>

@@ -162,7 +162,7 @@
 				<td>
 					<input id="_marketEventTypeId" name="_marketEventTypeId"
 						class="easyui-combobox" required="true" url="" valueField="id"
-						textField="name" multiple="false" editable="false"
+						textField="name" panelHeight="auto" editable="false"
 						panelHeight="auto" style="width: 160px;"
 						value='<s:property value="#_mktEvtView.mktevtSuperiorName" />'>
 				</td>
@@ -173,7 +173,7 @@
 					<input id="mktEvt_marketEventTypeId"
 						name="mktEvt.marketEventTypeId" class="easyui-combobox"
 						required="true" url="" valueField="id" textField="name"
-						multiple="false" editable="false" panelHeight="auto"
+						panelHeight="auto" editable="false" panelHeight="auto"
 						style="width: 160px;"
 						value='<s:property value="#_mktEvtView.mktevtName" />'>
 				</td>
@@ -183,8 +183,9 @@
 				<td>
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
 						url='getSysCompUserByCompIds' class="easyui-combobox"
-						required="true" valueField="id" textField="name" multiple="false"
-						editable="false" panelHeight="auto" style="width: 160px;"
+						required="true" valueField="id" textField="name"
+						panelHeight="auto" editable="false" panelHeight="auto"
+						style="width: 160px;"
 						value='<s:property value="#_mktEvtView.sysCompUserName" />'>
 				</td>
 			</tr>
@@ -203,16 +204,11 @@
 					实施状态：
 				</td>
 				<td>
-					<select id="mktEvt_status" name="mktEvt.status"
-						class="easyui-combobox" required="true" panelHeight="auto"
-						editable="false" style="width: 160px;">
-						<option value="N" selected="selected">
-							未实施
-						</option>
-						<option value="Y">
-							已实施
-						</option>
-					</select>
+					<input id="mktEvt_status" name="mktEvt.status"
+						class="easyui-combobox" url="getStatusYN?statusFlag=2"
+						required="true" valueField="id" textField="text"
+						panelHeight="auto" editable="false" style="width: 160px;"
+						value='<s:property value="#_mktEvt.status" />'>
 				</td>
 			</tr>
 			<tr height="30px">
@@ -221,9 +217,9 @@
 				</td>
 				<td colspan="5">
 					<input id="mktEvt_customerIds" class="easyui-combobox"
-						name="mktEvt.customerIds" url="getCustNameList"
-						valueField="id" textField="custName" multiple="true"
-						editable="false" panelHeight="auto" style="width: 426px;"
+						name="mktEvt.customerIds" url="getCustNameList" valueField="id"
+						textField="custName" multiple="true" editable="false"
+						panelHeight="auto" style="width: 426px;"
 						value='<s:property value="#_mktEvtView.custName" />'>
 				</td>
 			</tr>
@@ -302,7 +298,7 @@
 	$("#_edit").click(function() {
 		document.getElementById('div_info_read-only').style.display='none';
 		document.getElementById('div_info').style.display='inline';		
-		//
+		//		
 		$('#_marketEventTypeId').combobox('setValue','<s:property value="#_mktEvtView.mktevtSuperiorId" />');
 		$('#mktEvt_marketEventTypeId').combobox('setValue','<s:property value="#_mktEvtView.mktevtId" />');		
 		$('#mktEvt_sysCompUseIds').combobox('setValue','<s:property value="#_mktEvtView.sysCompUserId" />');
@@ -310,6 +306,7 @@
 		$('#mktEvt_sysCompIds').combobox('setValues',_idsStr.split(','));
 		_idsStr='<s:property value="#_mktEvtView.custId" />';
 		$('#mktEvt_customerIds').combobox('setValues',_idsStr.split(','));		
+		$('#mktEvt_status').combobox('setValue','<s:property value="#_mktEvt.status" />');
 		//
 		document.getElementById('mktEvt_situation').value='<s:property value="#_mktEvt.situation" escape="false" />';
 		document.getElementById('mktEvt_goods').value='<s:property value="#_mktEvt.goods" escape="false" />';	

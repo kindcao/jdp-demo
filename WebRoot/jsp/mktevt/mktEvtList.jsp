@@ -41,7 +41,7 @@
 				<td>
 					<input id="_marketEventTypeId" name="_marketEventTypeId"
 						class="easyui-combobox" required="true" url="" valueField="id"
-						textField="name" multiple="false" editable="false"
+						textField="name" panelHeight="auto" editable="false"
 						panelHeight="auto" style="width: 160px;">
 				</td>
 				<td class="label-title">
@@ -51,7 +51,7 @@
 					<input id="mktEvt_marketEventTypeId"
 						name="mktEvt.marketEventTypeId" class="easyui-combobox"
 						required="true" url="" valueField="id" textField="name"
-						multiple="false" editable="false" panelHeight="auto"
+						panelHeight="auto" editable="false" panelHeight="auto"
 						style="width: 160px;">
 				</td>
 				<td class="label-title">
@@ -60,8 +60,9 @@
 				<td>
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
 						url='getSysCompUserByCompIds' class="easyui-combobox"
-						required="true" valueField="id" textField="name" multiple="false"
-						editable="false" panelHeight="auto" style="width: 160px;">
+						required="true" valueField="id" textField="name"
+						panelHeight="auto" editable="false" panelHeight="auto"
+						style="width: 160px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -78,16 +79,10 @@
 					实施状态：
 				</td>
 				<td>
-					<select id="mktEvt_status" name="mktEvt.status"
-						class="easyui-combobox" required="true" panelHeight="auto"
-						editable="false" style="width: 160px;">
-						<option value="N" selected="selected">
-							未实施
-						</option>
-						<option value="Y">
-							已实施
-						</option>
-					</select>
+					<input id="mktEvt_status" name="mktEvt.status"
+						class="easyui-combobox" url="getStatusYN?statusFlag=2"
+						required="true" valueField="id" textField="text"
+						panelHeight="auto" editable="false" style="width: 160px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -96,9 +91,9 @@
 				</td>
 				<td colspan="5">
 					<input id="mktEvt_customerIds" class="easyui-combobox"
-						name="mktEvt.customerIds" url="getCustNameList"
-						valueField="id" textField="custName" multiple="true"
-						editable="false" panelHeight="auto" style="width: 425px;">
+						name="mktEvt.customerIds" url="getCustNameList" valueField="id"
+						textField="custName" multiple="true" editable="false"
+						panelHeight="auto" style="width: 425px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -186,7 +181,7 @@
 					<td width="20%">
 						<input id="mktevtSuperiorId" name="mktevtSuperiorId"
 							class="easyui-combobox" url="" valueField="id" textField="name"
-							multiple="false" editable="false" panelHeight="auto"
+							panelHeight="auto" editable="false" panelHeight="auto"
 							style="width: 159px;">
 					</td>
 				</tr>
@@ -209,17 +204,9 @@
 						实施状态：
 					</td>
 					<td>
-						<select id="status" name="status" class="easyui-combobox"
-							panelHeight="auto" editable="false" style="width: 159px;">
-							<option value="">
-							</option>
-							<option value="N">
-								未实施
-							</option>
-							<option value="Y">
-								已实施
-							</option>
-						</select>
+						<input id="status" name="status" class="easyui-combobox"
+							url="getStatusYN?statusFlag=2" valueField="id" textField="text"
+							panelHeight="auto" editable="false" style="width: 160px;">
 					</td>
 				</tr>
 				<tr>
@@ -236,7 +223,7 @@
 					<td>
 						<input id="sysCompUseIds" name="sysCompUseIds"
 							url='getSysCompUserByCompIds' class="easyui-combobox"
-							valueField="id" textField="name" multiple="false"
+							valueField="id" textField="name" panelHeight="auto"
 							editable="false" panelHeight="auto" style="width: 160px;">
 					</td>
 					<td class="label-title">

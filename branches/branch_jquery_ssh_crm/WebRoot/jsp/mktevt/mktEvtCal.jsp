@@ -227,7 +227,7 @@
 									<input id="calExtDto_mktevtSuperiorId"
 										name="calExtDto.mktevtSuperiorId" class="easyui-combobox"
 										url="getMktEvtType?eventTypeId=0" valueField="id"
-										textField="name" multiple="false" editable="false"
+										textField="name" panelHeight="auto" editable="false"
 										panelHeight="auto" style="width: 160px;">
 								</td>
 							</tr>

@@ -46,8 +46,8 @@
 				<td>
 					<input id="cust_indu" class="easyui-combobox"
 						name="cust.industryId" required="true" url="getCustIndu"
-						valueField="id" textField="name" multiple="false" editable="false"
-						panelHeight="auto" style="width: 159px;">
+						valueField="id" textField="name" panelHeight="auto"
+						editable="false" panelHeight="auto" style="width: 159px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -174,7 +174,7 @@
 					<td width="20%">
 						<input id="cust_indu_search" class="easyui-combobox"
 							name="industryId" url="getCustIndu" valueField="id"
-							textField="name" multiple="false" editable="false"
+							textField="name" panelHeight="auto" editable="false"
 							panelHeight="auto" style="width: 159px;">
 					</td>
 				</tr>
@@ -219,13 +219,13 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--	
+<!--
 	//for add begin
 	$("#_add").click(function() {		
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
 		$('#_delete').linkbutton('disable');	
-		$("#_reset").click();	
+		$("#_reset").click();
 	});	
 	
 	$("#_back").click(function() {

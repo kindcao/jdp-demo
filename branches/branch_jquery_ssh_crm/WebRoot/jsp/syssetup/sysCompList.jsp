@@ -20,30 +20,19 @@
 					公司类型：
 				</td>
 				<td width="20%">
-					<select name="sysCompany.type" class="easyui-combobox"
-						panelHeight="auto" required="true" editable="false">
-						<option value="R">
-							融聚公司
-						</option>
-						<option value="O">
-							其它公司
-						</option>
-					</select>
+					<input id="sysCompany_type" name="sysCompany.type"
+						class="easyui-combobox" url="getStatusYN?statusFlag=4"
+						valueField="id" textField="text" panelHeight="auto"
+						required="true" editable="false" style="width: 160px;">
 				</td>
 				<td class="label-title" width="10%">
 					公司状态：
 				</td>
 				<td width="20%">
-					<select id="sysCompany_status" name="sysCompany.status"
-						class="easyui-combobox" panelHeight="auto" required="true"
-						editable="false">
-						<option value="A">
-							正常
-						</option>
-						<option value="D">
-							禁用
-						</option>
-					</select>
+					<input id="sysCompany_status" name="sysCompany.status"
+						class="easyui-combobox" url="getStatusYN?statusFlag=3"
+						valueField="id" textField="text" panelHeight="auto"
+						required="true" editable="false" style="width: 160px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -51,7 +40,7 @@
 					Logo图URI：
 				</td>
 				<td colspan="3">
-					<input type="text" name="sysCompany.logo" style="width: 428px;"
+					<input type="text" name="sysCompany.logo" style="width: 429px;"
 						maxlength="100" class="easyui-validatebox" required="true"
 						validType="url" />
 				</td>
@@ -64,7 +53,7 @@
 					备注：
 				</td>
 				<td colspan="3">
-					<textarea name="sysCompany.descript" rows="5" style="width: 428px;"
+					<textarea name="sysCompany.descript" rows="5" style="width: 429px;"
 						class="easyui-validatebox" validType="length[0,100]"></textarea>
 				</td>
 				<td colspan="2" align="center" valign="bottom">
@@ -99,18 +88,10 @@
 						公司状态：
 					</td>
 					<td width="20%">
-						<select id="sysCompany_status_search" name="sysCompany.status"
-							class="easyui-combobox" panelHeight="auto" editable="false">
-							<option value="">
-								---请选择---
-							</option>
-							<option value="A">
-								正常
-							</option>
-							<option value="D">
-								禁用
-							</option>
-						</select>
+						<input id="sysCompany_status_search" name="sysCompany.status"
+							class="easyui-combobox" url="getStatusYN?statusFlag=3"
+							valueField="id" textField="text" panelHeight="auto"
+							editable="false" style="width: 160px;">
 					</td>
 					<td colspan="2" align="center">
 						<a href="javascript:void(0);" class="easyui-linkbutton"

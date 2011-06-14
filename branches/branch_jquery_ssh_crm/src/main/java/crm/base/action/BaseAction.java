@@ -74,6 +74,8 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     // for select all ids
     private String ids;
 
+    private int statusFlag;
+
     public String welcome() throws Exception {
         return "welcome";
     }
@@ -90,7 +92,24 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
     }
 
     public String getStatusYN() throws Exception {
-        responseJsonData(Constants.JSON_DATA_STATUS_YN);
+        String result = Constants.JSON_DATA_STATUS_YN_0;
+        switch (statusFlag) {
+        case 1:
+            result = Constants.JSON_DATA_STATUS_YN_1;
+            break;
+        case 2:
+            result = Constants.JSON_DATA_STATUS_YN_2;
+            break;
+        case 3:
+            result = Constants.JSON_DATA_STATUS_AD_3;
+            break;
+        case 4:
+            result = Constants.JSON_DATA_STATUS_RO_4;
+            break;
+        default:
+            break;
+        }
+        responseJsonData(result);
         return NONE;
     }
 
@@ -232,6 +251,14 @@ public class BaseAction extends ActionSupport implements SessionAware, ServletRe
 
     public void setIds(String ids) {
         this.ids = Utils.fmtAndSortIds(ids);
+    }
+
+    public int getStatusFlag() {
+        return statusFlag;
+    }
+
+    public void setStatusFlag(int statusFlag) {
+        this.statusFlag = statusFlag;
     }
 
 }

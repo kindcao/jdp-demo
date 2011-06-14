@@ -23,28 +23,6 @@ public class Constants {
 
     public static final String CURR_SYS_USER_COMP_SESSION_KEY = "CURR_SYS_USER_COMP_SESSION_KEY";
 
-    // public static final String CUSTOMER_SESSION_KEY = "CUSTOMER_SESSION_KEY";
-
-    // public static final String CUSTOMER_CONTACT_SESSION_KEY =
-    // "CUSTOMER_CONTACT_SESSION_KEY";
-
-    // public static final String MARKET_EVENT_SESSION_KEY =
-    // "MARKET_EVENT_SESSION_KEY";
-
-    // public static final String MARKET_EVENT_VIEW_SESSION_KEY =
-    // "MARKET_EVENT_VIEW_SESSION_KEY";
-
-    // public static final String MONITOR_NEWS_VIEW_SESSION_KEY =
-    // "MONITOR_NEWS_VIEW_SESSION_KEY";
-
-    // public static final String MONITOR_INDUSTRY_VIEW_SESSION_KEY =
-    // "MONITOR_INDUSTRY_VIEW_SESSION_KEY";
-
-    // public static final String SYS_COMP_USER_VIEW_SESSION_KEY =
-    // "SYS_COMP_USER_VIEW_SESSION_KEY";
-
-    // public static final String SYS_COMP_SESSION_KEY = "SYS_COMP_SESSION_KEY";
-
     public static final String RESULT_TRANSFORMER_DTO = "RESULT_TRANSFORMER_DTO";
 
     public static final String STATUS_Y = "Y";
@@ -59,5 +37,13 @@ public class Constants {
 
     public static final String STATUS_D = "D";
 
-    public static final String JSON_DATA_STATUS_YN = "[{\"id\":\"Y\", \"text\":\"是\"},{\"id\":\"N\", \"text\":\"否\"}]";
+    public static final String JSON_DATA_STATUS_YN_0 = "[{\"id\":\"Y\", \"text\":\"是\"},{\"id\":\"N\", \"text\":\"否\"}]";
+
+    public static final String JSON_DATA_STATUS_YN_1 = "[{\"id\":\"Y\", \"text\":\"已删除\"},{\"id\":\"N\", \"text\":\"未删除\"}]";
+
+    public static final String JSON_DATA_STATUS_YN_2 = "[{\"id\":\"Y\", \"text\":\"已实施\"},{\"id\":\"N\", \"text\":\"未实施\"}]";
+
+    public static final String JSON_DATA_STATUS_AD_3 = "[{\"id\":\"A\", \"text\":\"正常\"},{\"id\":\"D\", \"text\":\"禁用\"}]";
+
+    public static final String JSON_DATA_STATUS_RO_4 = "[{\"id\":\"R\", \"text\":\"融聚公司\"},{\"id\":\"O\", \"text\":\"其它公司\"}]";
 }

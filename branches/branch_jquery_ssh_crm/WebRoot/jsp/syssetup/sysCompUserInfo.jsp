@@ -111,9 +111,9 @@
 				</td>
 				<td>
 					<input id="sysCompUser_sysCompanyId" class="easyui-combobox"
-						name="sysCompUser.sysCompanyId" url="getSysComp"
-						valueField="id" textField="companyName" editable="false"
-						panelHeight="auto" required="true" style="width: 158px;"
+						name="sysCompUser.sysCompanyId" url="getSysComp" valueField="id"
+						textField="companyName" editable="false" panelHeight="auto"
+						required="true" style="width: 158px;"
 						value='<s:property value="#_sysCompUser.sysCompanyId" />'>
 				</td>
 				<td class="label-title" width="10%">
@@ -122,7 +122,7 @@
 				<td width="20%">
 					<input id="sysCompUser_superiorId" name="sysCompUser.superiorId"
 						url='' class="easyui-combobox" valueField="id" textField="name"
-						multiple="false" editable="true" panelHeight="auto"
+						panelHeight="auto" editable="true" panelHeight="auto"
 						style="width: 158px;"
 						value='<s:property value="#_sysCompUser.superiorId" />'>
 				</td>
@@ -149,16 +149,10 @@
 					用户状态：
 				</td>
 				<td>
-					<select id="sysCompUser_status" name="sysCompUser.status"
-						class="easyui-combobox" panelHeight="auto" required="true"
-						editable="false">
-						<option value="A">
-							正常
-						</option>
-						<option value="D">
-							禁用
-						</option>
-					</select>
+					<input id="sysCompUser_status" name="sysCompUser.status"
+						class="easyui-combobox" url="getStatusYN?statusFlag=3"
+						valueField="id" textField="text" panelHeight="auto"
+						required="true" editable="false" style="width: 158px;">
 				</td>
 			</tr>
 			<tr height="30px">
@@ -174,16 +168,10 @@
 					删除标记：
 				</td>
 				<td>
-					<select id="sysCompUser_deleteFlag" name="sysCompUser.deleteFlag"
-						class="easyui-combobox" panelHeight="auto" required="true"
-						editable="false">
-						<option value="N">
-							未删除
-						</option>
-						<option value="Y">
-							已删除
-						</option>
-					</select>
+					<input id="sysCompUser_deleteFlag" name="sysCompUser.deleteFlag"
+						class="easyui-combobox" url="getStatusYN?statusFlag=1"
+						valueField="id" textField="text" panelHeight="auto"
+						required="true" editable="false" style="width: 158px;">
 				</td>
 				<td colspan="2">
 					&nbsp;

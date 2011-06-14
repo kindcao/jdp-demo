@@ -21,7 +21,7 @@
 				</td>
 				<td>
 					<input name="sysCompUser.loginId" class="easyui-validatebox"
-						required="true" validType="length[1,20]" />
+						required="true" validType="length[1,20]" value="admin" />
 				</td>
 			</tr>
 			<tr height="30px">
@@ -31,7 +31,7 @@
 				<td>
 					<input name="sysCompUser.passwd" type="password"
 						class="easyui-validatebox" required="true" validType="safepass"
-						maxlength="50" />
+						maxlength="50" value="admin123" />
 				</td>
 			</tr>
 			<tr>

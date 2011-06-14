@@ -18,6 +18,7 @@
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="myStack" />
+		<default-action-ref name="welcome" />
 		<global-results>
 			<result name="login" type="tiles">syscompuser.login</result>
 			<result name="error" type="tiles">error</result>

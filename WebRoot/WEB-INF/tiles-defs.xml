@@ -22,7 +22,7 @@
 	</definition>
 	<definition name="welcome" extends="main.layout">
 		<put-attribute name="menutitle" value="系统默认" />
-		<put-attribute name="bodyhead" value="欢迎版面" />
+		<put-attribute name="bodyhead" value="欢迎页" />
 		<put-attribute name="body" value="/jsp/common/welcome.jsp" />
 	</definition>
 	<!-- cust -->

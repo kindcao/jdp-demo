@@ -18,7 +18,7 @@
 	style="overflow: hidden;" fit="true">
 	<div title="系统默认">
 		<div style="margin: 10px;">
-			<a href="#" onclick="clickMenu('welcome');">欢迎版面</a>
+			<a href="#" onclick="clickMenu('welcome');">欢迎页</a>
 		</div>
 	</div>
 	<div title="客户管理">

@@ -89,6 +89,9 @@
 				<configuration>
 					<webappDirectory>WebRoot</webappDirectory>
 					<warSourceDirectory>WebRoot</warSourceDirectory>
+					<outputDirectory>WebRoot</outputDirectory>
+					<warSourceExcludes>**/.svn/**,**/*.war,**/logs/*.*</warSourceExcludes>
+					<warName>${artifactId}</warName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -154,19 +157,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 			<version>3.0.5.RELEASE</version>
 		</dependency>
-		<!--dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>3.0.5.RELEASE</version>
-			</dependency>
-			<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>3.0.5.RELEASE</version>
-			</dependency-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -202,32 +200,6 @@
 			<artifactId>tiles-core</artifactId>
 			<version>2.0.6</version>
 		</dependency>
-		<!--dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-plugin</artifactId>
-			<version>2.5.0</version>
-			</dependency>		
-			<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-grid-plugin</artifactId>
-			<version>2.5.0</version>
-			</dependency>
-			<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-json-plugin</artifactId>
-			<version>2.2.1</version>
-			</dependency-->
-		<!--dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.4.0.GA</version>
-			</dependency>
-			<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.9</version>
-			</dependency>
-		-->
 		<dependency>
 			<groupId>jboss</groupId>
 			<artifactId>javassist</artifactId>

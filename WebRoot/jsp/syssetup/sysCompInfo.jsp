@@ -41,7 +41,8 @@
 				Logo图URI：
 			</td>
 			<td colspan="3">
-				<s:if test="%{#_sysCompany.logo.trim().length()>0}">
+				<s:if
+					test="%{#_sysCompany.logo!=null && #_sysCompany.logo.trim().length()>0}">
 					<a href="#" onclick=window.open('<s:property value="#_sysCompany.logo" />')><s:property
 							value="#_sysCompany.logo" /> </a>
 				</s:if>

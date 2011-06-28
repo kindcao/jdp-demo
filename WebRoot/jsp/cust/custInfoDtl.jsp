@@ -57,7 +57,7 @@
 				邮箱：
 			</td>
 			<td>
-				<s:if test="%{#_cust.email.trim().length()>0}">
+				<s:if test="%{#_cust.email!=null && #_cust.email.trim().length()>0}">
 					<a href='mailto:<s:property value="#_cust.email" />'><s:property
 							value="#_cust.email" /> </a>
 				</s:if>
@@ -108,7 +108,8 @@
 				网站：
 			</td>
 			<td>
-				<s:if test="%{#_cust.website.trim().length()>0}">
+				<s:if
+					test="%{#_cust.website!=null && #_cust.website.trim().length()>0}">
 					<a href="#" onclick=window.open('<s:property value="#_cust.website" />')><s:property
 							value="#_cust.website" /> </a>
 				</s:if>
@@ -180,8 +181,8 @@
 				<td>
 					<input id="cust_indu" class="easyui-combobox"
 						name="cust.industryId" required="true" url="getCustIndu"
-						valueField="id" textField="name" panelHeight="auto" editable="false"
-						panelHeight="auto" style="width: 159px;"
+						valueField="id" textField="name" panelHeight="auto"
+						editable="false" panelHeight="auto" style="width: 159px;"
 						value='<s:property value="#_cust.industryName" />'>
 				</td>
 			</tr>

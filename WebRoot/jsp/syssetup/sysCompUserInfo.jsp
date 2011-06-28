@@ -56,7 +56,8 @@
 				用户邮箱：
 			</td>
 			<td>
-				<s:if test="%{#_sysCompUser.email.trim().length()>0}">
+				<s:if
+					test="%{#_sysCompUser.email!=null && #_sysCompUser.email.trim().length()>0}">
 					<a href='mailto:<s:property value="#_sysCompUser.email" />'><s:property
 							value="#_sysCompUser.email" /> </a>
 				</s:if>

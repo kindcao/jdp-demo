@@ -39,7 +39,8 @@
 				网址：
 			</td>
 			<td colspan="3">
-				<s:if test="%{#_induView.url.trim().length()>0}">
+				<s:if
+					test="%{#_induView.url!=null && #_induView.url.trim().length()>0}">
 					<a href="#" onclick=window.open('<s:property value="#_induView.url" />')><s:property
 							value="#_induView.url" /> </a>
 				</s:if>

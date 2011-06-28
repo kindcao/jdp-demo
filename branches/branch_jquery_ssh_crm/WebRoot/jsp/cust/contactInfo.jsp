@@ -24,7 +24,8 @@
 				照片URI：
 			</td>
 			<td rowspan="3" valign="top">
-				<s:if test="%{#_cont.picture.trim().length()>0}">
+				<s:if
+					test="%{#_cont.picture!=null && #_cont.picture.trim().length()>0}">
 					<img width="100px" height="80px"
 						src='<s:property value="#_cont.picture" />' />
 				</s:if>
@@ -66,7 +67,7 @@
 				邮箱：
 			</td>
 			<td>
-				<s:if test="%{#_cont.email.trim().length()>0}">
+				<s:if test="%{#_cont.email!=null && #_cont.email.trim().length()>0}">
 					<a href='mailto:<s:property value="#_cont.email" />'> <s:property
 							value="#_cont.email" /> </a>
 				</s:if>

@@ -10,6 +10,7 @@
 			<interceptor name="exceptionInterceptor" class="crm.interceptor.ExceptionInterceptor" />
 			<interceptor name="checkLoginInterceptor" class="crm.interceptor.CheckLoginInterceptor" />
 			<interceptor-stack name="myStack">
+				<interceptor-ref name="timer"/>
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="checkLoginInterceptor">
 					<param name="excludeMethods">showLogin,login,logout,getSysStatus</param>

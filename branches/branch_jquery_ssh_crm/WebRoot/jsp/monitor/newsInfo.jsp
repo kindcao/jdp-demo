@@ -80,7 +80,8 @@
 				截图URI：
 			</td>
 			<td width="40%">
-				<s:if test="%{#_news.picture.trim().length()>0}">
+				<s:if
+					test="%{#_news.picture!=null && #_news.picture.trim().length()>0}">
 					<a href="#" onclick=window.open('<s:property value="#_news.picture" />')><s:property
 							value="#_news.picture" /> </a>
 				</s:if>
@@ -98,7 +99,7 @@
 				网址：
 			</td>
 			<td width="40%">
-				<s:if test="%{#_news.url.trim().length()>0}">
+				<s:if test="%{#_news.url!=null && #_news.url.trim().length()>0}">
 					<a href="#" onclick=window.open('<s:property value="#_news.url" />')><s:property
 							value="#_news.url" /> </a>
 				</s:if>

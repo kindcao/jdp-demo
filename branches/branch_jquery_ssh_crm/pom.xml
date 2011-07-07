@@ -99,7 +99,7 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
-					<encoding>UTF-8</encoding>
+					<encoding>GBK</encoding>
 					<compilerArgument>-Djava.ext.dirs=WebRoot/WEB-INF/lib</compilerArgument>
 					<compilerArguments>
 						<sourcepath>src/main/**/*.*</sourcepath>

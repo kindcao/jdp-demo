@@ -120,7 +120,7 @@
 				if (null!=data && data.statusCode==0) {
 					document.getElementById('labOnlineUserNum').innerHTML = data.onlineUserNum;					
 				} else {
-					showErrorMsg();	
+					//showErrorMsg();	
 				}				
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown){

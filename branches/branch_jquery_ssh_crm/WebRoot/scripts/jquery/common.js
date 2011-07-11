@@ -96,7 +96,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 	},
 	mobile : {
 		validator : function(value, param) {
-			return /^((\(\d{2,3}\))|(\d{3}\-))?13\d{9}$/.test(value);
+			return /^((\(\d{2,3}\))|(\d{3}\-))?1\d{10}$/.test(value);
 		},
 		message : '手机号码不正确'
 	},
@@ -133,7 +133,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 	},
 	phone : {
 		validator : function(value, param) {
-			var reg = /(^([0][1-9]{2,3}[-])?\d{3,8}(-\d{1,6})?$)|(^\([0][1-9]{2,3}\)\d{3,8}(\(\d{1,6}\))?$)|(^\d{3,8}$)/;
+			var reg = /(^([0|8][1-9]{2,3}[-])?\d{3,8}(-\d{1,6})?$)|(^\([0|8][1-9]{2,3}\)\d{3,8}(\(\d{1,6}\))?$)|(^\d{3,8}$)/;
 			return reg.test(value);
 		},
 		message : '请输入正确的电话号码,区号和号码用\'-\'分割'

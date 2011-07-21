@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	   "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	   "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="nomenu.layout" template="/jsp/layout/nomenuLayout.jsp">
+		<put-attribute name="header" value="/jsp/layout/header2.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/jsp/layout/footer2.jsp" />
+	</definition>
+	<definition name="main.layout" template="/jsp/layout/mainLayout.jsp">
+		<put-attribute name="header" value="/jsp/layout/header.jsp" />
+		<put-attribute name="menu" value="/jsp/layout/menu.jsp" />
+		<put-attribute name="menutitle" value="" />
+		<put-attribute name="bodyhead" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/jsp/layout/footer.jsp" />
+	</definition>
+	<!-- common -->
+	<definition name="error" extends="nomenu.layout">
+		<put-attribute name="body" value="/jsp/common/error.jsp" />
+	</definition>
+	<definition name="welcome" extends="main.layout">
+		<put-attribute name="menutitle" value="系统默认" />
+		<put-attribute name="bodyhead" value="欢迎页" />
+		<put-attribute name="body" value="/jsp/common/welcome.jsp" />
+	</definition>
+	<!-- cust -->
+	<definition name="cust.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="客户管理" />
+	</definition>
+	<definition name="cust.list.layout" extends="cust.layout">
+		<put-attribute name="body" value="/jsp/cust/custList.jsp" />
+	</definition>
+	<definition name="cust.info.layout" extends="cust.layout">
+		<put-attribute name="body" value="/jsp/cust/custInfo.jsp" />
+	</definition>
+	<definition name="cust.broker.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="券商" />
+	</definition>
+	<definition name="cust.broker.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="券商" />
+	</definition>
+	<definition name="cust.bank.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="银行" />
+	</definition>
+	<definition name="cust.bank.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="银行" />
+	</definition>
+	<definition name="cust.invest.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="投资" />
+	</definition>
+	<definition name="cust.invest.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="投资" />
+	</definition>
+	<definition name="cust.media.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="媒体" />
+	</definition>
+	<definition name="cust.media.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="媒体" />
+	</definition>
+	<definition name="cust.info.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="资讯" />
+	</definition>
+	<definition name="cust.info.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="资讯" />
+	</definition>
+	<definition name="cust.listed.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="上市" />
+	</definition>
+	<definition name="cust.listed.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="上市" />
+	</definition>
+	<definition name="cust.others.list" extends="cust.list.layout">
+		<put-attribute name="bodyhead" value="其他" />
+	</definition>
+	<definition name="cust.others.info" extends="cust.info.layout">
+		<put-attribute name="bodyhead" value="其他" />
+	</definition>
+	<!-- market event -->
+	<definition name="mktevt.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="市场工作" />
+	</definition>
+	<definition name="mktevt.list" extends="mktevt.layout">
+		<put-attribute name="bodyhead" value="市场工作" />
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtList.jsp" />
+	</definition>
+	<definition name="mktevt.info" extends="mktevt.list">
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtInfo.jsp" />
+	</definition>
+	<definition name="mktevt.cal" extends="mktevt.layout">
+		<put-attribute name="bodyhead" value="日历" />
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtCal.jsp" />
+	</definition>
+	<definition name="mktevt.count" extends="mktevt.layout">
+		<put-attribute name="bodyhead" value="统计" />
+		<put-attribute name="body" value="/jsp/mktevt/mktEvtCount.jsp" />
+	</definition>
+	<!-- market monitor -->
+	<definition name="monitor.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="市场监控" />
+	</definition>
+	<definition name="publish.list" extends="monitor.layout">
+		<put-attribute name="bodyhead" value="发布监控" />
+		<put-attribute name="body" value="/jsp/monitor/publishList.jsp" />
+	</definition>
+	<definition name="news.list" extends="monitor.layout">
+		<put-attribute name="bodyhead" value="新闻专访" />
+		<put-attribute name="body" value="/jsp/monitor/newsList.jsp" />
+	</definition>
+	<definition name="news.info" extends="news.list">
+		<put-attribute name="body" value="/jsp/monitor/newsInfo.jsp" />
+	</definition>
+	<definition name="industry.list" extends="monitor.layout">
+		<put-attribute name="bodyhead" value="行业监控" />
+		<put-attribute name="body" value="/jsp/monitor/industryList.jsp" />
+	</definition>
+	<definition name="industry.info" extends="industry.list">
+		<put-attribute name="body" value="/jsp/monitor/industryInfo.jsp" />
+	</definition>
+	<!-- sysuser layout -->
+	<definition name="syscompuser.login" extends="nomenu.layout">
+		<put-attribute name="body" value="/jsp/syssetup/sysCompUserlogin.jsp" />
+	</definition>
+	<definition name="syssetup.layout" extends="main.layout">
+		<put-attribute name="menutitle" value="系统设定" />
+	</definition>
+	<definition name="syscomp.list" extends="syssetup.layout">
+		<put-attribute name="bodyhead" value="所属公司" />
+		<put-attribute name="body" value="/jsp/syssetup/sysCompList.jsp" />
+	</definition>
+	<definition name="syscomp.info" extends="syscomp.list">
+		<put-attribute name="body" value="/jsp/syssetup/sysCompInfo.jsp" />
+	</definition>
+	<definition name="syscompuser.list" extends="syssetup.layout">
+		<put-attribute name="bodyhead" value="系统用户" />
+		<put-attribute name="body" value="/jsp/syssetup/sysCompUserList.jsp" />
+	</definition>
+	<definition name="syscompuser.info" extends="syscompuser.list">
+		<put-attribute name="body" value="/jsp/syssetup/sysCompUserInfo.jsp" />
+	</definition>
+</tiles-definitions>

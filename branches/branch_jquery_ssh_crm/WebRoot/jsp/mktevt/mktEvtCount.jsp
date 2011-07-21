@@ -3,7 +3,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <style>
-<!--
 #count-tab {
 	border-left: 1px solid #A4BED4;
 	border-bottom: 1px solid #A4BED4;
@@ -38,11 +37,9 @@
 	color: gray;
 	white-space: nowrap;
 }
--->
 </style>
 
 <script type="text/javascript">
-<!--	
 	function getCountTabData(){		
 		var options = {
 			url : 'getMktEvtCountTab',
@@ -112,9 +109,7 @@
 		});
 		_tabHTML+='</table>';	
 		$('#div-count-tab').html(_tabHTML);		
-	}	
-	
-//-->
+	}
 </script>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
@@ -151,9 +146,9 @@
 								</td>
 								<td>
 									<input id="countExtDto_sysCompIds" class="easyui-combobox"
-										name="countExtDto.sysCompIds" url="getSysComp"
-										valueField="id" textField="companyName" multiple="true"
-										editable="false" panelHeight="auto" style="width: 200px;">
+										name="countExtDto.sysCompIds" url="getSysComp" valueField="id"
+										textField="companyName" multiple="true" editable="false"
+										panelHeight="auto" style="width: 200px;">
 								</td>
 							</tr>
 						</table>
@@ -194,7 +189,6 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--	
 	$('#_cal_def').click(function(){		
 		$('#_cal_def').linkbutton('disable');
 		$('#_cal_tab').linkbutton('enable');
@@ -233,5 +227,4 @@
 		$('#_delete').linkbutton('disable');	
 		$('#_cal_tab').click();		
 	});
-//-->
 </script>

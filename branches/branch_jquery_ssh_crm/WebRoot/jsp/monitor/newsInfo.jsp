@@ -262,7 +262,6 @@
 	</form>
 </div>
 <script type="text/javascript" defer="defer">
-<!--	
 	$("#_back").click(function() {
 		window.location.href='showNewsList';			
 	});	
@@ -294,6 +293,5 @@
 				window.location.href='showNewsInfo?newsExtDto.id=<s:property value="#_news.id" />';
 			}
 		);		
-	});		
-//-->
+	});
 </script>

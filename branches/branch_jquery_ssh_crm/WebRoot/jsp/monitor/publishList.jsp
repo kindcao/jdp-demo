@@ -11,7 +11,6 @@
 </style>
 
 <script type="text/javascript">
-<!--
 	function getPublishData(inc){
 		var labTxt=$('#_labPublishDate').text();
 		var d=new Date();	
@@ -29,7 +28,6 @@
 		$('#grid-datalist').datagrid('options').url=_url;			
 		$('#grid-datalist').datagrid('reload');	
 	}
-//-->
 </script>
 
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
@@ -59,7 +57,6 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--
 	$(document).ready(function() {
 		$('#_add').linkbutton('disable');
 		$('#_delete').linkbutton('disable');
@@ -103,5 +100,4 @@
 		showDatagrid('grid-datalist','',frozenColumns,columns);
 		getPublishData();
 	});
-//-->
 </script>

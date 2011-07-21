@@ -140,6 +140,6 @@
 	//
 	$(document).ready(function(){
 		innerTask();
-		setInterval("innerTask();", 60*1000);
+		setInterval("innerTask();", 2*60*1000);
 	});
 </script>

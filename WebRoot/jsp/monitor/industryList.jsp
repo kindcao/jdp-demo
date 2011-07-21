@@ -171,7 +171,6 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--	
 	//for add begin
 	$("#_add").click(function() {		
 		document.getElementById('div_info').style.display='inline';
@@ -279,6 +278,5 @@
 		//		
 		showDatagrid('grid-datalist','getIndustryList',frozenColumns,columns);					
 	});	
-	//for search end  
-//-->
+	//for search end
 </script>

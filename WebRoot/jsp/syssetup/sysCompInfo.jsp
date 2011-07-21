@@ -138,7 +138,6 @@
 	</form>
 </div>
 <script type="text/javascript" defer="defer">
-<!--	
 	$("#_back").click(function() {
 		window.location.href='showSysCompList';			
 	});	
@@ -173,5 +172,4 @@
 			}
 		);		
 	});	
-//-->
 </script>

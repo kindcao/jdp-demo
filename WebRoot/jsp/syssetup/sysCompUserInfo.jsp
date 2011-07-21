@@ -195,7 +195,6 @@
 	</form>
 </div>
 <script type="text/javascript" defer="defer">
-<!--
 	$('#sysCompUser_sysCompanyId').combobox({		
 		onSelect:function(rec){
 		 	var _sysUserIds=$(this).combobox("getValues");		 	
@@ -250,5 +249,4 @@
 			}
 		);		
 	});	
-//-->
 </script>

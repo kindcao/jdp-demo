@@ -184,7 +184,6 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--	
 	//for add begin			
 	$("#_add").click(function() {
 		document.getElementById('div_info_contact').style.display='inline';
@@ -306,5 +305,4 @@
 		showDatagrid('grid-datalist-contact','getContList',frozenColumns,columns);				
 	});	
 	//for search end
-//-->
 </script>

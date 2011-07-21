@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css"
 		href="${pageContext.request.contextPath}/styles/style.css" />
 	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/scripts/jquery/jquery-1.4.4.min.js"></script>
+		src="${pageContext.request.contextPath}/scripts/jquery/jquery-1.6.min.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/jquery.form.min.js"></script>
 	<script type="text/javascript"
@@ -20,8 +20,7 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/scripts/jquery/common.js"></script>
 
-	<script type="text/javascript">
-	<!--
+	<script type="text/javascript">	
 		 $.ajaxSetup ({
 			cache: false //关闭AJAX相应的缓存			
 		 });
@@ -33,7 +32,6 @@
 				document.location = "logout";
 				// window.event.returnValue = ""; //这里可以放置你想做的操作代码
 			}
-		 }
-	//-->		
+		 }		
 	</script>
 </head>

@@ -48,7 +48,6 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--
 	$("#_login").click(function() {
 		$('#loginForm').submitForm(
 			'login',
@@ -58,5 +57,4 @@
 			}
 		);	
 	});
-//-->
 </script>

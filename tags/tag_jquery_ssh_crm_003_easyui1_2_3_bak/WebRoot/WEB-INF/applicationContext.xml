@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!--  -->
+	<context:component-scan base-package="*" use-default-filters="false">
+		<context:include-filter type="regex" expression="^[crm].*.[action|dao|service].*" />
+		<!--context:include-filter type="aspectj" expression="crm..*.impl..*" /-->
+	</context:component-scan>
+	<!--cfg data source  -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://jdp-demo.dbserver:3306/test?useUnicode=true&amp;characterEncoding=UTF-8</value>
+		</property>
+		<property name="username">
+			<value>user</value>
+		</property>
+		<property name="password">
+			<value>user</value>
+		</property>
+	</bean>
+	<!-- 配置Hibernate -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>/WEB-INF/hbm</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+			</props>
+		</property>
+	</bean>
+	<!--  -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 定义事务管理器，使用适用于Hibernte的局部事务管理策略-->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<!--   HibernateTransactionManager bean需要依赖注入一个SessionFactory bean的引用-->
+		<property name="sessionFactory" ref="sessionFactory" />
+		<!-- 注意：下边这个属性一定不要少，把嵌套事务的开关打开-->
+		<property name="nestedTransactionAllowed" value="true" />
+	</bean>
+	<!--配置事务拦截器-->
+	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<!--事务拦截器bean需要依赖注入一个事务管理器 -->
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<!--下面定义事务传播属性-->
+			<props>
+				<prop key="find*,get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="save*,update*,delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<!-- 下面列出所有需要生成权限检查代理的控制器 -->
+		<property name="beanNames">
+			<list>
+				<value>*Service*</value>
+			</list>
+		</property>
+		<!-- 下面列出所有需要生成权限检查代理的控制器 -->
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -256,7 +256,6 @@
 	</div>
 </div>
 <script type="text/javascript" defer="defer">
-<!--
 	//for add begin			
 	$("#_add").click(function() {
 		document.getElementById('div_info').style.display='inline';
@@ -434,5 +433,4 @@
 			}
 		});	
 	});
-//-->
 </script>

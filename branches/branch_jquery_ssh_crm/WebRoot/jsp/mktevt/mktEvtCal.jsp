@@ -294,7 +294,6 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--	
 	$('#_cal_year').click(function(){
 		$('#calExtDto_year').val(true);	
 		$('#_cal_year').linkbutton('disable');
@@ -376,5 +375,4 @@
 		$('#_delete').linkbutton('disable');	
 		$('#_cal_year').click();
 	});
-//-->
 </script>

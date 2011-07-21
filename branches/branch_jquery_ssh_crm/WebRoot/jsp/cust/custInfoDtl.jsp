@@ -294,7 +294,6 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-<!--
 	$("#_back").click(function() {
 		window.location.href='showCustList';
 	});	
@@ -331,5 +330,4 @@
 			}
 		);
 	});
-//-->
 </script>

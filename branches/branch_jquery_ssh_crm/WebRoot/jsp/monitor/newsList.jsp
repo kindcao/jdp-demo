@@ -205,7 +205,6 @@
 </div>
 
 <script type="text/javascript">
-<!--
 	$("#_add").click(function() {		
 		document.getElementById('div_info').style.display='inline';
 		document.getElementById('div_search').style.display='none';
@@ -318,5 +317,4 @@
 		//		
 		showDatagrid('grid-datalist','getNewsList',frozenColumns,columns);						
 	});	
-//-->
 </script>

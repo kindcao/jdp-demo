@@ -13,7 +13,4 @@
 	<div title="联系人" style="margin-left: 5px;" cache="false"
 		href='showContList?customerId=<s:property value="cust.id" />'>
 	</div>
-	<!--div title="市场工作" style="margin-left: 5px;" cache="false"
-		href="showMktEvtList">
-	</div-->
 </div>

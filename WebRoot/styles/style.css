@@ -2,6 +2,8 @@
 
 @IMPORT url("icon.css");
 
+@IMPORT url("uploadify.css");
+
 /* GENERAL ELEMENTS */
 * {
 	margin: 0;
@@ -93,8 +95,7 @@ h5 {
 	margin: 1.2em 0em 0.4em 0em;
 }
 
-h6 {
-	/**font-size: 0.8em;**/
+h6 { /**font-size: 0.8em;**/
 	margin: 1.2em 0em 0.4em 0em;
 }
 

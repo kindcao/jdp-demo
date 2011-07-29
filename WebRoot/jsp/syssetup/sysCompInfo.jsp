@@ -43,7 +43,7 @@
 			<td colspan="3">
 				<s:if
 					test="%{#_sysCompany.logo!=null && #_sysCompany.logo.trim().length()>0}">
-					<a href="#" onclick=window.open('<s:property value="#_sysCompany.logo" />')><s:property
+					<a href="#" onclick=_openWin('${pageContext.request.contextPath}','<s:property value="#_sysCompany.logo" />')><s:property
 							value="#_sysCompany.logo" /> </a>
 				</s:if>
 			</td>
@@ -110,7 +110,8 @@
 				<td colspan="3">
 					<input type="text" name="sysCompany.logo" style="width: 429px;"
 						maxlength="100" class="easyui-validatebox" required="true"
-						validType="url" value='<s:property value="#_sysCompany.logo" />' />
+						validType="exturl"
+						value='<s:property value="#_sysCompany.logo" />' />
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;

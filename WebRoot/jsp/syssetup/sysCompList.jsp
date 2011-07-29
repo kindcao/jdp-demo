@@ -42,7 +42,7 @@
 				<td colspan="3">
 					<input type="text" name="sysCompany.logo" style="width: 429px;"
 						maxlength="100" class="easyui-validatebox" required="true"
-						validType="url" />
+						validType="exturl" />
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;
@@ -203,8 +203,9 @@
 			title : '公司Logo图URI',
 			width : 400,
 			formatter : function(value, rec) {
-				if(value){	
-					return "<a href='#' onclick=window.open('" + value+ "');>" + cutstr(value,80) + "</a>";
+				if(value){					
+					return "<a href='#' onclick=_openWin('${pageContext.request.contextPath}','" 
+					+ value + "');>" + cutstr(value,80) + "</a>";
 				}
 			}
 		}]];

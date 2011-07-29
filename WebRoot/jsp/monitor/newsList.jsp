@@ -77,7 +77,8 @@
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.picture" maxlength="200"
-						style="width: 350px;" class="easyui-validatebox" validType="url" />
+						style="width: 350px;" class="easyui-validatebox"
+						validType="exturl" />
 				</td>
 			</tr>
 			<tr height="30px">

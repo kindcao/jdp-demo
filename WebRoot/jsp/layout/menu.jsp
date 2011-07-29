@@ -84,5 +84,8 @@
 		<div style="margin: 10px;">
 			<a href="#" onclick="clickMenu('#');">发布监控</a>
 		</div>
+		<div style="margin: 10px;">
+			<a href="#" onclick="clickMenu('showFileList');">上传文件</a>
+		</div>
 	</div>
 </div>

@@ -139,4 +139,8 @@
 	<definition name="syscompuser.info" extends="syscompuser.list">
 		<put-attribute name="body" value="/jsp/syssetup/sysCompUserInfo.jsp" />
 	</definition>
+	<definition name="file.list" extends="syssetup.layout">
+		<put-attribute name="bodyhead" value="上传文件" />
+		<put-attribute name="body" value="/jsp/syssetup/uploadFile.jsp" />
+	</definition>
 </tiles-definitions>

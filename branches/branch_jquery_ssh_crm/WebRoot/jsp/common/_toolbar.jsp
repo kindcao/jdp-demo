@@ -32,6 +32,14 @@
 				<a href="#" class="easyui-linkbutton" plain="true"
 					iconCls="icon-save" disabled="true">导出</a>
 			</td>
+			<td>
+				<div class="separator2">
+				</div>
+			</td>
+			<td>
+				<a href="showFileList" class="easyui-linkbutton" plain="true"
+					iconCls="icon-upload" id="_upload">上传</a>
+			</td>
 		</tr>
 	</table>
 </div>

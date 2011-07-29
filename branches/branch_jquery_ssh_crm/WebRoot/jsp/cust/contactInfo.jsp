@@ -28,7 +28,7 @@
 					test="%{#_cont.picture!=null && #_cont.picture.trim().length()>0}">
 					<img width="100px" height="80px"
 						src='<s:property value="#_cont.picture" />' />
-				</s:if>
+				</s:if>		
 				<s:else>
 					<img width="100px" height="80px" src='images/portrait.gif' />
 				</s:else>
@@ -205,8 +205,8 @@
 				</td>
 				<td colspan="3">
 					<input type="text" name="cont.picture" maxlength="100"
-						style="width: 427px;" class="easyui-validatebox" validType="url"
-						value='<s:property value="#_cont.picture" />' />
+						style="width: 427px;" class="easyui-validatebox"
+						validType="exturl" value='<s:property value="#_cont.picture" />' />
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;

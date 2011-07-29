@@ -81,7 +81,8 @@
 				</td>
 				<td colspan="3">
 					<input type="text" name="cont.picture" maxlength="100"
-						style="width: 428px;" class="easyui-validatebox" validType="url" />
+						style="width: 428px;" class="easyui-validatebox"
+						validType="exturl" />
 				</td>
 				<td colspan="2" align="center">
 					&nbsp;

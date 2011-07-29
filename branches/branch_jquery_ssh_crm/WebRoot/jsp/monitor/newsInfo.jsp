@@ -82,7 +82,7 @@
 			<td width="40%">
 				<s:if
 					test="%{#_news.picture!=null && #_news.picture.trim().length()>0}">
-					<a href="#" onclick=window.open('<s:property value="#_news.picture" />')><s:property
+					<a href="#" onclick=_openWin('${pageContext.request.contextPath}','<s:property value="#_news.picture" />')><s:property
 							value="#_news.picture" /> </a>
 				</s:if>
 			</td>
@@ -202,8 +202,8 @@
 				</td>
 				<td width="40%">
 					<input type="text" name="newsExtDto.picture" maxlength="200"
-						style="width: 350px;" class="easyui-validatebox" validType="url"
-						value='<s:property value="#_news.picture" />' />
+						style="width: 350px;" class="easyui-validatebox"
+						validType="exturl" value='<s:property value="#_news.picture" />' />
 				</td>
 			</tr>
 			<tr height="30px">

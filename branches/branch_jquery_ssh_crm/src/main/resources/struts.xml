@@ -10,7 +10,7 @@
 			<interceptor name="exceptionInterceptor" class="crm.interceptor.ExceptionInterceptor" />
 			<interceptor name="checkLoginInterceptor" class="crm.interceptor.CheckLoginInterceptor" />
 			<interceptor-stack name="myStack">
-				<interceptor-ref name="timer"/>
+				<interceptor-ref name="timer" />
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="checkLoginInterceptor">
 					<param name="excludeMethods">showLogin,login,logout,getSysStatus</param>
@@ -100,5 +100,11 @@
 			<result name="syscompuser.list" type="tiles">syscompuser.list</result>
 			<result name="syscompuser.info" type="tiles">syscompuser.info</result>
 		</action>
+		<!-- syssetup upload file -->
+		<action name="showFileList" class="uploadFileAction" method="showFileList">
+			<result name="file.list" type="tiles">file.list</result>
+		</action>
+		<action name="upload" class="uploadFileAction" method="upload" />
+		<action name="getFileList" class="uploadFileAction" method="getFileList" />
 	</package>
 </struts>

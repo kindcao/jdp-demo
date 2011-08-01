@@ -90,7 +90,7 @@
 					<webappDirectory>WebRoot</webappDirectory>
 					<warSourceDirectory>WebRoot</warSourceDirectory>
 					<outputDirectory>WebRoot</outputDirectory>
-					<warSourceExcludes>**/.svn/**,**/*.war,**/logs/*.*</warSourceExcludes>
+					<warSourceExcludes>**/.svn/**,**/*.war,**/logs/*.*,**/uploads/**</warSourceExcludes>
 					<warName>${artifactId}</warName>
 				</configuration>
 			</plugin>

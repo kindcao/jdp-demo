@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 
 import crm.base.action.BaseAction;
 import crm.common.Constants;
@@ -19,6 +20,7 @@ import crm.cust.dto.UploadFileDto;
  * @author Kind Cao
  * @version $Rev$, Jul 28, 2011 2:22:43 PM
  */
+@Scope("session")
 @SuppressWarnings("serial")
 public class UploadFileAction extends BaseAction {
 

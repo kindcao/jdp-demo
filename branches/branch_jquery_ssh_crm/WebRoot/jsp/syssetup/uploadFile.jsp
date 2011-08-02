@@ -96,12 +96,12 @@
 	});
 	//
 	function showResult(){
-    	$("#result").html("");
+    	$('#result').html('');
     }
     function uploadFile(){
-    	jQuery('#uploadify').uploadifyUpload();
+    	$('#uploadify').uploadifyUpload();
     }
     function clearFile(){
-    	jQuery('#uploadify').uploadifyClearQueue();
+    	$('#uploadify').uploadifyClearQueue();
     }
 </script>

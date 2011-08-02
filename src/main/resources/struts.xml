@@ -13,7 +13,7 @@
 				<interceptor-ref name="timer" />
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="checkLoginInterceptor">
-					<param name="excludeMethods">showLogin,login,logout,getSysStatus</param>
+					<param name="excludeMethods">showLogin,login,logout,getSysStatus,upload</param>
 				</interceptor-ref>
 				<interceptor-ref name="exceptionInterceptor" />
 			</interceptor-stack>

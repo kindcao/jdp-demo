@@ -96,15 +96,16 @@ $.extend($.fn.validatebox.defaults.rules, {
 	},
 	mobile : {
 		validator : function(value, param) {
-			return /^((\(\d{2,3}\))|(\d{3}\-))?1\d{10}$/.test(value);
+			return /(^((\(\d{2,3}\))|(\d{3}\-))?1\d{10}$)|(^((\(852\))|(852\-))?\d{3,8}$)/
+					.test(value);
 		},
-		message : '手机号码不正确'
+		message : '手机号码不正确，格式如(区号)号码或区号-号码形式'
 	},
 	loginName : {
 		validator : function(value, param) {
 			return /^[\u0391-\uFFE5\w]+$/.test(value);
 		},
-		message : '登录名称只允许汉字、英文字母、数字及下划线。'
+		message : '登录名称只允许汉字、英文字母、数字及下划线'
 	},
 	safepass : {
 		validator : function(value, param) {
@@ -144,7 +145,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 			var reg = /(^([0|8][1-9]{2,3}[-])?\d{3,8}(-\d{1,6})?$)|(^\([0|8][1-9]{2,3}\)\d{3,8}(\(\d{1,6}\))?$)|(^\d{3,8}$)/;
 			return reg.test(value);
 		},
-		message : '请输入正确的电话号码,区号和号码用\'-\'分割'
+		message : '请输入正确的电话号码，格式如(区号)号码或区号-号码形式'
 	}
 });
 
@@ -153,7 +154,7 @@ var localurl = function(value) {
 }
 
 var _openWin = function(ctxPath, url) {
-	window.open((localurl(url) ? ctxPath+'/' : '') + url);
+	window.open((localurl(url) ? ctxPath + '/' : '') + url);
 }
 
 /* 密码由字母和数字组成，至少6位 */

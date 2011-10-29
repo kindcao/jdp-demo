@@ -184,8 +184,8 @@
 					<input id="mktEvt_sysCompUseIds" name="mktEvt.sysCompUseIds"
 						url='getSysCompUserByCompIds' class="easyui-combobox"
 						required="true" valueField="id" textField="name"
-						panelHeight="auto" editable="false" panelHeight="auto"
-						style="width: 160px;"
+						panelHeight="auto" multiple="true" editable="false"
+						panelHeight="auto" style="width: 160px;"
 						value='<s:property value="#_mktEvtView.sysCompUserName" />'>
 				</td>
 			</tr>
@@ -300,13 +300,17 @@
 		//		
 		$('#_marketEventTypeId').combobox('setValue','<s:property value="#_mktEvtView.mktevtSuperiorId" />');
 		$('#mktEvt_marketEventTypeId').combobox('setValue','<s:property value="#_mktEvtView.mktevtId" />');		
-		$('#mktEvt_sysCompUseIds').combobox('setValue','<s:property value="#_mktEvtView.sysCompUserId" />');
+		//$('#mktEvt_sysCompUseIds').combobox('setValue','<s:property value="#_mktEvtView.sysCompUserId" />');
+		$('#mktEvt_status').combobox('setValue','<s:property value="#_mktEvt.status" />');
 		var _idsStr='<s:property value="#_mktEvtView.compId" />';
 		$('#mktEvt_sysCompIds').combobox('setValues',_idsStr.split(','));
+		//
 		_idsStr='<s:property value="#_mktEvtView.custId" />';
 		$('#mktEvt_customerIds').combobox('setValues',_idsStr.split(','));		
-		$('#mktEvt_status').combobox('setValue','<s:property value="#_mktEvt.status" />');
 		//
+		_idsStr='<s:property value="#_mktEvtView.sysCompUserId" />';
+		$('#mktEvt_sysCompUseIds').combobox('setValues',_idsStr.split(','));
+				
 		document.getElementById('mktEvt_situation').value='<s:property value="#_mktEvt.situation" escape="false" />';
 		document.getElementById('mktEvt_goods').value='<s:property value="#_mktEvt.goods" escape="false" />';	
 		document.getElementById('mktEvt_remark').value='<s:property value="#_mktEvt.remark" escape="false" />';

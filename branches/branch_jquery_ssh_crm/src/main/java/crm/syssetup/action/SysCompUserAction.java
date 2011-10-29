@@ -170,6 +170,9 @@ public class SysCompUserAction extends BaseAction {
             if (null != sysCompUser.getSysCompanyId() && sysCompUser.getSysCompanyId() > 0) {
                 map.put("sysCompanyId", sysCompUser.getSysCompanyId());
             }
+            if (!currSysCompTypeIsR()) {
+                map.put("sysCompanyId", getCurrSysComp().getId());
+            }
             if (null != sysCompUser.getSuperiorId() && sysCompUser.getSuperiorId() > 0) {
                 map.put("superiorId", sysCompUser.getSuperiorId());
             }

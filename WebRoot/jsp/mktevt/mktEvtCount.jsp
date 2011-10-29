@@ -115,7 +115,7 @@
 <jsp:include page="../common/_toolbar.jsp"></jsp:include>
 <div style="margin-top: 0px;">
 	<form id="mktevtCountForm" name="mktevtCountForm">
-		<table cellpadding="0" cellspacing="0" border="0">
+		<table cellpadding="0" cellspacing="0" border="0" width="85%">
 			<tr>
 				<td width="10%" nowrap="nowrap" style="display: none;">
 					<!--
@@ -130,16 +130,16 @@
 					<input type="text" id="countExtDt_occurDateStart"
 						name="countExtDto.occurDateStart" class="easyui-datebox">
 				</td>
-				<td width="10%" class="label-title">
+				<td width="5%" class="label-title">
 					至：
 				</td>
 				<td width="10%">
 					<input type="text" id="countExtDt_occurDateEnd"
 						name="countExtDto.occurDateEnd" class="easyui-datebox">
 				</td>
-				<td width="30%">
+				<td width="35%">
 					<div id="div-cont-search-tab" style="display: none;">
-						<table cellpadding="0" cellspacing="0" border="0">
+						<table cellpadding="0" cellspacing="0" border="0" width="100%">
 							<tr>
 								<td class="label-title" width="30%">
 									所属公司：
@@ -148,7 +148,7 @@
 									<input id="countExtDto_sysCompIds" class="easyui-combobox"
 										name="countExtDto.sysCompIds" url="getSysComp" valueField="id"
 										textField="companyName" multiple="true" editable="false"
-										panelHeight="auto" style="width: 200px;">
+										panelHeight="auto" style="width: 250px;">
 								</td>
 							</tr>
 						</table>
@@ -170,7 +170,7 @@
 						</table>
 					</div>
 				</td>
-				<td nowrap="nowrap" style="padding-left: 10px;">
+				<td nowrap="nowrap">
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-search" id="_search">查询</a>
 					<a href="#" class="easyui-linkbutton" plain="true"

@@ -272,14 +272,14 @@
 <div id="div_cal-month" style="margin-top: 0px; display: none;">
 	<table cellpadding="0" cellspacing="0" border="0" width="99%">
 		<tr valign="top" height="400px">
-			<td width="20%">
+			<td>
 				<div id="div-cal-ui" class="easyui-calendar"
 					style="width: 200px; height: 200px;"></div>
 			</td>
-			<td width="1%">
+			<td width="20px">
 				&nbsp;
 			</td>
-			<td width="79%">
+			<td width="80%">
 				<div align="left">
 					<table id="grid-datalist"></table>
 				</div>

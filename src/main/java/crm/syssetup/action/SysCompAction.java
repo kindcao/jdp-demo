@@ -56,6 +56,11 @@ public class SysCompAction extends BaseAction {
         if (StringUtils.isNotBlank(sysCompany.getCompanyName())) {
             map.put("companyName", sysCompany.getCompanyName());
         }
+
+        if (!currSysCompTypeIsR()) {
+            map.put("companyName", getCurrSysComp().getCompanyName());
+        }
+
         if (StringUtils.isNotBlank(sysCompany.getStatus())) {
             map.put("status", sysCompany.getStatus());
         }

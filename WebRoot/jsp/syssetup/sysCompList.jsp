@@ -74,7 +74,7 @@
 			<legend>
 				查询条件
 			</legend>
-			<table cellpadding="0" cellspacing="0" width="800" border="0"
+			<table cellpadding="0" cellspacing="0" width="850" border="0"
 				style="margin: 10px;">
 				<tr height="30px">
 					<td class="label-title" width="10%">

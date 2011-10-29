@@ -170,7 +170,7 @@
 						</table>
 					</div>
 				</td>
-				<td nowrap="nowrap">
+				<td nowrap="nowrap" style="padding-left: 10px;">
 					<a href="#" class="easyui-linkbutton" plain="true"
 						iconCls="icon-search" id="_search">查询</a>
 					<a href="#" class="easyui-linkbutton" plain="true"

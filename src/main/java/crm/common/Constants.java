@@ -17,6 +17,8 @@ public class Constants {
 
     public static final int DEFAULT_PAGE = 1;
 
+    public static final String CURR_SYS_USER_COOKIE_KEY = "CURR_SYS_USER_COOKIE_KEY";
+
     public static final String SYS_USER_APPLICATION_KEY = "SYS_USER_APPLICATION_KEY";
 
     public static final String CURR_SYS_USER_SESSION_KEY = "CURR_SYS_USER_SESSION_KEY";

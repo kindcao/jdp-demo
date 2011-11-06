@@ -20,8 +20,9 @@
 					用户名称：
 				</td>
 				<td>
-					<input name="sysCompUser.loginId" class="easyui-validatebox"
-						required="true" validType="length[1,20]" value="admin" />
+					<input id="sysCompUser_loginId" name="sysCompUser.loginId"
+						class="easyui-validatebox" required="true"
+						validType="length[1,20]" />
 				</td>
 			</tr>
 			<tr height="30px">
@@ -31,7 +32,7 @@
 				<td>
 					<input name="sysCompUser.passwd" type="password"
 						class="easyui-validatebox" required="true" validType="safepass"
-						maxlength="50" value="admin123" />
+						maxlength="50" />
 				</td>
 			</tr>
 			<tr height="30px">
@@ -48,6 +49,7 @@
 </div>
 
 <script type="text/javascript" defer="defer">
+    $('#sysCompUser_loginId').val(getCookie('CURR_SYS_USER_COOKIE_KEY'));
 	$("#_login").click(function() {
 		$('#loginForm').submitForm(
 			'login',

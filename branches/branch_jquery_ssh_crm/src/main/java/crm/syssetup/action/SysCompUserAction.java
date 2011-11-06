@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -92,6 +93,10 @@ public class SysCompUserAction extends BaseAction {
                 session.put(Constants.CURR_SYS_USER_SESSION_KEY, _currUser);
                 session.put(Constants.CURR_SYS_USER_COMP_SESSION_KEY, _currSysComp);
                 Constants.SYS_USER_MAP.put(_currUser.getLoginId(), request.getSession());
+                //           
+                Cookie cok = new Cookie(Constants.CURR_SYS_USER_COOKIE_KEY, _currUser.getLoginId());
+                cok.setMaxAge(30 * 24 * 60 * 60 * 1000);
+                response.addCookie(cok);
                 jvr.setSuccess(true);
             } else {
                 jvr.setErrors("Sys company access prohibited!");
@@ -175,6 +180,10 @@ public class SysCompUserAction extends BaseAction {
             }
             if (null != sysCompUser.getSuperiorId() && sysCompUser.getSuperiorId() > 0) {
                 map.put("superiorId", sysCompUser.getSuperiorId());
+            }
+            if ((null == getCurrSysCompUser().getSuperiorId() || getCurrSysCompUser().getSuperiorId() > 0)
+                    && StringUtils.isNotBlank(getCurrSysUserChild())) {
+                map.put("id", Utils.getIds(getCurrSysUserChild()));
             }
         }
         int totalCount = sysCompUserService.getTotalCount(map);

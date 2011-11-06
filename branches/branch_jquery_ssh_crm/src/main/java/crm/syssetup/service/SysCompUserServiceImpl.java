@@ -97,6 +97,9 @@ public class SysCompUserServiceImpl extends BaseServiceImpl implements SysCompUs
     private String getQueryHQL(Map<String, Object> map) {
         StringBuilder sb = new StringBuilder();
         sb.append(" from SysCompanyUserView where 1=1 ");
+        if (null != map.get("id")) {
+            sb.append(" and id in (:id) ");
+        }
         if (null != map.get("name")) {
             sb.append(" and name like :name ");
             map.put("name", "%" + map.get("name") + "%");

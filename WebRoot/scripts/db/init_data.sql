@@ -48,7 +48,7 @@ insert into sys_company VALUES ('1', 'ÈÚ¾Û', null, 'A', 'default.jpg', 'R');
 insert into sys_company VALUES ('2', 'ÁªÍ¨', null, 'A', 'default.jpg', 'O');
 
 delete from sys_company_user;
-insert into `sys_company_user` VALUES ('1', '1', 'admin', 'admin', 'admin123', null, null, 'A', 'N');
+insert into `sys_company_user` VALUES ('1', '1', 'admin', 'admin', 'admin123', -1, null, 'A', 'N');
 
 delete from sys_company_user_role;
 insert into sys_company_user_role(sys_company_user_id, sys_company_role_id) values(1, 1);

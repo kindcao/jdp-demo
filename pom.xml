@@ -7,7 +7,7 @@
 	<name>snmp_demo</name>
 	<version>1.0.0</version>
 	<description>SNMP</description>
-	<url>#</url>
+	<url>https://jdp-demo.googlecode.com/svn/branches/branch_snmp_demo</url>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -87,7 +87,7 @@
 							<archive>
 								<index>false</index>
 								<manifest>
-									<mainClass>MDFMain</mainClass>
+									<mainClass>Main</mainClass>
 									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 									<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 								</manifest>
@@ -100,26 +100,6 @@
 							<useDefaultManifestFile>true</useDefaultManifestFile>
 							<outputDirectory>./</outputDirectory>
 							<finalName>${artifactId}</finalName>
-						</configuration>
-					</execution>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<id>jar-client</id>
-						<configuration>
-							<source>1.6</source>
-							<target>1.6</target>
-							<excludes>
-								<exclude>**/.#*</exclude>
-								<exclude>**/*.xml</exclude>
-								<exclude>**/*.properties</exclude>
-								<exclude>**/Test*.*</exclude>
-								<exclude>**/*Test.*</exclude>
-							</excludes>
-							<useDefaultManifestFile>true</useDefaultManifestFile>
-							<outputDirectory>./</outputDirectory>
-							<finalName>${artifactId}-${version}</finalName>
 						</configuration>
 					</execution>
 				</executions>
@@ -148,9 +128,9 @@
 	</developers>
 	<dependencies>
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1</version>
+			<groupId>org.snmp4j</groupId>
+			<artifactId>snmp4j</artifactId>
+			<version>1.10.1</version>
 		</dependency>
 	</dependencies>
 </project>

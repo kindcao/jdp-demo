@@ -1,6 +1,7 @@
 package snmp.demo;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
@@ -26,6 +27,10 @@ import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.Variable;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
+import org.snmp4j.util.DefaultPDUFactory;
+import org.snmp4j.util.PDUFactory;
+import org.snmp4j.util.TableEvent;
+import org.snmp4j.util.TableUtils;
 
 /**
  * @author Kind Cao
@@ -63,19 +68,7 @@ public class SnmpManager {
         }
     }
 
-    /**
-     * 
-     * @param syn
-     *            是否是同步模式
-     * @param bro
-     *            是否是广播
-     * @param pdu
-     *            要发送的报文
-     * @param addr
-     *            目标地址
-     * @throws IOException
-     */
-    public void sendMessage(final String addr, final boolean syn, final boolean bro, final PDU pdu) throws IOException {
+    private Target getTarget(final String addr) {
         // 生成目标地址对象
         Address targetAddress = GenericAddress.parse(addr);
         Target target = null;
@@ -106,7 +99,23 @@ public class SnmpManager {
         target.setAddress(targetAddress);
         target.setRetries(5);
         target.setTimeout(1000);
+        return target;
+    }
 
+    /**
+     * 
+     * @param syn
+     *            是否是同步模式
+     * @param bro
+     *            是否是广播
+     * @param pdu
+     *            要发送的报文
+     * @param addr
+     *            目标地址
+     * @throws IOException
+     */
+    private void sendMessage(final String addr, final boolean syn, final boolean bro, final PDU pdu) throws IOException {
+        Target target = getTarget(addr);
         if (syn) {
             // 发送报文 并且接受响应
             ResponseEvent response = snmp.send(pdu, target);
@@ -134,10 +143,30 @@ public class SnmpManager {
         }
     }
 
+    public void getTab(final String addr, String oid) {
+        PDUFactory pf = new DefaultPDUFactory(PDU.GET);
+        TableUtils tu = new TableUtils(snmp, pf);
+        OID[] columns = new OID[1];
+        columns[0] = new VariableBinding(new OID(oid)).getOid();
+        List<TableEvent> list = tu.getTable(getTarget(addr), columns, null, null);
+        //
+        if (null != list) {
+            for (int i = 0; i < list.size(); i++) {
+                TableEvent te = (TableEvent) list.get(i);
+                VariableBinding[] vb = te.getColumns();
+                if (null != vb) {
+                    for (int j = 0; j < vb.length; j++) {
+                        System.out.println(vb[j]);
+                    }
+                }
+            }
+        }
+    }
+
     public void getPDU(final String addr, final boolean syn, final boolean bro, final String oid) throws IOException {
         PDU pdu = new PDU();
         pdu.add(new VariableBinding(new OID(oid)));// pcName
-        pdu.setType(PDU.GET);
+        pdu.setType(PDU.GETNEXT);
         sendMessage(addr, syn, bro, pdu);
     }
 
@@ -153,10 +182,13 @@ public class SnmpManager {
         final String HOSTS = "udp:127.0.0.1/161";
         SnmpManager manager = new SnmpManager();
         try {
+            //获取MIB数据
+            manager.getTab(HOSTS, ".");
             // 发送get报文
-            manager.getPDU(HOSTS, false, true, "1.3.6.1.2.1.1.6.0");
+            manager.getPDU(HOSTS, false, true, "1.3.6.1.2.1.1.1.0");
             // 发送set报文
-            manager.setPDU(HOSTS, false, true, "1.3.6.1.2.1.1.6.0", new OctetString("8812"));
+            // manager.setPDU(HOSTS, false, true, "1.3.6.1.2.1.1.6.0", new
+            // OctetString("8812"));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

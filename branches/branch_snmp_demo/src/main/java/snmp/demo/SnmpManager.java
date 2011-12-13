@@ -47,7 +47,7 @@ public class SnmpManager {
     }
 
     /**
-     * 
+     * @see SnmpConstants
      * @param version
      */
     public SnmpManager(int version) {
@@ -63,13 +63,18 @@ public class SnmpManager {
             // 开始监听消息
             transport.listen();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
+    /**
+     * 生成目标地址对象
+     * 
+     * @param addr
+     *            目标地址
+     * @return 目标地址对象
+     */
     private Target getTarget(final String addr) {
-        // 生成目标地址对象
         Address targetAddress = GenericAddress.parse(addr);
         Target target = null;
         if (SnmpConstants.version3 == version) {
@@ -103,17 +108,19 @@ public class SnmpManager {
     }
 
     /**
+     * 读写报文
      * 
+     * @param addr
+     *            目标地址
      * @param syn
      *            是否是同步模式
      * @param bro
      *            是否是广播
      * @param pdu
      *            要发送的报文
-     * @param addr
-     *            目标地址
      * @throws IOException
      */
+
     private void sendMessage(final String addr, final boolean syn, final boolean bro, final PDU pdu) throws IOException {
         Target target = getTarget(addr);
         if (syn) {
@@ -182,7 +189,7 @@ public class SnmpManager {
         final String HOSTS = "udp:127.0.0.1/161";
         SnmpManager manager = new SnmpManager();
         try {
-            //获取MIB数据
+            // 获取MIB数据
             manager.getTab(HOSTS, ".");
             // 发送get报文
             manager.getPDU(HOSTS, false, true, "1.3.6.1.2.1.1.1.0");

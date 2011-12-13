@@ -1,10 +1,19 @@
 package snmp.demo;
 
+import java.net.InetAddress;
+
+import org.snmp4j.CommandResponderEvent;
+import org.snmp4j.MessageException;
 import org.snmp4j.PDU;
+import org.snmp4j.Snmp;
 import org.snmp4j.TransportMapping;
+import org.snmp4j.mp.StateReference;
+import org.snmp4j.mp.StatusInformation;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
+import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.smi.VariableBinding;
+import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 /**
  * 
@@ -38,9 +47,8 @@ public class OTAAgent {
 
         public void start() {
             try {
-                mServerSocket = new org.snmp4j.transport.DefaultUdpTransportMapping(new org.snmp4j.smi.UdpAddress(
-                        java.net.InetAddress.getByName(mAddress), mPort));
-                mSNMP = new org.snmp4j.Snmp(mServerSocket);
+                mServerSocket = new DefaultUdpTransportMapping(new UdpAddress(InetAddress.getByName(mAddress), mPort));
+                mSNMP = new Snmp(mServerSocket);
                 mSNMP.addCommandResponder(this);
                 mServerSocket.listen();
             } catch (java.net.UnknownHostException vException) {
@@ -50,20 +58,20 @@ public class OTAAgent {
             }
         }
 
-        public synchronized void processPdu(org.snmp4j.CommandResponderEvent aEvent) {
+        public synchronized void processPdu(CommandResponderEvent aEvent) {
             java.lang.String vCommunityName = new java.lang.String(aEvent.getSecurityName());
             System.out.println("Community name " + vCommunityName);
-            org.snmp4j.PDU vPDU = aEvent.getPDU();
+            PDU vPDU = aEvent.getPDU();
             Config config = new Config();
             if (vPDU == null) {
                 System.out.println("Null pdu");
             } else {
                 System.out.println("(rcv) " + vPDU.toString());
                 switch (vPDU.getType()) {
-                case org.snmp4j.PDU.GET:
-                case org.snmp4j.PDU.GETNEXT:
+                case PDU.GET:
+                case PDU.GETNEXT:
                     break;
-                case org.snmp4j.PDU.SET:
+                case PDU.SET:
                     System.out.println("------SET----------");
                     String reciv = vPDU.get(0).getVariable().getSyntaxString();
                     System.out.println("----set------" + vPDU.get(0).toString());
@@ -73,8 +81,8 @@ public class OTAAgent {
                     config.setValueByOID(setoid.substring(0, setoid.indexOf("=") - 1).trim(), setoid.substring(
                             setoid.indexOf("=") + 1).trim());
                 }
-                org.snmp4j.mp.StatusInformation statusInformation = new org.snmp4j.mp.StatusInformation();
-                org.snmp4j.mp.StateReference ref = aEvent.getStateReference();
+                StatusInformation statusInformation = new StatusInformation();
+                StateReference ref = aEvent.getStateReference();
                 try {
                     System.out.println("Sending response");
                     vPDU.setType(PDU.RESPONSE);
@@ -87,13 +95,9 @@ public class OTAAgent {
                             setoid.indexOf("=") - 1).trim()))));
 
                     aEvent.getMessageDispatcher().returnResponsePdu(aEvent.getMessageProcessingModel(),
-
-                    aEvent.getSecurityModel(), aEvent.getSecurityName(),
-
-                    aEvent.getSecurityLevel(), vPDU, aEvent.getMaxSizeResponsePDU(), ref,
-
-                    statusInformation);
-                } catch (org.snmp4j.MessageException vException) {
+                            aEvent.getSecurityModel(), aEvent.getSecurityName(), aEvent.getSecurityLevel(), vPDU,
+                            aEvent.getMaxSizeResponsePDU(), ref, statusInformation);
+                } catch (MessageException vException) {
                     System.out.println(vException);
                 }
             }

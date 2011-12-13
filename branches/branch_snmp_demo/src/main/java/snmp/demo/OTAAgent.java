@@ -2,6 +2,7 @@ package snmp.demo;
 
 import java.net.InetAddress;
 
+import org.snmp4j.CommandResponder;
 import org.snmp4j.CommandResponderEvent;
 import org.snmp4j.MessageException;
 import org.snmp4j.PDU;
@@ -23,7 +24,7 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
  */
 public class OTAAgent {
 
-    public static class Handler implements org.snmp4j.CommandResponder {
+    public static class Handler implements CommandResponder {
 
         protected java.lang.String mAddress = null;
 
@@ -31,9 +32,7 @@ public class OTAAgent {
 
         protected java.lang.String mMyCommunityName = null;
 
-        protected TransportMapping mServerSocket = null;
-
-        protected org.snmp4j.Snmp mSNMP = null;
+        protected Snmp mSNMP = null;
 
         public Handler() {
         }
@@ -47,7 +46,8 @@ public class OTAAgent {
 
         public void start() {
             try {
-                mServerSocket = new DefaultUdpTransportMapping(new UdpAddress(InetAddress.getByName(mAddress), mPort));
+                TransportMapping<?> mServerSocket = new DefaultUdpTransportMapping(new UdpAddress(InetAddress
+                        .getByName(mAddress), mPort));
                 mSNMP = new Snmp(mServerSocket);
                 mSNMP.addCommandResponder(this);
                 mServerSocket.listen();
@@ -62,7 +62,6 @@ public class OTAAgent {
             java.lang.String vCommunityName = new java.lang.String(aEvent.getSecurityName());
             System.out.println("Community name " + vCommunityName);
             PDU vPDU = aEvent.getPDU();
-            Config config = new Config();
             if (vPDU == null) {
                 System.out.println("Null pdu");
             } else {
@@ -73,13 +72,14 @@ public class OTAAgent {
                     break;
                 case PDU.SET:
                     System.out.println("------SET----------");
-                    String reciv = vPDU.get(0).getVariable().getSyntaxString();
+                    // String reciv =
+                    // vPDU.get(0).getVariable().getSyntaxString();
                     System.out.println("----set------" + vPDU.get(0).toString());
                     String setoid = vPDU.get(0).toString();
                     System.out.println("-----set-----" + setoid.substring(0, setoid.indexOf("=") - 1));
                     System.out.println("-----set-----" + setoid.substring(setoid.indexOf("=") + 1));
-                    config.setValueByOID(setoid.substring(0, setoid.indexOf("=") - 1).trim(), setoid.substring(
-                            setoid.indexOf("=") + 1).trim());
+                    Config.getInstance().setValueByOID(setoid.substring(0, setoid.indexOf("=") - 1).trim(),
+                            setoid.substring(setoid.indexOf("=") + 1).trim());
                 }
                 StatusInformation statusInformation = new StatusInformation();
                 StateReference ref = aEvent.getStateReference();
@@ -91,8 +91,8 @@ public class OTAAgent {
                     String setoid = vPDU.get(0).toString();
                     System.out.println("----get------" + setoid.substring(0, setoid.indexOf("=") - 1));
                     System.out.println("-----get-----" + setoid.substring(setoid.indexOf("=") + 1));
-                    vPDU.set(0, new VariableBinding(oid, new OctetString(config.getValueByOID(setoid.substring(0,
-                            setoid.indexOf("=") - 1).trim()))));
+                    vPDU.set(0, new VariableBinding(oid, new OctetString(Config.getInstance().getValueByOID(
+                            setoid.substring(0, setoid.indexOf("=") - 1).trim()))));
 
                     aEvent.getMessageDispatcher().returnResponsePdu(aEvent.getMessageProcessingModel(),
                             aEvent.getSecurityModel(), aEvent.getSecurityName(), aEvent.getSecurityLevel(), vPDU,

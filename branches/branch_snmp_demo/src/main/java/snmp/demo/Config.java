@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
+import sun.security.jca.GetInstance;
+
 /**
  * 
  * @author Kind Cao
@@ -15,21 +17,25 @@ import java.util.Properties;
  */
 public class Config {
 
-    Properties properties;
+    private static final String filePath = "./conf/mib.properties";
 
-    Map map;
+    private static final Properties properties = new Properties();
 
-    private String filePath = "./conf/mib.properties";
+    private static final Config cfg = new Config();
 
-    public Config() {
-        properties = new Properties();
-
+    static {
         try {
             properties.load(new FileInputStream(filePath));
         } catch (IOException e) {
-            System.out.println("读取properties文件错误");
             e.printStackTrace();
         }
+    }
+
+    private Config() {
+    }
+
+    public static final Config getInstance() {
+        return cfg;
     }
 
     /**
@@ -39,34 +45,15 @@ public class Config {
      * @return
      */
     public String getValueByOID(String oid) {
-
         return properties.getProperty(oid);
-
     }
 
     public void setValueByOID(String oid, String value) {
-
         properties.setProperty(oid, value);
         try {
             properties.store(new FileOutputStream(filePath), filePath);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    // 测试主函数
-    public static void main(String[] args) {
-        Config cfg = new Config();
-        String oid = "1.3.6.1.2.1.1.8.0";
-        System.out.println("---------" + cfg.getValueByOID(oid));
-
-        cfg.setValueByOID(oid, "test");
-
-        System.out.println("---------" + cfg.getValueByOID(oid));
     }
 }

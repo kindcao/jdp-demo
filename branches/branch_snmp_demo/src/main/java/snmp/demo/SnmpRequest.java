@@ -292,6 +292,14 @@ public class SnmpRequest implements PDUFactory {
         this.upperBoundIndex = upperBoundIndex;
     }
 
+    public OctetString getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(OctetString community) {
+        this.community = community;
+    }
+
     class TextTableListener implements TableListener {
 
         private boolean finished;
@@ -406,10 +414,8 @@ public class SnmpRequest implements PDUFactory {
 
     public static void main(String[] args) throws IOException {
         SnmpRequest req = new SnmpRequest("udp:127.0.0.1/161");
-        //
         ConcurrentMap<String, StringBuilder> dataMap = new ConcurrentHashMap<String, StringBuilder>();
         new Thread(req.new DataWorker(dataMap)).start();
         new Thread(req.new PrintWorker(dataMap)).start();
     }
-
 }

@@ -1,0 +1,415 @@
+package snmp.demo;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
+
+import org.snmp4j.CommunityTarget;
+import org.snmp4j.PDU;
+import org.snmp4j.PDUv1;
+import org.snmp4j.ScopedPDU;
+import org.snmp4j.Snmp;
+import org.snmp4j.Target;
+import org.snmp4j.UserTarget;
+import org.snmp4j.event.ResponseEvent;
+import org.snmp4j.mp.MPv3;
+import org.snmp4j.mp.SnmpConstants;
+import org.snmp4j.security.SecurityLevel;
+import org.snmp4j.security.SecurityModels;
+import org.snmp4j.security.SecurityProtocols;
+import org.snmp4j.security.USM;
+import org.snmp4j.security.UsmUser;
+import org.snmp4j.smi.Address;
+import org.snmp4j.smi.Counter32;
+import org.snmp4j.smi.OID;
+import org.snmp4j.smi.OctetString;
+import org.snmp4j.smi.TcpAddress;
+import org.snmp4j.smi.UdpAddress;
+import org.snmp4j.smi.VariableBinding;
+import org.snmp4j.transport.AbstractTransportMapping;
+import org.snmp4j.transport.DefaultTcpTransportMapping;
+import org.snmp4j.transport.DefaultUdpTransportMapping;
+import org.snmp4j.util.PDUFactory;
+import org.snmp4j.util.TableEvent;
+import org.snmp4j.util.TableListener;
+import org.snmp4j.util.TableUtils;
+
+/**
+ * @author Kind Cao
+ * @version $Rev$, Dec 15, 2011 10:04:27 AM
+ */
+public class SnmpRequest implements PDUFactory {
+
+    private OID authProtocol;
+
+    private OID privProtocol;
+
+    private OctetString privPassphrase;
+
+    private OctetString authPassphrase;
+
+    private OctetString community = new OctetString("public");
+
+    private OctetString contextEngineID;
+
+    private OctetString contextName = new OctetString();
+
+    private OctetString securityName = new OctetString();
+
+    private OctetString localEngineID = new OctetString(MPv3.createLocalEngineID());
+
+    private int engineBootCount = 0;
+
+    private int version = SnmpConstants.version1;
+
+    private Target target;
+
+    private Address address;
+
+    private PDUv1 v1TrapPDU = new PDUv1();
+
+    private int retries = 1;
+
+    private int timeout = 1000;
+
+    private int pduType = PDU.GETNEXT;
+
+    private int maxRepetitions = 10;
+
+    private int nonRepeaters = 0;
+
+    private int maxSizeResponsePDU = 65535;
+
+    private Vector<VariableBinding> vbs = new Vector<VariableBinding>();
+
+    // table options
+    private OID lowerBoundIndex;
+
+    private OID upperBoundIndex;
+
+    public SnmpRequest(String addressStr) {
+        address = getAddress(addressStr);
+    }
+
+    public PDU send() throws IOException {
+        Snmp snmp = createSnmpSession();
+        this.target = createTarget();
+        target.setVersion(version);
+        target.setAddress(address);
+        target.setRetries(retries);
+        target.setTimeout(timeout);
+        target.setMaxSizeRequestPDU(maxSizeResponsePDU);
+        snmp.listen();
+
+        PDU request = createPDU(target);
+        if (request.getType() == PDU.GETBULK) {
+            request.setMaxRepetitions(maxRepetitions);
+            request.setNonRepeaters(nonRepeaters);
+        }
+        for (int i = 0; i < vbs.size(); i++) {
+            request.add((VariableBinding) vbs.get(i));
+        }
+
+        PDU response = null;
+        ResponseEvent responseEvent;
+        long startTime = System.currentTimeMillis();
+        responseEvent = snmp.send(request, target);
+        if (responseEvent != null) {
+            response = responseEvent.getResponse();
+            System.out.println("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
+        }
+        snmp.close();
+        return response;
+    }
+
+    public PDU createPDU(Target target) {
+        PDU request;
+        if (target.getVersion() == SnmpConstants.version3) {
+            request = new ScopedPDU();
+            ScopedPDU scopedPDU = (ScopedPDU) request;
+            if (contextEngineID != null) {
+                scopedPDU.setContextEngineID(contextEngineID);
+            }
+            if (contextName != null) {
+                scopedPDU.setContextName(contextName);
+            }
+        } else {
+            if (pduType == PDU.V1TRAP) {
+                request = v1TrapPDU;
+            } else {
+                request = new PDU();
+            }
+        }
+        request.setType(pduType);
+        return request;
+    }
+
+    private Target createTarget() {
+        if (version == SnmpConstants.version3) {
+            UserTarget target = new UserTarget();
+            if (authPassphrase != null) {
+                if (privPassphrase != null) {
+                    target.setSecurityLevel(SecurityLevel.AUTH_PRIV);
+                } else {
+                    target.setSecurityLevel(SecurityLevel.AUTH_NOPRIV);
+                }
+            } else {
+                target.setSecurityLevel(SecurityLevel.NOAUTH_NOPRIV);
+            }
+            target.setSecurityName(securityName);
+            return target;
+        } else {
+            CommunityTarget target = new CommunityTarget();
+            target.setCommunity(community);
+            return target;
+        }
+    }
+
+    private Snmp createSnmpSession() throws IOException {
+        AbstractTransportMapping<?> transport;
+        if (address instanceof TcpAddress) {
+            transport = new DefaultTcpTransportMapping();
+        } else {
+            transport = new DefaultUdpTransportMapping();
+        }
+        // Could save some CPU cycles:
+        // transport.setAsyncMsgProcessingSupported(false);
+        Snmp snmp = new Snmp(transport);
+        ((MPv3) snmp.getMessageProcessingModel(MPv3.ID)).setLocalEngineID(localEngineID.getValue());
+
+        if (version == SnmpConstants.version3) {
+            USM usm = new USM(SecurityProtocols.getInstance(), localEngineID, engineBootCount);
+            SecurityModels.getInstance().addSecurityModel(usm);
+            addUsmUser(snmp);
+        }
+        return snmp;
+    }
+
+    private void addUsmUser(Snmp snmp) {
+        snmp.getUSM().addUser(securityName,
+                new UsmUser(securityName, authProtocol, authPassphrase, privProtocol, privPassphrase));
+    }
+
+    private static Address getAddress(String transportAddress) {
+        String transport = "udp";
+        int colon = transportAddress.indexOf(':');
+        if (colon > 0) {
+            transport = transportAddress.substring(0, colon);
+            transportAddress = transportAddress.substring(colon + 1);
+        }
+        // set default port
+        if (transportAddress.indexOf('/') < 0) {
+            transportAddress += "/161";
+        }
+        if (transport.equalsIgnoreCase("udp")) {
+            return new UdpAddress(transportAddress);
+        } else if (transport.equalsIgnoreCase("tcp")) {
+            return new TcpAddress(transportAddress);
+        }
+        throw new IllegalArgumentException("Unknown transport " + transport);
+    }
+
+    public void table(TableListener listener) throws IOException {
+        Snmp snmp = createSnmpSession();
+        this.target = createTarget();
+        target.setVersion(version);
+        target.setAddress(address);
+        target.setRetries(retries);
+        target.setTimeout(timeout);
+        snmp.listen();
+
+        TableUtils tableUtils = new TableUtils(snmp, this);
+        tableUtils.setMaxNumRowsPerPDU(maxRepetitions);
+        Counter32 counter = new Counter32();
+
+        OID[] columns = new OID[vbs.size()];
+        for (int i = 0; i < columns.length; i++) {
+            columns[i] = ((VariableBinding) vbs.get(i)).getOid();
+        }
+        long startTime = System.currentTimeMillis();
+        synchronized (counter) {
+            tableUtils.getTable(target, columns, listener, counter, lowerBoundIndex, upperBoundIndex);
+            try {
+                counter.wait(timeout);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            System.out.println("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
+            snmp.close();
+        }
+    }
+
+    public void fetchData(ConcurrentMap<String, StringBuilder> dataMap) throws IOException {
+        OID interfaces = new OID(".1.3.6.1.2.1.2");
+        getVbs().add(new VariableBinding(interfaces));
+        PDU response = send();
+        //
+        int ifNumber = response.getVariable(interfaces).toInt();
+        System.out.println("ifNumber = " + ifNumber);
+        //
+        if (ifNumber > 0) {
+            getVbs().clear();
+            getVbs().add(new VariableBinding(new OID(".1.3.6.1.2.1.2.2.1.10")));
+            getVbs().add(new VariableBinding(new OID(".1.3.6.1.2.1.2.2.1.16")));
+            setUpperBoundIndex(new OID(String.valueOf(ifNumber)));
+            table(new TextTableListener(dataMap));
+        }
+        getVbs().clear();
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public Vector<VariableBinding> getVbs() {
+        return vbs;
+    }
+
+    public void setVbs(Vector<VariableBinding> vbs) {
+        this.vbs = vbs;
+    }
+
+    public OID getLowerBoundIndex() {
+        return lowerBoundIndex;
+    }
+
+    public void setLowerBoundIndex(OID lowerBoundIndex) {
+        this.lowerBoundIndex = lowerBoundIndex;
+    }
+
+    public OID getUpperBoundIndex() {
+        return upperBoundIndex;
+    }
+
+    public void setUpperBoundIndex(OID upperBoundIndex) {
+        this.upperBoundIndex = upperBoundIndex;
+    }
+
+    class TextTableListener implements TableListener {
+
+        private boolean finished;
+
+        //
+        private ConcurrentMap<String, StringBuilder> dataMap;
+
+        public TextTableListener(ConcurrentMap<String, StringBuilder> dataMap) {
+            if (null == dataMap) {
+                throw new IllegalArgumentException("dataMap is null");
+            }
+            this.dataMap = dataMap;
+        }
+
+        public void finished(TableEvent event) {
+            System.out.println("Table walk completed with status " + event.getStatus() + ". Received "
+                    + event.getUserObject() + " rows.");
+            finished = true;
+            synchronized (event.getUserObject()) {
+                event.getUserObject().notify();
+            }
+        }
+
+        public boolean next(TableEvent event) {
+            System.out.println("Index = " + event.getIndex() + ":");
+            for (int i = 0; i < event.getColumns().length; i++) {
+                String key = event.getColumns()[i].getOid().toString();
+                String value = event.getColumns()[i].toValueString();
+                System.out.println(key + " = " + value);
+                //
+                if (!dataMap.containsKey(key)) {
+                    dataMap.put(key, new StringBuilder());
+                }
+                if (dataMap.get(key).length() > 0) {
+                    dataMap.get(key).append(",");
+                }
+                dataMap.get(key).append(value);
+            }
+            System.out.println();
+            ((Counter32) event.getUserObject()).increment();
+            return true;
+        }
+
+        public boolean isFinished() {
+            return finished;
+        }
+    }
+
+    class DataWorker implements Runnable {
+
+        private boolean isRun = true;
+
+        private ConcurrentMap<String, StringBuilder> dataMap;
+
+        public DataWorker(ConcurrentMap<String, StringBuilder> dataMap) {
+            this.dataMap = dataMap;
+        }
+
+        public void run() {
+            while (isRun) {
+                try {
+                    synchronized (dataMap) {
+                        fetchData(dataMap);
+                        dataMap.wait();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public boolean isRun() {
+            return isRun;
+        }
+
+        public void setRun(boolean isRun) {
+            this.isRun = isRun;
+        }
+    }
+
+    class PrintWorker implements Runnable {
+
+        private boolean isRun = true;
+
+        private ConcurrentMap<String, StringBuilder> dataMap;
+
+        public PrintWorker(ConcurrentMap<String, StringBuilder> dataMap) {
+            this.dataMap = dataMap;
+        }
+
+        @Override
+        public void run() {
+            while (isRun) {
+                synchronized (dataMap) {
+                    for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {
+                        String key = (String) iterator.next();
+                        System.out.println("map : [" + key + "=" + dataMap.get(key).toString() + "]");
+                        if (!iterator.hasNext()) {
+                            System.out.println();
+                        }
+                    }
+                    dataMap.notifyAll();
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        SnmpRequest req = new SnmpRequest("udp:127.0.0.1/161");
+        //
+        ConcurrentMap<String, StringBuilder> dataMap = new ConcurrentHashMap<String, StringBuilder>();
+        new Thread(req.new DataWorker(dataMap)).start();
+        new Thread(req.new PrintWorker(dataMap)).start();
+    }
+
+}

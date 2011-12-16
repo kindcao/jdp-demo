@@ -296,8 +296,8 @@ public class SnmpRequest implements PDUFactory {
         return community;
     }
 
-    public void setCommunity(OctetString community) {
-        this.community = community;
+    public void setCommunity(String community) {
+        this.community = new OctetString(community);
     }
 
     class TextTableListener implements TableListener {
@@ -413,8 +413,9 @@ public class SnmpRequest implements PDUFactory {
     }
 
     public static void main(String[] args) throws IOException {
-        SnmpRequest req = new SnmpRequest("udp:127.0.0.1/161");
         ConcurrentMap<String, StringBuilder> dataMap = new ConcurrentHashMap<String, StringBuilder>();
+        SnmpRequest req = new SnmpRequest("udp:127.0.0.1/161");
+        // req.setCommunity("public");//defalut public
         new Thread(req.new DataWorker(dataMap)).start();
         new Thread(req.new PrintWorker(dataMap)).start();
     }

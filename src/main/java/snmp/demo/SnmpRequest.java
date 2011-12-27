@@ -1,11 +1,8 @@
 package snmp.demo;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
 
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
@@ -242,8 +239,8 @@ public class SnmpRequest implements PDUFactory {
         }
     }
 
-    public void fetchData(ConcurrentMap<String, StringBuilder> dataMap) throws IOException {
-        OID interfaces = new OID(".1.3.6.1.2.1.2");
+    public void fetchData(ConcurrentMap<String, IfEntry> IfEntry) throws IOException {
+        OID interfaces = new OID(Constants.INTERFACES);
         getVbs().add(new VariableBinding(interfaces));
         PDU response = send();
         //
@@ -252,10 +249,12 @@ public class SnmpRequest implements PDUFactory {
         //
         if (ifNumber > 0) {
             getVbs().clear();
-            getVbs().add(new VariableBinding(new OID(".1.3.6.1.2.1.2.2.1.10")));
-            getVbs().add(new VariableBinding(new OID(".1.3.6.1.2.1.2.2.1.16")));
-            setUpperBoundIndex(new OID(String.valueOf(ifNumber)));
-            table(new TextTableListener(dataMap));
+            getVbs().add(new VariableBinding(new OID(Constants.IFDESCR)));
+            getVbs().add(new VariableBinding(new OID(Constants.IFTYPE)));
+            getVbs().add(new VariableBinding(new OID(Constants.IFINOCTETS)));
+            getVbs().add(new VariableBinding(new OID(Constants.IFOUTOCTETS)));
+            // setUpperBoundIndex(new OID(String.valueOf(ifNumber)));
+            table(new TextTableListener(IfEntry));
         }
         getVbs().clear();
     }
@@ -305,9 +304,9 @@ public class SnmpRequest implements PDUFactory {
         private boolean finished;
 
         //
-        private ConcurrentMap<String, StringBuilder> dataMap;
+        private ConcurrentMap<String, IfEntry> dataMap;
 
-        public TextTableListener(ConcurrentMap<String, StringBuilder> dataMap) {
+        public TextTableListener(ConcurrentMap<String, IfEntry> dataMap) {
             if (null == dataMap) {
                 throw new IllegalArgumentException("dataMap is null");
             }
@@ -315,8 +314,9 @@ public class SnmpRequest implements PDUFactory {
         }
 
         public void finished(TableEvent event) {
-            System.out.println("Table walk completed with status " + event.getStatus() + ". Received "
-                    + event.getUserObject() + " rows.");
+            // System.out.println("Table walk completed with status " +
+            // event.getStatus() + ". Received "
+            // + event.getUserObject() + " rows.");
             finished = true;
             synchronized (event.getUserObject()) {
                 event.getUserObject().notify();
@@ -324,21 +324,32 @@ public class SnmpRequest implements PDUFactory {
         }
 
         public boolean next(TableEvent event) {
-            System.out.println("Index = " + event.getIndex() + ":");
+            // System.out.println("Index = " + event.getIndex() + ":");
             for (int i = 0; i < event.getColumns().length; i++) {
                 String key = event.getColumns()[i].getOid().toString();
                 String value = event.getColumns()[i].toValueString();
-                System.out.println(key + " = " + value);
-                //
+                // System.out.println(key + " = " + value);
                 if (!dataMap.containsKey(key)) {
-                    dataMap.put(key, new StringBuilder());
+                    dataMap.put(key, new IfEntry());
                 }
-                if (dataMap.get(key).length() > 0) {
-                    dataMap.get(key).append(",");
+
+                IfEntry entry = dataMap.get(key);
+                entry.setOid(key);
+                if (key.startsWith(Constants.IFDESCR) && null == entry.getIfDescr()) {
+                    entry.setIfDescr(new String(OctetString.fromHexString(value).getValue()).trim());
                 }
-                dataMap.get(key).append(value);
+                if (key.startsWith(Constants.IFTYPE) && null == entry.getIfType()) {
+                    entry.setIfType(value);
+                }
+                if (key.startsWith(Constants.IFINOCTETS)) {
+                    entry.setIfInOctets(Long.valueOf(value));
+                }
+                if (key.startsWith(Constants.IFOUTOCTETS)) {
+                    entry.setIfOutOctets(Long.valueOf(value));
+                }
+                //
+                dataMap.put(key, entry);
             }
-            System.out.println();
             ((Counter32) event.getUserObject()).increment();
             return true;
         }
@@ -346,77 +357,5 @@ public class SnmpRequest implements PDUFactory {
         public boolean isFinished() {
             return finished;
         }
-    }
-
-    class DataWorker implements Runnable {
-
-        private boolean isRun = true;
-
-        private ConcurrentMap<String, StringBuilder> dataMap;
-
-        public DataWorker(ConcurrentMap<String, StringBuilder> dataMap) {
-            this.dataMap = dataMap;
-        }
-
-        public void run() {
-            while (isRun) {
-                try {
-                    synchronized (dataMap) {
-                        fetchData(dataMap);
-                        dataMap.wait();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        public boolean isRun() {
-            return isRun;
-        }
-
-        public void setRun(boolean isRun) {
-            this.isRun = isRun;
-        }
-    }
-
-    class PrintWorker implements Runnable {
-
-        private boolean isRun = true;
-
-        private ConcurrentMap<String, StringBuilder> dataMap;
-
-        public PrintWorker(ConcurrentMap<String, StringBuilder> dataMap) {
-            this.dataMap = dataMap;
-        }
-
-        @Override
-        public void run() {
-            while (isRun) {
-                synchronized (dataMap) {
-                    for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {
-                        String key = (String) iterator.next();
-                        System.out.println("map : [" + key + "=" + dataMap.get(key).toString() + "]");
-                        if (!iterator.hasNext()) {
-                            System.out.println();
-                        }
-                    }
-                    dataMap.notifyAll();
-                }
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public static void main(String[] args) throws IOException {
-        ConcurrentMap<String, StringBuilder> dataMap = new ConcurrentHashMap<String, StringBuilder>();
-        SnmpRequest req = new SnmpRequest("udp:127.0.0.1/161");
-        // req.setCommunity("public");//defalut public
-        new Thread(req.new DataWorker(dataMap)).start();
-        new Thread(req.new PrintWorker(dataMap)).start();
     }
 }

@@ -16,5 +16,10 @@ public class TestMain {
         req.setCommunity("public");
         ChartTimer ct = new ChartTimer(new ChartTimerTask(req, "1", 5 * 1000));
         ct.start();
+        //
+        SnmpRequest req2 = new SnmpRequest("udp:127.0.0.1/161");
+        req2.setCommunity("public");
+        ChartTimer ct2 = new ChartTimer(new ChartTimerTask(req2, "3", 5 * 1000));
+        ct2.start();
     }
 }

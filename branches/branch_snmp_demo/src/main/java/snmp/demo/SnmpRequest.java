@@ -249,6 +249,7 @@ public class SnmpRequest implements PDUFactory {
         //
         if (ifNumber > 0) {
             getVbs().clear();
+            getVbs().add(new VariableBinding(new OID(Constants.IFINDEX)));
             getVbs().add(new VariableBinding(new OID(Constants.IFDESCR)));
             getVbs().add(new VariableBinding(new OID(Constants.IFTYPE)));
             getVbs().add(new VariableBinding(new OID(Constants.IFINOCTETS)));
@@ -335,6 +336,9 @@ public class SnmpRequest implements PDUFactory {
 
                 IfEntry entry = dataMap.get(key);
                 entry.setOid(key);
+                if (key.startsWith(Constants.IFINDEX)) {
+                    entry.setIfIndex(value);
+                }
                 if (key.startsWith(Constants.IFDESCR) && null == entry.getIfDescr()) {
                     entry.setIfDescr(new String(OctetString.fromHexString(value).getValue()).trim());
                 }

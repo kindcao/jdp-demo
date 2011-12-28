@@ -1,5 +1,6 @@
 package snmp.demo;
 
+import java.util.Iterator;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -17,8 +18,6 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class ChartTimerTask extends TimerTask {
 
-    private TimeSeriesCollection[] datasets = new TimeSeriesCollection[2];
-
     private String[] yName = new String[2];
 
     private TimeSeries inSeries;
@@ -31,11 +30,15 @@ public class ChartTimerTask extends TimerTask {
 
     private String subOID;
 
+    private ChartUtil cu;
+
     private ConcurrentMap<String, IfEntry> dataMap = new ConcurrentHashMap<String, IfEntry>();
 
-    private ChartUtil tsc;
+    private TimeSeriesCollection[] datasets = new TimeSeriesCollection[2];
 
-    private IfEntry lastIfEntry = new IfEntry();
+    public ChartTimerTask(SnmpRequest req, long period) {
+        this(req, null, period);
+    }
 
     public ChartTimerTask(SnmpRequest req, String subOID) {
         this(req, subOID, 1);
@@ -45,57 +48,70 @@ public class ChartTimerTask extends TimerTask {
         this.req = req;
         this.subOID = subOID;
         this.period = period;
-        this.lastIfEntry.setIfInOctets(-1);
-        this.lastIfEntry.setIfOutOctets(-1);
+        this.yName[0] = "In (k/s)";
+        this.yName[1] = "Out (k/s)";
     }
 
     public void run() {
         try {
-            dataMap.clear();
             req.fetchData(dataMap);
-            //
-            if (null == tsc) {
-                yName[0] = "入站 (bytes/second)";
-                yName[1] = "出站 (bytes/second)";
-                IfEntry entryDesc = dataMap.get(Constants.IFDESCR + "." + subOID);
-                tsc = new ChartUtil(entryDesc.getIfDescr(), "", "", yName);
-                //
-                inSeries = new TimeSeries("入站网络流量", Second.class);
-                datasets[0] = new TimeSeriesCollection(inSeries);
-                //
-                outSeries = new TimeSeries("出站网络流量", Second.class);
-                datasets[1] = new TimeSeriesCollection(outSeries);
-            }
-            // In
-            IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + "." + subOID));
-            if (null != entryIn) {
-                if (lastIfEntry.getIfInOctets() == -1) {
-                    lastIfEntry.setIfInOctets(entryIn.getIfInOctets());
+            // show all device chart
+            if (null == subOID || subOID.trim().length() == 0) {
+                for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {
+                    String key = (String) iterator.next();
+                    if (key.startsWith(Constants.IFINDEX)) {
+                        createChart(key.substring(key.lastIndexOf(Constants.DOT) + 1));
+                    }
                 }
-                double inRate = (entryIn.getIfInOctets() - lastIfEntry.getIfInOctets()) * 1000.00 / period;
-                inSeries.add(new Second(), inRate);
-                System.out.println(entryIn.getIfInOctets() + " in  " + lastIfEntry.getIfInOctets() + " " + inRate);
-                lastIfEntry.setIfInOctets(entryIn.getIfInOctets());
+            } else {
+                createChart(subOID);
             }
 
-            // out
-            IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + "." + subOID));
-            if (null != entryOut) {
-                if (lastIfEntry.getIfOutOctets() == -1) {
-                    lastIfEntry.setIfOutOctets(entryOut.getIfOutOctets());
-                }
-                double outRate = (entryOut.getIfOutOctets() - lastIfEntry.getIfOutOctets()) * 1000.00 / period;
-                outSeries.add(new Second(), outRate);
-                System.out.println(entryOut.getIfOutOctets() + " out " + lastIfEntry.getIfOutOctets() + " " + outRate);
-                lastIfEntry.setIfOutOctets(entryOut.getIfOutOctets());
-            }
-
-            //
-            JFreeChart chart = tsc.createChart(datasets);
-            tsc.saveAsFile(chart, "d:\\s-" + subOID + ".png");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void createChart(String _subOID) {
+        //
+        if (null == cu) {
+            cu = new ChartUtil();
+            //
+            IfEntry entryDesc = dataMap.get(Constants.IFDESCR + _subOID);
+            cu.setTitle(entryDesc.getIfDescr());
+            cu.setYName(yName);
+            //
+            inSeries = new TimeSeries("In");
+            inSeries.setMaximumItemCount(20);
+            datasets[0] = new TimeSeriesCollection(inSeries);
+            //
+            outSeries = new TimeSeries("Out");
+            outSeries.setMaximumItemCount(20);
+            datasets[1] = new TimeSeriesCollection(outSeries);
+        }
+        // In
+        IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
+        if (null != entryIn) {
+            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (period / 1000) / 1024;
+            inSeries.addOrUpdate(new Second(), inRate);
+            System.out.println("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets="
+                    + entryIn.getLastIfInOctets() + "\tinRate=" + inRate);
+            entryIn.setLastIfInOctets(entryIn.getIfInOctets());
+        }
+
+        // out
+        IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + _subOID));
+        if (null != entryOut) {
+            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (period / 1000) / 1024;
+            outSeries.addOrUpdate(new Second(), outRate);
+            System.out.println("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
+                    + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
+            entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
+        }
+
+        //
+        JFreeChart chart = cu.createChart(datasets);
+        cu.saveAsFile(chart, "d:\\s-" + _subOID + ".png");
     }
 
     public long getPeriod() {

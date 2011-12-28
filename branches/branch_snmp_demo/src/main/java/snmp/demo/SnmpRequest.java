@@ -239,12 +239,8 @@ public class SnmpRequest implements PDUFactory {
         }
     }
 
-    public void fetchData(ConcurrentMap<String, IfEntry> IfEntry) throws IOException {
-        OID interfaces = new OID(Constants.INTERFACES);
-        getVbs().add(new VariableBinding(interfaces));
-        PDU response = send();
-        //
-        int ifNumber = response.getVariable(interfaces).toInt();
+    public void fetchData(ConcurrentMap<String, IfEntry> IfEntry) {
+        int ifNumber = getIfNumber();
         System.out.println("ifNumber = " + ifNumber);
         //
         if (ifNumber > 0) {
@@ -255,9 +251,28 @@ public class SnmpRequest implements PDUFactory {
             getVbs().add(new VariableBinding(new OID(Constants.IFINOCTETS)));
             getVbs().add(new VariableBinding(new OID(Constants.IFOUTOCTETS)));
             // setUpperBoundIndex(new OID(String.valueOf(ifNumber)));
-            table(new TextTableListener(IfEntry));
+            try {
+                table(new TextTableListener(IfEntry));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                getVbs().clear();
+            }
         }
+    }
+
+    public int getIfNumber() {
+        OID oid = new OID(Constants.IFNUMBER);
         getVbs().clear();
+        getVbs().add(new VariableBinding(oid));
+        PDU response;
+        try {
+            response = send();
+            return response.getVariable(oid).toInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public int getVersion() {

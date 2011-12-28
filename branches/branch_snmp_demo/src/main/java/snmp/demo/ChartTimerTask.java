@@ -34,8 +34,6 @@ public class ChartTimerTask extends TimerTask {
 
     private ConcurrentMap<String, TimeSeriesCollection[]> tscMap = new ConcurrentHashMap<String, TimeSeriesCollection[]>();
 
-    // private TimeSeriesCollection[] datasets = new TimeSeriesCollection[2];
-
     public ChartTimerTask(SnmpRequest req, long period) {
         this(req, null, period);
     }
@@ -111,7 +109,8 @@ public class ChartTimerTask extends TimerTask {
 
         //
         JFreeChart chart = cu.createChart(datasets);
-        cu.saveAsFile(chart, "d:\\s-" + _subOID + ".png");
+        String chartPath = Constants.CHART_IMG_DIR + req.getAddress() + "/" + _subOID + ".png";
+        cu.writeChartAsPNG(chart, chartPath);
     }
 
     public long getPeriod() {

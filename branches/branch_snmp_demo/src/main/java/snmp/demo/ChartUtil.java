@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -40,6 +41,10 @@ public class ChartUtil {
 
     private String[] yName;//
 
+    public ChartUtil() {
+        this("", "", "", null, 600, 400);
+    }
+
     /***************************************************************************
      * constructor function
      * 
@@ -49,13 +54,13 @@ public class ChartUtil {
      * @param xName
      * @param yName
      */
-    public ChartUtil(String title, String subTitle, String xName, String[] yName) {
+    public ChartUtil(String title, String subTitle, String xName, String[] yName, int width, int height) {
         this.title = title;
         this.subTitle = subTitle;
         this.xName = xName;
         this.yName = yName;
-        this.width = 600;
-        this.height = 400;
+        this.width = width;
+        this.height = height;
 
     }
 
@@ -64,6 +69,9 @@ public class ChartUtil {
         final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new DateAxis(xName));
         NumberAxis rangeAxis = new NumberAxis(yName[0]);
         rangeAxis.setAutoRangeIncludesZero(false);
+        rangeAxis.setAutoRange(true);
+        rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
+        rangeAxis.setLabelFont(new Font("宋体", Font.PLAIN, 9));
         XYPlot subplot = new XYPlot(datasets[0], null, rangeAxis, new StandardXYItemRenderer());
         subplot.setBackgroundPaint(Color.lightGray);
         subplot.setDomainGridlinePaint(Color.white);
@@ -72,6 +80,9 @@ public class ChartUtil {
         //        
         rangeAxis = new NumberAxis(yName[1]);
         rangeAxis.setAutoRangeIncludesZero(false);
+        rangeAxis.setAutoRange(true);
+        rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
+        rangeAxis.setLabelFont(new Font("宋体", Font.PLAIN, 9));
         subplot = new XYPlot(datasets[1], null, rangeAxis, new StandardXYItemRenderer());
         subplot.setBackgroundPaint(Color.lightGray);
         subplot.setDomainGridlinePaint(Color.white);
@@ -92,13 +103,15 @@ public class ChartUtil {
         axis.setFixedAutoRange(60000.0); // 60 seconds
 
         // 设置子标题
-        TextTitle subtitle = new TextTitle(this.subTitle, new Font("黑体", Font.BOLD, 12));
+        TextTitle subtitle = new TextTitle(this.subTitle, new Font("宋体", Font.PLAIN, 9));
         chart.addSubtitle(subtitle);
         // 设置主标题
-        chart.setTitle(new TextTitle(this.title, new Font("隶书", Font.ITALIC, 15)));
+        chart.setTitle(new TextTitle(this.title, new Font("宋书", Font.ITALIC, 10)));
         // 设置背景颜色
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.blue));
         chart.setAntiAlias(true);
+        //
+        chart.getLegend().setItemFont(new Font("宋体", Font.PLAIN, 9));
         return chart;
     }
 

@@ -8,13 +8,17 @@ package snmp.demo;
  */
 public class Constants {
 
+    public static String DOT = ".";
+
     public static String INTERFACES = "1.3.6.1.2.1.2";
 
-    public static String IFDESCR = "1.3.6.1.2.1.2.2.1.2";
+    public static String IFINDEX = "1.3.6.1.2.1.2.2.1.1.";
 
-    public static String IFTYPE = "1.3.6.1.2.1.2.2.1.3";
+    public static String IFDESCR = "1.3.6.1.2.1.2.2.1.2.";
 
-    public static String IFINOCTETS = "1.3.6.1.2.1.2.2.1.10";
+    public static String IFTYPE = "1.3.6.1.2.1.2.2.1.3.";
 
-    public static String IFOUTOCTETS = "1.3.6.1.2.1.2.2.1.16";
+    public static String IFINOCTETS = "1.3.6.1.2.1.2.2.1.10.";
+
+    public static String IFOUTOCTETS = "1.3.6.1.2.1.2.2.1.16.";
 }

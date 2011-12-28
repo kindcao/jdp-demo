@@ -20,8 +20,10 @@ public class Constants {
 
     public static String IFOUTOCTETS = "1.3.6.1.2.1.2.2.1.16.";
 
-    public static String UNDERLINE = "_";
+    public static final String UNDERLINE = "_";
 
-    public static String DOT = ".";
+    public static final String DOT = ".";
+
+    public static final String CHART_IMG_DIR = "./chart/";
 
 }

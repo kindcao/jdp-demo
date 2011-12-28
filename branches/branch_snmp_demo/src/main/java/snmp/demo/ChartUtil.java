@@ -3,8 +3,8 @@ package snmp.demo;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -79,7 +79,7 @@ public class ChartUtil {
             rangeAxis.setAutoRangeIncludesZero(false);
             rangeAxis.setAutoRange(true);
             rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
-            rangeAxis.setLabelFont(new Font("宋体", Font.PLAIN, 9));
+            rangeAxis.setLabelFont(new Font("黑体", Font.PLAIN, 10));
             XYPlot subplot = new XYPlot(datasets[i], null, rangeAxis, new StandardXYItemRenderer());
             subplot.setBackgroundPaint(Color.lightGray);
             subplot.setDomainGridlinePaint(Color.white);
@@ -101,40 +101,38 @@ public class ChartUtil {
         axis.setFixedAutoRange(60000.0); // 60 seconds
 
         // 设置子标题
-        TextTitle subtitle = new TextTitle(this.subTitle, new Font("宋体", Font.PLAIN, 9));
+        TextTitle subtitle = new TextTitle(this.subTitle, new Font("黑体", Font.PLAIN, 10));
         chart.addSubtitle(subtitle);
         // 设置主标题
-        chart.setTitle(new TextTitle(this.title, new Font("宋书", Font.ITALIC, 10)));
+        chart.setTitle(new TextTitle(this.title, new Font("黑书", Font.ITALIC, 12)));
         // 设置背景颜色
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.blue));
         chart.setAntiAlias(true);
         //
-        chart.getLegend().setItemFont(new Font("宋体", Font.PLAIN, 9));
+        chart.getLegend().setItemFont(new Font("黑体", Font.PLAIN, 9));
         return chart;
     }
 
     /** 保存为文件 */
-    public void saveAsFile(JFreeChart chart, String outputPath) {
-        FileOutputStream out = null;
+    public void writeChartAsPNG(JFreeChart chart, String outputPath) {
+        BufferedOutputStream bos = null;
         try {
-            File outFile = new File(outputPath);
-            if (!outFile.getParentFile().exists()) {
-                outFile.getParentFile().mkdirs();
+            File f = new File(outputPath);
+            if (!f.getParentFile().exists()) {
+                f.getParentFile().mkdirs();
             }
-            out = new FileOutputStream(outputPath);
+            bos = new BufferedOutputStream(new FileOutputStream(outputPath));
             // 保存为PNG
-            ChartUtilities.writeChartAsPNG(out, chart, width, height);
+            ChartUtilities.writeChartAsPNG(bos, chart, width, height);
             // 保存为JPEG
             // ChartUtilities.writeChartAsJPEG(out, chart, width, height);
-            out.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            bos.flush();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (out != null) {
+            if (bos != null) {
                 try {
-                    out.close();
+                    bos.close();
                 } catch (IOException e) {
                     // do nothing
                 }

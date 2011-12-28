@@ -42,7 +42,7 @@ public class ChartUtil {
     private String[] yName;//
 
     public ChartUtil() {
-        this("", "", "", null, 600, 400);
+        this("", "", "", null, 400, 250);
     }
 
     /***************************************************************************
@@ -95,10 +95,12 @@ public class ChartUtil {
         plot.setBackgroundPaint(Color.lightGray);
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
-        // plot.setAxisOffset(new Spacer(Spacer.ABSOLUTE, 4, 4, 4, 4));
+        // plot.setAxisOffset(new RectangleInsets(5D, 5D, 5D, 5D));
+        plot.setNoDataMessage("No Data!");
         final ValueAxis axis = plot.getDomainAxis();
         axis.setAutoRange(true);
-        axis.setFixedAutoRange(60000.0); // 60 seconds
+        axis.setFixedAutoRange(60000); // 60 seconds
+        axis.setAutoRangeMinimumSize(1);
 
         // 设置子标题
         TextTitle subtitle = new TextTitle(this.subTitle, new Font("黑体", Font.PLAIN, 10));
@@ -107,6 +109,7 @@ public class ChartUtil {
         chart.setTitle(new TextTitle(this.title, new Font("黑书", Font.ITALIC, 12)));
         // 设置背景颜色
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.blue));
+        // 字体模糊边界
         chart.setAntiAlias(true);
         //
         chart.getLegend().setItemFont(new Font("黑体", Font.PLAIN, 9));
@@ -125,7 +128,7 @@ public class ChartUtil {
             // 保存为PNG
             ChartUtilities.writeChartAsPNG(bos, chart, width, height);
             // 保存为JPEG
-            // ChartUtilities.writeChartAsJPEG(out, chart, width, height);
+            // ChartUtilities.writeChartAsJPEG(bos, chart, width, height);
             bos.flush();
         } catch (Exception e) {
             e.printStackTrace();

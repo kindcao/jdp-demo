@@ -18,11 +18,9 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class ChartTimerTask extends TimerTask {
 
-    private String[] yName = new String[2];
+    private static final int CHAET_NUM = 2;
 
-    private TimeSeries inSeries;
-
-    private TimeSeries outSeries;
+    private String[] yName;
 
     private SnmpRequest req;
 
@@ -30,11 +28,13 @@ public class ChartTimerTask extends TimerTask {
 
     private String subOID;
 
-    private ChartUtil cu;
+    private ChartUtil cu = new ChartUtil();
 
     private ConcurrentMap<String, IfEntry> dataMap = new ConcurrentHashMap<String, IfEntry>();
 
-    private TimeSeriesCollection[] datasets = new TimeSeriesCollection[2];
+    private ConcurrentMap<String, TimeSeriesCollection[]> tscMap = new ConcurrentHashMap<String, TimeSeriesCollection[]>();
+
+    // private TimeSeriesCollection[] datasets = new TimeSeriesCollection[2];
 
     public ChartTimerTask(SnmpRequest req, long period) {
         this(req, null, period);
@@ -48,52 +48,52 @@ public class ChartTimerTask extends TimerTask {
         this.req = req;
         this.subOID = subOID;
         this.period = period;
+        //
+        yName = new String[CHAET_NUM];
         this.yName[0] = "In (k/s)";
         this.yName[1] = "Out (k/s)";
     }
 
     public void run() {
-        try {
-            req.fetchData(dataMap);
-            // show all device chart
-            if (null == subOID || subOID.trim().length() == 0) {
-                for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {
-                    String key = (String) iterator.next();
-                    if (key.startsWith(Constants.IFINDEX)) {
-                        createChart(key.substring(key.lastIndexOf(Constants.DOT) + 1));
-                    }
+        //
+        req.fetchData(dataMap);
+        // show all device chart
+        if (null == subOID || subOID.trim().length() == 0) {
+            for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {
+                String key = (String) iterator.next();
+                if (key.startsWith(Constants.IFINDEX)) {
+                    createChart(key.substring(key.lastIndexOf(Constants.DOT) + 1));
                 }
-            } else {
-                createChart(subOID);
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            createChart(subOID);
         }
     }
 
     private void createChart(String _subOID) {
-        //
-        if (null == cu) {
-            cu = new ChartUtil();
+        String dsKey = req.getAddress() + Constants.UNDERLINE + _subOID;
+        TimeSeriesCollection[] datasets = tscMap.get(dsKey);
+        if (null == datasets) {
+            datasets = new TimeSeriesCollection[CHAET_NUM];
+            tscMap.put(dsKey, datasets);
             //
-            IfEntry entryDesc = dataMap.get(Constants.IFDESCR + _subOID);
-            cu.setTitle(entryDesc.getIfDescr());
-            cu.setYName(yName);
-            //
-            inSeries = new TimeSeries("In");
+            TimeSeries inSeries = new TimeSeries("In");
             inSeries.setMaximumItemCount(20);
             datasets[0] = new TimeSeriesCollection(inSeries);
             //
-            outSeries = new TimeSeries("Out");
+            TimeSeries outSeries = new TimeSeries("Out");
             outSeries.setMaximumItemCount(20);
             datasets[1] = new TimeSeriesCollection(outSeries);
         }
+        //
+        IfEntry entryDesc = dataMap.get(Constants.IFDESCR + _subOID);
+        cu.setTitle(entryDesc.getIfDescr());
+        cu.setYName(yName);
         // In
         IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
         if (null != entryIn) {
             double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (period / 1000) / 1024;
-            inSeries.addOrUpdate(new Second(), inRate);
+            datasets[0].getSeries(0).addOrUpdate(new Second(), inRate);
             System.out.println("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets="
                     + entryIn.getLastIfInOctets() + "\tinRate=" + inRate);
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
@@ -103,7 +103,7 @@ public class ChartTimerTask extends TimerTask {
         IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + _subOID));
         if (null != entryOut) {
             double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (period / 1000) / 1024;
-            outSeries.addOrUpdate(new Second(), outRate);
+            datasets[1].getSeries(0).addOrUpdate(new Second(), outRate);
             System.out.println("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());

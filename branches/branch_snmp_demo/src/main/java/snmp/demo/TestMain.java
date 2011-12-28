@@ -14,7 +14,7 @@ public class TestMain {
     public static void main(String[] args) {
         SnmpRequest req = new SnmpRequest("udp:127.0.0.1/161");
         req.setCommunity("public");
-        ChartTimer ct = new ChartTimer(new ChartTimerTask(req, "131074", 5 * 1000));
+        ChartTimer ct = new ChartTimer(new ChartTimerTask(req, 5 * 1000));
         ct.start();
         //
         // SnmpRequest req2 = new SnmpRequest("udp:127.0.0.1/161");

@@ -19,8 +19,8 @@ import org.snmp4j.security.SecurityModels;
 import org.snmp4j.security.SecurityProtocols;
 import org.snmp4j.security.USM;
 import org.snmp4j.security.UsmUser;
-import org.snmp4j.smi.Address;
 import org.snmp4j.smi.Counter32;
+import org.snmp4j.smi.IpAddress;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.TcpAddress;
@@ -64,7 +64,7 @@ public class SnmpRequest implements PDUFactory {
 
     private Target target;
 
-    private Address address;
+    private IpAddress address;
 
     private PDUv1 v1TrapPDU = new PDUv1();
 
@@ -190,7 +190,7 @@ public class SnmpRequest implements PDUFactory {
                 new UsmUser(securityName, authProtocol, authPassphrase, privProtocol, privPassphrase));
     }
 
-    private static Address getAddress(String transportAddress) {
+    private static IpAddress getAddress(String transportAddress) {
         String transport = "udp";
         int colon = transportAddress.indexOf(':');
         if (colon > 0) {
@@ -315,6 +315,13 @@ public class SnmpRequest implements PDUFactory {
         this.community = new OctetString(community);
     }
 
+    public String getAddress() {
+        if (null != address) {
+            return address.getInetAddress().getHostName();
+        }
+        return null;
+    }
+
     class TextTableListener implements TableListener {
 
         private boolean finished;
@@ -377,4 +384,5 @@ public class SnmpRequest implements PDUFactory {
             return finished;
         }
     }
+
 }

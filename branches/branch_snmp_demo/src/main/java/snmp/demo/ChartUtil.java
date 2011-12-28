@@ -66,29 +66,27 @@ public class ChartUtil {
 
     /** 根据TimeSeriesCollection创建JFreeChart对象 */
     public JFreeChart createChart(TimeSeriesCollection... datasets) {
+        if (null == datasets || datasets.length == 0) {
+            throw new IllegalArgumentException("null==datasets||datasets.length==0");
+        }
+        if (null == yName || yName.length == 0 || yName.length != datasets.length) {
+            throw new IllegalArgumentException("null == yName || yName.length == 0 || yName.length != datasets.length");
+        }
+        //
         final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new DateAxis(xName));
-        NumberAxis rangeAxis = new NumberAxis(yName[0]);
-        rangeAxis.setAutoRangeIncludesZero(false);
-        rangeAxis.setAutoRange(true);
-        rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
-        rangeAxis.setLabelFont(new Font("宋体", Font.PLAIN, 9));
-        XYPlot subplot = new XYPlot(datasets[0], null, rangeAxis, new StandardXYItemRenderer());
-        subplot.setBackgroundPaint(Color.lightGray);
-        subplot.setDomainGridlinePaint(Color.white);
-        subplot.setRangeGridlinePaint(Color.white);
-        plot.add(subplot);
-        //        
-        rangeAxis = new NumberAxis(yName[1]);
-        rangeAxis.setAutoRangeIncludesZero(false);
-        rangeAxis.setAutoRange(true);
-        rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
-        rangeAxis.setLabelFont(new Font("宋体", Font.PLAIN, 9));
-        subplot = new XYPlot(datasets[1], null, rangeAxis, new StandardXYItemRenderer());
-        subplot.setBackgroundPaint(Color.lightGray);
-        subplot.setDomainGridlinePaint(Color.white);
-        subplot.setRangeGridlinePaint(Color.white);
-        plot.add(subplot);
-
+        for (int i = 0; i < datasets.length; i++) {
+            NumberAxis rangeAxis = new NumberAxis(yName[i]);
+            rangeAxis.setAutoRangeIncludesZero(false);
+            rangeAxis.setAutoRange(true);
+            rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
+            rangeAxis.setLabelFont(new Font("宋体", Font.PLAIN, 9));
+            XYPlot subplot = new XYPlot(datasets[i], null, rangeAxis, new StandardXYItemRenderer());
+            subplot.setBackgroundPaint(Color.lightGray);
+            subplot.setDomainGridlinePaint(Color.white);
+            subplot.setRangeGridlinePaint(Color.white);
+            plot.add(subplot);
+        }
+        //
         final JFreeChart chart = new JFreeChart(title, plot);
         chart.getLegend().setVerticalAlignment(VerticalAlignment.CENTER);
         chart.setBorderPaint(Color.black);

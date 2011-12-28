@@ -317,7 +317,7 @@ public class SnmpRequest implements PDUFactory {
 
     public String getAddress() {
         if (null != address) {
-            return address.getInetAddress().getHostName();
+            return address.getInetAddress().getHostAddress();
         }
         return null;
     }

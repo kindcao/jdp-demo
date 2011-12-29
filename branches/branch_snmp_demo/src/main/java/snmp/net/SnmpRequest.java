@@ -1,9 +1,11 @@
-package snmp.demo;
+package snmp.net;
 
 import java.io.IOException;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.PDUv1;
@@ -34,11 +36,15 @@ import org.snmp4j.util.TableEvent;
 import org.snmp4j.util.TableListener;
 import org.snmp4j.util.TableUtils;
 
+import snmp.common.Constants;
+
 /**
  * @author Kind Cao
  * @version $Rev$, Dec 15, 2011 10:04:27 AM
  */
 public class SnmpRequest implements PDUFactory {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private OID authProtocol;
 
@@ -116,7 +122,7 @@ public class SnmpRequest implements PDUFactory {
         responseEvent = snmp.send(request, target);
         if (responseEvent != null) {
             response = responseEvent.getResponse();
-            System.out.println("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
+            logger.info("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
         }
         snmp.close();
         return response;
@@ -234,14 +240,14 @@ public class SnmpRequest implements PDUFactory {
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            System.out.println("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
+            logger.info("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
             snmp.close();
         }
     }
 
     public void fetchData(ConcurrentMap<String, IfEntry> IfEntry) {
         int ifNumber = getIfNumber();
-        System.out.println("ifNumber = " + ifNumber);
+        logger.info("ifNumber = " + ifNumber);
         //
         if (ifNumber > 0) {
             getVbs().clear();
@@ -384,5 +390,4 @@ public class SnmpRequest implements PDUFactory {
             return finished;
         }
     }
-
 }

@@ -1,9 +1,12 @@
-package snmp.demo;
+package snmp.common;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -13,7 +16,7 @@ import java.util.Properties;
  */
 public class Config {
 
-    private static final String filePath = "./conf/mib.properties";
+    private static final Logger logger = LoggerFactory.getLogger(Config.class);
 
     private static final Properties properties = new Properties();
 
@@ -21,9 +24,9 @@ public class Config {
 
     static {
         try {
-            properties.load(new FileInputStream(filePath));
+            properties.load(new FileInputStream(Constants.CFG_FILE_PATH));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.info("Load config file error: " + e);
         }
     }
 
@@ -35,19 +38,19 @@ public class Config {
     }
 
     /**
-     * 根据oid获取value
+     * 根据key获取value
      * 
      * @param oid
      * @return
      */
-    public String getValueByOID(String oid) {
-        return properties.getProperty(oid);
+    public String getValue(String key) {
+        return properties.getProperty(key);
     }
 
-    public void setValueByOID(String oid, String value) {
-        properties.setProperty(oid, value);
+    public void setValue(String key, String newValue) {
+        properties.setProperty(key, newValue);
         try {
-            properties.store(new FileOutputStream(filePath), filePath);
+            properties.store(new FileOutputStream(Constants.CFG_FILE_PATH), Constants.CFG_FILE_PATH);
         } catch (Exception e) {
             e.printStackTrace();
         }

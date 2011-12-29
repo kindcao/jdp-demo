@@ -1,4 +1,4 @@
-package snmp.demo;
+package snmp.net;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package snmp.demo;
+package snmp.chart;
 
 import java.awt.Color;
 import java.awt.Font;

@@ -1,11 +1,10 @@
-package com.demo.dao.impl;
+package com.demo.dao;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import com.dao.impl.BaseDaoImpl;
-import com.demo.dao.UserDao;
+import com.base.dao.BaseDaoImpl;
 import com.demo.model.User;
 
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {

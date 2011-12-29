@@ -1,14 +1,13 @@
-package com.demo.service.impl;
+package com.demo.service;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.base.service.BaseServiceImpl;
 import com.demo.dao.UserDao;
 import com.demo.model.User;
-import com.demo.service.UserService;
-import com.service.impl.BaseServiceImpl;
 
 /**
  * 
@@ -19,34 +18,34 @@ import com.service.impl.BaseServiceImpl;
 
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
-    private UserDao userDao;
+    private UserDao userDaoImpl;
 
     @Resource
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public void setUserDao(UserDao userDaoImpl) {
+        this.userDaoImpl = userDaoImpl;
     }
 
     @Override
     public List<User> findPageByQuery(int pageNo, int pageSize, Map map) {
         String hql = "from User where username like :username";
-        return userDao.findPageByQuery(pageNo, pageSize, hql, map);
+        return userDaoImpl.findPageByQuery(pageNo, pageSize, hql, map);
     }
 
     @Override
     public int getTotalCount(Map map) {
         // TODO Auto-generated method stub
         String hql = "from User where username like :username";
-        return userDao.getTotalCount(hql, map);
+        return userDaoImpl.getTotalCount(hql, map);
     }
 
     @Override
     public User findUserByName(String username) {
-        return userDao.findUserByName(username);
+        return userDaoImpl.findUserByName(username);
     }
 
     @Override
     public User findUserByNameAndPass(String username, String password) {
-        return userDao.findUserByNameAndPass(username, password);
+        return userDaoImpl.findUserByNameAndPass(username, password);
     }
 
 }

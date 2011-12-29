@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>crm</groupId>
@@ -20,7 +19,6 @@
 				</excludes>
 			</resource>
 		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -32,16 +30,13 @@
 							<directory>./</directory>
 							<includes>
 								<include>**/.#*</include>
-								<include>
-									WebRoot/WEB-INF/lib/**/*.jar
-								</include>
+								<include>WebRoot/WEB-INF/lib/**/*.jar</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 					</filesets>
 				</configuration>
 			</plugin>
-
 			<!-- dependency:copy-dependencies -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -55,19 +50,14 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>
-								WebRoot/WEB-INF/lib
-							</outputDirectory>
+							<outputDirectory>WebRoot/WEB-INF/lib</outputDirectory>
 							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>
-								true
-							</overWriteSnapshots>
+							<overWriteSnapshots>true</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -83,9 +73,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>
-								WebRoot/WEB-INF/classes/
-							</outputDirectory>
+							<outputDirectory>WebRoot/WEB-INF/classes/</outputDirectory>
 							<resources>
 								<resource>
 									<directory>conf</directory>
@@ -109,9 +97,7 @@
 					<source>1.6</source>
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
-					<compilerArgument>
-						-Djava.ext.dirs=WebRoot/WEB-INF/lib
-					</compilerArgument>
+					<compilerArgument>-Djava.ext.dirs=WebRoot/WEB-INF/lib</compilerArgument>
 					<compilerArguments>
 						<sourcepath>src/main/**/*.*</sourcepath>
 					</compilerArguments>
@@ -119,14 +105,16 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>central</id>
 			<url>http://repo1.maven.org/maven2</url>
 		</repository>
+		<repository>
+			<id>oosnmpRepo</id>
+			<url>dav:https://server.oosnmp.net/dist/release</url>
+		</repository>
 	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -228,20 +216,25 @@
 			<artifactId>xstream</artifactId>
 			<version>1.3.1</version>
 		</dependency>
-		<!--dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.4.0.GA</version>
-			</dependency>
-			<dependency>
+		<dependency>
+			<groupId>org.snmp4j</groupId>
+			<artifactId>snmp4j</artifactId>
+			<version>2.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.17</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.1</version>
-			</dependency>
-			<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-nop</artifactId>
-			<version>1.6.1</version>
-			</dependency-->
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.4</version>
+		</dependency>
 	</dependencies>
 </project>

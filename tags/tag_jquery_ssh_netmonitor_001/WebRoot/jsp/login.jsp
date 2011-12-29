@@ -39,13 +39,13 @@ $(document).ready(function() {
 		},
 		// specifying a submitHandler prevents the default submit, good for the demo
 		submitHandler: function() {		  
-			$.getJSON("login.action", {
+			$.getJSON("login", {
 				username: $("#username").val(), 
 				password: $("#password").val()
 				},
 				function(data){				    					 
 				 	if(data.success){		
-				 	 	window.location.href="forward.action?forward=main";
+				 	 	window.location.href="forward?forward=main";
 			     	}else{			     	
 			     		$("#errormsg").html(data.errors);			     		
 			     	}

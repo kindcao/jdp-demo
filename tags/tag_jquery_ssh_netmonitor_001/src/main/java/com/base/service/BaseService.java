@@ -1,4 +1,4 @@
-package com.service;
+package com.base.service;
 
 import java.io.Serializable;
 import java.util.Collection;

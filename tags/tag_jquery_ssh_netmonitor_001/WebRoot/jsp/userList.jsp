@@ -12,7 +12,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:false,
-				url:'getUserList.action',
+				url:'getUserList',
 				queryParams:{},			
 				sortName: 'id',
 				sortOrder: 'desc',
@@ -79,7 +79,7 @@
 							}
 							//							
 							$.ajax({
-		                        url:'delUser.action?id='+ids.join(','),
+		                        url:'delUser?id='+ids.join(','),
 		                        dataType:'json',	                        
 		                        success:function(data){		                       
 		                        	if(!data.success){
@@ -128,7 +128,7 @@
 			var isValid=$('#'+formIdStr).form('validate');
 			if(isValid){							   
 				var options = {
-					url:'addUser.action',
+					url:'addUser',
 					dataType:'json',
 					success:function(data){
 				   		if(!data.success){
@@ -146,7 +146,7 @@
 		
 		function editUser(id){
 			$.ajax({
-		   		url:'editUser.action?id='+id,
+		   		url:'editUser?id='+id,
 		       	dataType:'json',	                        
 		        success:function(data){		                       
 			        if(data){			      						

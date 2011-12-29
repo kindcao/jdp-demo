@@ -1,4 +1,4 @@
-package com.dao;
+package com.base.dao;
 
 import java.io.Serializable;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.action;
+package com.base.action;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
-import com.action.json.JsonResult;
+import com.base.action.json.JsonResult;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BaseAction extends ActionSupport implements SessionAware {

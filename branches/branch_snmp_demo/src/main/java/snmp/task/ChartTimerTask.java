@@ -100,7 +100,7 @@ public class ChartTimerTask extends TimerTask {
         if (null != entryIn) {
             double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (period / 1000) / 1024;
             datasets[0].getSeries(0).addOrUpdate(new Second(), inRate);
-            logger.info("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
+            logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
                     + "\tinRate=" + inRate);
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
         }
@@ -110,7 +110,7 @@ public class ChartTimerTask extends TimerTask {
         if (null != entryOut) {
             double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (period / 1000) / 1024;
             datasets[1].getSeries(0).addOrUpdate(new Second(), outRate);
-            logger.info("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
+            logger.debug("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
         }

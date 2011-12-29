@@ -3,33 +3,26 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<constant name="struts.custom.i18n.resources"
-		value="messageResource" />
+	<constant name="struts.custom.i18n.resources" value="messageResource" />
 	<constant name="struts.devMode" value="false" />
-
 	<package name="default" extends="struts-default" namespace="/">
 		<interceptors>
-			<interceptor name="checkLoginInterceptor"
-				class="com.demo.interceptor.CheckLoginInterceptor" />
+			<interceptor name="checkLoginInterceptor" class="com.demo.interceptor.CheckLoginInterceptor" />
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="checkLoginInterceptor" />
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="myStack" />
-
 		<global-results>
 			<result name="login">/jsp/login.jsp</result>
 			<result name="error">/jsp/error.jsp</result>
 			<result name="main">/jsp/main.jsp</result>
-
 		</global-results>
-		<action name="showUserList" class="userAction"
-			method="showUserList">
+		<action name="showUserList" class="userAction" method="showUserList">
 			<result name="success">/jsp/userList.jsp</result>
 		</action>
-		<action name="getUserList" class="userAction"
-			method="getUserList" />
+		<action name="getUserList" class="userAction" method="getUserList" />
 		<action name="login" class="userAction" method="login">
 			<!-- result name="jvrResult" type="json">
 				<param name="includeProperties">jvrResult.*</param>
@@ -40,6 +33,9 @@
 		<action name="addUser" class="userAction" method="addUser" />
 		<action name="editUser" class="userAction" method="editUser" />
 		<action name="delUser" class="userAction" method="delUser" />
-
+		<!--  -->
+		<action name="showNetMonitor" class="netMonitor" method="showNetMonitor">
+			<result name="success">/jsp/netMonitor.jsp</result>
+		</action>
 	</package>
 </struts>

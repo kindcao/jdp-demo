@@ -73,7 +73,7 @@
 								</td>
 								<td nowrap="nowrap" width="120px">
 									在线人数:
-									<%=com.action.BaseAction.DATA_MAP.size()%>
+									<%=com.base.action.BaseAction.DATA_MAP.size()%>
 								</td>
 								<td width="1px" style="border-right: 1px solid white">
 									&nbsp;
@@ -85,7 +85,7 @@
 						align="center">
 						<div style="margin: 5px;" id="labinfo">
 							<a id="logoutAction" href="#"
-								onclick='document.location = "logout.action"'>Logout</a>
+								onclick='document.location = "logout"'>Logout</a>
 						</div>
 					</td>
 				</tr>
@@ -94,49 +94,16 @@
 
 		<div region="west" split="false" title="&nbsp;" align="center"
 			style="width: 200px; padding1: 0px; overflow: hidden;">
-			<div class="easyui-accordion" fit="true">
-				<div title="客户管理">
+			<div class="easyui-accordion" fit="true" selected="true">
+				<div title="网络监控">
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">券商</a>
-					</div>
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">銀行</a>
+						<a href="#" onclick="addTab(this,'showNetMonitor');">网络监控</a>
 					</div>
 				</div>
-				<div title="市场工作">
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">日历</a>
-					</div>
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">统计</a>
-					</div>
-				</div>
-				<div title="市场监控">
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">发布监控</a>
-					</div>
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">行业监控</a>
-					</div>
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">新闻专访</a>
-					</div>
-				</div>
-				<div title="开户工作">
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">开户统计</a>
-					</div>
-				</div>
-				<div title="系统设定" selected="true">
+				<div title="系统设定" fit="true">
 					<div style="margin: 10px;">
 						<label onclick=""></label>
-						<a href="#" onclick="addTab(this,'showUserList.action');">用户设定</a>
-					</div>
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">行业设定</a>
-					</div>
-					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'');">发布监控</a>
+						<a href="#" onclick="addTab(this,'showUserList');">用户设定</a>
 					</div>
 				</div>
 			</div>

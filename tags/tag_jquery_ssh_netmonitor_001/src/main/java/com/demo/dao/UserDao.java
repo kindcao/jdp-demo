@@ -1,6 +1,6 @@
 package com.demo.dao;
 
-import com.dao.BaseDao;
+import com.base.dao.BaseDao;
 import com.demo.model.User;
 
 public interface UserDao extends BaseDao {

@@ -1,4 +1,4 @@
-package com.service.impl;
+package com.base.service;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -7,51 +7,49 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.dao.BaseDao;
-import com.service.BaseService;
+import com.base.dao.BaseDao;
 
 public class BaseServiceImpl implements BaseService {
 
-    private BaseDao baseDao;
+    private BaseDao baseDaoImpl;
 
     @Resource
-    public void setBaseDao(BaseDao baseDao) {
-        this.baseDao = baseDao;
+    public void setBaseDaoImpl(BaseDao baseDaoImpl) {
+        this.baseDaoImpl = baseDaoImpl;
     }
 
     public Object getObject(Class class1, Serializable serializable) {
-        // TODO Auto-generated method stub
-        return this.baseDao.getObject(class1, serializable);
+        return baseDaoImpl.getObject(class1, serializable);
     }
 
     @Override
     public void saveOrUpdate(Object object) {
-        baseDao.saveOrUpdate(object);
+        baseDaoImpl.saveOrUpdate(object);
     }
 
     @Override
     public List findPageByQuery(int pageNo, int pageSize, String hql, Map map) {
-        return baseDao.findPageByQuery(pageNo, pageSize, hql, map);
+        return baseDaoImpl.findPageByQuery(pageNo, pageSize, hql, map);
     }
 
     @Override
     public int getTotalCount(String hql, Map map) {
-        return baseDao.getTotalCount(hql, map);
+        return baseDaoImpl.getTotalCount(hql, map);
     }
 
     @Override
     public void removeObject(Class clazz, Serializable serializable) {
-        baseDao.removeObject(clazz, serializable);
+        baseDaoImpl.removeObject(clazz, serializable);
     }
 
     @Override
     public void deleteAll(Class clazz, Collection ids) {
-        baseDao.deleteAll(clazz, ids);
+        baseDaoImpl.deleteAll(clazz, ids);
     }
 
     @Override
     public void deleteAll(Collection entities) {
-        baseDao.deleteAll(entities);
+        baseDaoImpl.deleteAll(entities);
     }
 
 }

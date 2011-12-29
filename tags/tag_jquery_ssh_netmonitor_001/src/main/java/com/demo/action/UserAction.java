@@ -11,10 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 
-import com.action.BaseAction;
-import com.action.json.JsonListResult;
-import com.action.json.JsonObjectResult;
-import com.action.json.JsonValidateResult;
+import com.base.action.BaseAction;
+import com.base.action.json.JsonListResult;
+import com.base.action.json.JsonObjectResult;
+import com.base.action.json.JsonValidateResult;
 import com.demo.model.User;
 import com.demo.service.UserService;
 import com.opensymphony.xwork2.ActionContext;

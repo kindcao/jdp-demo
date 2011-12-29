@@ -1,4 +1,4 @@
-package com.dao.impl;
+package com.base.dao;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -14,9 +14,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-
-import com.dao.BaseDao;
-import com.demo.model.User;
 
 public class BaseDaoImpl implements BaseDao {
 
@@ -47,30 +44,26 @@ public class BaseDaoImpl implements BaseDao {
         getHibernateTemplate().delete(getHibernateTemplate().get(clazz, id));
     }
 
-    public List findPageByQuery(final int pageNo, final int pageSize,
-            final String hql, final Map map) {
+    public List findPageByQuery(final int pageNo, final int pageSize, final String hql, final Map map) {
         // TODO Auto-generated method stub
         List result = null;
         try {
-            result = getHibernateTemplate().executeFind(
-                    new HibernateCallback() {
+            result = getHibernateTemplate().executeFind(new HibernateCallback() {
 
-                        public Object doInHibernate(Session session)
-                                throws HibernateException {
-                            Query query = session.createQuery(hql);
-                            Iterator it = map.keySet().iterator();
-                            while (it.hasNext()) {
-                                Object key = it.next();
-                                query.setString(key.toString(), map.get(key)
-                                        .toString());
-                            }
-                            System.out.println("pageNo=" + pageNo);
-                            query.setFirstResult(pageNo); // (pageNo - 1) *
-                            // pageSize
-                            query.setMaxResults(pageSize);
-                            return query.list();
-                        }
-                    });
+                public Object doInHibernate(Session session) throws HibernateException {
+                    Query query = session.createQuery(hql);
+                    Iterator it = map.keySet().iterator();
+                    while (it.hasNext()) {
+                        Object key = it.next();
+                        query.setString(key.toString(), map.get(key).toString());
+                    }
+                    System.out.println("pageNo=" + pageNo);
+                    query.setFirstResult(pageNo); // (pageNo - 1) *
+                    // pageSize
+                    query.setMaxResults(pageSize);
+                    return query.list();
+                }
+            });
         } catch (RuntimeException re) {
             re.printStackTrace();
             throw re;
@@ -83,22 +76,19 @@ public class BaseDaoImpl implements BaseDao {
         List result = null;
 
         try {
-            result = getHibernateTemplate().executeFind(
-                    new HibernateCallback() {
+            result = getHibernateTemplate().executeFind(new HibernateCallback() {
 
-                        public Object doInHibernate(Session session)
-                                throws HibernateException, SQLException {
-                            // TODO Auto-generated method stub
-                            Query query = session.createQuery(hql);
-                            Iterator<String> it = map.keySet().iterator();
-                            while (it.hasNext()) {
-                                Object key = it.next();
-                                query.setString(key.toString(), map.get(key)
-                                        .toString());
-                            }
-                            return query.list();
-                        }
-                    });
+                public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                    // TODO Auto-generated method stub
+                    Query query = session.createQuery(hql);
+                    Iterator<String> it = map.keySet().iterator();
+                    while (it.hasNext()) {
+                        Object key = it.next();
+                        query.setString(key.toString(), map.get(key).toString());
+                    }
+                    return query.list();
+                }
+            });
         } catch (RuntimeException re) {
             re.printStackTrace();
             throw re;
@@ -141,8 +131,7 @@ public class BaseDaoImpl implements BaseDao {
     public void deleteAll(Class clazz, Collection ids) {
         for (Iterator iterator = ids.iterator(); iterator.hasNext();) {
             Serializable id = (Serializable) iterator.next();
-            getHibernateTemplate()
-                    .delete(getHibernateTemplate().get(clazz, id));
+            getHibernateTemplate().delete(getHibernateTemplate().get(clazz, id));
         }
     }
 }

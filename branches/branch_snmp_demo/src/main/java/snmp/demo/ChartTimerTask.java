@@ -76,11 +76,11 @@ public class ChartTimerTask extends TimerTask {
             tscMap.put(dsKey, datasets);
             //
             TimeSeries inSeries = new TimeSeries("In");
-            inSeries.setMaximumItemCount(50);
+            inSeries.setMaximumItemCount(30);
             datasets[0] = new TimeSeriesCollection(inSeries);
             //
             TimeSeries outSeries = new TimeSeries("Out");
-            outSeries.setMaximumItemCount(50);
+            outSeries.setMaximumItemCount(30);
             datasets[1] = new TimeSeriesCollection(outSeries);
         }
         //

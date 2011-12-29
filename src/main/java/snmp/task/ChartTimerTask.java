@@ -1,4 +1,4 @@
-package snmp.demo;
+package snmp.task;
 
 import java.util.Iterator;
 import java.util.TimerTask;
@@ -9,6 +9,14 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import snmp.chart.ChartUtil;
+import snmp.common.Config;
+import snmp.common.Constants;
+import snmp.net.IfEntry;
+import snmp.net.SnmpRequest;
 
 /**
  * 
@@ -18,7 +26,7 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class ChartTimerTask extends TimerTask {
 
-    private static final int CHAET_NUM = 2;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private String[] yName;
 
@@ -47,7 +55,7 @@ public class ChartTimerTask extends TimerTask {
         this.subOID = subOID;
         this.period = period;
         //
-        yName = new String[CHAET_NUM];
+        yName = new String[Constants.CHAET_NUM];
         this.yName[0] = "In (k/s)";
         this.yName[1] = "Out (k/s)";
     }
@@ -72,7 +80,7 @@ public class ChartTimerTask extends TimerTask {
         String dsKey = req.getAddress() + Constants.UNDERLINE + _subOID;
         TimeSeriesCollection[] datasets = tscMap.get(dsKey);
         if (null == datasets) {
-            datasets = new TimeSeriesCollection[CHAET_NUM];
+            datasets = new TimeSeriesCollection[Constants.CHAET_NUM];
             tscMap.put(dsKey, datasets);
             //
             TimeSeries inSeries = new TimeSeries("In");
@@ -92,8 +100,8 @@ public class ChartTimerTask extends TimerTask {
         if (null != entryIn) {
             double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (period / 1000) / 1024;
             datasets[0].getSeries(0).addOrUpdate(new Second(), inRate);
-            System.out.println("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets="
-                    + entryIn.getLastIfInOctets() + "\tinRate=" + inRate);
+            logger.info("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
+                    + "\tinRate=" + inRate);
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
         }
 
@@ -102,14 +110,16 @@ public class ChartTimerTask extends TimerTask {
         if (null != entryOut) {
             double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (period / 1000) / 1024;
             datasets[1].getSeries(0).addOrUpdate(new Second(), outRate);
-            System.out.println("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
+            logger.info("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
         }
 
         //
         JFreeChart chart = cu.createChart(datasets);
-        String chartPath = Constants.CHART_IMG_DIR + req.getAddress() + "/" + _subOID + ".png";
+        String chartPath = Config.getInstance().getValue("chart.img.dir").endsWith("/") ? Config.getInstance()
+                .getValue("chart.img.dir") : Config.getInstance().getValue("chart.img.dir").concat("/")
+                + req.getAddress() + "/" + _subOID + ".png";
         cu.writeChartAsPNG(chart, chartPath);
     }
 

@@ -1,4 +1,4 @@
-package snmp.demo;
+package snmp.common;
 
 /**
  * 
@@ -24,6 +24,10 @@ public class Constants {
 
     public static final String DOT = ".";
 
-    public static final String CHART_IMG_DIR = "./chart/";
+    public static final String CFG_FILE_PATH = "./conf/snmp_cfg.properties";
+
+    public static final String LOG_FILE_PATH = "./conf/log4j.properties";
+
+    public static final int CHAET_NUM = 2;
 
 }

@@ -84,8 +84,9 @@
 					<td style="width: 80px; border: 1px solid white;" nowrap="nowrap"
 						align="center">
 						<div style="margin: 5px;" id="labinfo">
-							<a id="logoutAction" href="#"
-								onclick='document.location = "logout"'>Logout</a>
+							<a href="javascript:void(0);" class="easyui-linkbutton"
+								plain="true" iconCls="icon-back" id="logoutAction"
+								onclick='document.location="logout"'>注销</a>
 						</div>
 					</td>
 				</tr>

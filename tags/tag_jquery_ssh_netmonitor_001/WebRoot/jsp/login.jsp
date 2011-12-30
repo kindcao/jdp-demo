@@ -114,31 +114,6 @@ $(document).ready(function() {
 												&nbsp;
 											</label>
 										</td>
-										<td class="field" colspan="2"
-											style="vertical-align: top; padding-top: 2px;">
-											<table>
-												<tbody>
-													<tr>
-														<td style="padding-right: 5px;">
-															<input id="dateformat_eu" name="dateformat"
-																type="checkbox" value="0" />
-															<label id="ldateformat_eu" for="dateformat_eu">
-																save pssward
-															</label>
-														</td>
-														<td style="padding-left: 5px;">
-															<input id="dateformat_am" name="dateformat"
-																type="checkbox" value="1" />
-															<label id="ldateformat_am" for="dateformat_am">
-																change pssward
-															</label>
-														</td>
-														<td>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
 									</tr>
 									<tr>
 										<td class="label">

@@ -10,11 +10,12 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.annotation.Scope;
 
 import com.base.action.BaseAction;
-import com.base.action.json.JsonListResult;
-import com.base.action.json.JsonObjectResult;
-import com.base.action.json.JsonValidateResult;
+import com.base.json.JsonListResult;
+import com.base.json.JsonObjectResult;
+import com.base.json.JsonValidateResult;
 import com.demo.model.User;
 import com.demo.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
@@ -25,7 +26,7 @@ import com.opensymphony.xwork2.ActionContext;
  * @version 1.0 <br>
  *          Dec 4, 2010 9:09:55 PM
  */
-
+@Scope("session")
 public class UserAction extends BaseAction {
 
     private static final long serialVersionUID = -2322517524694073991L;
@@ -72,8 +73,7 @@ public class UserAction extends BaseAction {
     }
 
     public String logout() throws Exception {
-        User user = (User) ServletActionContext.getContext().getSession()
-                .remove("_CURR_USER");
+        User user = (User) ServletActionContext.getContext().getSession().remove("_CURR_USER");
         if (user != null) {
             DATA_MAP.remove(user.getUsername());
             log.info("user " + user.getUsername() + " logout.");
@@ -82,8 +82,7 @@ public class UserAction extends BaseAction {
     }
 
     public String forward() throws Exception {
-        String forward = ServletActionContext.getRequest().getParameter(
-                "forward");
+        String forward = ServletActionContext.getRequest().getParameter("forward");
         if ("login".equals(forward)) {
             return LOGIN;
         } else if ("main".equals(forward)) {
@@ -116,8 +115,7 @@ public class UserAction extends BaseAction {
 
     public String editUser() throws Exception {
         if (Integer.parseInt(id) > 0) {
-            User user = (User) userService.getObject(User.class, Integer
-                    .valueOf(id));
+            User user = (User) userService.getObject(User.class, Integer.valueOf(id));
             jor.setObj(user);
         }
         responseJsonData(jor);
@@ -167,8 +165,7 @@ public class UserAction extends BaseAction {
         // setTotal((int) Math.ceil((double) getRecord() / (double) getRows()));
         // session.put("mylist", myCustomers);
         int totalCount = userService.getTotalCount(map);
-        List<User> userList = userService.findPageByQuery((getPage() - 1)
-                * getRows(), getRows(), map);
+        List<User> userList = userService.findPageByQuery((getPage() - 1) * getRows(), getRows(), map);
 
         // StringBuffer sb = new StringBuffer();
         // sb.append("{\"total\":").append(totalCount).append(",");

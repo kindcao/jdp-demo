@@ -37,5 +37,9 @@
 		<action name="showNetMonitor" class="netMonitor" method="showNetMonitor">
 			<result name="success">/jsp/netMonitor.jsp</result>
 		</action>
+		<action name="inputSnmpPara" class="netMonitor" method="inputSnmpPara" />
+		<action name="start" class="netMonitor" method="start" />
+		<action name="stop" class="netMonitor" method="stop" />
+		<action name="getDataList" class="netMonitor" method="getDataList" />
 	</package>
 </struts>

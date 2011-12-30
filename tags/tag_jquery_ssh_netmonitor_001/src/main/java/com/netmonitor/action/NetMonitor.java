@@ -107,6 +107,14 @@ public class NetMonitor extends BaseAction {
                 }
             }
             //         
+            Collections.sort(list, new Comparator<IfEntry>() {
+
+                @Override
+                public int compare(IfEntry o1, IfEntry o2) {
+                    return Integer.valueOf(o1.getIfIndex()) - Integer.valueOf(o2.getIfIndex());
+                }
+            });
+            // 
             jlr.setTotal(list.size());
             if (list.size() > getRows()) {
                 int fromIndex = (getPage() - 1) * getRows();
@@ -118,14 +126,6 @@ public class NetMonitor extends BaseAction {
                 list = list.subList(fromIndex, toIndex);
                 jlr.setRows(list);
             }
-            //
-            Collections.sort(list, new Comparator<IfEntry>() {
-
-                @Override
-                public int compare(IfEntry o1, IfEntry o2) {
-                    return Integer.valueOf(o1.getIfIndex()) - Integer.valueOf(o2.getIfIndex());
-                }
-            });
         }
         responseJsonData(jlr);
         return NONE;

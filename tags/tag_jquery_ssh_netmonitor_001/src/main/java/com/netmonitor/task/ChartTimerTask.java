@@ -55,8 +55,8 @@ public class ChartTimerTask extends TimerTask {
         this.period = period;
         //
         yName = new String[Constants.CHAET_NUM];
-        this.yName[0] = "In (k/s)";
-        this.yName[1] = "Out (k/s)";
+        this.yName[0] = "In(B/s)";
+        this.yName[1] = "Out(B/s)";
     }
 
     public void run() {
@@ -97,7 +97,7 @@ public class ChartTimerTask extends TimerTask {
         // In
         IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
         if (null != entryIn) {
-            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (period / 1000) / 1024;
+            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (period / 1000);
             datasets[0].getSeries(0).addOrUpdate(new Second(), inRate);
             logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
                     + "\tinRate=" + inRate);
@@ -107,7 +107,7 @@ public class ChartTimerTask extends TimerTask {
         // out
         IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + _subOID));
         if (null != entryOut) {
-            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (period / 1000) / 1024;
+            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (period / 1000);
             datasets[1].getSeries(0).addOrUpdate(new Second(), outRate);
             logger.debug("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
@@ -116,7 +116,8 @@ public class ChartTimerTask extends TimerTask {
 
         //
         JFreeChart chart = cu.createChart(datasets);
-        String chartPath = System.getProperty("webApp.root") + "/images/chart/" + _subOID + ".png";
+        String chartPath = System.getProperty("webApp.root") + "/images/chart/" + req.getAddress() + "/" + _subOID
+                + ".png";
         cu.writeChartAsPNG(chart, chartPath);
     }
 

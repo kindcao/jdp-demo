@@ -1,5 +1,7 @@
 package com.netmonitor.snmp;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 
  * @author Kind Cao
@@ -24,6 +26,50 @@ public class IfEntry {
     private long lastIfInOctets = -1;
 
     private long lastIfOutOctets = -1;
+
+    // for datalist
+
+    private String id;
+
+    private long totalIfInOctets;
+
+    private long totalIfOutOctets;
+
+    private long totalTime;
+
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public long getTotalIfInOctets() {
+        return totalIfInOctets;
+    }
+
+    public void setTotalIfInOctets(long totalIfInOctets) {
+        this.totalIfInOctets = totalIfInOctets;
+    }
+
+    public long getTotalIfOutOctets() {
+        return totalIfOutOctets;
+    }
+
+    public void setTotalIfOutOctets(long totalIfOutOctets) {
+        this.totalIfOutOctets = totalIfOutOctets;
+    }
+
+    public long getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(long totalTime) {
+        this.totalTime = totalTime;
+    }
 
     public String getOid() {
         return oid;
@@ -77,6 +123,7 @@ public class IfEntry {
 
     public void setIfIndex(String ifIndex) {
         this.ifIndex = ifIndex;
+        this.id = this.ifIndex;
     }
 
     public long getLastIfInOctets() {
@@ -96,6 +143,20 @@ public class IfEntry {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        IfEntry entry = (IfEntry) obj;
+        return oid.equals(entry.oid);
+    }
+
+    @Override
+    public int hashCode() {
+        if (StringUtils.isNotBlank(ifIndex)) {
+            return Integer.valueOf(ifIndex);
+        }
+        return -1;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(getClass().getSimpleName() + ":");
         sb.append("\toid = " + oid);
@@ -107,6 +168,14 @@ public class IfEntry {
         sb.append("\tlastIfInOctets = " + lastIfInOctets);
         sb.append("\tlastIfOutOctets = " + lastIfOutOctets);
         return sb.toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

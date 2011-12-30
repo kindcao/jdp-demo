@@ -7,21 +7,22 @@
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
-	<title><s:text name="msg.sys.title" /></title>
+	<title><s:text name="msg.sys.title" />
+	</title>
 	<%
 	    String root = request.getContextPath();
 	%>
 
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/style.css" />
 	<script type="text/javascript"
-		src="<%=root%>/scripts/jquery/jquery-1.4.4.min.js"></script>
+		src="<%=root%>/scripts/jquery/jquery-1.6.min.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.validate.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.form.min.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.easyui.min.js"></script>
-
+	<script type="text/javascript" src="<%=root%>/scripts/jquery/common.js"></script>
 	<script type="text/javascript">
 	 <!--	   
 	 

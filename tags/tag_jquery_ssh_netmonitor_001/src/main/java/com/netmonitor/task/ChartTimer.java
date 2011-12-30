@@ -28,4 +28,10 @@ public class ChartTimer {
         if (timer != null)
             timer.cancel();
     }
+
+    
+    public ChartTimerTask getCtt() {
+        return ctt;
+    }
+    
 }

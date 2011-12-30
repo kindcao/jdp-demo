@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snmp4j.CommunityTarget;
@@ -76,7 +77,7 @@ public class SnmpRequest implements PDUFactory {
 
     private int retries = 1;
 
-    private int timeout = 1000;
+    private int timeout = 1;
 
     private int pduType = PDU.GETNEXT;
 
@@ -92,10 +93,6 @@ public class SnmpRequest implements PDUFactory {
     private OID lowerBoundIndex;
 
     private OID upperBoundIndex;
-
-    public SnmpRequest(String addressStr) {
-        address = getAddress(addressStr);
-    }
 
     public PDU send() throws IOException {
         Snmp snmp = createSnmpSession();
@@ -318,7 +315,9 @@ public class SnmpRequest implements PDUFactory {
     }
 
     public void setCommunity(String community) {
-        this.community = new OctetString(community);
+        if (StringUtils.isNotBlank(community)) {
+            this.community = new OctetString(community);
+        }
     }
 
     public String getAddress() {
@@ -326,6 +325,32 @@ public class SnmpRequest implements PDUFactory {
             return address.getInetAddress().getHostAddress();
         }
         return null;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(String timeout) {
+        if (StringUtils.isNotBlank(timeout)) {
+            this.timeout = Integer.valueOf(timeout);
+        }
+        this.timeout *= 1000;
+    }
+
+    public int getRetries() {
+        return retries;
+    }
+
+    public void setRetries(String retries) {
+        if (StringUtils.isNotBlank(retries)) {
+            this.retries = Integer.valueOf(retries);
+        }
+        this.retries *= 1000;
+    }
+
+    public void setAddress(String address) {
+        this.address = getAddress(address);
     }
 
     class TextTableListener implements TableListener {
@@ -390,4 +415,5 @@ public class SnmpRequest implements PDUFactory {
             return finished;
         }
     }
+
 }

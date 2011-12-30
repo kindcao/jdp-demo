@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
+<s:set name="_sr" value="sr" />
+<s:set name="_period" value="period" />
 <div style="margin: 0 0 0 5px;">
 	<h6>
 		&nbsp;
@@ -58,7 +60,8 @@
 							<a href="javascript:void(0);" class="easyui-linkbutton"
 								plain="true" iconCls="icon-add" id="_input">输入</a>
 							<a href="javascript:void(0);" class="easyui-linkbutton"
-								plain="true" iconCls="icon-remove" id="_reset_input">重置</a>
+								plain="true" iconCls="icon-remove" id="_reset_input"
+								disabled="true">重置</a>
 						</td>
 					</tr>
 				</table>
@@ -67,9 +70,11 @@
 		<div style="height: 10px;">
 			&nbsp;
 		</div>
-		<div style="height: 10px;">
+		<div style="height: 30px;">
 			<a href="javascript:void(0);" class="easyui-linkbutton" plain="true"
-				iconCls="icon-go" id="_start">启动</a>
+				iconCls="icon-ok" id="_start" disabled="true">启动</a>
+			<a href="javascript:void(0);" class="easyui-linkbutton" plain="true"
+				iconCls="icon-undo" id="_stop" disabled="true">停止</a>
 		</div>
 		<div align="left">
 			<table id="grid-datalist-netmonitor"></table>
@@ -79,9 +84,40 @@
 
 <script type="text/javascript">
 <!--
+var sh;
+$("#_start").click(function() {
+	$.ajax({
+		url:'start',
+		dataType:'json',	                        
+		success:function(data){		                       
+			if(!data.success){			      						
+				alert(data.errors);							
+			}else{
+				$("#_start").linkbutton('disable');
+			    $("#_stop").linkbutton('enable');
+			    //
+			    var _period='<s:property value="#_period" />';			 
+			    sh=setInterval("$('#grid-datalist-netmonitor').datagrid('reload');",_period);
+			}
+		}
+	});
+});
 
-$("#_start").click(function() {	  
-	//reloadDatagrid('grid-datalist-netmonitor');
+$("#_stop").click(function() {
+	$.ajax({
+		url:'stop',
+		dataType:'json',	                        
+		success:function(data){		                       
+			if(!data.success){			      						
+				alert(data.errors);							
+			}else{
+			    clearInterval(sh);
+			    //
+			    $("#_start").linkbutton('enable');
+			    $("#_stop").linkbutton('disable');		
+			}
+		}
+	});
 });
 
 $("#_input").click(function() {
@@ -91,13 +127,11 @@ $("#_input").click(function() {
 			url:'inputSnmpPara',
 			dataType:'json',
 			success:function(data){
-				//if(!data.success){
-		   			//$.messager.alert('提示信息',data.errors,'error');
-				//}else{
-					//resetForm(formIdStr);
-				    // goback('_userUpdate');					        
-				    //reloadDatagrid('test');
-				//}
+				if(!data.success){
+		   			$.messager.alert('提示信息',data.errors,'error');
+				}else{
+					$("#_start").linkbutton('enable');
+				}
 			}
 		};
 	}			
@@ -120,7 +154,7 @@ $(document).ready(function() {
 		}, {
 			field : 'ifDescr',
 			title : '名称',
-			width : 200,
+			width : 300,
 			sortable : true,			
 			formatter : function(value, rec) {
 				return  value;
@@ -129,28 +163,22 @@ $(document).ready(function() {
 	var columns = [[{
 	    	field : 'ifIndex',
 			title : '图表',
-			width : 400,
-			formatter : function(value, rec) {				
-				return value;			
+			width : 405,
+			formatter : function(value, rec) {
+				var host='<s:property value="#_sr.address" />';
+				return "<img width='400' height='250' style='no-repeat 0px 0px' src='images/chart/"+host+"/"+value+".png'/>";						
 			}
 		},	{
 			field : 'totalIfInOctets',
-			title : '总入口流量（字节）',
+			title : '总入/出口流量（字节）',
 			width : 150,
 			formatter : function(value, rec) {				
-				return value;
-			}
-		}, {
-			field : 'totalIfOutOctets',
-			title : '总出口流量（字节）',
-			width : 150,
-			formatter : function(value, rec) {				
-				return value;
-			}
+				return value+"/"+rec.totalIfOutOctets;
+			}		
 		}, {
 			field : 'totalTime',
 			title : '监控时长（秒）',
-			width : 150,
+			width : 100,
 			formatter : function(value, rec) {				
 				return value;
 			}

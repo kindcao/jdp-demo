@@ -82,7 +82,7 @@ public class ChartUtil {
             NumberAxis rangeAxis = new NumberAxis(yName[i]);
             rangeAxis.setAutoRangeIncludesZero(false);
             rangeAxis.setAutoRange(true);
-            rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
+            rangeAxis.setNumberFormatOverride(new DecimalFormat("#,###"));
             rangeAxis.setLabelFont(new Font("ºÚÌå", Font.PLAIN, 10));
             XYPlot subplot = new XYPlot(datasets[i], null, rangeAxis, new StandardXYItemRenderer());
             subplot.setBackgroundPaint(Color.lightGray);

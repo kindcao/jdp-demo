@@ -351,6 +351,7 @@ public class SnmpRequest implements PDUFactory {
 
     public void setAddress(String address) {
         this.address = getAddress(address);
+        System.out.println(address);
     }
 
     class TextTableListener implements TableListener {
@@ -400,9 +401,13 @@ public class SnmpRequest implements PDUFactory {
                 }
                 if (key.startsWith(Constants.IFINOCTETS)) {
                     entry.setIfInOctets(Long.valueOf(value));
+                    entry.setTotalIfInOctets(entry.getTotalIfInOctets() + entry.getIfInOctets()
+                            - entry.getLastIfInOctets());
                 }
                 if (key.startsWith(Constants.IFOUTOCTETS)) {
                     entry.setIfOutOctets(Long.valueOf(value));
+                    entry.setTotalIfOutOctets(entry.getTotalIfOutOctets() + entry.getIfOutOctets()
+                            - entry.getLastIfOutOctets());
                 }
                 //
                 dataMap.put(key, entry);

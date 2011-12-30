@@ -26,7 +26,7 @@ public class Constants {
 
     public static final int CHAET_NUM = 2;
 
-    public static final int DEFAULT_ROWS = 1;
+    public static final int DEFAULT_ROWS = 2;
 
     public static final int DEFAULT_PAGE = 1;
 }

@@ -36,7 +36,7 @@ public class NetMonitor extends BaseAction {
 
     private ChartTimer ct;
 
-    private long period = 5;
+    private long period = 5000;
 
     private ConcurrentMap<String, IfEntry> dataMap;
 
@@ -45,10 +45,10 @@ public class NetMonitor extends BaseAction {
     }
 
     public String inputSnmpPara() throws Exception {
-        if (null != sr) {
-            sr = new SnmpRequest();
-            logger.info("create SnmpRequest instance");
-        }
+        JsonValidateResult jvr = new JsonValidateResult();
+        logger.info("create SnmpRequest instance");
+        jvr.setSuccess(true);
+        responseJsonData(jvr);
         return NONE;
     }
 
@@ -66,33 +66,58 @@ public class NetMonitor extends BaseAction {
         if (jvr.isSuccess()) {
             ct = new ChartTimer(new ChartTimerTask(sr, period));
             ct.start();
-            logger.warn("start ChartTimerTask[" + sr.getAddress() + "] ...");
+            logger.info("start ChartTimerTask[" + sr.getAddress() + "] ...");
         }
         responseJsonData(jvr);
         return NONE;
     }
 
     public String stop() throws Exception {
+        JsonValidateResult jvr = new JsonValidateResult();
         if (null != ct) {
             ct.stop();
+            jvr.setSuccess(true);
+            logger.info("stop ChartTimerTask[" + sr.getAddress() + "]");
+        } else {
+            jvr.setErrors("ChartTimer object is null");
         }
+        responseJsonData(jvr);
         return NONE;
     }
 
     public String getDataList() throws Exception {
+        List<IfEntry> list = new ArrayList<IfEntry>();
+        JsonListResult jlr = new JsonListResult();
+        jlr.setRows(list);
         if (null != ct) {
-            JsonListResult jlr = new JsonListResult();
             dataMap = ct.getCtt().getDataMap();
-            //
-            List<IfEntry> list = new ArrayList<IfEntry>();
+            //      
+            IfEntry entry = null;
             for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {
                 String key = (String) iterator.next();
-                if (key.startsWith(Constants.IFINOCTETS)) {
-                    list.add(dataMap.get(key));
+                if (key.startsWith(Constants.IFINDEX)) {
+                    entry = new IfEntry();
+                    entry.setIfIndex(dataMap.get(key).getIfIndex());
+                    entry.setIfDescr(dataMap.get(Constants.IFDESCR + entry.getIfIndex()).getIfDescr());
+                    entry.setTotalIfInOctets(dataMap.get(Constants.IFINOCTETS + entry.getIfIndex())
+                            .getTotalIfInOctets());
+                    entry.setTotalIfOutOctets(dataMap.get(Constants.IFOUTOCTETS + entry.getIfIndex())
+                            .getTotalIfOutOctets());
+                    list.add(entry);
                 }
             }
-            jlr.setRows(list);
+            //         
             jlr.setTotal(list.size());
+            if (list.size() > getRows()) {
+                int fromIndex = (getPage() - 1) * getRows();
+                int toIndex = getPage() * getRows();
+                if (toIndex > list.size()) {
+                    toIndex = list.size();
+                }
+                //
+                list = list.subList(fromIndex, toIndex);
+                jlr.setRows(list);
+            }
             //
             Collections.sort(list, new Comparator<IfEntry>() {
 
@@ -100,10 +125,9 @@ public class NetMonitor extends BaseAction {
                 public int compare(IfEntry o1, IfEntry o2) {
                     return Integer.valueOf(o1.getIfIndex()) - Integer.valueOf(o2.getIfIndex());
                 }
-
             });
-            responseJsonData(list);
         }
+        responseJsonData(jlr);
         return NONE;
     }
 
@@ -122,7 +146,7 @@ public class NetMonitor extends BaseAction {
     public void setPeriod(String period) {
         if (StringUtils.isNotBlank(period)) {
             this.period = Long.valueOf(period);
+            this.period *= 1000;
         }
-        this.period *= 1000;
     }
 }

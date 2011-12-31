@@ -116,8 +116,8 @@ public class ChartTimerTask extends TimerTask {
 
         //
         JFreeChart chart = cu.createChart(datasets);
-        String chartPath = System.getProperty("webApp.root") + "/images/chart/" + req.getAddress() + "/" + _subOID
-                + ".png";
+        String chartPath = System.getProperty("webApp.root") + Constants.SUB_CHART_SAVE_PATH + req.getAddress() + "/"
+                + _subOID;
         cu.writeChartAsPNG(chart, chartPath);
     }
 

@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set name="_sr" value="sr" />
 <s:set name="_period" value="period" />
 <div style="margin: 0 0 0 5px;">
 	<h6>
@@ -163,12 +162,11 @@ $(document).ready(function() {
 			}
 		}]];
 	var columns = [[{
-	    	field : 'ifIndex',
+	    	field : 'chartPath',
 			title : '图表',
 			width : 405,
-			formatter : function(value, rec) {
-				var host='<s:property value="#_sr.address" />';
-				return "<img width='400' height='250' style='no-repeat 0px 0px' src='images/chart/"+host+"/"+value+".png'/>";						
+			formatter : function(value, rec) {			
+				return "<img width='400' height='250' style='no-repeat 0px 0px' src='"+value+"'/>";						
 			}
 		},	{
 			field : 'totalIfOutOctets',

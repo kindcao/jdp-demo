@@ -95,13 +95,13 @@
 
 		<div region="west" split="false" title="&nbsp;" align="center"
 			style="width: 200px; padding1: 0px; overflow: hidden;">
-			<div class="easyui-accordion" fit="true" selected="true">
+			<div class="easyui-accordion" fit="true">
 				<div title="网络监控">
 					<div style="margin: 10px;">
 						<a href="#" onclick="addTab(this,'showNetMonitor');">网络监控</a>
 					</div>
 				</div>
-				<div title="系统设定" fit="true">
+				<div title="系统设定">
 					<div style="margin: 10px;">
 						<label onclick=""></label>
 						<a href="#" onclick="addTab(this,'showUserList');">用户设定</a>
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 
-		<div region="center" style="padding: 5px; background: #aaa;">
+		<div region="center" style="padding1: 5px; background: #aaa;">
 			<div id="tabs-container" class="easyui-tabs" fit="true"
 				style="overflow: hidden;">
 				<div title="默认信息" style="padding: 0px; display: none;">

@@ -23,10 +23,13 @@ public class Constants {
     public static final String UNDERLINE = "_";
 
     public static final String DOT = ".";
+    
+    public static final String SUB_CHART_SAVE_PATH="/images/chart/";
 
     public static final int CHAET_NUM = 2;
 
     public static final int DEFAULT_ROWS = 2;
 
     public static final int DEFAULT_PAGE = 1;
+    
 }

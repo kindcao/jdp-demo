@@ -1,5 +1,6 @@
 package com.netmonitor.action;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +66,9 @@ public class NetMonitor extends BaseAction {
         }
         //
         if (jvr.isSuccess()) {
+            if (null != ct) {
+                ct.stop();
+            }
             ct = new ChartTimer(new ChartTimerTask(sr, period));
             ct.start();
             logger.info("start ChartTimerTask[" + sr.getAddress() + "] ...");
@@ -76,6 +81,9 @@ public class NetMonitor extends BaseAction {
         JsonValidateResult jvr = new JsonValidateResult();
         if (null != ct) {
             ct.stop();
+            ct.getCtt().getDataMap().clear();
+            FileUtils.deleteDirectory(new File(System.getProperty("webApp.root") + Constants.SUB_CHART_SAVE_PATH
+                    + sr.getAddress()));
             jvr.setSuccess(true);
             logger.info("stop ChartTimerTask[" + sr.getAddress() + "]");
         } else {

@@ -40,9 +40,4 @@
 	 }
 	//-->
 	</script>
-
-	<script language="Javascript">
-	
-</script>
-
 </head>

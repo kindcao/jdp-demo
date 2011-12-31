@@ -237,14 +237,14 @@ public class SnmpRequest implements PDUFactory {
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            logger.info("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
+            logger.debug("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
             snmp.close();
         }
     }
 
     public void fetchData(ConcurrentMap<String, IfEntry> IfEntry) {
         int ifNumber = getIfNumber();
-        logger.info("ifNumber = " + ifNumber);
+        logger.debug("ifNumber = " + ifNumber);
         //
         if (ifNumber > 0) {
             getVbs().clear();

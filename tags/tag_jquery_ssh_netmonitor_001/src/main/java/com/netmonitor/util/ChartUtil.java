@@ -6,9 +6,9 @@ import java.awt.GradientPaint;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DecimalFormat;
 
+import org.apache.commons.io.FileUtils;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -123,8 +123,9 @@ public class ChartUtil {
     /** 保存为文件 */
     public void writeChartAsPNG(JFreeChart chart, String outputPath) {
         BufferedOutputStream bos = null;
+        File f = null;
         try {
-            File f = new File(outputPath);
+            f = new File(outputPath);
             if (!f.getParentFile().exists()) {
                 f.getParentFile().mkdirs();
                 logger.info("save chart img dir : " + f.getParentFile().getPath());
@@ -132,19 +133,15 @@ public class ChartUtil {
             bos = new BufferedOutputStream(new FileOutputStream(outputPath));
             // 保存为PNG
             ChartUtilities.writeChartAsPNG(bos, chart, width, height);
-            // 保存为JPEG
-            // ChartUtilities.writeChartAsJPEG(bos, chart, width, height);
-            bos.flush();
+            bos.close();
+            //
+            FileUtils.copyFile(f, new File(outputPath + ".png"));
+            FileUtils.forceDelete(f);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException e) {
-                    // do nothing
-                }
-            }
+            bos = null;
+            f = null;
         }
     }
 

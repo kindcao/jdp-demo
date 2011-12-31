@@ -58,7 +58,7 @@
 						</td>
 						<td colspan="2" align="center" valign="bottom">
 							<a href="javascript:void(0);" class="easyui-linkbutton"
-								plain="true" iconCls="icon-add" id="_input">输入</a>
+								plain="true" iconCls="icon-add" id="_input">设置</a>
 							<a href="javascript:void(0);" class="easyui-linkbutton"
 								plain="true" iconCls="icon-remove" id="_reset_input"
 								disabled="true">重置</a>
@@ -74,7 +74,7 @@
 			<a href="javascript:void(0);" class="easyui-linkbutton" plain="true"
 				iconCls="icon-ok" id="_start" disabled="true">启动</a>
 			<a href="javascript:void(0);" class="easyui-linkbutton" plain="true"
-				iconCls="icon-undo" id="_stop" disabled="true">停止</a>
+				iconCls="icon-undo" id="_stop">停止</a>
 		</div>
 		<div align="left">
 			<table id="grid-datalist-netmonitor"></table>
@@ -85,7 +85,7 @@
 <script type="text/javascript">
 <!--
 var sh;
-$("#_start").click(function() {
+$("#_start").click(function() {   
 	$.ajax({
 		url:'start',
 		dataType:'json',	                        
@@ -111,10 +111,12 @@ $("#_stop").click(function() {
 			if(!data.success){			      						
 				alert(data.errors);							
 			}else{
-			    clearInterval(sh);
-			    //
+				//
+				clearInterval(sh);
+				//
+			    reloadDatagrid('#grid-datalist-netmonitor');
 			    $("#_start").linkbutton('enable');
-			    $("#_stop").linkbutton('disable');		
+			    $("#_stop").linkbutton('disable');
 			}
 		}
 	});
@@ -147,7 +149,7 @@ $("#_reset_input").click(function() {
 	resetForm('infoForm');
 });
 
-$(document).ready(function() {
+$(document).ready(function() {	
 	var frozenColumns = [[{
 			field : 'ck',
 			checkbox : true
@@ -169,11 +171,11 @@ $(document).ready(function() {
 				return "<img width='400' height='250' style='no-repeat 0px 0px' src='images/chart/"+host+"/"+value+".png'/>";						
 			}
 		},	{
-			field : 'totalIfInOctets',
-			title : '总入/出口流量（字节）',
+			field : 'totalIfOutOctets',
+			title : '出/入总流量（字节）',
 			width : 150,
 			formatter : function(value, rec) {				
-				return value+"/"+rec.totalIfOutOctets;
+				return value+"/"+rec.totalIfInOctets;
 			}		
 		}, {
 			field : 'totalTime',

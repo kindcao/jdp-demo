@@ -111,6 +111,8 @@ public class NetMonitor extends BaseAction {
                             .getTotalIfInOctets());
                     entry.setTotalIfOutOctets(dataMap.get(Constants.IFOUTOCTETS + entry.getIfIndex())
                             .getTotalIfOutOctets());
+                    entry.setChartPath(Constants.SUB_CHART_SAVE_PATH + sr.getAddress() + "/" + entry.getIfIndex()
+                            + ".png");
                     list.add(entry);
                 }
             }

@@ -28,8 +28,10 @@ public class IfEntry {
     private long lastIfOutOctets = -1;
 
     // for datalist
-
+    
     private String id;
+
+    private String chartPath;
 
     private long totalIfInOctets;
 
@@ -176,6 +178,16 @@ public class IfEntry {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    
+    public String getChartPath() {
+        return chartPath;
+    }
+
+    
+    public void setChartPath(String chartPath) {
+        this.chartPath = chartPath;
     }
 
 }

@@ -113,11 +113,10 @@ public class ChartTimerTask extends TimerTask {
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
         }
-
         //
         JFreeChart chart = cu.createChart(datasets);
-        String chartPath = System.getProperty("webApp.root") + Constants.SUB_CHART_SAVE_PATH + req.getAddress() + "/"
-                + _subOID;
+        String chartPath = System.getProperty("webApp.root") + "/" + Constants.SUB_CHART_SAVE_PATH + req.getAddress()
+                + "/" + _subOID;
         cu.writeChartAsPNG(chart, chartPath);
     }
 

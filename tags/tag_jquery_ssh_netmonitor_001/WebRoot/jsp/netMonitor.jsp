@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <s:set name="_period" value="period" />
-<div style="margin: 0 0 0 5px;">
+<div id="div_search" style="display: inline;">
 	<h6>
 		&nbsp;
 	</h6>
@@ -155,7 +155,7 @@ $(document).ready(function() {
 		}, {
 			field : 'ifDescr',
 			title : '名称',
-			width : 300,
+			width : 250,
 			sortable : true,			
 			formatter : function(value, rec) {
 				return  value;
@@ -164,14 +164,14 @@ $(document).ready(function() {
 	var columns = [[{
 	    	field : 'chartPath',
 			title : '图表',
-			width : 405,
+			width : 410,
 			formatter : function(value, rec) {			
 				return "<img width='400' height='250' style='no-repeat 0px 0px' src='"+value+"'/>";						
 			}
 		},	{
 			field : 'totalIfOutOctets',
 			title : '出/入总流量（字节）',
-			width : 150,
+			width : 200,
 			formatter : function(value, rec) {				
 				return value+"/"+rec.totalIfInOctets;
 			}		

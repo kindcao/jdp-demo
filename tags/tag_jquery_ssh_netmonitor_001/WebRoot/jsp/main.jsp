@@ -110,7 +110,7 @@
 			</div>
 		</div>
 
-		<div region="center" style="padding1: 5px; background: #aaa;">
+		<div region="center" style="padding: 5px; background: #aaa;">
 			<div id="tabs-container" class="easyui-tabs" fit="true"
 				style="overflow: hidden;">
 				<div title="默认信息" style="padding: 0px; display: none;">

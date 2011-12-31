@@ -15,7 +15,7 @@
 
 	<link rel="stylesheet" type="text/css" href="<%=root%>/css/style.css" />
 	<script type="text/javascript"
-		src="<%=root%>/scripts/jquery/jquery-1.6.min.js"></script>
+		src="<%=root%>/scripts/jquery/jquery-1.6.4.min.js"></script>
 	<script type="text/javascript"
 		src="<%=root%>/scripts/jquery/jquery.validate.js"></script>
 	<script type="text/javascript"

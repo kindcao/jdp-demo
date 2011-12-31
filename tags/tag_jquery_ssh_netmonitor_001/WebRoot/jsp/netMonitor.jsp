@@ -113,7 +113,7 @@ $("#_stop").click(function() {
 				//
 				clearInterval(sh);
 				//
-			    reloadDatagrid('#grid-datalist-netmonitor');
+			    $('#grid-datalist-netmonitor').datagrid('reload');
 			    $("#_start").linkbutton('enable');
 			    $("#_stop").linkbutton('disable');
 			}

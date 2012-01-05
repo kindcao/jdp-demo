@@ -29,49 +29,21 @@ import org.jfree.ui.VerticalAlignment;
  */
 public class ChartUtil {
 
-    private int width;// 后台计算
-
-    private int height;// 后台计算
-
-    private String title;
-
-    private String subTitle;
-
-    private String xName;
-
-    private String[] yName;//
-
-    public ChartUtil() {
-        this("", "", "", null, 400, 250);
-    }
-
-    /***************************************************************************
-     * constructor function
-     * 
-     * @param type
-     * @param title
-     * @param subTitle
-     * @param xName
-     * @param yName
-     */
-    public ChartUtil(String title, String subTitle, String xName, String[] yName, int width, int height) {
-        this.title = title;
-        this.subTitle = subTitle;
-        this.xName = xName;
-        this.yName = yName;
-        this.width = width;
-        this.height = height;
-
+    public static JFreeChart createChart(ChartInfo ci, TimeSeriesCollection datasets) {
+        return createChart(ci, new TimeSeriesCollection[] { datasets });
     }
 
     /** 根据TimeSeriesCollection创建JFreeChart对象 */
-    public JFreeChart createChart(TimeSeriesCollection... datasets) {
+    public static JFreeChart createChart(ChartInfo ci, TimeSeriesCollection... datasets) {
         if (null == datasets || datasets.length == 0) {
             throw new IllegalArgumentException("null==datasets||datasets.length==0");
         }
+
+        String[] yName = ci.getYName();
         if (null == yName || yName.length == 0 || yName.length != datasets.length) {
             throw new IllegalArgumentException("null == yName || yName.length == 0 || yName.length != datasets.length");
         }
+        String xName = ci.getXName();
         //
         final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new DateAxis(xName));
         for (int i = 0; i < datasets.length; i++) {
@@ -87,7 +59,7 @@ public class ChartUtil {
             plot.add(subplot);
         }
         //
-        final JFreeChart chart = new JFreeChart(title, plot);
+        final JFreeChart chart = new JFreeChart(ci.getTitle(), plot);
         chart.getLegend().setVerticalAlignment(VerticalAlignment.CENTER);
         chart.setBorderPaint(Color.black);
         chart.setBorderVisible(true);
@@ -103,10 +75,10 @@ public class ChartUtil {
         axis.setAutoRangeMinimumSize(1);
 
         // 设置子标题
-        TextTitle subtitle = new TextTitle(this.subTitle, new Font("黑体", Font.PLAIN, 10));
+        TextTitle subtitle = new TextTitle(ci.getSubTitle(), new Font("黑体", Font.PLAIN, 10));
         chart.addSubtitle(subtitle);
         // 设置主标题
-        chart.setTitle(new TextTitle(this.title, new Font("黑书", Font.ITALIC, 12)));
+        chart.setTitle(new TextTitle(ci.getTitle(), new Font("黑书", Font.ITALIC, 12)));
         // 设置背景颜色
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.blue));
         // 字体模糊边界
@@ -117,18 +89,16 @@ public class ChartUtil {
     }
 
     /** 保存为文件 */
-    public void writeChartAsPNG(JFreeChart chart, String outputPath) {
+    public static void writeChartAsPNG(ChartInfo ci, JFreeChart chart) {
         BufferedOutputStream bos = null;
         try {
-            File f = new File(outputPath);
+            File f = new File(ci.getSaveFilepath());
             if (!f.getParentFile().exists()) {
                 f.getParentFile().mkdirs();
             }
-            bos = new BufferedOutputStream(new FileOutputStream(outputPath));
+            bos = new BufferedOutputStream(new FileOutputStream(f.getPath()));
             // 保存为PNG
-            ChartUtilities.writeChartAsPNG(bos, chart, width, height);
-            // 保存为JPEG
-            // ChartUtilities.writeChartAsJPEG(bos, chart, width, height);
+            ChartUtilities.writeChartAsPNG(bos, chart, ci.getWidth(), ci.getHeight());
             bos.flush();
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,53 +112,4 @@ public class ChartUtil {
             }
         }
     }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getXName() {
-        return xName;
-    }
-
-    public void setXName(String name) {
-        xName = name;
-    }
-
-    public String[] getYName() {
-        return yName;
-    }
-
-    public void setYName(String[] name) {
-        yName = name;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getSubTitle() {
-        return subTitle;
-    }
-
-    public void setSubTitle(String subTitle) {
-        this.subTitle = subTitle;
-    }
-
 }

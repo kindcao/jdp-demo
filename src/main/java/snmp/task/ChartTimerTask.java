@@ -1,19 +1,16 @@
 package snmp.task;
 
-import java.util.Iterator;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import snmp.chart.ChartInfo;
 import snmp.chart.ChartUtil;
-import snmp.common.Config;
 import snmp.common.Constants;
 import snmp.net.IfEntry;
 import snmp.net.SnmpRequest;
@@ -24,21 +21,11 @@ import snmp.net.SnmpRequest;
  * @version 1.0 <br>
  *          Dec 27, 2011 8:30:03 PM
  */
-public class ChartTimerTask extends TimerTask {
+public class ChartTimerTask extends AbstractChartTask {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private String[] yName;
-
-    private SnmpRequest req;
-
-    private long period;
-
-    private String subOID;
-
-    private ChartUtil cu = new ChartUtil();
-
-    private ConcurrentMap<String, IfEntry> dataMap = new ConcurrentHashMap<String, IfEntry>();
+    private String[] yName = { "In (k/s)", "Out (k/s)" };
 
     private ConcurrentMap<String, TimeSeriesCollection[]> tscMap = new ConcurrentHashMap<String, TimeSeriesCollection[]>();
 
@@ -50,34 +37,13 @@ public class ChartTimerTask extends TimerTask {
         this(req, subOID, 1);
     }
 
-    public ChartTimerTask(SnmpRequest req, String subOID, long period) {
-        this.req = req;
-        this.subOID = subOID;
-        this.period = period;
-        //
-        yName = new String[Constants.CHAET_NUM];
-        this.yName[0] = "In (k/s)";
-        this.yName[1] = "Out (k/s)";
+    public ChartTimerTask(SnmpRequest sr, String subOID, long period) {
+        super(sr, subOID, period);
     }
 
-    public void run() {
-        //
-        req.fetchData(dataMap);
-        // show all device chart
-        if (null == subOID || subOID.trim().length() == 0) {
-            for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {
-                String key = (String) iterator.next();
-                if (key.startsWith(Constants.IFINDEX)) {
-                    createChart(key.substring(key.lastIndexOf(Constants.DOT) + 1));
-                }
-            }
-        } else {
-            createChart(subOID);
-        }
-    }
-
-    private void createChart(String _subOID) {
-        String dsKey = req.getAddress() + Constants.UNDERLINE + _subOID;
+    public void createChart(String _subOID) {
+        ChartInfo ci = new ChartInfo();
+        String dsKey = sr.getAddress() + Constants.UNDERLINE + _subOID;
         TimeSeriesCollection[] datasets = tscMap.get(dsKey);
         if (null == datasets) {
             datasets = new TimeSeriesCollection[Constants.CHAET_NUM];
@@ -93,12 +59,12 @@ public class ChartTimerTask extends TimerTask {
         }
         //
         IfEntry entryDesc = dataMap.get(Constants.IFDESCR + _subOID);
-        cu.setTitle(entryDesc.getIfDescr());
-        cu.setYName(yName);
+        ci.setTitle(entryDesc.getIfDescr());
+        ci.setYName(yName);
         // In
         IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
         if (null != entryIn) {
-            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (period / 1000) / 1024;
+            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (getPeriod() / 1000) / 1024;
             datasets[0].getSeries(0).addOrUpdate(new Second(), inRate);
             logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
                     + "\tinRate=" + inRate);
@@ -108,7 +74,8 @@ public class ChartTimerTask extends TimerTask {
         // out
         IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + _subOID));
         if (null != entryOut) {
-            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (period / 1000) / 1024;
+            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (getPeriod() / 1000)
+                    / 1024;
             datasets[1].getSeries(0).addOrUpdate(new Second(), outRate);
             logger.debug("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
@@ -116,18 +83,8 @@ public class ChartTimerTask extends TimerTask {
         }
 
         //
-        JFreeChart chart = cu.createChart(datasets);
-        String chartPath = Config.getInstance().getValue("chart.img.dir").endsWith("/") ? Config.getInstance()
-                .getValue("chart.img.dir") : Config.getInstance().getValue("chart.img.dir").concat("/")
-                + req.getAddress() + "/" + _subOID + ".png";
-        cu.writeChartAsPNG(chart, chartPath);
+        ci.setSaveFilepath(getSaveChartImgPath(_subOID));
+        ChartUtil.writeChartAsPNG(ci, ChartUtil.createChart(ci, datasets));;
     }
 
-    public long getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(long period) {
-        this.period = period;
-    }
 }

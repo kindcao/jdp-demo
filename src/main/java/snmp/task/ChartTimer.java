@@ -2,7 +2,6 @@ package snmp.task;
 
 import java.util.Timer;
 
-
 /**
  * 
  * @author Kind Cao
@@ -11,17 +10,17 @@ import java.util.Timer;
  */
 public class ChartTimer {
 
-    private ChartTimerTask ctt;
+    private AbstractChartTask ct;
 
     private Timer timer;
 
-    public ChartTimer(ChartTimerTask ctt) {
-        this.ctt = ctt;
+    public ChartTimer(AbstractChartTask ct) {
+        this.ct = ct;
     }
 
     public void start() {
         timer = new Timer();
-        timer.schedule(ctt, 0, ctt.getPeriod());
+        timer.schedule(ct, 0, ct.getPeriod());
     }
 
     public void stop() {

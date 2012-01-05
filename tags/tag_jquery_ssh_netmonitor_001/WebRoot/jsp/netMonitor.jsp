@@ -166,7 +166,7 @@ $(document).ready(function() {
 			title : '图表',
 			width : 410,
 			formatter : function(value, rec) {			
-				return "<img width='400' height='250' style='no-repeat 0px 0px' src='"+value+"'/>";						
+				return "<img width='400' height='200' style='no-repeat 0px 0px' src='"+value+"'/>";						
 			}
 		},	{
 			field : 'totalIfOutOctets',

@@ -59,11 +59,6 @@ public class ChartUtil {
             plot.add(subplot);
         }
         //
-        final JFreeChart chart = new JFreeChart(ci.getTitle(), plot);
-        chart.getLegend().setVerticalAlignment(VerticalAlignment.CENTER);
-        chart.setBorderPaint(Color.black);
-        chart.setBorderVisible(true);
-        chart.setBackgroundPaint(Color.white);
         plot.setBackgroundPaint(Color.lightGray);
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
@@ -73,7 +68,12 @@ public class ChartUtil {
         axis.setAutoRange(true);
         axis.setFixedAutoRange(60000); // 60 seconds
         axis.setAutoRangeMinimumSize(1);
-
+        //
+        final JFreeChart chart = new JFreeChart(ci.getTitle(), plot);
+        chart.getLegend().setVerticalAlignment(VerticalAlignment.CENTER);
+        chart.setBorderPaint(Color.black);
+        chart.setBorderVisible(false);
+        chart.setBackgroundPaint(Color.white);
         // 设置子标题
         TextTitle subtitle = new TextTitle(ci.getSubTitle(), new Font("黑体", Font.PLAIN, 10));
         chart.addSubtitle(subtitle);
@@ -82,8 +82,7 @@ public class ChartUtil {
         // 设置背景颜色
         chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.blue));
         // 字体模糊边界
-        chart.setAntiAlias(true);
-        //
+        // chart.setAntiAlias(true);
         chart.getLegend().setItemFont(new Font("黑体", Font.PLAIN, 9));
         return chart;
     }

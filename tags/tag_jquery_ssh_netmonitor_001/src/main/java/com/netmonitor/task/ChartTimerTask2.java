@@ -16,57 +16,55 @@ import com.netmonitor.util.ChartInfo;
 import com.netmonitor.util.ChartUtil;
 
 /**
- * 
  * @author Kind Cao
- * @version 1.0 <br>
- *          Dec 27, 2011 8:30:03 PM
+ * @version $Rev$, Jan 4, 2012 10:59:16 AM
  */
-public class ChartTimerTask extends AbstractChartTask {
+public class ChartTimerTask2 extends AbstractChartTask {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private String[] yName = new String[] { "In(B/s)", "Out(B/s)" };
+    private ConcurrentMap<String, TimeSeriesCollection> tscMap = new ConcurrentHashMap<String, TimeSeriesCollection>();
 
-    private ConcurrentMap<String, TimeSeriesCollection[]> tscMap = new ConcurrentHashMap<String, TimeSeriesCollection[]>();
-
-    public ChartTimerTask(SnmpRequest req, long period) {
-        this(req, null, period);
+    public ChartTimerTask2(SnmpRequest sr, long period) {
+        super(sr, period);
     }
 
-    public ChartTimerTask(SnmpRequest req, String subOID) {
-        this(req, subOID, 1);
-    }
-
-    public ChartTimerTask(SnmpRequest sr, String subOID, long period) {
+    public ChartTimerTask2(SnmpRequest sr, String subOID, long period) {
         super(sr, subOID, period);
-
     }
 
+    public ChartTimerTask2(SnmpRequest sr) {
+        super(sr);
+    }
+
+    @Override
     public void createChart(String _subOID) {
         ChartInfo ci = new ChartInfo();
+        ci.setHeight(200);
         String dsKey = sr.getAddress() + Constants.UNDERLINE + _subOID;
-        TimeSeriesCollection[] datasets = tscMap.get(dsKey);
+        TimeSeriesCollection datasets = tscMap.get(dsKey);
         if (null == datasets) {
-            datasets = new TimeSeriesCollection[yName.length];
+            datasets = new TimeSeriesCollection();
             tscMap.put(dsKey, datasets);
             //
             TimeSeries inSeries = new TimeSeries("In");
             inSeries.setMaximumItemCount(30);
-            datasets[0] = new TimeSeriesCollection(inSeries);
+            datasets.addSeries(inSeries);
             //
             TimeSeries outSeries = new TimeSeries("Out");
             outSeries.setMaximumItemCount(30);
-            datasets[1] = new TimeSeriesCollection(outSeries);
+            datasets.addSeries(outSeries);
         }
         //
         IfEntry entryDesc = dataMap.get(Constants.IFDESCR + _subOID);
-        ci.setTitle(entryDesc.getIfDescr());
-        ci.setYName(yName);
+        // ci.setTitle(entryDesc.getIfDescr());
+        ci.setTitle("");
+        ci.setYName(new String[] { "In/Out" });
         // In
         IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
         if (null != entryIn) {
-            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (getPeriod() / 1000);
-            datasets[0].getSeries(0).addOrUpdate(new Second(), inRate);
+            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (getPeriod() / 1000) / 1024;
+            datasets.getSeries(0).addOrUpdate(new Second(), inRate);
             logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
                     + "\tinRate=" + inRate);
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
@@ -75,15 +73,17 @@ public class ChartTimerTask extends AbstractChartTask {
         // out
         IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + _subOID));
         if (null != entryOut) {
-            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (getPeriod() / 1000);
-            datasets[1].getSeries(0).addOrUpdate(new Second(), outRate);
+            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (getPeriod() / 1000)
+                    / 1024;
+            datasets.getSeries(1).addOrUpdate(new Second(), outRate);
             logger.debug("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
         }
+
         //
         ci.setSaveFilepath(getSaveChartImgPath(_subOID));
-        ChartUtil.writeChartAsPNG(ci, ChartUtil.createChart(ci, datasets));
+        ChartUtil.writeChartAsPNG(ci, ChartUtil.createChart(ci, datasets));;
     }
 
 }

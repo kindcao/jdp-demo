@@ -2,7 +2,6 @@ package com.netmonitor.task;
 
 import java.util.Timer;
 
-
 /**
  * 
  * @author Kind Cao
@@ -11,17 +10,17 @@ import java.util.Timer;
  */
 public class ChartTimer {
 
-    private ChartTimerTask ctt;
+    private AbstractChartTask chartTask;
 
     private Timer timer;
 
-    public ChartTimer(ChartTimerTask ctt) {
-        this.ctt = ctt;
+    public ChartTimer(AbstractChartTask chartTask) {
+        this.chartTask = chartTask;
     }
 
     public void start() {
         timer = new Timer();
-        timer.schedule(ctt, 0, ctt.getPeriod());
+        timer.schedule(chartTask, 0, chartTask.getPeriod());
     }
 
     public void stop() {
@@ -30,8 +29,9 @@ public class ChartTimer {
     }
 
     
-    public ChartTimerTask getCtt() {
-        return ctt;
+    public AbstractChartTask getChartTask() {
+        return chartTask;
     }
+
     
 }

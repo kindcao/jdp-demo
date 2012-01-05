@@ -21,7 +21,7 @@ import com.netmonitor.common.Constants;
 import com.netmonitor.snmp.IfEntry;
 import com.netmonitor.snmp.SnmpRequest;
 import com.netmonitor.task.ChartTimer;
-import com.netmonitor.task.ChartTimerTask;
+import com.netmonitor.task.ChartTimerTask2;
 
 /**
  * @author Kind Cao
@@ -69,7 +69,7 @@ public class NetMonitor extends BaseAction {
             if (null != ct) {
                 ct.stop();
             }
-            ct = new ChartTimer(new ChartTimerTask(sr, period));
+            ct = new ChartTimer(new ChartTimerTask2(sr, period));
             ct.start();
             logger.info("start ChartTimerTask[" + sr.getAddress() + "] ...");
         }
@@ -81,7 +81,7 @@ public class NetMonitor extends BaseAction {
         JsonValidateResult jvr = new JsonValidateResult();
         if (null != ct) {
             ct.stop();
-            ct.getCtt().getDataMap().clear();
+            ct.getChartTask().getDataMap().clear();
             FileUtils.deleteDirectory(new File(System.getProperty("webApp.root") + Constants.SUB_CHART_SAVE_PATH
                     + sr.getAddress()));
             jvr.setSuccess(true);
@@ -98,7 +98,7 @@ public class NetMonitor extends BaseAction {
         JsonListResult jlr = new JsonListResult();
         jlr.setRows(list);
         if (null != ct) {
-            dataMap = ct.getCtt().getDataMap();
+            dataMap = ct.getChartTask().getDataMap();
             //      
             IfEntry entry = null;
             for (Iterator<String> iterator = dataMap.keySet().iterator(); iterator.hasNext();) {

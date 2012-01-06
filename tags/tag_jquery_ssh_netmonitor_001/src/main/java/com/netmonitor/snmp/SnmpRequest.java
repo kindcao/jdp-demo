@@ -15,6 +15,7 @@ import org.snmp4j.Snmp;
 import org.snmp4j.Target;
 import org.snmp4j.UserTarget;
 import org.snmp4j.event.ResponseEvent;
+import org.snmp4j.event.ResponseListener;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.security.SecurityLevel;
@@ -79,7 +80,7 @@ public class SnmpRequest implements PDUFactory {
 
     private int timeout = 1;
 
-    private int pduType = PDU.GETNEXT;
+    private int pduType = PDU.GET;
 
     private int maxRepetitions = 10;
 
@@ -114,14 +115,32 @@ public class SnmpRequest implements PDUFactory {
         }
 
         PDU response = null;
-        ResponseEvent responseEvent;
         long startTime = System.currentTimeMillis();
-        responseEvent = snmp.send(request, target);
-        if (responseEvent != null) {
-            response = responseEvent.getResponse();
+        Counter32 counter = new Counter32();
+        synchronized (counter) {
+            snmp.send(request, target, counter, new ResponseListener() {
+
+                private PDU response;
+
+                @Override
+                public void onResponse(ResponseEvent event) {
+                    response = event.getResponse();
+                }
+
+                public PDU getResponse() {
+                    return response;
+                }
+            });
+            try {
+                counter.wait(timeout);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            //
+            response = listener.getResponse();
             logger.info("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
+            snmp.close();
         }
-        snmp.close();
         return response;
     }
 
@@ -271,9 +290,14 @@ public class SnmpRequest implements PDUFactory {
         PDU response;
         try {
             response = send();
-            return response.getVariable(oid).toInt();
+            if (null != response) {
+                return response.getVariable(oid).toInt();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            getVbs().clear();
         }
         return 0;
     }

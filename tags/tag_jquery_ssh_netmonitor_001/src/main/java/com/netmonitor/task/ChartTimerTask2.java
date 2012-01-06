@@ -64,10 +64,17 @@ public class ChartTimerTask2 extends AbstractChartTask {
         IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
         if (null != entryIn) {
             double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (getPeriod() / 1000) / 1024;
-            datasets.getSeries(0).addOrUpdate(new Second(), inRate);
+            TimeSeries inSeries = datasets.getSeries(0);
+            inSeries.addOrUpdate(new Second(), inRate);
             logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
                     + "\tinRate=" + inRate);
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
+            //
+            StringBuilder sb = new StringBuilder("In");
+            sb.append("    Now: " + inRate);
+            sb.append("    Avg: " + entryIn.getIfInOctets());
+            sb.append("    Total: " + entryIn.getTotalIfInOctets());
+            inSeries.setKey(sb.toString());
         }
 
         // out
@@ -75,15 +82,27 @@ public class ChartTimerTask2 extends AbstractChartTask {
         if (null != entryOut) {
             double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (getPeriod() / 1000)
                     / 1024;
-            datasets.getSeries(1).addOrUpdate(new Second(), outRate);
+            TimeSeries outSeries = datasets.getSeries(1);
+            outSeries.addOrUpdate(new Second(), outRate);
             logger.debug("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
+            //
+            StringBuilder sb = new StringBuilder("Out");
+            sb.append("    Now: " + outRate);
+            sb.append("    Avg: " + entryIn.getIfOutOctets());
+            sb.append("    Total: " + entryIn.getTotalIfOutOctets());
+            outSeries.setKey(sb.toString());
         }
 
         //
         ci.setSaveFilepath(getSaveChartImgPath(_subOID));
         ChartUtil.writeChartAsPNG(ci, ChartUtil.createChart(ci, datasets));;
+    }
+
+    public String getSaveChartImgPath(String oid) {
+        String chartPath = "d:/" + Constants.SUB_CHART_SAVE_PATH + sr.getAddress() + "/" + oid;
+        return chartPath;
     }
 
 }

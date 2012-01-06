@@ -14,6 +14,7 @@ import org.snmp4j.Snmp;
 import org.snmp4j.Target;
 import org.snmp4j.UserTarget;
 import org.snmp4j.event.ResponseEvent;
+import org.snmp4j.event.ResponseListener;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.security.SecurityLevel;
@@ -117,13 +118,11 @@ public class SnmpRequest implements PDUFactory {
         }
 
         PDU response = null;
-        ResponseEvent responseEvent;
+        TextResponseListener listener = new TextResponseListener();
         long startTime = System.currentTimeMillis();
-        responseEvent = snmp.send(request, target);
-        if (responseEvent != null) {
-            response = responseEvent.getResponse();
-            logger.info("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
-        }
+        snmp.send(request, target, null, listener);
+        response = listener.getResponse();
+        logger.info("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
         snmp.close();
         return response;
     }
@@ -326,6 +325,32 @@ public class SnmpRequest implements PDUFactory {
             return address.getInetAddress().getHostAddress();
         }
         return null;
+    }
+
+    class TextResponseListener implements ResponseListener {
+
+        private Object lock = new Object();
+
+        private PDU response;
+
+        @Override
+        public void onResponse(ResponseEvent event) {
+            synchronized (lock) {
+                response = event.getResponse();
+                lock.notifyAll();
+            }
+        }
+
+        public PDU getResponse() {
+            synchronized (lock) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+                    //
+                }
+            }
+            return response;
+        }
     }
 
     class TextTableListener implements TableListener {

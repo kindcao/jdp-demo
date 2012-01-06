@@ -20,6 +20,10 @@ public class IfEntry {
 
     private long ifOutOctets;
 
+    private double inRate;
+
+    private double outRate;
+
     // for chart
     private long lastIfInOctets = -1;
 
@@ -107,6 +111,22 @@ public class IfEntry {
         sb.append("\tlastIfInOctets = " + lastIfInOctets);
         sb.append("\tlastIfOutOctets = " + lastIfOutOctets);
         return sb.toString();
+    }
+
+    public double getInRate() {
+        return inRate;
+    }
+
+    public void setInRate(double inRate) {
+        this.inRate = inRate;
+    }
+
+    public double getOutRate() {
+        return outRate;
+    }
+
+    public void setOutRate(double outRate) {
+        this.outRate = outRate;
     }
 
 }

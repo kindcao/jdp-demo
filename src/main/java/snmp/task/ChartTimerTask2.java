@@ -63,10 +63,17 @@ public class ChartTimerTask2 extends AbstractChartTask {
         IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
         if (null != entryIn) {
             double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (getPeriod() / 1000) / 1024;
-            datasets.getSeries(0).addOrUpdate(new Second(), inRate);
+            TimeSeries inSeries = datasets.getSeries(0);
+            inSeries.addOrUpdate(new Second(), inRate);
             logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
                     + "\tinRate=" + inRate);
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
+            //
+            StringBuilder sb = new StringBuilder("In ");
+            sb.append("\t Now: " + inRate);
+            sb.append("\t\t Avg: " + entryIn.getLastIfInOctets());
+            sb.append("\t\t Total: " + entryIn.getLastIfInOctets());
+            inSeries.setKey(sb.toString());
         }
 
         // out

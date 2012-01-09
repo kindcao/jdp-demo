@@ -79,7 +79,7 @@ public class SnmpRequest implements PDUFactory {
 
     private int timeout = 1000;
 
-    private int pduType = PDU.GETNEXT;
+    private int pduType = PDU.GET;
 
     private int maxRepetitions = 10;
 
@@ -117,13 +117,21 @@ public class SnmpRequest implements PDUFactory {
             request.add((VariableBinding) vbs.get(i));
         }
 
+        //
         PDU response = null;
-        TextResponseListener listener = new TextResponseListener();
         long startTime = System.currentTimeMillis();
-        snmp.send(request, target, null, listener);
-        response = listener.getResponse();
-        logger.info("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
-        snmp.close();
+        TextResponseListener listener = new TextResponseListener();
+        synchronized (listener) {
+            snmp.send(request, target, null, listener);
+            try {
+                listener.wait(timeout);
+                response = listener.getResponse();
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            logger.info("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
+            snmp.close();
+        }
         return response;
     }
 
@@ -329,29 +337,22 @@ public class SnmpRequest implements PDUFactory {
 
     class TextResponseListener implements ResponseListener {
 
-        private Object lock = new Object();
-
         private PDU response;
 
-        @Override
+        public PDU getResponse() {
+            return response;
+        }
+
         public void onResponse(ResponseEvent event) {
-            synchronized (lock) {
-                response = event.getResponse();
-                lock.notifyAll();
+            ((Snmp) event.getSource()).cancel(event.getRequest(), this);
+            System.out.println("Set Status is:" + event.getResponse());
+            response = event.getResponse();
+            synchronized (this) {
+                this.notify();
             }
         }
 
-        public PDU getResponse() {
-            synchronized (lock) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException e) {
-                    //
-                }
-            }
-            return response;
-        }
-    }
+    };
 
     class TextTableListener implements TableListener {
 

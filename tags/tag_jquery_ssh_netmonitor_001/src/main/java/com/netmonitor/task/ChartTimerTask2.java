@@ -14,6 +14,7 @@ import com.netmonitor.snmp.IfEntry;
 import com.netmonitor.snmp.SnmpRequest;
 import com.netmonitor.util.ChartInfo;
 import com.netmonitor.util.ChartUtil;
+import com.netmonitor.util.Utils;
 
 /**
  * @author Kind Cao
@@ -40,7 +41,6 @@ public class ChartTimerTask2 extends AbstractChartTask {
     @Override
     public void createChart(String _subOID) {
         ChartInfo ci = new ChartInfo();
-        ci.setHeight(200);
         String dsKey = sr.getAddress() + Constants.UNDERLINE + _subOID;
         TimeSeriesCollection datasets = tscMap.get(dsKey);
         if (null == datasets) {
@@ -48,61 +48,84 @@ public class ChartTimerTask2 extends AbstractChartTask {
             tscMap.put(dsKey, datasets);
             //
             TimeSeries inSeries = new TimeSeries("In");
-            inSeries.setMaximumItemCount(30);
+            // inSeries.setMaximumItemCount(30);
             datasets.addSeries(inSeries);
             //
             TimeSeries outSeries = new TimeSeries("Out");
-            outSeries.setMaximumItemCount(30);
+            // outSeries.setMaximumItemCount(30);
             datasets.addSeries(outSeries);
         }
+
         //
-        IfEntry entryDesc = dataMap.get(Constants.IFDESCR + _subOID);
-        // ci.setTitle(entryDesc.getIfDescr());
-        ci.setTitle("");
-        ci.setYName(new String[] { "In/Out" });
-        // In
+        int exponent = 0;
+        double inRate = 0;
+        double outRate = 0;
         IfEntry entryIn = (dataMap.get(Constants.IFINOCTETS + _subOID));
+        IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + _subOID));
         if (null != entryIn) {
-            double inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (getPeriod() / 1000) / 1024;
-            TimeSeries inSeries = datasets.getSeries(0);
-            inSeries.addOrUpdate(new Second(), inRate);
-            logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
-                    + "\tinRate=" + inRate);
-            entryIn.setLastIfInOctets(entryIn.getIfInOctets());
-            //
-            StringBuilder sb = new StringBuilder("In");
-            sb.append("    Now: " + inRate);
-            sb.append("    Avg: " + entryIn.getIfInOctets());
-            sb.append("    Total: " + entryIn.getTotalIfInOctets());
-            inSeries.setKey(sb.toString());
+            inRate = (entryIn.getIfInOctets() - entryIn.getLastIfInOctets() * 1.0) / (getPeriod() / 1000);
+            exponent = Math.max(exponent, Math.max(entryIn.getExponent(), Utils.getExponent(inRate)));
+            entryIn.setExponent(exponent);
+        }
+        if (null != entryOut) {
+            outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (getPeriod() / 1000);
+            exponent = Math.max(exponent, Math.max(entryOut.getExponent(), Utils.getExponent(outRate)));
+            entryOut.setExponent(exponent);
         }
 
-        // out
-        IfEntry entryOut = (dataMap.get(Constants.IFOUTOCTETS + _subOID));
+        //
+        if (null != entryIn) {
+            TimeSeries inSeries = datasets.getSeries(0);
+            inSeries.addOrUpdate(new Second(), inRate / Math.pow(10, exponent));
+            logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
+                    + "\tinRate=" + inRate);
+            entryIn.setTotalIfInOctets(entryIn.getTotalIfInOctets() + entryIn.getIfInOctets()
+                    - entryIn.getLastIfInOctets());
+            entryIn.setLastIfInOctets(entryIn.getIfInOctets());
+            //
+            double totalTime = (System.currentTimeMillis() - entryIn.getTotalTime()) / 1000 * 1.0;
+            totalTime = totalTime == 0 ? 1 : totalTime;
+            StringBuilder sb = new StringBuilder("In ");
+            sb.append("    Now: " + Utils.fmtData(inRate));
+            sb.append("    Avg: " + Utils.fmtData(entryIn.getTotalIfInOctets() / totalTime));
+            sb.append("    Total: " + Utils.fmtData(entryIn.getTotalIfInOctets()));
+
+            inSeries.setKey(sb.toString());
+        }
         if (null != entryOut) {
-            double outRate = (entryOut.getIfOutOctets() - entryOut.getLastIfOutOctets() * 1.0) / (getPeriod() / 1000)
-                    / 1024;
             TimeSeries outSeries = datasets.getSeries(1);
-            outSeries.addOrUpdate(new Second(), outRate);
+            outSeries.addOrUpdate(new Second(), outRate / Math.pow(10, exponent));
             logger.debug("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
+            entryOut.setTotalIfOutOctets(entryOut.getTotalIfOutOctets() + entryOut.getIfOutOctets()
+                    - entryOut.getLastIfOutOctets());
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
             //
+            double totalTime = (System.currentTimeMillis() - entryOut.getTotalTime()) / 1000 * 1.0;
+            totalTime = totalTime == 0 ? 1 : totalTime;
             StringBuilder sb = new StringBuilder("Out");
-            sb.append("    Now: " + outRate);
-            sb.append("    Avg: " + entryIn.getIfOutOctets());
-            sb.append("    Total: " + entryIn.getTotalIfOutOctets());
+            sb.append("    Now: " + Utils.fmtData(outRate));
+            sb.append("    Avg: " + Utils.fmtData(entryOut.getTotalIfOutOctets() / totalTime));
+            sb.append("    Total: " + Utils.fmtData(entryOut.getTotalIfOutOctets()));
             outSeries.setKey(sb.toString());
         }
+
+        //
+        IfEntry entryDesc = dataMap.get(Constants.IFDESCR + _subOID);
+        ci.setTitle(entryDesc.getIfDescr());
+        // ci.setTitle("");
+        ci.setSubTitle("");
+        ci.setYName(new String[] { "In/Out (" + Utils.getUnit(exponent) + "/s)" });
 
         //
         ci.setSaveFilepath(getSaveChartImgPath(_subOID));
         ChartUtil.writeChartAsPNG(ci, ChartUtil.createChart(ci, datasets));;
     }
 
-    public String getSaveChartImgPath(String oid) {
-        String chartPath = "d:/" + Constants.SUB_CHART_SAVE_PATH + sr.getAddress() + "/" + oid;
-        return chartPath;
-    }
+    // public String getSaveChartImgPath(String oid) {
+    // String chartPath = "d:/" + Constants.SUB_CHART_SAVE_PATH +
+    // sr.getAddress() + "/" + oid;
+    // return chartPath;
+    // }
 
 }

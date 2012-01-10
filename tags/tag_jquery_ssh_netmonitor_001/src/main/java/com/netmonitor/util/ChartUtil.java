@@ -12,16 +12,13 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.VerticalAlignment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,39 +55,57 @@ public class ChartUtil {
             rangeAxis.setAutoRangeIncludesZero(false);
             rangeAxis.setAutoRange(true);
             rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
-            rangeAxis.setLabelFont(new Font("黑体", Font.PLAIN, 10));
+            rangeAxis.setLabelFont(new Font("Verdana", Font.PLAIN, 10));
+            rangeAxis.setMinorTickCount(3);
             XYPlot subplot = new XYPlot(datasets[i], null, rangeAxis, new StandardXYItemRenderer());
-            subplot.setBackgroundPaint(Color.lightGray);
-            subplot.setDomainGridlinePaint(Color.white);
-            subplot.setRangeGridlinePaint(Color.white);
+            // subplot.setBackgroundPaint(Color.lightGray);
+            subplot.setDomainGridlinePaint(Color.darkGray);
+            subplot.setRangeGridlinePaint(Color.darkGray);
+
+            //
+            subplot.setDomainMinorGridlinePaint(Color.lightGray);
+            subplot.setDomainMinorGridlinesVisible(true);
+            subplot.setRangeMinorGridlinePaint(Color.lightGray);
+            subplot.setRangeMinorGridlinesVisible(true);
             plot.add(subplot);
         }
-        //
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-        // plot.setAxisOffset(new RectangleInsets(5D, 5D, 5D, 5D));
+        // plot.setAxisOffset(new RectangleInsets(1, 1, 1, 1));
         plot.setNoDataMessage("No Data!");
-        final ValueAxis axis = plot.getDomainAxis();
+        final DateAxis axis = (DateAxis) plot.getDomainAxis();
+        axis.setNegativeArrowVisible(false);
         axis.setAutoRange(true);
-        axis.setFixedAutoRange(60000); // 60 seconds
-        axis.setAutoRangeMinimumSize(1);
+        axis.setLowerMargin(0);
+        axis.setMinorTickCount(5);
+        // axis.setMinorTickMarksVisible(true);
+
+        // axis.setInverted(true);
+        // axis.setVerticalTickLabels(true);
+        // axis.setFixedAutoRange(1 * 60 * 60 * 1000); // 60 seconds
+        // axis.setAutoRangeMinimumSize(1);
         //
         final JFreeChart chart = new JFreeChart(ci.getTitle(), plot);
-        chart.getLegend().setVerticalAlignment(VerticalAlignment.CENTER);
         chart.setBorderPaint(Color.black);
         chart.setBorderVisible(false);
         chart.setBackgroundPaint(Color.white);
         // 设置子标题
-        TextTitle subtitle = new TextTitle(ci.getSubTitle(), new Font("黑体", Font.PLAIN, 10));
+        TextTitle subtitle = new TextTitle(ci.getSubTitle(), new Font("Verdana", Font.PLAIN, 10));
+        subtitle.setHorizontalAlignment(HorizontalAlignment.LEFT);
+        subtitle.setVerticalAlignment(VerticalAlignment.CENTER);
+        subtitle.setMargin(0, 10, 0, 0);
         chart.addSubtitle(subtitle);
         // 设置主标题
-        chart.setTitle(new TextTitle(ci.getTitle(), new Font("黑书", Font.ITALIC, 12)));
+        chart.setTitle(new TextTitle(ci.getTitle(), new Font("Verdana", Font.ITALIC, 12)));
         // 设置背景颜色
-        chart.setBackgroundPaint(new GradientPaint(0, 0, Color.white, 0, 1000, Color.blue));
+        GradientPaint bgPaint = new GradientPaint(0, 0, Color.white, 0, 1000, Color.white);
+        chart.setBackgroundPaint(bgPaint);
         // 字体模糊边界
         // chart.setAntiAlias(true);
-        chart.getLegend().setItemFont(new Font("黑体", Font.PLAIN, 9));
+
+        LegendTitle lt = chart.getLegend();
+        lt.setItemFont(new Font("Verdana", Font.PLAIN, 10));
+        lt.setBackgroundPaint(bgPaint);
+        lt.setBorder(0, 0, 0, 0);
+        lt.setPadding(1, 10, 1, 10);
         return chart;
     }
 
@@ -116,10 +131,12 @@ public class ChartUtil {
             srcFile.renameTo(destFile);
             srcFile.delete();
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage(), e);
         } finally {
             bos = null;
             srcFile = null;
         }
     }
+
 }

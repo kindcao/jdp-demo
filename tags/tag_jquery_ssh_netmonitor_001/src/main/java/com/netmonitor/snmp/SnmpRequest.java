@@ -78,7 +78,7 @@ public class SnmpRequest implements PDUFactory {
 
     private int retries = 1;
 
-    private int timeout = 1;
+    private int timeout = 1000;
 
     private int pduType = PDU.GET;
 
@@ -104,7 +104,7 @@ public class SnmpRequest implements PDUFactory {
         target.setTimeout(timeout);
         target.setMaxSizeRequestPDU(maxSizeResponsePDU);
         snmp.listen();
-
+        //
         PDU request = createPDU(target);
         if (request.getType() == PDU.GETBULK) {
             request.setMaxRepetitions(maxRepetitions);
@@ -113,32 +113,19 @@ public class SnmpRequest implements PDUFactory {
         for (int i = 0; i < vbs.size(); i++) {
             request.add((VariableBinding) vbs.get(i));
         }
-
+        //
         PDU response = null;
         long startTime = System.currentTimeMillis();
-        Counter32 counter = new Counter32();
-        synchronized (counter) {
-            snmp.send(request, target, counter, new ResponseListener() {
-
-                private PDU response;
-
-                @Override
-                public void onResponse(ResponseEvent event) {
-                    response = event.getResponse();
-                }
-
-                public PDU getResponse() {
-                    return response;
-                }
-            });
+        TextResponseListener listener = new TextResponseListener();
+        synchronized (listener) {
+            snmp.send(request, target, null, listener);
             try {
-                counter.wait(timeout);
+                listener.wait(timeout);
+                response = listener.getResponse();
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            //
-            response = listener.getResponse();
-            logger.info("Received response after " + (System.currentTimeMillis() - startTime) + " millis");
+            logger.info("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
             snmp.close();
         }
         return response;
@@ -263,7 +250,7 @@ public class SnmpRequest implements PDUFactory {
 
     public void fetchData(ConcurrentMap<String, IfEntry> IfEntry) {
         int ifNumber = getIfNumber();
-        logger.debug("ifNumber = " + ifNumber);
+        logger.info("ifNumber = " + ifNumber);
         //
         if (ifNumber > 0) {
             getVbs().clear();
@@ -272,7 +259,6 @@ public class SnmpRequest implements PDUFactory {
             getVbs().add(new VariableBinding(new OID(Constants.IFTYPE)));
             getVbs().add(new VariableBinding(new OID(Constants.IFINOCTETS)));
             getVbs().add(new VariableBinding(new OID(Constants.IFOUTOCTETS)));
-            // setUpperBoundIndex(new OID(String.valueOf(ifNumber)));
             try {
                 table(new TextTableListener(IfEntry));
             } catch (IOException e) {
@@ -359,7 +345,6 @@ public class SnmpRequest implements PDUFactory {
         if (StringUtils.isNotBlank(timeout)) {
             this.timeout = Integer.valueOf(timeout);
         }
-        this.timeout *= 1000;
     }
 
     public int getRetries() {
@@ -370,13 +355,30 @@ public class SnmpRequest implements PDUFactory {
         if (StringUtils.isNotBlank(retries)) {
             this.retries = Integer.valueOf(retries);
         }
-        this.retries *= 1000;
     }
 
     public void setAddress(String address) {
         this.address = getAddress(address);
         System.out.println(address);
     }
+
+    class TextResponseListener implements ResponseListener {
+
+        private PDU response;
+
+        public PDU getResponse() {
+            return response;
+        }
+
+        public void onResponse(ResponseEvent event) {
+            ((Snmp) event.getSource()).cancel(event.getRequest(), this);
+            response = event.getResponse();
+            synchronized (this) {
+                this.notify();
+            }
+        }
+
+    };
 
     class TextTableListener implements TableListener {
 
@@ -393,9 +395,6 @@ public class SnmpRequest implements PDUFactory {
         }
 
         public void finished(TableEvent event) {
-            // System.out.println("Table walk completed with status " +
-            // event.getStatus() + ". Received "
-            // + event.getUserObject() + " rows.");
             finished = true;
             synchronized (event.getUserObject()) {
                 event.getUserObject().notify();

@@ -1,5 +1,6 @@
 package com.netmonitor.util;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -72,5 +73,47 @@ public class Utils {
             }
         }
         return idsList;
+    }
+
+    public static int getExponent(double value) {
+        int exponent = 0;
+        if ((int) (value / Math.pow(10, 12)) > 0) {
+            exponent = 12;
+        } else if ((int) (value / Math.pow(10, 9)) > 0) {
+            exponent = 9;
+        } else if ((int) (value / Math.pow(10, 6)) > 0) {
+            exponent = 6;
+        } else if ((int) (value / Math.pow(10, 3)) > 0) {
+            exponent = 3;
+        }
+        return exponent;
+    }
+
+    public static String getUnit(int exponent) {
+        StringBuilder sb = new StringBuilder();
+        switch (exponent) {
+        case 12:
+            sb.append("T");
+            break;
+        case 9:
+            sb.append("G");
+            break;
+        case 6:
+            sb.append("M");
+            break;
+        case 3:
+            sb.append("K");
+            break;
+        default:
+            break;
+        }
+        sb.append("b");
+        return sb.toString();
+    }
+
+    public static String fmtData(double value) {
+        int exponent = getExponent(value);
+        value /= Math.pow(10, exponent);
+        return new DecimalFormat("#,##0.0").format(value) + " " + getUnit(exponent);
     }
 }

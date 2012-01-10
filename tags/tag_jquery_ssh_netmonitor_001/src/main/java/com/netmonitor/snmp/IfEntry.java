@@ -27,8 +27,10 @@ public class IfEntry {
 
     private long lastIfOutOctets = -1;
 
+    private int exponent;
+
     // for datalist
-    
+
     private String id;
 
     private String chartPath;
@@ -37,7 +39,7 @@ public class IfEntry {
 
     private long totalIfOutOctets;
 
-    private long totalTime;
+    private long totalTime = System.currentTimeMillis();
 
     private boolean status;
 
@@ -180,14 +182,20 @@ public class IfEntry {
         this.id = id;
     }
 
-    
     public String getChartPath() {
         return chartPath;
     }
 
-    
     public void setChartPath(String chartPath) {
         this.chartPath = chartPath;
+    }
+
+    public int getExponent() {
+        return exponent;
+    }
+
+    public void setExponent(int exponent) {
+        this.exponent = exponent;
     }
 
 }

@@ -8,7 +8,7 @@ package com.netmonitor.common;
  */
 public class Constants {
 
-    public static String IFNUMBER = "1.3.6.1.2.1.2.1";
+    public static String IFNUMBER = "1.3.6.1.2.1.2.1.0";
 
     public static String IFINDEX = "1.3.6.1.2.1.2.2.1.1.";
 

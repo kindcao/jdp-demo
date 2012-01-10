@@ -91,7 +91,7 @@ public class ChartTimerTask2 extends AbstractChartTask {
             cal.clear();
             cal.setTimeInMillis((long) totalTime + cal.getTimeInMillis());
             entryIn.setStrTotalTime(new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
-            entryIn.setStrAvgIfInOctets(Utils.fmtData(entryIn.getTotalIfInOctets() / totalTime));
+            entryIn.setStrAvgIfInOctets(Utils.fmtData(entryIn.getTotalIfInOctets() / (totalTime / 1000)));
             entryIn.setStrTotalIfInOctets(Utils.fmtData(entryIn.getTotalIfInOctets()));
             //
             StringBuilder sb = new StringBuilder("In ");
@@ -115,7 +115,7 @@ public class ChartTimerTask2 extends AbstractChartTask {
             cal.clear();
             cal.setTimeInMillis((long) totalTime + cal.getTimeInMillis());
             entryOut.setStrTotalTime(new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
-            entryOut.setStrAvgIfOutOctets(Utils.fmtData(entryOut.getTotalIfOutOctets() / totalTime));
+            entryOut.setStrAvgIfOutOctets(Utils.fmtData(entryOut.getTotalIfOutOctets() / (totalTime / 1000)));
             entryOut.setStrTotalIfOutOctets(Utils.fmtData(entryOut.getTotalIfOutOctets()));
             //
             StringBuilder sb = new StringBuilder("Out");

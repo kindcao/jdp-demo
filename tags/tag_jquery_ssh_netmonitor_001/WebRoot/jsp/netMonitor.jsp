@@ -152,14 +152,6 @@ $(document).ready(function() {
 	var frozenColumns = [[{
 			field : 'ck',
 			checkbox : true
-		}, {
-			field : 'ifDescr',
-			title : '名称',
-			width : 250,
-			sortable : true,			
-			formatter : function(value, rec) {
-				return  value;
-			}
 		}]];
 	var columns = [[{
 	    	field : 'chartPath',
@@ -169,15 +161,22 @@ $(document).ready(function() {
 				return "<img width='400' height='200' style='no-repeat 0px 0px' src='"+value+"'/>";						
 			}
 		},	{
-			field : 'totalIfOutOctets',
-			title : '出/入总流量（字节）',
-			width : 200,
+			field : 'strAvgIfInOctets',
+			title : '平均入/出',
+			width : 150,
 			formatter : function(value, rec) {				
-				return value+"/"+rec.totalIfInOctets;
+				return value+"/"+rec.strAvgIfOutOctets;
+			}		
+		}, {		
+			field : 'strTotalIfInOctets',
+			title : '总入/出',
+			width : 150,
+			formatter : function(value, rec) {				
+				return value+"/"+rec.strTotalIfOutOctets;
 			}		
 		}, {
-			field : 'totalTime',
-			title : '监控时长（秒）',
+			field : 'strTotalTime',
+			title : '监控时长',
 			width : 100,
 			formatter : function(value, rec) {				
 				return value;

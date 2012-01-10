@@ -1,5 +1,7 @@
 package com.netmonitor.task;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -83,13 +85,19 @@ public class ChartTimerTask2 extends AbstractChartTask {
                     - entryIn.getLastIfInOctets());
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
             //
-            double totalTime = (System.currentTimeMillis() - entryIn.getTotalTime()) / 1000 * 1.0;
+            Calendar cal = Calendar.getInstance();
+            double totalTime = (cal.getTimeInMillis() - entryIn.getTotalTime());
             totalTime = totalTime == 0 ? 1 : totalTime;
+            cal.clear();
+            cal.setTimeInMillis((long) totalTime + cal.getTimeInMillis());
+            entryIn.setStrTotalTime(new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
+            entryIn.setStrAvgIfInOctets(Utils.fmtData(entryIn.getTotalIfInOctets() / totalTime));
+            entryIn.setStrTotalIfInOctets(Utils.fmtData(entryIn.getTotalIfInOctets()));
+            //
             StringBuilder sb = new StringBuilder("In ");
             sb.append("    Now: " + Utils.fmtData(inRate));
-            sb.append("    Avg: " + Utils.fmtData(entryIn.getTotalIfInOctets() / totalTime));
-            sb.append("    Total: " + Utils.fmtData(entryIn.getTotalIfInOctets()));
-
+            sb.append("    Avg: " + entryIn.getStrAvgIfInOctets());
+            sb.append("    Total: " + entryIn.getStrTotalIfInOctets());
             inSeries.setKey(sb.toString());
         }
         if (null != entryOut) {
@@ -101,12 +109,19 @@ public class ChartTimerTask2 extends AbstractChartTask {
                     - entryOut.getLastIfOutOctets());
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
             //
-            double totalTime = (System.currentTimeMillis() - entryOut.getTotalTime()) / 1000 * 1.0;
+            Calendar cal = Calendar.getInstance();
+            double totalTime = (cal.getTimeInMillis() - entryOut.getTotalTime());
             totalTime = totalTime == 0 ? 1 : totalTime;
+            cal.clear();
+            cal.setTimeInMillis((long) totalTime + cal.getTimeInMillis());
+            entryOut.setStrTotalTime(new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
+            entryOut.setStrAvgIfOutOctets(Utils.fmtData(entryOut.getTotalIfOutOctets() / totalTime));
+            entryOut.setStrTotalIfOutOctets(Utils.fmtData(entryOut.getTotalIfOutOctets()));
+            //
             StringBuilder sb = new StringBuilder("Out");
-            sb.append("    Now: " + Utils.fmtData(outRate));
-            sb.append("    Avg: " + Utils.fmtData(entryOut.getTotalIfOutOctets() / totalTime));
-            sb.append("    Total: " + Utils.fmtData(entryOut.getTotalIfOutOctets()));
+            sb.append("    Now: " + Utils.fmtData(inRate));
+            sb.append("    Avg: " + entryOut.getStrAvgIfOutOctets());
+            sb.append("    Total: " + entryOut.getStrTotalIfOutOctets());
             outSeries.setKey(sb.toString());
         }
 
@@ -121,7 +136,7 @@ public class ChartTimerTask2 extends AbstractChartTask {
         ci.setSaveFilepath(getSaveChartImgPath(_subOID));
         ChartUtil.writeChartAsPNG(ci, ChartUtil.createChart(ci, datasets));;
     }
-
+    //
     // public String getSaveChartImgPath(String oid) {
     // String chartPath = "d:/" + Constants.SUB_CHART_SAVE_PATH +
     // sr.getAddress() + "/" + oid;

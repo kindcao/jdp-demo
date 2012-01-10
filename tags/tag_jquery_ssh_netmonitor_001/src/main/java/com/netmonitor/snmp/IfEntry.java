@@ -43,6 +43,16 @@ public class IfEntry {
 
     private boolean status;
 
+    private String strTotalIfInOctets;
+
+    private String strTotalIfOutOctets;
+
+    private String strAvgIfInOctets;
+
+    private String strAvgIfOutOctets;
+
+    private String strTotalTime;
+
     public boolean isStatus() {
         return status;
     }
@@ -196,6 +206,46 @@ public class IfEntry {
 
     public void setExponent(int exponent) {
         this.exponent = exponent;
+    }
+
+    public String getStrTotalIfInOctets() {
+        return strTotalIfInOctets;
+    }
+
+    public void setStrTotalIfInOctets(String strTotalIfInOctets) {
+        this.strTotalIfInOctets = strTotalIfInOctets;
+    }
+
+    public String getStrTotalIfOutOctets() {
+        return strTotalIfOutOctets;
+    }
+
+    public void setStrTotalIfOutOctets(String strTotalIfOutOctets) {
+        this.strTotalIfOutOctets = strTotalIfOutOctets;
+    }
+
+    public String getStrAvgIfInOctets() {
+        return strAvgIfInOctets;
+    }
+
+    public void setStrAvgIfInOctets(String strAvgIfInOctets) {
+        this.strAvgIfInOctets = strAvgIfInOctets;
+    }
+
+    public String getStrAvgIfOutOctets() {
+        return strAvgIfOutOctets;
+    }
+
+    public void setStrAvgIfOutOctets(String strAvgIfOutOctets) {
+        this.strAvgIfOutOctets = strAvgIfOutOctets;
+    }
+
+    public String getStrTotalTime() {
+        return strTotalTime;
+    }
+
+    public void setStrTotalTime(String strTotalTime) {
+        this.strTotalTime = strTotalTime;
     }
 
 }

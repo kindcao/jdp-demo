@@ -107,10 +107,20 @@ public class NetMonitor extends BaseAction {
                     entry = new IfEntry();
                     entry.setIfIndex(dataMap.get(key).getIfIndex());
                     entry.setIfDescr(dataMap.get(Constants.IFDESCR + entry.getIfIndex()).getIfDescr());
-                    entry.setTotalIfInOctets(dataMap.get(Constants.IFINOCTETS + entry.getIfIndex())
-                            .getTotalIfInOctets());
-                    entry.setTotalIfOutOctets(dataMap.get(Constants.IFOUTOCTETS + entry.getIfIndex())
-                            .getTotalIfOutOctets());
+                    entry.setStrTotalIfInOctets(dataMap.get(Constants.IFINOCTETS + entry.getIfIndex())
+                            .getStrTotalIfInOctets());
+                    entry.setStrTotalIfOutOctets(dataMap.get(Constants.IFOUTOCTETS + entry.getIfIndex())
+                            .getStrTotalIfOutOctets());
+                    entry.setStrAvgIfInOctets(dataMap.get(Constants.IFINOCTETS + entry.getIfIndex())
+                            .getStrAvgIfInOctets());
+                    entry.setStrAvgIfOutOctets(dataMap.get(Constants.IFOUTOCTETS + entry.getIfIndex())
+                            .getStrAvgIfOutOctets());
+                    //
+                    String strTotalTimeIn = dataMap.get(Constants.IFINOCTETS + entry.getIfIndex()).getStrTotalTime();
+                    String strTotalTimeOut = dataMap.get(Constants.IFOUTOCTETS + entry.getIfIndex()).getStrTotalTime();
+                    String strTotalTime = strTotalTimeIn.compareTo(strTotalTimeOut) > 0 ? strTotalTimeIn
+                            : strTotalTimeOut;
+                    entry.setStrTotalTime(strTotalTime);
                     entry.setChartPath(Constants.SUB_CHART_SAVE_PATH + sr.getAddress() + "/" + entry.getIfIndex()
                             + ".png");
                     list.add(entry);

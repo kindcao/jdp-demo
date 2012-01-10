@@ -7,6 +7,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -76,6 +77,7 @@ public class ChartUtil {
         axis.setAutoRange(true);
         axis.setLowerMargin(0);
         axis.setMinorTickCount(5);
+        axis.setDateFormatOverride(new SimpleDateFormat("HH:mm:ss"));
         // axis.setMinorTickMarksVisible(true);
 
         // axis.setInverted(true);

@@ -96,7 +96,7 @@ public class ChartUtil {
         subtitle.setMargin(0, 10, 0, 0);
         chart.addSubtitle(subtitle);
         // 设置主标题
-        chart.setTitle(new TextTitle(ci.getTitle(), new Font("Verdana", Font.ITALIC, 12)));
+        chart.setTitle(new TextTitle(ci.getTitle(), new Font("宋体", Font.ITALIC, 12)));
         // 设置背景颜色
         GradientPaint bgPaint = new GradientPaint(0, 0, Color.white, 0, 1000, Color.white);
         chart.setBackgroundPaint(bgPaint);

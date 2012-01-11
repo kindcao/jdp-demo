@@ -98,7 +98,7 @@
 			<div class="easyui-accordion" fit="true">
 				<div title="网络监控">
 					<div style="margin: 10px;">
-						<a href="#" onclick="addTab(this,'showNetMonitor');">网络监控</a>
+						<a href="#" onclick="addTab(this,'showNetFlow');">网络监控</a>
 					</div>
 				</div>
 				<div title="系统设定">

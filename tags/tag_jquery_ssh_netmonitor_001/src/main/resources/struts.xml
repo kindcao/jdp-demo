@@ -34,12 +34,12 @@
 		<action name="editUser" class="userAction" method="editUser" />
 		<action name="delUser" class="userAction" method="delUser" />
 		<!--  -->
-		<action name="showNetMonitor" class="netMonitor" method="showNetMonitor">
-			<result name="success">/jsp/netMonitor.jsp</result>
+		<action name="showNetFlow" class="netFlowAction" method="showNetFlow">
+			<result name="success">/jsp/netFlow.jsp</result>
 		</action>
-		<action name="inputSnmpPara" class="netMonitor" method="inputSnmpPara" />
-		<action name="start" class="netMonitor" method="start" />
-		<action name="stop" class="netMonitor" method="stop" />
-		<action name="getDataList" class="netMonitor" method="getDataList" />
+		<action name="inputSnmpPara" class="netFlowAction" method="inputSnmpPara" />
+		<action name="start" class="netFlowAction" method="start" />
+		<action name="stop" class="netFlowAction" method="stop" />
+		<action name="getDataList" class="netFlowAction" method="getDataList" />
 	</package>
 </struts>

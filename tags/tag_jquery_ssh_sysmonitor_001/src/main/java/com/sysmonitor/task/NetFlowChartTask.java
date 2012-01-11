@@ -121,11 +121,11 @@ public class NetFlowChartTask extends AbstractChartTask {
         //
         if (null != entryIn) {
             TimeSeries inSeries = datasets.getSeries(0);
-            inSeries.addOrUpdate(new Second(), inRate / Math.pow(10, exponent));
+            // inSeries.addOrUpdate(new Second(), inRate / Math.pow(10,
+            // exponent));
+            inSeries.addOrUpdate(new Second(), inRate);
             logger.debug("ifInOctets=" + entryIn.getIfInOctets() + "\tlastIfInOctets=" + entryIn.getLastIfInOctets()
                     + "\tinRate=" + inRate);
-            entryIn.setTotalIfInOctets(entryIn.getTotalIfInOctets() + entryIn.getIfInOctets()
-                    - entryIn.getLastIfInOctets());
             entryIn.setLastIfInOctets(entryIn.getIfInOctets());
             //
             Calendar cal = Calendar.getInstance();
@@ -145,11 +145,11 @@ public class NetFlowChartTask extends AbstractChartTask {
         }
         if (null != entryOut) {
             TimeSeries outSeries = datasets.getSeries(1);
-            outSeries.addOrUpdate(new Second(), outRate / Math.pow(10, exponent));
+            // outSeries.addOrUpdate(new Second(), outRate / Math.pow(10,
+            // exponent));
+            outSeries.addOrUpdate(new Second(), outRate);
             logger.debug("ifOutOctets=" + entryOut.getIfOutOctets() + "\tlastIfOutOctets="
                     + entryOut.getLastIfOutOctets() + "\toutRate=" + outRate);
-            entryOut.setTotalIfOutOctets(entryOut.getTotalIfOutOctets() + entryOut.getIfOutOctets()
-                    - entryOut.getLastIfOutOctets());
             entryOut.setLastIfOutOctets(entryOut.getIfOutOctets());
             //
             Calendar cal = Calendar.getInstance();
@@ -162,7 +162,7 @@ public class NetFlowChartTask extends AbstractChartTask {
             entryOut.setStrTotalIfOutOctets(Utils.fmtData(entryOut.getTotalIfOutOctets()));
             //
             StringBuilder sb = new StringBuilder("Out");
-            sb.append("    Now: " + Utils.fmtData(inRate));
+            sb.append("    Now: " + Utils.fmtData(outRate));
             sb.append("    Avg: " + entryOut.getStrAvgIfOutOctets());
             sb.append("    Total: " + entryOut.getStrTotalIfOutOctets());
             outSeries.setKey(sb.toString());
@@ -173,7 +173,7 @@ public class NetFlowChartTask extends AbstractChartTask {
         ci.setTitle(entryDesc.getIfDescr());
         // ci.setTitle("");
         ci.setSubTitle("");
-        ci.setYName(new String[] { "In/Out (" + Utils.getUnit(exponent) + "/s)" });
+        ci.setYName(new String[] { "In/Out (b/s)" });
 
         //
         ci.setSaveFilepath(getSaveChartImgPath(_subOID));

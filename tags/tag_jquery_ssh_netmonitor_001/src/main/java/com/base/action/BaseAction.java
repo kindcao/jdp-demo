@@ -22,9 +22,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.netmonitor.common.Constants;
-import com.netmonitor.util.Utils;
 import com.opensymphony.xwork2.ActionSupport;
+import com.sysmonitor.common.Constants;
+import com.sysmonitor.util.Utils;
 
 @SuppressWarnings("serial")
 public class BaseAction extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware,

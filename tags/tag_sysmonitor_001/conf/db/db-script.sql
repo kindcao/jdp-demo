@@ -27,3 +27,35 @@ INSERT INTO `user` VALUES ('4', 'test03', 'test03', 'test03');
 INSERT INTO `user` VALUES ('5', 'test04', 'test04', 'test04');
 INSERT INTO `user` VALUES ('6', 'test05', 'test05', 'test05');
 INSERT INTO `user` VALUES ('7', 'test06', 'test06', 'test06');
+
+
+drop table if exists nc_host;
+
+drop table if exists nc_log;
+
+/*==============================================================*/
+/* Table: nc_host                                               */
+/*==============================================================*/
+create table nc_host
+(
+   id                   int not null,
+   host_ip              varchar(30),
+   host_name            varchar(50),
+   status               char,
+   remarks              varchar(50),
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: nc_log                                                */
+/*==============================================================*/
+create table nc_log
+(
+   id                   int not null,
+   host_id              int not null,
+   occurrence_time      timestamp,
+   primary key (id)
+);
+
+alter table nc_log add constraint fk_host_id foreign key (host_id)
+      references nc_host (id) on delete restrict on update restrict;

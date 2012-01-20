@@ -20,7 +20,7 @@ import com.sysmonitor.snmp.IfEntry;
 import com.sysmonitor.snmp.NetFlowTableListener;
 import com.sysmonitor.snmp.SnmpRequest;
 import com.sysmonitor.util.ChartInfo;
-import com.sysmonitor.util.ChartUtil;
+import com.sysmonitor.util.ChartUtils;
 import com.sysmonitor.util.Utils;
 
 /**
@@ -177,7 +177,7 @@ public class NetFlowChartTask extends AbstractChartTask {
 
         //
         ci.setSaveFilepath(getSaveChartImgPath(_subOID));
-        ChartUtil.writeChartAsPNG(ci, ChartUtil.createChart(ci, datasets));;
+        ChartUtils.writeChartAsPNG(ci, ChartUtils.createChart(ci, datasets));;
     }
 
     // public String getSaveChartImgPath(String oid) {

@@ -30,4 +30,10 @@ public class Constants {
 
     public static final int DEFAULT_PAGE = 1;
 
+    public static final String CFG_FILE_PATH = "conf/sysmonitor-cfg.properties";
+
+    public static final String LOG_FILE_PATH = "conf/log4j.properties";
+
+    public static final String CTX_FILE_PATH = "conf/applicationContext.xml";
+
 }

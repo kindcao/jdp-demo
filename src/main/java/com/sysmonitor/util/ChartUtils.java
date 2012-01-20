@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
  * @version 1.0 <br>
  *          Dec 27, 2011 5:32:01 PM
  */
-public class ChartUtil {
+public class ChartUtils {
 
-    private final static Logger logger = LoggerFactory.getLogger(ChartUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(ChartUtils.class);
 
     public static JFreeChart createChart(ChartInfo ci, TimeSeriesCollection datasets) {
         return createChart(ci, new TimeSeriesCollection[] { datasets });

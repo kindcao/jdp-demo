@@ -21,4 +21,8 @@ public interface BaseService {
 
     int getTotalCount(String hql, Map map);
 
+    List<?> loadAll(Class entityClass);
+
+    List<?> findByExample(Object exampleEntity);
+
 }

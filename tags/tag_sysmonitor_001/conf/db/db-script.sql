@@ -29,17 +29,23 @@ INSERT INTO `user` VALUES ('6', 'test05', 'test05', 'test05');
 INSERT INTO `user` VALUES ('7', 'test06', 'test06', 'test06');
 
 
-drop table if exists nc_host;
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2012-1-27 14:48:48                           */
+/*==============================================================*/
+
 
 drop table if exists nc_log;
+
+drop table if exists nc_host;
 
 /*==============================================================*/
 /* Table: nc_host                                               */
 /*==============================================================*/
 create table nc_host
 (
-   id                   int not null,
-   host_ip              varchar(30),
+   id                   int not null auto_increment,
+   host_address         varchar(30),
    host_name            varchar(50),
    status               char,
    remarks              varchar(50),
@@ -51,7 +57,7 @@ create table nc_host
 /*==============================================================*/
 create table nc_log
 (
-   id                   int not null,
+   id                   int not null auto_increment,
    host_id              int not null,
    occurrence_time      timestamp,
    primary key (id)
@@ -59,3 +65,24 @@ create table nc_log
 
 alter table nc_log add constraint fk_host_id foreign key (host_id)
       references nc_host (id) on delete restrict on update restrict;
+
+/*==============================================================*/
+INSERT INTO nc_host
+   (`id`, `host_address`, `host_name`, `status`, `remarks`)
+VALUES
+   (1, '127.0.0.1', 'localhost', '1', '');
+
+INSERT INTO nc_host
+   (`id`, `host_address`, `host_name`, `status`, `remarks`)
+VALUES
+   (2, 'www.baidu.com', 'baidu', '1', '');
+
+INSERT INTO nc_host
+   (`id`, `host_address`, `host_name`, `status`, `remarks`)
+VALUES
+   (3, '129.0.0.1', 'xyz', '1', '');
+   
+INSERT INTO nc_host
+   (`id`, `host_address`, `host_name`, `status`, `remarks`)
+VALUES
+   (4, 'www.sohu.com', 'sohu', '0', '');

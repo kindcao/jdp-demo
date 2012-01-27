@@ -33,7 +33,7 @@ public class PingUtils {
                 logger.warn("not support OS");
                 return -2;
             }
-            logger.info("OS name " + osName);
+            logger.info("OS name " + osName + ",pingCmd " + pingCmd);
             //
             Process process = Runtime.getRuntime().exec(pingCmd);
             InputStreamReader ir = new InputStreamReader(process.getInputStream());

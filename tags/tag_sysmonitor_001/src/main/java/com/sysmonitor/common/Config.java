@@ -47,6 +47,10 @@ public class Config {
         return properties.getProperty(key);
     }
 
+    public int getIntValue(String key) {
+        return Integer.valueOf(getValue(key));
+    }
+
     public void setValue(String key, String newValue) {
         properties.setProperty(key, newValue);
         try {

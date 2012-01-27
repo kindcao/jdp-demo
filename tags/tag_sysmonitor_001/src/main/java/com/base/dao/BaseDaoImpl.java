@@ -134,4 +134,10 @@ public class BaseDaoImpl implements BaseDao {
             getHibernateTemplate().delete(getHibernateTemplate().get(clazz, id));
         }
     }
+
+    @Override
+    public List<?> findByExample(Object exampleEntity) {
+        return getHibernateTemplate().findByExample(exampleEntity);
+    }
+
 }

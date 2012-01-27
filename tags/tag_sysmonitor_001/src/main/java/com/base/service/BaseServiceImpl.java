@@ -52,4 +52,14 @@ public class BaseServiceImpl implements BaseService {
         baseDaoImpl.deleteAll(entities);
     }
 
+    @Override
+    public List<?> loadAll(Class entityClass) {
+        return baseDaoImpl.loadAll(entityClass);
+    }
+
+    @Override
+    public List<?> findByExample(Object exampleEntity) {
+        return baseDaoImpl.findByExample(exampleEntity);
+    }
+
 }

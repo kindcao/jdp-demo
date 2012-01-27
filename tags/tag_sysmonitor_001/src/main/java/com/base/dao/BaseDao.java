@@ -25,4 +25,6 @@ public interface BaseDao {
 
     List<?> loadAll(Class entityClass);
 
+    List<?> findByExample(Object exampleEntity);
+
 }

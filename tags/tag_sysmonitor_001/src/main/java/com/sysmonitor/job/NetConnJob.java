@@ -39,7 +39,7 @@ public class NetConnJob extends AbstractJob {
         List<?> list = netConnService.findByExample(nh);
         logger.info("host address list size : " + list.size());
         //
-        List<NcHost> errors = new ArrayList<NcHost>();
+        List<NcHost> results = new ArrayList<NcHost>();
         NcLog nl = null;
         int count = 0;
         for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
@@ -56,14 +56,14 @@ public class NetConnJob extends AbstractJob {
                     NcHost _nh = new NcHost();
                     _nh.setHostAddress(ele.getHostAddress());
                     _nh.setHostName(ele.getHostName());
-                    errors.add(_nh);
+                    results.add(_nh);
                 }
             } else {
                 logger.warn("hostAddress is null");
             }
         }
         //    
-        jlr.setRows(errors);
+        jlr.setRows(results);
         jlr.setTotal(jlr.getRows().size());
     }
 

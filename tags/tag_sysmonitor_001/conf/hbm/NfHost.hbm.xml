@@ -37,7 +37,7 @@
         <property name="remarks" type="java.lang.String">
             <column name="remarks" length="50" />
         </property>
-        <set name="nfHostOidRefs" inverse="true">
+        <set name="nfHostOidRefs" inverse="true" lazy="false">
             <key>
                 <column name="host_id" />
             </key>

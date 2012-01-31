@@ -41,6 +41,8 @@ public class IfEntry {
 
     private long totalTime = System.currentTimeMillis();
 
+    private long lastUpdateTime = System.currentTimeMillis();
+
     private boolean status;
 
     private String strTotalIfInOctets;
@@ -246,6 +248,14 @@ public class IfEntry {
 
     public void setStrTotalTime(String strTotalTime) {
         this.strTotalTime = strTotalTime;
+    }
+
+    public long getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(long lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 
 }

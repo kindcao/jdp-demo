@@ -1,7 +1,9 @@
 package com.sysmonitor.job;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Resource;
 
+import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.slf4j.Logger;
@@ -21,13 +24,13 @@ import com.sysmonitor.common.Config;
 import com.sysmonitor.common.Constants;
 import com.sysmonitor.model.NfHost;
 import com.sysmonitor.model.NfHostOidRef;
-import com.sysmonitor.model.NfLog;
 import com.sysmonitor.service.NetFlowService;
 import com.sysmonitor.snmp.IfEntry;
 import com.sysmonitor.snmp.NetFlowTableListener;
 import com.sysmonitor.snmp.SnmpRequest;
 import com.sysmonitor.util.ChartInfo;
 import com.sysmonitor.util.ChartUtils;
+import com.sysmonitor.util.Utils;
 
 /**
  * @author Kind Cao
@@ -39,7 +42,7 @@ public class NetFlowJob extends AbstractJob {
 
     private NetFlowService netFlowService;
 
-    private Map<String, DataBean> dataMap = new ConcurrentHashMap<String, DataBean>();
+    private Map<String, DataBean> beanMap = new ConcurrentHashMap<String, DataBean>();
 
     @Override
     protected void job() {
@@ -47,11 +50,7 @@ public class NetFlowJob extends AbstractJob {
         nh.setStatus("1");
         List<?> list = netFlowService.findByExample(nh);
         logger.info("host address list size : " + list.size());
-
-        //
-        List<NfHost> results = new ArrayList<NfHost>();
-        NfLog nl = null;
-        SnmpRequest sr;
+        //               
         for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
             NfHost ele = (NfHost) iterator.next();
             createChart(ele);
@@ -59,34 +58,90 @@ public class NetFlowJob extends AbstractJob {
     }
 
     private void createChart(NfHost host) {
-        fetchData(host);
-        //
-        ChartInfo ci = new ChartInfo();
         String subOID = getSubOID(host);
-        Map<String, TimeSeriesCollection> tscMap = dataMap.get(host.getHostAddress()).getTscMap();
-        TimeSeriesCollection datasets = tscMap.get(subOID);
-        if (null == datasets) {
-            datasets = new TimeSeriesCollection();
-            tscMap.put(subOID, datasets);
-            //
-            TimeSeries inSeries = new TimeSeries("In");
+        String mapKey = host.getHostAddress() + Constants.UNDERLINE + subOID;
+        fetchData(host, mapKey);
+        // 
+        TimeSeriesCollection datasets = beanMap.get(mapKey).getTsc();
+        // ======================================//
+
+        String inKey = "In ";
+        TimeSeries inSeries = datasets.getSeries(inKey);
+        if (null == inSeries) {
+            inSeries = new TimeSeries(inKey);
             // inSeries.setMaximumItemCount(30);
             datasets.addSeries(inSeries);
-            //
-            TimeSeries outSeries = new TimeSeries("Out");
+        }
+        //
+        String outKey = "Out ";
+        TimeSeries outSeries = datasets.getSeries(outKey);
+        if (null == outSeries) {
+            outSeries = new TimeSeries(outKey);
             // outSeries.setMaximumItemCount(30);
             datasets.addSeries(outSeries);
         }
+        // ======================================//
+        int exponent = 0;
+        long period = 0;
+        double inRate = 0;
+        double outRate = 0;
+        IfEntry entry = beanMap.get(mapKey).getEntry();
+        period = (System.currentTimeMillis() - entry.getLastUpdateTime()) / 1000;
+        period = period != 0 ? period : 1;
         //
-
+        inRate = (entry.getIfInOctets() - entry.getLastIfInOctets() * 1.0) / period;
+        outRate = (entry.getIfOutOctets() - entry.getLastIfOutOctets() * 1.0) / period;
+        exponent = Math.max(Utils.getExponent(inRate), Utils.getExponent(outRate));
+        entry.setExponent(exponent);
+        // ======================================//
+        inSeries.addOrUpdate(new Second(), inRate);
+        logger.debug("ifInOctets=" + entry.getIfInOctets() + "\tlastIfInOctets=" + entry.getLastIfInOctets()
+                + "\tinRate=" + inRate);
+        entry.setLastIfInOctets(entry.getIfInOctets());
+        //
+        outSeries.addOrUpdate(new Second(), outRate);
+        logger.debug("ifOutOctets=" + entry.getIfOutOctets() + "\tlastIfOutOctets=" + entry.getLastIfOutOctets()
+                + "\toutRate=" + outRate);
+        entry.setLastIfOutOctets(entry.getIfOutOctets());
+        // ======================================//
+        Calendar cal = Calendar.getInstance();
+        double totalTime = (cal.getTimeInMillis() - entry.getTotalTime());
+        totalTime = totalTime == 0 ? 1 : totalTime;
+        cal.clear();
+        cal.setTimeInMillis((long) totalTime + cal.getTimeInMillis());
+        entry.setStrTotalTime(new SimpleDateFormat("HH:mm:ss").format(cal.getTime()));
+        entry.setStrAvgIfInOctets(Utils.fmtData(entry.getTotalIfInOctets() / (totalTime / 1000)));
+        entry.setStrTotalIfInOctets(Utils.fmtData(entry.getTotalIfInOctets()));
+        //
+        entry.setStrAvgIfOutOctets(Utils.fmtData(entry.getTotalIfOutOctets() / (totalTime / 1000)));
+        entry.setStrTotalIfOutOctets(Utils.fmtData(entry.getTotalIfOutOctets()));
+        // ======================================//
+        StringBuilder sb = new StringBuilder(inKey);
+        sb.append("    Now: " + Utils.fmtData(inRate));
+        sb.append("    Avg: " + entry.getStrAvgIfInOctets());
+        sb.append("    Total: " + entry.getStrTotalIfInOctets());
+        inSeries.setKey(sb.toString());
+        //
+        sb = new StringBuilder(outSeries.getKey().toString());
+        sb.append("    Now: " + Utils.fmtData(outRate));
+        sb.append("    Avg: " + entry.getStrAvgIfOutOctets());
+        sb.append("    Total: " + entry.getStrTotalIfOutOctets());
+        outSeries.setKey(sb.toString());
+        // ======================================//
+        ChartInfo ci = new ChartInfo();
+        ci.setTitle(entry.getIfDescr());
+        ci.setYName(new String[] { "In/Out (b/s)" });
         //
         String chartPath = Config.getInstance().getValue("data.dir") + "/" + Constants.SUB_CHART_SAVE_PATH
                 + host.getHostAddress() + "/" + subOID;
         ci.setSaveFilepath(chartPath);
         ChartUtils.writeChartAsPNG(ci, ChartUtils.createChart(ci, datasets));;
+        //
+        inSeries.setKey(inKey);
+        outSeries.setKey(outKey);
     }
 
-    private void fetchData(NfHost host) {
+    private void fetchData(NfHost host, String mapKey) {
         SnmpRequest sr = new SnmpRequest();
         sr.setAddress(host.getProtocol() + ":" + host.getHostAddress() + "/" + host.getPort());
         sr.setCommunity(host.getCommunity());
@@ -95,14 +150,18 @@ public class NetFlowJob extends AbstractJob {
         List<String> oidList = getOidList(host);
         for (Iterator<String> iterator = oidList.iterator(); iterator.hasNext();) {
             String oid = iterator.next();
-            sr.getVbs().add(new VariableBinding(new OID(oid)));
+            if (oid.endsWith(".")) {
+                logger.error("OID[" + oid + "] end with '.'");
+                return;
+            }
+            sr.getVbs().add(new VariableBinding(new OID(oid.substring(0, oid.lastIndexOf(".") + 1))));
         }
         //
         try {
-            if (!dataMap.containsKey(host.getHostAddress())) {
-                dataMap.put(host.getHostAddress(), new DataBean());
+            if (!beanMap.containsKey(mapKey)) {
+                beanMap.put(mapKey, new DataBean());
             }
-            sr.table(new NetFlowTableListener(dataMap.get(host.getHostAddress()).getDataMap()));
+            sr.table(new NetFlowTableListener(beanMap.get(mapKey).getEntry()));
         } catch (IOException e) {
             logger.error("fetchData", e);
         } finally {
@@ -126,12 +185,17 @@ public class NetFlowJob extends AbstractJob {
         String subOID = "";
         for (Iterator<String> iterator = oidList.iterator(); iterator.hasNext();) {
             String oid = (String) iterator.next();
-            if (oid.startsWith(Constants.IFINOCTETS) || oid.startsWith(Constants.IFOUTOCTETS)) {
+            if (oid.startsWith(Constants.IFINDEX)) {
                 subOID = oid.substring(oid.lastIndexOf(".") + 1);
                 break;
             }
         }
         return subOID;
+    }
+
+    @Override
+    protected void writeFile() {
+        // ignore
     }
 
     @Resource
@@ -146,16 +210,16 @@ public class NetFlowJob extends AbstractJob {
      */
     class DataBean {
 
-        private Map<String, TimeSeriesCollection> tscMap = new ConcurrentHashMap<String, TimeSeriesCollection>();
+        private TimeSeriesCollection tsc = new TimeSeriesCollection();
 
-        private Map<String, IfEntry> dataMap = new ConcurrentHashMap<String, IfEntry>();
+        private IfEntry entry = new IfEntry();
 
-        public Map<String, TimeSeriesCollection> getTscMap() {
-            return tscMap;
+        public TimeSeriesCollection getTsc() {
+            return tsc;
         }
 
-        public Map<String, IfEntry> getDataMap() {
-            return dataMap;
+        public IfEntry getEntry() {
+            return entry;
         }
 
     }

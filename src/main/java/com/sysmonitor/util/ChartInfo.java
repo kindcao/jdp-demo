@@ -10,9 +10,9 @@ public class ChartInfo {
 
     private int height;
 
-    private String title;
+    private String title = "";
 
-    private String subTitle;
+    private String subTitle = "";
 
     private String xName;
 

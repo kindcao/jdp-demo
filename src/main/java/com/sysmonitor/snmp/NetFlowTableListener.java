@@ -1,7 +1,5 @@
 package com.sysmonitor.snmp;
 
-import java.util.Map;
-
 import org.snmp4j.smi.Counter32;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.util.TableEvent;
@@ -18,13 +16,10 @@ public class NetFlowTableListener implements TableListener {
     private boolean finished;
 
     //
-    private Map<String, IfEntry> dataMap;
+    private IfEntry entry;
 
-    public NetFlowTableListener(Map<String, IfEntry> dataMap) {
-        if (null == dataMap) {
-            throw new IllegalArgumentException("dataMap is null");
-        }
-        this.dataMap = dataMap;
+    public NetFlowTableListener(IfEntry entry) {
+        this.entry = entry;
     }
 
     public void finished(TableEvent event) {
@@ -35,25 +30,16 @@ public class NetFlowTableListener implements TableListener {
     }
 
     public boolean next(TableEvent event) {
-        // System.out.println("Index = " + event.getIndex() + ":");
         for (int i = 0; i < event.getColumns().length; i++) {
             String key = event.getColumns()[i].getOid().toString();
             String value = event.getColumns()[i].toValueString();
-            // System.out.println(key + " = " + value);
-            if (!dataMap.containsKey(key)) {
-                dataMap.put(key, new IfEntry());
-            }
-
-            IfEntry entry = dataMap.get(key);
+            //
             entry.setOid(key);
             if (key.startsWith(Constants.IFINDEX)) {
                 entry.setIfIndex(value);
             }
             if (key.startsWith(Constants.IFDESCR) && null == entry.getIfDescr()) {
                 entry.setIfDescr(new String(OctetString.fromHexString(value).getValue()).trim());
-            }
-            if (key.startsWith(Constants.IFTYPE) && null == entry.getIfType()) {
-                entry.setIfType(value);
             }
             if (key.startsWith(Constants.IFINOCTETS)) {
                 entry.setIfInOctets(Long.valueOf(value));
@@ -67,7 +53,7 @@ public class NetFlowTableListener implements TableListener {
                         - entry.getLastIfOutOctets());
             }
             //
-            dataMap.put(key, entry);
+            entry.setLastUpdateTime(System.currentTimeMillis());
         }
         ((Counter32) event.getUserObject()).increment();
         return true;

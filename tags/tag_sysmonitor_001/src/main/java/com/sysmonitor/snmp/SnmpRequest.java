@@ -223,15 +223,15 @@ public class SnmpRequest implements PDUFactory {
         target.setRetries(retries);
         target.setTimeout(timeout);
         snmp.listen();
-
-        TableUtils tableUtils = new TableUtils(snmp, this);
-        tableUtils.setMaxNumRowsPerPDU(maxRepetitions);
-        Counter32 counter = new Counter32();
-
+        //
         OID[] columns = new OID[vbs.size()];
         for (int i = 0; i < columns.length; i++) {
             columns[i] = ((VariableBinding) vbs.get(i)).getOid();
         }
+        //
+        TableUtils tableUtils = new TableUtils(snmp, this);
+        tableUtils.setMaxNumRowsPerPDU(maxRepetitions);
+        Counter32 counter = new Counter32();
         long startTime = System.currentTimeMillis();
         synchronized (counter) {
             tableUtils.getTable(target, columns, listener, counter, lowerBoundIndex, upperBoundIndex);
@@ -240,7 +240,7 @@ public class SnmpRequest implements PDUFactory {
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            logger.debug("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
+            logger.info("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
             snmp.close();
         }
     }

@@ -2,22 +2,25 @@ package com.sysmonitor.model;
 
 import java.util.Date;
 
-
 /**
- * NfLog entity. @author MyEclipse Persistence Tools
+ * NfLog entity.
+ * 
+ * @author MyEclipse Persistence Tools
  */
 
-public class NfLog  implements java.io.Serializable {
+public class NfLog implements java.io.Serializable {
 
+    // Fields
 
-    // Fields    
+    private Integer id;
 
-     private Integer id;
-     private NfHostOidRef nfHostOidRef;
-     private Long inOctets;
-     private Long outOctets;
-     private Date occurrenceTime;
+    private NfSwitch nfSwitch;
 
+    private Long inOctets;
+
+    private Long outOctets;
+
+    private Date occurrenceTime;
 
     // Constructors
 
@@ -25,42 +28,41 @@ public class NfLog  implements java.io.Serializable {
     public NfLog() {
     }
 
-	/** minimal constructor */
+    /** minimal constructor */
     public NfLog(Date occurrenceTime) {
         this.occurrenceTime = occurrenceTime;
     }
-    
+
     /** full constructor */
-    public NfLog(NfHostOidRef nfHostOidRef, Long inOctets, Long outOctets, Date occurrenceTime) {
-        this.nfHostOidRef = nfHostOidRef;
+    public NfLog(NfSwitch nfSwitch, Long inOctets, Long outOctets, Date occurrenceTime) {
+        this.nfSwitch = nfSwitch;
         this.inOctets = inOctets;
         this.outOctets = outOctets;
         this.occurrenceTime = occurrenceTime;
     }
 
-   
     // Property accessors
 
     public Integer getId() {
         return this.id;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public NfHostOidRef getNfHostOidRef() {
-        return this.nfHostOidRef;
+    public NfSwitch getNfSwitch() {
+        return this.nfSwitch;
     }
-    
-    public void setNfHostOidRef(NfHostOidRef nfHostOidRef) {
-        this.nfHostOidRef = nfHostOidRef;
+
+    public void setNfSwitch(NfSwitch nfSwitch) {
+        this.nfSwitch = nfSwitch;
     }
 
     public Long getInOctets() {
         return this.inOctets;
     }
-    
+
     public void setInOctets(Long inOctets) {
         this.inOctets = inOctets;
     }
@@ -68,7 +70,7 @@ public class NfLog  implements java.io.Serializable {
     public Long getOutOctets() {
         return this.outOctets;
     }
-    
+
     public void setOutOctets(Long outOctets) {
         this.outOctets = outOctets;
     }
@@ -76,17 +78,9 @@ public class NfLog  implements java.io.Serializable {
     public Date getOccurrenceTime() {
         return this.occurrenceTime;
     }
-    
+
     public void setOccurrenceTime(Date occurrenceTime) {
         this.occurrenceTime = occurrenceTime;
     }
-   
-
-
-
-
-
-
-
 
 }

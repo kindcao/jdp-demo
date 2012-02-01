@@ -51,7 +51,7 @@ public class NetConnJob extends AbstractJob {
                     nl.setNcHost(ele);
                     nl.setOccurrenceTime(Calendar.getInstance().getTime());
                     netConnService.saveOrUpdate(nl);
-                    logger.info("host address[" + ele.getHostAddress() + "] ping fail,save log data.");
+                    logger.info("host address[" + ele.getHostAddress() + "] save log data.");
                     //
                     NcHost _nh = new NcHost();
                     _nh.setHostAddress(ele.getHostAddress());

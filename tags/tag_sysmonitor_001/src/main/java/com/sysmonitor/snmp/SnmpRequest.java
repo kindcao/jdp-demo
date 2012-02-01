@@ -13,6 +13,7 @@ import org.snmp4j.ScopedPDU;
 import org.snmp4j.Snmp;
 import org.snmp4j.Target;
 import org.snmp4j.UserTarget;
+import org.snmp4j.event.ResponseListener;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.security.SecurityLevel;
@@ -92,6 +93,12 @@ public class SnmpRequest implements PDUFactory {
     private OID upperBoundIndex;
 
     public PDU send() throws IOException {
+        TextResponseListener listener = new TextResponseListener();
+        send(listener);
+        return listener.getResponse();
+    }
+
+    public void send(ResponseListener listener) throws IOException {
         Snmp snmp = createSnmpSession();
         this.target = createTarget();
         target.setVersion(version);
@@ -110,21 +117,20 @@ public class SnmpRequest implements PDUFactory {
             request.add((VariableBinding) vbs.get(i));
         }
         //
-        PDU response = null;
+        // PDU response = null;
         long startTime = System.currentTimeMillis();
-        TextResponseListener listener = new TextResponseListener();
         synchronized (listener) {
             snmp.send(request, target, null, listener);
             try {
                 listener.wait(timeout);
-                response = listener.getResponse();
+                // response = listener.getResponse();
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-            logger.info("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
+            logger.debug("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
             snmp.close();
         }
-        return response;
+        // return response;
     }
 
     public PDU createPDU(Target target) {
@@ -196,7 +202,7 @@ public class SnmpRequest implements PDUFactory {
     }
 
     private IpAddress getAddress(String transportAddress) {
-        logger.info("Host Address " + transportAddress);
+        logger.debug("Host Address " + transportAddress);
         String transport = "udp";
         int colon = transportAddress.indexOf(':');
         if (colon > 0) {

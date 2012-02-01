@@ -55,7 +55,8 @@ public class ChartUtils {
             NumberAxis rangeAxis = new NumberAxis(yName[i]);
             rangeAxis.setAutoRangeIncludesZero(false);
             rangeAxis.setAutoRange(true);
-            rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
+            rangeAxis.setNumberFormatOverride(new DecimalFormat("#,###"));
+            // rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
             rangeAxis.setLabelFont(new Font("Verdana", Font.PLAIN, 10));
             rangeAxis.setMinorTickCount(3);
             XYPlot subplot = new XYPlot(datasets[i], null, rangeAxis, new StandardXYItemRenderer());

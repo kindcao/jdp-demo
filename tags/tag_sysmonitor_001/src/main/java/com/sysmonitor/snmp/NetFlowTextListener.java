@@ -35,7 +35,7 @@ public class NetFlowTextListener implements ResponseListener {
         if (null != response) {
             entry.setIfDescr(new String(OctetString.fromHexString(
                     response.getVariable(new OID(Constants.IFDESCR)).toString()).getValue()).trim());
-            //
+            //    
             entry.setIfInOctets(response.getVariable(new OID(Constants.IFINOCTETS)).toLong());
             entry.setTotalIfInOctets(entry.getTotalIfInOctets() + entry.getIfInOctets() - entry.getLastIfInOctets());
             //    

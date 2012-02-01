@@ -10,8 +10,6 @@ import org.apache.commons.lang.StringUtils;
  */
 public class IfEntry {
 
-    private String oid;
-
     private String ifIndex;
 
     private String ifDescr;
@@ -87,14 +85,6 @@ public class IfEntry {
         this.totalTime = totalTime;
     }
 
-    public String getOid() {
-        return oid;
-    }
-
-    public void setOid(String oid) {
-        this.oid = oid;
-    }
-
     public String getIfDescr() {
         return ifDescr;
     }
@@ -159,12 +149,6 @@ public class IfEntry {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        IfEntry entry = (IfEntry) obj;
-        return oid.equals(entry.oid);
-    }
-
-    @Override
     public int hashCode() {
         if (StringUtils.isNotBlank(ifIndex)) {
             return Integer.valueOf(ifIndex);
@@ -175,7 +159,7 @@ public class IfEntry {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(getClass().getSimpleName() + ":");
-        sb.append("\toid = " + oid);
+        // sb.append("\toid = " + oid);
         sb.append("\tifIndex = " + ifIndex);
         sb.append("\tifDescr = " + ifDescr);
         sb.append("\tifType = " + ifType);

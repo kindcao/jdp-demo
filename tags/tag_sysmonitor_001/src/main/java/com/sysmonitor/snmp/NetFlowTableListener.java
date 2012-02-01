@@ -34,7 +34,7 @@ public class NetFlowTableListener implements TableListener {
             String key = event.getColumns()[i].getOid().toString();
             String value = event.getColumns()[i].toValueString();
             //
-            entry.setOid(key);
+            // entry.setOid(key);
             if (key.startsWith(Constants.IFINDEX)) {
                 entry.setIfIndex(value);
             }

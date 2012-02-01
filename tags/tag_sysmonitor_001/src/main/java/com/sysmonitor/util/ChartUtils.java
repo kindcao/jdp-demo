@@ -55,8 +55,7 @@ public class ChartUtils {
             NumberAxis rangeAxis = new NumberAxis(yName[i]);
             rangeAxis.setAutoRangeIncludesZero(false);
             rangeAxis.setAutoRange(true);
-            rangeAxis.setNumberFormatOverride(new DecimalFormat("#,###"));
-            // rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
+            rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
             rangeAxis.setLabelFont(new Font("Verdana", Font.PLAIN, 10));
             rangeAxis.setMinorTickCount(3);
             XYPlot subplot = new XYPlot(datasets[i], null, rangeAxis, new StandardXYItemRenderer());
@@ -78,12 +77,12 @@ public class ChartUtils {
         axis.setAutoRange(true);
         axis.setLowerMargin(0);
         axis.setMinorTickCount(5);
-        axis.setDateFormatOverride(new SimpleDateFormat("HH:mm:ss"));
+        axis.setDateFormatOverride(new SimpleDateFormat("HH:mm"));
         // axis.setMinorTickMarksVisible(true);
 
         // axis.setInverted(true);
         // axis.setVerticalTickLabels(true);
-        // axis.setFixedAutoRange(1 * 60 * 60 * 1000); // 60 seconds
+        // axis.setFixedAutoRange(1 * 10 * 60 * 1000); // 60 seconds
         // axis.setAutoRangeMinimumSize(1);
         //
         final JFreeChart chart = new JFreeChart(ci.getTitle(), plot);

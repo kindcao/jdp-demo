@@ -66,4 +66,5 @@ public abstract class AbstractJob {
     }
 
     protected abstract void job();
+
 }

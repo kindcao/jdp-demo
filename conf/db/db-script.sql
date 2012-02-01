@@ -22,11 +22,9 @@ drop table if exists nc_host;
 /*==============================================================*/
 drop table if exists nf_log;
 
-drop table if exists nf_host_oid_ref;
+drop table if exists nf_switch;
 
 drop table if exists nf_host;
-
-drop table if exists nd_oid;
 
 
 /*==============================================================*/
@@ -54,19 +52,6 @@ create table nc_log
 );
 
 
-
-/*==============================================================*/
-/* Table: nd_oid                                                */
-/*==============================================================*/
-create table nd_oid
-(
-   id                   int not null auto_increment,
-   oid                  varchar(30),
-   status               char,
-   remarks              varchar(50),
-   primary key (id)
-);
-
 /*==============================================================*/
 /* Table: nf_host                                               */
 /*==============================================================*/
@@ -86,26 +71,28 @@ create table nf_host
 );
 
 /*==============================================================*/
-/* Table: nf_host_oid_ref                                       */
-/*==============================================================*/
-create table nf_host_oid_ref
-(
-   id                   int not null auto_increment,
-   host_id              int,
-   oid_id               int,
-   primary key (id)
-);
-
-/*==============================================================*/
 /* Table: nf_log                                                */
 /*==============================================================*/
 create table nf_log
 (
    id                   int not null auto_increment,
-   host_oid_id          int,
+   switch_id            int,
    in_octets            numeric,
    out_octets           numeric,
    occurrence_time      timestamp,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: nf_switch                                             */
+/*==============================================================*/
+create table nf_switch
+(
+   id                   int not null auto_increment,
+   host_id              int,
+   if_index             varchar(30),
+   status               char,
+   remarks              varchar(50),
    primary key (id)
 );
 
@@ -117,13 +104,10 @@ create table nf_log
 alter table nc_log add constraint fk_nc_log_ref_host foreign key (host_id)
       references nc_host (id) on delete restrict on update restrict;
 
-alter table nf_host_oid_ref add constraint fk_nf_host_oid_ref_host foreign key (host_id)
+alter table nf_log add constraint fk_nf_log_ref_switch foreign key (switch_id)
+      references nf_switch (id) on delete restrict on update restrict;
+
+alter table nf_switch add constraint fk_nf_switch_ref_host foreign key (host_id)
       references nf_host (id) on delete restrict on update restrict;
-
-alter table nf_host_oid_ref add constraint fk_nf_host_oid_ref_oid foreign key (oid_id)
-      references nd_oid (id) on delete restrict on update restrict;
-
-alter table nf_log add constraint fk_nf_log_ref_host_oid foreign key (host_oid_id)
-      references nf_host_oid_ref (id) on delete restrict on update restrict; 
    
    

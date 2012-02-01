@@ -27,7 +27,7 @@ public class IfEntry {
 
     private long lastIfOutOctets = -1;
 
-    private int exponent;
+    // private int exponent;
 
     // for datalist
 
@@ -202,13 +202,13 @@ public class IfEntry {
         this.chartPath = chartPath;
     }
 
-    public int getExponent() {
-        return exponent;
-    }
-
-    public void setExponent(int exponent) {
-        this.exponent = exponent;
-    }
+    // public int getExponent() {
+    // return exponent;
+    // }
+    //
+    // public void setExponent(int exponent) {
+    // this.exponent = exponent;
+    // }
 
     public String getStrTotalIfInOctets() {
         return strTotalIfInOctets;

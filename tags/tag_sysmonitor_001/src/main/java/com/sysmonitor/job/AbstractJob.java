@@ -37,7 +37,7 @@ public abstract class AbstractJob {
     }
 
     protected void alarm() {
-        logger.info("alerm ...");
+        logger.debug("alerm ...");
     }
 
     protected void writeFile() {

@@ -2,7 +2,6 @@ package com.sysmonitor.job;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -22,10 +21,9 @@ import org.snmp4j.smi.VariableBinding;
 
 import com.sysmonitor.common.Config;
 import com.sysmonitor.common.Constants;
-import com.sysmonitor.model.NdOid;
 import com.sysmonitor.model.NfHost;
-import com.sysmonitor.model.NfHostOidRef;
 import com.sysmonitor.model.NfLog;
+import com.sysmonitor.model.NfSwitch;
 import com.sysmonitor.service.NetFlowService;
 import com.sysmonitor.snmp.IfEntry;
 import com.sysmonitor.snmp.NetFlowTextListener;
@@ -52,19 +50,22 @@ public class NetFlowJob extends AbstractJob {
         nh.setStatus("1");
         List<?> list = netFlowService.findByExample(nh);
         logger.debug("host address list size : " + list.size());
-        //               
-        String subOID = "";
+        //      
         for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-            NfHost host = (NfHost) iterator.next();
-            subOID = getSubOID(host);
-            fetchData(host, subOID);
-            writeDB(host, subOID);
-            createChart(host, subOID);
+            NfHost nfHost = (NfHost) iterator.next();
+            Set<?> switchs = nfHost.getNfSwitchs();
+            for (Iterator<?> iterator2 = switchs.iterator(); iterator2.hasNext();) {
+                NfSwitch nfSwitch = (NfSwitch) iterator2.next();
+                fetchData(nfSwitch);
+                writeDB(nfSwitch);
+                // last
+                createChart(nfSwitch);
+            }
         }
     }
 
-    private void createChart(NfHost host, String subOID) {
-        String mapKey = host.getHostAddress() + Constants.UNDERLINE + subOID;
+    private void createChart(NfSwitch nfSwitch) {
+        String mapKey = nfSwitch.getNfHost().getHostAddress() + Constants.UNDERLINE + nfSwitch.getIfIndex();
         TimeSeriesCollection datasets = beanMap.get(mapKey).getTsc();
         // ======================================//
         String inKey = "In ";
@@ -128,12 +129,12 @@ public class NetFlowJob extends AbstractJob {
         outSeries.setKey(sb.toString());
         // ======================================//
         ChartInfo ci = new ChartInfo();
-        ci.setTitle(getDeviceDesc(host));
+        ci.setTitle(nfSwitch.getRemarks());
         // ci.setTitle(entry.getIfDescr() + "-" + getDeviceDesc(host));
         ci.setYName(new String[] { "In/Out (" + Utils.getUnit(3) + "/s)" });
         //
         String chartPath = Config.getInstance().getValue("data.dir") + "/" + Constants.SUB_CHART_SAVE_PATH
-                + host.getHostAddress() + "/" + subOID;
+                + nfSwitch.getNfHost().getHostAddress() + "/" + nfSwitch.getIfIndex();
         ci.setSaveFilepath(chartPath);
         ChartUtils.writeChartAsPNG(ci, ChartUtils.createChart(ci, datasets));;
         //
@@ -141,20 +142,19 @@ public class NetFlowJob extends AbstractJob {
         outSeries.setKey(outKey);
     }
 
-    private void fetchData(NfHost host, String subOID) {
+    private void fetchData(NfSwitch nfSwitch) {
+        NfHost host = nfSwitch.getNfHost();
         SnmpRequest sr = new SnmpRequest();
         sr.setAddress(host.getProtocol() + ":" + host.getHostAddress() + "/" + host.getPort());
         sr.setCommunity(host.getCommunity());
         //
         sr.getVbs().clear();
-        List<NdOid> oidList = getOidList(host);
-        for (Iterator<NdOid> iterator = oidList.iterator(); iterator.hasNext();) {
-            NdOid oid = iterator.next();
-            sr.getVbs().add(new VariableBinding(new OID(oid.getOid())));
-        }
+        sr.getVbs().add(new VariableBinding(new OID(Constants.IFDESCR).append(nfSwitch.getIfIndex())));
+        sr.getVbs().add(new VariableBinding(new OID(Constants.IFINOCTETS).append(nfSwitch.getIfIndex())));
+        sr.getVbs().add(new VariableBinding(new OID(Constants.IFOUTOCTETS).append(nfSwitch.getIfIndex())));
         //
         try {
-            String mapKey = host.getHostAddress() + Constants.UNDERLINE + subOID;
+            String mapKey = host.getHostAddress() + Constants.UNDERLINE + nfSwitch.getIfIndex();
             if (!beanMap.containsKey(mapKey)) {
                 beanMap.put(mapKey, new DataBean());
             }
@@ -166,50 +166,14 @@ public class NetFlowJob extends AbstractJob {
         }
     }
 
-    private List<NdOid> getOidList(NfHost host) {
-        List<NdOid> oidList = new ArrayList<NdOid>();
-        Set<?> nfHostOidRefs = host.getNfHostOidRefs();
-        logger.debug("nfHostOidRefs set size : " + nfHostOidRefs.size());
-        for (Iterator<?> iterator = nfHostOidRefs.iterator(); iterator.hasNext();) {
-            NfHostOidRef ele = (NfHostOidRef) iterator.next();
-            oidList.add(ele.getNdOid());
-        }
-        return oidList;
-    }
-
-    private String getSubOID(NfHost host) {
-        List<NdOid> oidList = getOidList(host);
-        String subOID = "";
-        for (Iterator<NdOid> iterator = oidList.iterator(); iterator.hasNext();) {
-            NdOid oid = (NdOid) iterator.next();
-            if (oid.getOid().startsWith(Constants.IFINDEX)) {
-                subOID = oid.getOid().substring(oid.getOid().lastIndexOf(".") + 1);
-                break;
-            }
-        }
-        return subOID;
-    }
-
-    private String getDeviceDesc(NfHost host) {
-        String desc = "";
-        Set<?> nfHostOidRefs = host.getNfHostOidRefs();
-        for (Iterator<?> iterator = nfHostOidRefs.iterator(); iterator.hasNext();) {
-            NfHostOidRef ele = (NfHostOidRef) iterator.next();
-            if (ele.getNdOid().getOid().startsWith(Constants.IFDESCR)) {
-                desc = ele.getNdOid().getRemarks();
-                break;
-            }
-        }
-        return desc;
-    }
-
     @Override
     protected void writeFile() {
         // ignore
     }
 
-    private void writeDB(NfHost host, String subOID) {
-        String mapKey = host.getHostAddress() + Constants.UNDERLINE + subOID;
+    private void writeDB(NfSwitch nfSwitch) {
+        NfHost host = nfSwitch.getNfHost();
+        String mapKey = host.getHostAddress() + Constants.UNDERLINE + nfSwitch.getIfIndex();
         IfEntry entry = beanMap.get(mapKey).getEntry();
         //
         long inOctets = entry.getIfInOctets() - entry.getLastIfInOctets();
@@ -219,12 +183,10 @@ public class NetFlowJob extends AbstractJob {
             nl.setInOctets(inOctets);
             nl.setOutOctets(outOctets);
             nl.setOccurrenceTime(Calendar.getInstance().getTime());
-            //           
-
-            // NfHostOidRef ref=new NfHostOidRef(hsot,,null);
-            //            
-            // nl.setNfHostOidRef(getHostRefOid(host, entry.getOid()));
-            // netFlowService.saveOrUpdate(nl);
+            nl.setNfSwitch(nfSwitch);
+            //
+            logger.info("host address[" + host.getHostAddress() + "] save log data.");
+            netFlowService.saveOrUpdate(nl);
         }
     }
 

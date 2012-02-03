@@ -11,10 +11,11 @@ import com.sysmonitor.dao.NetConnDao;
  */
 public class NetConnServiceImpl extends BaseServiceImpl implements NetConnService {
 
-    private NetConnDao netConnDaoImpl;
+    private NetConnDao netConnDao;
 
     @Resource
-    public void setNetConnDaoImpl(NetConnDao netConnDaoImpl) {
-        this.netConnDaoImpl = netConnDaoImpl;
+    public void setNetConnDao(NetConnDao netConnDao) {
+        this.netConnDao = netConnDao;
     }
+
 }

@@ -16,7 +16,8 @@ public class TestSnmpRequest {
     public static void main(String[] args) throws IOException {
         SnmpRequest sr = new SnmpRequest();
         sr.setAddress("udp:127.0.0.1/161");
-        sr.getVbs().add(new VariableBinding(new OID("1.3.6.1.2.1.2.2.1.1.1")));
+        sr.getVbs().add(new VariableBinding(new OID("1.3.6.1.2.1.25.3.3.1.2.1")));
+     
         System.out.println(sr.send());
     }
 }

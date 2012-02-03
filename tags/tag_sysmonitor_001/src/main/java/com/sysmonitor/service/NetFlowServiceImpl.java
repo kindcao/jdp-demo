@@ -11,11 +11,11 @@ import com.sysmonitor.dao.NetFlowDao;
  */
 public class NetFlowServiceImpl extends BaseServiceImpl implements NetFlowService {
 
-    private NetFlowDao netFlowDaoImpl;
+    private NetFlowDao netFlowDao;
 
     @Resource
-    public void setNetFlowDaoImpl(NetFlowDao netFlowDaoImpl) {
-        this.netFlowDaoImpl = netFlowDaoImpl;
+    public void setNetFlowDao(NetFlowDao netFlowDao) {
+        this.netFlowDao = netFlowDao;
     }
 
 }

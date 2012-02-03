@@ -8,13 +8,9 @@ public class SysResourceEntry {
 
     private String desci;
 
-    private long totalDisk = -1;
+    private long totalCapacity = -1;
 
-    private long freeDisk = -1;
-
-    private long totalRam = -1;
-
-    private long freeRam = -1;
+    private long freeCapacity = -1;
 
     private double useCpuRate = -1;
 
@@ -38,44 +34,26 @@ public class SysResourceEntry {
     public String toString() {
         StringBuilder sb = new StringBuilder(getClass().getSimpleName() + ":");
         sb.append("\tdesci = " + desci);
-        sb.append("\ttotalDisk = " + totalDisk);
-        sb.append("\tfreeDisk = " + freeDisk);
-        sb.append("\ttotalRam = " + totalRam);
-        sb.append("\tfreeRam = " + freeRam);
+        sb.append("\ttotalCapacity = " + totalCapacity);
+        sb.append("\tfreeCapacity = " + freeCapacity);
         sb.append("\tuseCpuRate = " + useCpuRate);
         return sb.toString();
     }
 
-    public long getTotalDisk() {
-        return totalDisk;
+    public long getTotalCapacity() {
+        return totalCapacity;
     }
 
-    public void setTotalDisk(long totalDisk) {
-        this.totalDisk = totalDisk;
+    public void setTotalCapacity(long totalCapacity) {
+        this.totalCapacity = totalCapacity;
     }
 
-    public long getFreeDisk() {
-        return freeDisk;
+    public long getFreeCapacity() {
+        return freeCapacity;
     }
 
-    public void setFreeDisk(long freeDisk) {
-        this.freeDisk = freeDisk;
-    }
-
-    public long getTotalRam() {
-        return totalRam;
-    }
-
-    public void setTotalRam(long totalRam) {
-        this.totalRam = totalRam;
-    }
-
-    public long getFreeRam() {
-        return freeRam;
-    }
-
-    public void setFreeRam(long freeRam) {
-        this.freeRam = freeRam;
+    public void setFreeCapacity(long freeCapacity) {
+        this.freeCapacity = freeCapacity;
     }
 
 }

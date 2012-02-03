@@ -35,19 +35,19 @@ public class NetFlowTableListener implements TableListener {
             String value = event.getColumns()[i].toValueString();
             //
             // entry.setOid(key);
-            if (key.startsWith(Constants.IFINDEX)) {
+            if (key.startsWith(Constants.ifIndex)) {
                 entry.setIfIndex(value);
             }
-            if (key.startsWith(Constants.IFDESCR) && null == entry.getIfDescr()) {
+            if (key.startsWith(Constants.ifDescr) && null == entry.getIfDescr()) {
                 entry.setIfDescr(new String(OctetString.fromHexString(value).getValue()).trim());
             }
-            if (key.startsWith(Constants.IFINOCTETS)) {
+            if (key.startsWith(Constants.ifInOctets)) {
                 entry.setIfInOctets(Long.valueOf(value));
                 entry
                         .setTotalIfInOctets(entry.getTotalIfInOctets() + entry.getIfInOctets()
                                 - entry.getLastIfInOctets());
             }
-            if (key.startsWith(Constants.IFOUTOCTETS)) {
+            if (key.startsWith(Constants.ifOutOctets)) {
                 entry.setIfOutOctets(Long.valueOf(value));
                 entry.setTotalIfOutOctets(entry.getTotalIfOutOctets() + entry.getIfOutOctets()
                         - entry.getLastIfOutOctets());

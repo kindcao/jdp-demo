@@ -19,6 +19,8 @@ public class NcHost implements java.io.Serializable {
 
     private String hostName;
 
+    private Integer times;
+
     private String status;
 
     private String remarks;
@@ -31,16 +33,11 @@ public class NcHost implements java.io.Serializable {
     public NcHost() {
     }
 
-    /** minimal constructor */
-    public NcHost(Integer id) {
-        this.id = id;
-    }
-
     /** full constructor */
-    public NcHost(Integer id, String hostAddress, String hostName, String status, String remarks, Set ncLogs) {
-        this.id = id;
+    public NcHost(String hostAddress, String hostName, Integer times, String status, String remarks, Set ncLogs) {
         this.hostAddress = hostAddress;
         this.hostName = hostName;
+        this.times = times;
         this.status = status;
         this.remarks = remarks;
         this.ncLogs = ncLogs;
@@ -70,6 +67,14 @@ public class NcHost implements java.io.Serializable {
 
     public void setHostName(String hostName) {
         this.hostName = hostName;
+    }
+
+    public Integer getTimes() {
+        return this.times;
+    }
+
+    public void setTimes(Integer times) {
+        this.times = times;
     }
 
     public String getStatus() {

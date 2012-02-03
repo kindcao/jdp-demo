@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sysmonitor.common.Config;
 import com.sysmonitor.model.NcHost;
 import com.sysmonitor.model.NcLog;
 import com.sysmonitor.service.NetConnService;
@@ -30,7 +29,8 @@ public class NetConnJob extends AbstractJob {
 
     private NetConnService netConnService;
 
-    private int maxCount = Config.getInstance().getIntValue("ping.max.count");
+    // private int maxCount =
+    // Config.getInstance().getIntValue("ping.max.count");
 
     @Override
     public void job() {
@@ -45,8 +45,8 @@ public class NetConnJob extends AbstractJob {
         for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
             NcHost ele = (NcHost) iterator.next();
             if (StringUtils.isNotBlank(ele.getHostAddress())) {
-                count = pu.doPingCmd(ele.getHostAddress(), maxCount);
-                if (count != maxCount) {
+                count = pu.doPingCmd(ele.getHostAddress(), ele.getTimes());
+                if (count != ele.getTimes()) {
                     nl = new NcLog();
                     nl.setNcHost(ele);
                     nl.setOccurrenceTime(Calendar.getInstance().getTime());

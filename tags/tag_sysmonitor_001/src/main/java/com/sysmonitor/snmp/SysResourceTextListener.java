@@ -7,9 +7,7 @@ import org.snmp4j.event.ResponseListener;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
 
-import com.sysmonitor.common.Constants;
 import com.sysmonitor.common.Constants.Storeage;
-import com.sysmonitor.model.SrResource;
 
 /**
  * @author Kind Cao

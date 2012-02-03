@@ -72,7 +72,7 @@ public class NetFlowJob extends AbstractJob {
         TimeSeries inSeries = datasets.getSeries(inKey);
         if (null == inSeries) {
             inSeries = new TimeSeries(inKey);
-            // inSeries.setMaximumItemCount(50);
+            inSeries.setMaximumItemCount(500);
             datasets.addSeries(inSeries);
         }
         //
@@ -80,7 +80,7 @@ public class NetFlowJob extends AbstractJob {
         TimeSeries outSeries = datasets.getSeries(outKey);
         if (null == outSeries) {
             outSeries = new TimeSeries(outKey);
-            // outSeries.setMaximumItemCount(50);
+            outSeries.setMaximumItemCount(500);
             datasets.addSeries(outSeries);
         }
         // ======================================//
@@ -149,9 +149,9 @@ public class NetFlowJob extends AbstractJob {
         sr.setCommunity(host.getCommunity());
         //
         sr.getVbs().clear();
-        sr.getVbs().add(new VariableBinding(new OID(Constants.IFDESCR).append(nfSwitch.getIfIndex())));
-        sr.getVbs().add(new VariableBinding(new OID(Constants.IFINOCTETS).append(nfSwitch.getIfIndex())));
-        sr.getVbs().add(new VariableBinding(new OID(Constants.IFOUTOCTETS).append(nfSwitch.getIfIndex())));
+        sr.getVbs().add(new VariableBinding(new OID(Constants.ifDescr).append(nfSwitch.getIfIndex())));
+        sr.getVbs().add(new VariableBinding(new OID(Constants.ifInOctets).append(nfSwitch.getIfIndex())));
+        sr.getVbs().add(new VariableBinding(new OID(Constants.ifOutOctets).append(nfSwitch.getIfIndex())));
         //
         try {
             String mapKey = host.getHostAddress() + Constants.UNDERLINE + nfSwitch.getIfIndex();
@@ -178,7 +178,7 @@ public class NetFlowJob extends AbstractJob {
         //
         long inOctets = entry.getIfInOctets() - entry.getLastIfInOctets();
         long outOctets = entry.getIfOutOctets() - entry.getLastIfOutOctets();
-        if (inOctets > host.getInOctets() || outOctets > host.getOutOctets()) {
+        if (inOctets > nfSwitch.getAlarmInOctets() || outOctets > nfSwitch.getAlarmOutOctets()) {
             NfLog nl = new NfLog();
             nl.setInOctets(inOctets);
             nl.setOutOctets(outOctets);

@@ -19,6 +19,10 @@ public class NfSwitch implements java.io.Serializable {
 
     private String ifIndex;
 
+    private Long alarmInOctets;
+
+    private Long alarmOutOctets;
+
     private String status;
 
     private String remarks;
@@ -32,9 +36,12 @@ public class NfSwitch implements java.io.Serializable {
     }
 
     /** full constructor */
-    public NfSwitch(NfHost nfHost, String ifIndex, String status, String remarks, Set nfLogs) {
+    public NfSwitch(NfHost nfHost, String ifIndex, Long alarmInOctets, Long alarmOutOctets, String status,
+            String remarks, Set nfLogs) {
         this.nfHost = nfHost;
         this.ifIndex = ifIndex;
+        this.alarmInOctets = alarmInOctets;
+        this.alarmOutOctets = alarmOutOctets;
         this.status = status;
         this.remarks = remarks;
         this.nfLogs = nfLogs;
@@ -64,6 +71,22 @@ public class NfSwitch implements java.io.Serializable {
 
     public void setIfIndex(String ifIndex) {
         this.ifIndex = ifIndex;
+    }
+
+    public Long getAlarmInOctets() {
+        return this.alarmInOctets;
+    }
+
+    public void setAlarmInOctets(Long alarmInOctets) {
+        this.alarmInOctets = alarmInOctets;
+    }
+
+    public Long getAlarmOutOctets() {
+        return this.alarmOutOctets;
+    }
+
+    public void setAlarmOutOctets(Long alarmOutOctets) {
+        this.alarmOutOctets = alarmOutOctets;
     }
 
     public String getStatus() {

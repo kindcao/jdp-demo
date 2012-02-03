@@ -8,7 +8,7 @@
     <class name="com.sysmonitor.model.NcLog" table="nc_log" catalog="test">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="native" />
+            <generator class="identity" />
         </id>
         <many-to-one name="ncHost" class="com.sysmonitor.model.NcHost" fetch="select">
             <column name="host_id" not-null="true" />

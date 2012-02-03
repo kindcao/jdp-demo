@@ -25,8 +25,7 @@ public class NcLog implements java.io.Serializable {
     }
 
     /** full constructor */
-    public NcLog(Integer id, NcHost ncHost, Date occurrenceTime) {
-        this.id = id;
+    public NcLog(NcHost ncHost, Date occurrenceTime) {
         this.ncHost = ncHost;
         this.occurrenceTime = occurrenceTime;
     }

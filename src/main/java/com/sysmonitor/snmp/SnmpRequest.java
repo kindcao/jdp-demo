@@ -35,8 +35,6 @@ import org.snmp4j.util.PDUFactory;
 import org.snmp4j.util.TableListener;
 import org.snmp4j.util.TableUtils;
 
-import com.sysmonitor.common.Constants;
-
 /**
  * @author Kind Cao
  * @version $Rev$, Dec 15, 2011 10:04:27 AM
@@ -75,7 +73,7 @@ public class SnmpRequest implements PDUFactory {
 
     private int retries = 1;
 
-    private int timeout = 1000;
+    private int timeout = 5000;
 
     private int pduType = PDU.GET;
 
@@ -249,25 +247,6 @@ public class SnmpRequest implements PDUFactory {
             logger.info("Table received in " + (System.currentTimeMillis() - startTime) + " milliseconds.");
             snmp.close();
         }
-    }
-
-    public int getIfNumber() {
-        OID oid = new OID(Constants.IFNUMBER);
-        getVbs().clear();
-        getVbs().add(new VariableBinding(oid));
-        PDU response;
-        try {
-            response = send();
-            if (null != response) {
-                return response.getVariable(oid).toInt();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            getVbs().clear();
-        }
-        return 0;
     }
 
     public int getVersion() {

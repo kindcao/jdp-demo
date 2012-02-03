@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * NfHost entity.
+ * SrHost entity.
  * 
  * @author MyEclipse Persistence Tools
  */
 
-public class NfHost implements java.io.Serializable {
+public class SrHost implements java.io.Serializable {
 
     // Fields
 
@@ -25,29 +25,32 @@ public class NfHost implements java.io.Serializable {
 
     private String community;
 
+    private String osType;
+
     private String status;
 
     private String remarks;
 
-    private Set nfSwitchs = new HashSet(0);
+    private Set srResources = new HashSet(0);
 
     // Constructors
 
     /** default constructor */
-    public NfHost() {
+    public SrHost() {
     }
 
     /** full constructor */
-    public NfHost(String hostAddress, String hostName, String protocol, Integer port, String community, String status,
-            String remarks, Set nfSwitchs) {
+    public SrHost(String hostAddress, String hostName, String protocol, Integer port, String community, String osType,
+            String status, String remarks, Set srResources) {
         this.hostAddress = hostAddress;
         this.hostName = hostName;
         this.protocol = protocol;
         this.port = port;
         this.community = community;
+        this.osType = osType;
         this.status = status;
         this.remarks = remarks;
-        this.nfSwitchs = nfSwitchs;
+        this.srResources = srResources;
     }
 
     // Property accessors
@@ -100,6 +103,14 @@ public class NfHost implements java.io.Serializable {
         this.community = community;
     }
 
+    public String getOsType() {
+        return this.osType;
+    }
+
+    public void setOsType(String osType) {
+        this.osType = osType;
+    }
+
     public String getStatus() {
         return this.status;
     }
@@ -116,12 +127,12 @@ public class NfHost implements java.io.Serializable {
         this.remarks = remarks;
     }
 
-    public Set getNfSwitchs() {
-        return this.nfSwitchs;
+    public Set getSrResources() {
+        return this.srResources;
     }
 
-    public void setNfSwitchs(Set nfSwitchs) {
-        this.nfSwitchs = nfSwitchs;
+    public void setSrResources(Set srResources) {
+        this.srResources = srResources;
     }
 
 }

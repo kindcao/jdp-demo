@@ -37,15 +37,15 @@ public class SysResourceTextListener implements ResponseListener {
     private void parserData(ResponseEvent event) {
         PDU response = event.getResponse();
         //        
-        if (null != response) {         
+        if (null != response) {
             entry.setDesci(new String(OctetString.fromHexString(
                     response.getVariable(new OID(storeage.getHrStorageDescr())).toString()).getValue()).trim());
             // 
             long size = response.getVariable(new OID(storeage.getHrStorageSize())).toLong();
             long units = response.getVariable(new OID(storeage.getHrStorageAllocationUnits())).toLong();
             long use = response.getVariable(new OID(storeage.getHrStorageUsed())).toLong();
-            
-        
+            entry.setTotalCapacity(size * units);
+            entry.setFreeCapacity((size - use) * units);
         }
     }
 }

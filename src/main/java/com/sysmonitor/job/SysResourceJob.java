@@ -1,7 +1,7 @@
 package com.sysmonitor.job;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +19,6 @@ import com.sysmonitor.model.SrLog;
 import com.sysmonitor.model.SrResource;
 import com.sysmonitor.service.SysResourceService;
 import com.sysmonitor.snmp.SnmpRequest;
-import com.sysmonitor.snmp.SysResourceEntry;
 import com.sysmonitor.snmp.SysResourceTextListener;
 
 /**
@@ -40,44 +39,38 @@ public class SysResourceJob extends AbstractJob {
         logger.debug("host address list size : " + list.size());
 
         //
-        SysResourceEntry sre = null;
-        List<SrLog> results = new ArrayList<SrLog>();
         SrLog sl = null;
+        SysResourceBean bean = null;
         //
         for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
             SrHost srHost = (SrHost) iterator.next();
             for (Iterator<?> iterator2 = srHost.getSrResources().iterator(); iterator2.hasNext();) {
                 SrResource srResource = (SrResource) iterator2.next();
+                if (!srResource.getStatus().equals(sr.getStatus())) {
+                    continue;
+                }
                 //
-                sre = new SysResourceEntry();
-                sre.setDesci(srResource.getRemarks());
-                fetchData(srResource, sre);
+                bean = new SysResourceBean();
+                bean.setHostAddress(srHost.getHostAddress());
+                bean.setHostName(sr.getHostName());
+                bean.setRemarks(srResource.getRemarks());
+                fetchData(srResource, bean);
                 //
-                // if (sre.getFreeCapacity() > 0 && sre.getFreeCapacity() <
-                // srHost.getFreeDisk()) {
-                // sl = new SrLog();
-                // sl.setFreeDisk(sre.getFreeCapacity());
-                // sl.setOccurrenceTime(Calendar.getInstance().getTime());
-                // sl.setSrResource(srResource);
-                // }
-                // if (sre.getFreeCapacity() > 0 && sre.getFreeCapacity() <
-                // srHost.getFreeRam()) {
-                // sl = new SrLog();
-                // sl.setFreeRam(sre.getFreeCapacity());
-                // sl.setOccurrenceTime(Calendar.getInstance().getTime());
-                // sl.setSrResource(srResource);
-                // }
-                // if (sre.getUseCpuRate() > srHost.getUseCpuRate()) {
-                // sl = new SrLog();
-                // sl.setUseCpuRate(sre.getUseCpuRate());
-                // sl.setOccurrenceTime(Calendar.getInstance().getTime());
-                // sl.setSrResource(srResource);
-                // }
+                if (bean.getFreeCapacity() > 0 && bean.getFreeCapacity() < srResource.getAlarmValue()) {
+                    sl = new SrLog();
+                    sl.setActualValue(bean.getFreeCapacity());
+                    sl.setOccurrenceTime(Calendar.getInstance().getTime());
+                    sl.setSrResource(srResource);
+                    sysResourceService.saveOrUpdate(sl);
+                    logger.info("host address[" + bean.getHostAddress() + "] save log data.");
+                    //         
+                    results.add(bean);
+                }
             }
         }
     }
 
-    private void fetchData(SrResource srResource, SysResourceEntry sre) {
+    private void fetchData(SrResource srResource, SysResourceBean bean) {
         SrHost srHost = srResource.getSrHost();
         SnmpRequest sr = new SnmpRequest();
         sr.setAddress(srHost.getProtocol() + ":" + srHost.getHostAddress() + "/" + srHost.getPort());
@@ -102,8 +95,8 @@ public class SysResourceJob extends AbstractJob {
                 .add(new VariableBinding(new OID(storeage.getHrStorageUsed()).append(srResource.getResourceIndex())));
         //
         try {
-            sr.send(new SysResourceTextListener(storeage, sre));
-            logger.info(sre.toString());
+            sr.send(new SysResourceTextListener(storeage, bean));
+            logger.debug(bean.toString());
         } catch (IOException e) {
             logger.error("fetchData", e);
         } finally {
@@ -115,5 +108,4 @@ public class SysResourceJob extends AbstractJob {
     public void setSysResourceService(SysResourceService sysResourceService) {
         this.sysResourceService = sysResourceService;
     }
-
 }

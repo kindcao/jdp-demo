@@ -105,7 +105,7 @@ create table sr_host
 /*==============================================================*/
 create table sr_log
 (
-   id                   int not null,
+   id                   int not null auto_increment,
    resource_id          int,
    actual_value         numeric(20),
    occurrence_time      timestamp,
@@ -117,7 +117,7 @@ create table sr_log
 /*==============================================================*/
 create table sr_resource
 (
-   id                   int not null,
+   id                   int not null auto_increment,
    host_id              int,
    resource_index       varchar(30),
    alarm_value          numeric(20),

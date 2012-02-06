@@ -56,7 +56,7 @@ VALUES
 INSERT INTO nf_switch
    (`id`, `host_id`, `if_index`, `alarm_in_octets`, `alarm_out_octets`, `status`, `remarks`)
 VALUES
-   (2, 1, '2', 100000, 100000, '1', '');
+   (2, 1, '2', 100000, 100000, '1', 'interfaces#2');
 
 /*==============================================================*/
 /* Table: sr_host                                             */

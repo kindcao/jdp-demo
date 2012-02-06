@@ -2,6 +2,8 @@ package com.sysmonitor.job;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -23,29 +25,34 @@ public abstract class AbstractJob {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected final JsonListResult jlr = new JsonListResult();
+    protected final List<Object> results = new ArrayList<Object>();
 
     protected final void doJob() {
         logger.debug("start ...");
-        job();
         //
-        writeFile();
+        results.clear();
+        //
+        job();
         //
         alarm();
         logger.debug("end");
-
     }
 
     protected void alarm() {
         logger.debug("alerm ...");
+        writeJsonFile();
     }
 
-    protected void writeFile() {
+    protected void writeJsonFile() {
         String dirPath = Config.getInstance().getValue("data.dir");
         File dirFile = new File(dirPath);
         if (!dirFile.exists()) {
             dirFile.mkdirs();
         }
+        //
+        JsonListResult jlr = new JsonListResult();
+        jlr.setRows(results);
+        jlr.setTotal(jlr.getRows().size());
         //
         JsonConfig cfg = new JsonConfig();
         StringBuilder sb = new StringBuilder();
@@ -65,6 +72,7 @@ public abstract class AbstractJob {
         }
     }
 
+    //
     protected abstract void job();
 
 }

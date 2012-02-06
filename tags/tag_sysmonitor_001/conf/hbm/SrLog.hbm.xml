@@ -8,7 +8,7 @@
     <class name="com.sysmonitor.model.SrLog" table="sr_log" catalog="test">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="srResource" class="com.sysmonitor.model.SrResource" fetch="select">
             <column name="resource_id" />

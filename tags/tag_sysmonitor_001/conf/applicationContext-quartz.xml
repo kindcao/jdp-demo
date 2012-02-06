@@ -28,14 +28,23 @@
 		<property name="cronExpression" value="0/10 * * * * ? *" />
 	</bean>
 	<!-- -->
-	
+	<bean id="sysResourceJob" class="com.sysmonitor.job.SysResourceJob" />
+	<bean id="sysResourceJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="sysResourceJob" />
+		<property name="targetMethod" value="doJob" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="sysResourceCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="sysResourceJobDetail" />
+		<property name="cronExpression" value="0/10 * * * * ? *" />
+	</bean>
 	<!-- -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="netConnCronTrigger" />
-				<ref bean="netFlowCronTrigger" />
-				<!--ref bean="sysResourceCronTrigger" /-->
+				<!--ref bean="netConnCronTrigger" /-->
+				<!--ref bean="netFlowCronTrigger" /-->
+				<ref bean="sysResourceCronTrigger" />
 			</list>
 		</property>
 	</bean>

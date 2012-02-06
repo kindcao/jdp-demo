@@ -57,7 +57,7 @@ public class NetFlowJob extends AbstractJob {
             for (Iterator<?> iterator2 = switchs.iterator(); iterator2.hasNext();) {
                 NfSwitch nfSwitch = (NfSwitch) iterator2.next();
                 fetchData(nfSwitch);
-                writeDB(nfSwitch);
+                writeData(nfSwitch);
                 // last
                 createChart(nfSwitch);
             }
@@ -166,16 +166,12 @@ public class NetFlowJob extends AbstractJob {
         }
     }
 
-    @Override
-    protected void writeFile() {
-        // ignore
-    }
-
-    private void writeDB(NfSwitch nfSwitch) {
+    private void writeData(NfSwitch nfSwitch) {
         NfHost host = nfSwitch.getNfHost();
         String mapKey = host.getHostAddress() + Constants.UNDERLINE + nfSwitch.getIfIndex();
         IfEntry entry = beanMap.get(mapKey).getEntry();
         //
+        NetFlowBean bean = null;
         long inOctets = entry.getIfInOctets() - entry.getLastIfInOctets();
         long outOctets = entry.getIfOutOctets() - entry.getLastIfOutOctets();
         if (inOctets > nfSwitch.getAlarmInOctets() || outOctets > nfSwitch.getAlarmOutOctets()) {
@@ -187,6 +183,16 @@ public class NetFlowJob extends AbstractJob {
             //
             logger.info("host address[" + host.getHostAddress() + "] save log data.");
             netFlowService.saveOrUpdate(nl);
+
+            //
+            bean = new NetFlowBean();
+            bean.setHostAddress(host.getHostAddress());
+            bean.setHostName(host.getHostName());
+            bean.setInOctets(inOctets);
+            bean.setOutOctets(outOctets);
+            bean.setRemarks(nfSwitch.getRemarks());
+            //         
+            results.add(bean);
         }
     }
 
@@ -200,7 +206,7 @@ public class NetFlowJob extends AbstractJob {
      * @author Kind Cao
      * @version $Rev: $, Jan 30, 2012 4:47:55 PM
      */
-    class DataBean {
+    private class DataBean {
 
         private TimeSeriesCollection tsc = new TimeSeriesCollection();
 

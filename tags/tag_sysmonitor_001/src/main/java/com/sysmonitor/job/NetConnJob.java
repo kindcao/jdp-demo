@@ -1,6 +1,5 @@
 package com.sysmonitor.job;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -29,9 +28,6 @@ public class NetConnJob extends AbstractJob {
 
     private NetConnService netConnService;
 
-    // private int maxCount =
-    // Config.getInstance().getIntValue("ping.max.count");
-
     @Override
     public void job() {
         NcHost nh = new NcHost();
@@ -39,9 +35,11 @@ public class NetConnJob extends AbstractJob {
         List<?> list = netConnService.findByExample(nh);
         logger.info("host address list size : " + list.size());
         //
-        List<NcHost> results = new ArrayList<NcHost>();
-        NcLog nl = null;
         int count = 0;
+        NcLog nl = null;
+        NetConnBean bean = null;
+
+        //
         for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
             NcHost ele = (NcHost) iterator.next();
             if (StringUtils.isNotBlank(ele.getHostAddress())) {
@@ -53,23 +51,20 @@ public class NetConnJob extends AbstractJob {
                     netConnService.saveOrUpdate(nl);
                     logger.info("host address[" + ele.getHostAddress() + "] save log data.");
                     //
-                    NcHost _nh = new NcHost();
-                    _nh.setHostAddress(ele.getHostAddress());
-                    _nh.setHostName(ele.getHostName());
-                    results.add(_nh);
+                    bean = new NetConnBean();
+                    bean.setHostAddress(ele.getHostAddress());
+                    bean.setHostName(ele.getHostName());
+                    bean.setTimes(count);
+                    results.add(bean);
                 }
             } else {
                 logger.warn("hostAddress is null");
             }
         }
-        //    
-        jlr.setRows(results);
-        jlr.setTotal(jlr.getRows().size());
     }
 
     @Resource
     public void setNetConnService(NetConnService netConnService) {
         this.netConnService = netConnService;
-    }
-
+    }       
 }

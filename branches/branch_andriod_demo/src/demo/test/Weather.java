@@ -79,9 +79,7 @@ public class Weather extends Activity {
 			// result.getProperty("getWeatherbyCityNameResult");
 
 			detail = (SoapObject) envelope.getResponse();
-
-			// System.out.println("result" + result);
-			System.out.println("detail" + detail);
+			// System.out.println("result" + result);			
 			Toast.makeText(this, detail.toString(), Toast.LENGTH_LONG).show();
 			parseWeather(detail);
 
@@ -99,9 +97,7 @@ public class Weather extends Activity {
 		weatherToday = weatherToday + "\nÆøÎÂ£º"
 				+ detail.getProperty(5).toString();
 		weatherToday = weatherToday + "\n·çÁ¦£º"
-				+ detail.getProperty(7).toString() + "\n";
-		System.out.println("weatherToday is " + weatherToday);
+				+ detail.getProperty(7).toString() + "\n";		
 		Toast.makeText(this, weatherToday, Toast.LENGTH_LONG).show();
-
 	}
 }

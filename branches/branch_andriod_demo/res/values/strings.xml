@@ -7,7 +7,7 @@
 	<string name="link">Link Email,Mobile,Web,Map</string>
 	<string name="map">Map</string>
 	<string name="weather">Weather</string>
-	<string name="default_input_text">请输入城市名称！</string>
+	<string name="default_input_text">深圳</string>
 
 	<string-array name="countries">
 		<item>01. Say Hello</item>

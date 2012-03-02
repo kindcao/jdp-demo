@@ -24,16 +24,16 @@
             android:label="@string/link"
             android:name=".Link" >
         </activity>
-        <activity
+        <!--activity
             android:label="@string/map"
             android:name=".Map" >
-        </activity>
+        </activity -->
         <activity
             android:label="@string/weather"
             android:name=".Weather" >
         </activity>
 
-        <uses-library android:name="com.google.android.maps" />
+        <!--uses-library android:name="com.google.android.maps" /-->
     </application>
 
     <!--  -->

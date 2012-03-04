@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="phone"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:text="phone : 13800138000"
+        android:textSize="18dip" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:gravity="center_vertical"
+        android:text="web : http://www.oschina.net"
+        android:textSize="18dip" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="email"
+        android:gravity="center_vertical"
+        android:text="email : kind@finet.cn"
+        android:textSize="18dip" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="map"
+        android:gravity="center_vertical"
+        android:text="Google Map"
+        android:textSize="18dip" />
+
+</LinearLayout>

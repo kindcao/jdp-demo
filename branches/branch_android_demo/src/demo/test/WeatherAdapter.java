@@ -36,28 +36,23 @@ public class WeatherAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			LayoutInflater inflater = mContext.getLayoutInflater();
-			convertView = inflater.inflate(R.layout.weather_list_row, null);
-
+			convertView = inflater.inflate(R.layout.weather_list, null);
 			holder = new ViewHolder();
-
 			holder.image = (ImageView) convertView.findViewById(R.id.image);
 			holder.date = (TextView) convertView.findViewById(R.id.day_of_week);
 			holder.temperature = (TextView) convertView
 					.findViewById(R.id.temperature);
 			holder.condition = (TextView) convertView
 					.findViewById(R.id.condition);
-
 			convertView.setTag(holder);
-
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-
+		//
 		holder.image.setImageDrawable(images[position]);
 		holder.date.setText(dates[position]);
 		holder.temperature.setText(temperatures[position]);
 		holder.condition.setText(conditions[position]);
-
 		return convertView;
 	}
 

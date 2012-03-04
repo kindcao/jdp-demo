@@ -129,18 +129,16 @@ public class Weather extends Activity {
 		}
 
 		for (int i = 0; i < conditions.length; i++) {
-
 			if ("Chance of Rain".equals(conditions[i])) {
-				conditions[i] = "有雨";
-
+				conditions[i] = "可能有雨";
 			} else if ("Clear".equals(conditions[i])) {
 				conditions[i] = "晴";
-
 			} else if ("Partly Sunny".equals(conditions[i])) {
 				conditions[i] = "多云间晴";
-
 			} else if ("Mostly Sunny".equals(conditions[i])) {
 				conditions[i] = "晴间多云";
+			} else if ("Fog".equals(conditions[i])) {
+				conditions[i] = "雾";
 			}
 		}
 
@@ -150,7 +148,7 @@ public class Weather extends Activity {
 			Log.i("TAG", low[i] + "----------");
 			high[i] = 5d / 9d * (high[i] - 32);
 			Log.i("TAG", high[i] + "----------****");
-			temperatures[i] = String.valueOf(low[i]).substring(0, 2) + "-"
+			temperatures[i] = String.valueOf(low[i]).substring(0, 2) + " ~ "
 					+ String.valueOf(high[i]).substring(0, 2);
 		}
 	}

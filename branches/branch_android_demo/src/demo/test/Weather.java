@@ -1,103 +1,158 @@
 package demo.test;
 
-import java.io.UnsupportedEncodingException;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
+import demo.test.utils.DomParseWeather;
+import demo.test.utils.WeatherModel;
+import demo.test.utils.WeatherXml;
 
 public class Weather extends Activity {
-	private static final String NAMESPACE = "http://WebXml.com.cn/";
+	Activity context = this;
 
-	// WebService地址
-	private static String URL = "http://www.webxml.com.cn/webservices/weatherwebservice.asmx";
+	private EditText city;
 
-	private static final String METHOD_NAME = "getWeatherbyCityName";
+	private Button button;
 
-	private static String SOAP_ACTION = "http://WebXml.com.cn/getWeatherbyCityName";
+	private ListView listView;
 
-	private String weatherToday;
+	private Drawable[] images;
 
-	private SoapObject detail;
+	private String[] dates;
 
-	private EditText tx_input;
+	private String[] temperatures;
 
-	private Button btn_search;
+	private String[] conditions;
 
-	/** Called when the activity is first created. */
+	private double[] low;
+
+	private double[] high;
+
+	private WeatherAdapter adapter;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weather);
-
-		tx_input = (EditText) this.findViewById(R.id.tx_input);
-
-		btn_search = (Button) this.findViewById(R.id.btn_search);
-		btn_search.setOnClickListener(new Button.OnClickListener() {
+		initView();
+		button.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				String city = tx_input.getText().toString();
-				if (null != city && city.length() > 0) {
-					getWeather(city);
-				}
+			public void onClick(View arg0) {
+				initData();
+				adapter = new WeatherAdapter(context, images, dates,
+						temperatures, conditions);
+				listView.setAdapter(adapter);
 			}
-
 		});
 	}
 
-	public void getWeather(String cityName) {
+	private void initView() {
+		city = (EditText) findViewById(R.id.city);
+		button = (Button) findViewById(R.id.button);
+		listView = (ListView) findViewById(R.id.list);
+	}
+
+	private void initData() {
+		String xmlStr = WeatherXml.getWeatherXml(city.getText().toString());
+		Log.i("TAG", xmlStr);
+		List<WeatherModel> ws = DomParseWeather.getWeatherFromXml(xmlStr);
+
+		images = new Drawable[ws.size()];
+		dates = new String[ws.size()];
+		temperatures = new String[ws.size()];
+		conditions = new String[ws.size()];
+		low = new double[ws.size()];
+		high = new double[ws.size()];
+
+		WeatherModel w = null;
+
+		for (int i = 0; i < ws.size(); i++) {
+			w = ws.get(i);
+			images[i] = loadImage(w.getImageUrl());
+			dates[i] = w.getDay_of_week();
+			conditions[i] = w.getCondition();
+			low[i] = Integer.parseInt(w.getLow_temperature());
+			high[i] = Integer.parseInt(w.getHigh_temperature());
+		}
+		dataShift();
+	}
+
+	private Drawable loadImage(String imageUrl) {
 		try {
-			SoapObject rpc = new SoapObject(NAMESPACE, METHOD_NAME);
-			System.out.println("rpc" + rpc);
-			System.out.println("cityName is " + cityName);
-			rpc.addProperty("theCityName", cityName);
-
-			SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-					SoapEnvelope.VER11);
-			envelope.bodyOut = rpc;
-			envelope.dotNet = true;
-			envelope.setOutputSoapObject(rpc);
-
-			HttpTransportSE ht = new HttpTransportSE(URL);
-
-			// AndroidHttpTransport ht = new AndroidHttpTransport(URL);
-			ht.debug = true;
-
-			ht.call(SOAP_ACTION, envelope);
-			// ht.call(null, envelope);
-
-			// SoapObject result = (SoapObject)envelope.bodyIn;
-			// detail = (SoapObject)
-			// result.getProperty("getWeatherbyCityNameResult");
-
-			detail = (SoapObject) envelope.getResponse();
-			// System.out.println("result" + result);			
-			Toast.makeText(this, detail.toString(), Toast.LENGTH_LONG).show();
-			parseWeather(detail);
-
-			return;
-		} catch (Exception e) {
+			return Drawable.createFromStream((InputStream) new URL(
+					"http://www.google.com" + imageUrl).getContent(), "image");
+		} catch (MalformedURLException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private void dataShift() {
+
+		for (int i = 0; i < dates.length; i++) {
+			if ("Mon".equals(dates[i])) {
+				dates[i] = "星期一";
+
+			} else if ("Tue".equals(dates[i])) {
+				dates[i] = "星期二";
+
+			} else if ("Wed".equals(dates[i])) {
+				dates[i] = "星期三";
+
+			} else if ("Thu".equals(dates[i])) {
+				dates[i] = "星期四";
+
+			} else if ("Fri".equals(dates[i])) {
+				dates[i] = "星期五";
+
+			} else if ("Sat".equals(dates[i])) {
+				dates[i] = "星期六";
+
+			} else if ("Sun".equals(dates[i])) {
+				dates[i] = "星期日";
+			}
+		}
+
+		for (int i = 0; i < conditions.length; i++) {
+
+			if ("Chance of Rain".equals(conditions[i])) {
+				conditions[i] = "有雨";
+
+			} else if ("Clear".equals(conditions[i])) {
+				conditions[i] = "晴";
+
+			} else if ("Partly Sunny".equals(conditions[i])) {
+				conditions[i] = "多云间晴";
+
+			} else if ("Mostly Sunny".equals(conditions[i])) {
+				conditions[i] = "晴间多云";
+			}
+		}
+
+		for (int i = 0; i < temperatures.length; i++) {
+			Log.i("TAG", low[i] + "）））））））");
+			low[i] = 5d / 9d * (low[i] - 32);
+			Log.i("TAG", low[i] + "----------");
+			high[i] = 5d / 9d * (high[i] - 32);
+			Log.i("TAG", high[i] + "----------****");
+			temperatures[i] = String.valueOf(low[i]).substring(0, 2) + "-"
+					+ String.valueOf(high[i]).substring(0, 2);
 		}
 	}
 
-	private void parseWeather(SoapObject detail)
-			throws UnsupportedEncodingException {
-		String date = detail.getProperty(6).toString();
-		weatherToday = "今天：" + date.split(" ")[0];
-		weatherToday = weatherToday + "\n天气：" + date.split(" ")[1];
-		weatherToday = weatherToday + "\n气温："
-				+ detail.getProperty(5).toString();
-		weatherToday = weatherToday + "\n风力："
-				+ detail.getProperty(7).toString() + "\n";		
-		Toast.makeText(this, weatherToday, Toast.LENGTH_LONG).show();
-	}
 }

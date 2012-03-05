@@ -29,7 +29,7 @@
         android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:divider="#FFFFFF"
+        android:divider="#C0C0C0"
         android:dividerHeight="1px" >
     </ListView>
 

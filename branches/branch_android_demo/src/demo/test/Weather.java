@@ -141,6 +141,10 @@ public class Weather extends Activity {
 				conditions[i] = "晴间多云";
 			} else if ("Fog".equals(conditions[i])) {
 				conditions[i] = "雾";
+			} else if ("Rain".equals(conditions[i])) {
+				conditions[i] = "雨";
+			} else if ("Chance of Storm".equals(conditions[i])) {
+				conditions[i] = "可能有暴风雨";
 			}
 		}
 

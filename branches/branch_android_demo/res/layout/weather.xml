@@ -28,7 +28,9 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:divider="#FFFFFF"
+        android:dividerHeight="1px" >
     </ListView>
 
 </LinearLayout>

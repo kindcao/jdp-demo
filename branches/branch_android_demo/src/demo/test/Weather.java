@@ -50,10 +50,12 @@ public class Weather extends Activity {
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				button.setClickable(false);
 				initData();
 				adapter = new WeatherAdapter(context, images, dates,
 						temperatures, conditions);
 				listView.setAdapter(adapter);
+				button.setClickable(true);
 			}
 		});
 	}

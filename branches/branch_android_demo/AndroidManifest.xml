@@ -15,32 +15,34 @@
         android:icon="@drawable/ic_baby"
         android:label="@string/app_name" >
         <activity
-            android:name=".AndroidDemo"
-            android:label="@string/app_name" >
-            <intent-filter>
+            android:label="@string/app_name"
+            android:name=".AndroidDemo" >
+            <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".SayHello"
-            android:label="@string/say_hello" >
+            android:label="@string/say_hello"
+            android:name=".SayHello" >
         </activity>
         <activity
-            android:name=".Link"
-            android:label="@string/link" >
+            android:label="@string/link"
+            android:name=".Link" >
         </activity>
         <activity
-            android:name=".Map"
-            android:label="@string/map" >
+            android:label="@string/map"
+            android:name=".Map" >
         </activity>
         <activity
-            android:name=".Weather"
-            android:label="@string/weather" >
+            android:label="@string/weather"
+            android:name=".Weather" >
         </activity>
 
-        <uses-library android:name="com.google.android.maps" />
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="false" />
     </application>
 
 </manifest>

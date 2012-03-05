@@ -94,7 +94,7 @@ public class Weather extends Activity {
 	private Drawable loadImage(String imageUrl) {
 		try {
 			return Drawable.createFromStream((InputStream) new URL(
-					"http://www.google.com" + imageUrl).getContent(), "image");
+					WeatherXml.HOST_ADDRESS + imageUrl).getContent(), "image");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

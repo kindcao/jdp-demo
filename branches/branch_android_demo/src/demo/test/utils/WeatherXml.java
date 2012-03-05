@@ -15,9 +15,13 @@ import android.util.Log;
 
 public class WeatherXml {
 
+	public static final String HOST_ADDRESS = "http://www.google.com";
+
+	private static final String URL = HOST_ADDRESS + "/ig/api?weather=";
+
 	private static final int REQUEST_TIMEOUT = 30 * 1000;// 设置请求超时10秒钟
+
 	private static final int SO_TIMEOUT = 30 * 1000; // 设置等待数据超时时间10秒钟
-	private static final String url = "http://www.google.com/ig/api?weather=";
 
 	public static String getWeatherXml(String weather) {
 		BasicHttpParams httpParams = new BasicHttpParams();
@@ -26,7 +30,7 @@ public class WeatherXml {
 		//
 		HttpClient httpClient = new DefaultHttpClient(httpParams);
 		HttpContext localContext = new BasicHttpContext();
-		HttpGet httpGet = new HttpGet(url + weather);
+		HttpGet httpGet = new HttpGet(URL + weather);
 		try {
 			HttpResponse response = httpClient.execute(httpGet, localContext);
 			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {

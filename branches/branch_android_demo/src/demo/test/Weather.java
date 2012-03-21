@@ -96,7 +96,7 @@ public class Weather extends Activity {
 		mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mypDialog.setMessage("Loading. Please wait...");
 		mypDialog.setCancelable(true);
-		mypDialog.setIndeterminate(true);
+		mypDialog.setIndeterminate(false);
 	}
 
 	private void initData() {

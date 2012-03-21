@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:padding="2px"
-        android:scaleType="center" />
+        android:padding="2px" />
 
     <TextView
         android:id="@+id/day_of_week"

@@ -58,13 +58,11 @@ public class Weather extends Activity {
 				adapter = new WeatherAdapter(context, images, dates,
 						temperatures, conditions);
 				listView.setAdapter(adapter);
-				handler.sendMessage(Message.obtain(handler, 2));
+				handler.sendMessage(handler.obtainMessage(2));
 				break;
 			case 2:
-				if (mypDialog != null) {
-					mypDialog.cancel();
-					button.setClickable(true);
-				}
+				mypDialog.dismiss();
+				button.setClickable(true);
 				break;
 			}
 		}
@@ -81,10 +79,20 @@ public class Weather extends Activity {
 				mypDialog.show();
 				button.setClickable(false);
 				//
-				new Thread(new Worker(1)).start();
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						handler.post(new Runnable() {
+							@Override
+							public void run() {
+								handler.sendMessage(handler.obtainMessage(1));
+							}
+						});
+					}
+				}).start();
 			}
 		});
-
 	}
 
 	private void initView() {
@@ -112,7 +120,6 @@ public class Weather extends Activity {
 		high = new double[ws.size()];
 
 		WeatherModel w = null;
-
 		for (int i = 0; i < ws.size(); i++) {
 			w = ws.get(i);
 			images[i] = loadImage(w.getImageUrl());
@@ -189,26 +196,6 @@ public class Weather extends Activity {
 			Log.i(TAG, high[i] + "----------****");
 			temperatures[i] = String.valueOf(low[i]).substring(0, 2) + " ~ "
 					+ String.valueOf(high[i]).substring(0, 2);
-		}
-	}
-
-	class Worker implements Runnable {
-
-		private int what;
-
-		public Worker(int what) {
-			this.what = what;
-		}
-
-		@Override
-		public void run() {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					handler.sendMessage(Message.obtain(handler, what));
-				}
-			});
-
 		}
 	}
 }

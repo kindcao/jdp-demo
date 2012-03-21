@@ -7,8 +7,11 @@ import java.net.URL;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,6 +45,31 @@ public class Weather extends Activity {
 
 	private WeatherAdapter adapter;
 
+	private ProgressDialog mypDialog;
+
+	private static final String TAG = "Handler";
+
+	private Handler handler = new Handler() {
+
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 1:
+				initData();
+				adapter = new WeatherAdapter(context, images, dates,
+						temperatures, conditions);
+				listView.setAdapter(adapter);
+				handler.sendMessage(Message.obtain(handler, 2));
+				break;
+			case 2:
+				if (mypDialog != null) {
+					mypDialog.cancel();
+					button.setClickable(true);
+				}
+				break;
+			}
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,25 +78,30 @@ public class Weather extends Activity {
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				mypDialog.show();
 				button.setClickable(false);
-				initData();
-				adapter = new WeatherAdapter(context, images, dates,
-						temperatures, conditions);
-				listView.setAdapter(adapter);
-				button.setClickable(true);
+				//
+				new Thread(new Worker(1)).start();
 			}
 		});
+
 	}
 
 	private void initView() {
 		city = (EditText) findViewById(R.id.city);
 		button = (Button) findViewById(R.id.button);
 		listView = (ListView) findViewById(R.id.list);
+		//
+		mypDialog = new ProgressDialog(context);
+		mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		mypDialog.setMessage("Loading. Please wait...");
+		mypDialog.setCancelable(true);
+		mypDialog.setIndeterminate(true);
 	}
 
 	private void initData() {
 		String xmlStr = WeatherXml.getWeatherXml(city.getText().toString());
-		Log.i("TAG", xmlStr);
+		Log.i(TAG, xmlStr);
 		List<WeatherModel> ws = DomParseWeather.getWeatherFromXml(xmlStr);
 
 		images = new Drawable[ws.size()];
@@ -149,14 +182,33 @@ public class Weather extends Activity {
 		}
 
 		for (int i = 0; i < temperatures.length; i++) {
-			Log.i("TAG", low[i] + "£©£©£©£©£©£©£©");
+			Log.i(TAG, low[i] + "£©£©£©£©£©£©£©");
 			low[i] = 5d / 9d * (low[i] - 32);
-			Log.i("TAG", low[i] + "----------");
+			Log.i(TAG, low[i] + "----------");
 			high[i] = 5d / 9d * (high[i] - 32);
-			Log.i("TAG", high[i] + "----------****");
+			Log.i(TAG, high[i] + "----------****");
 			temperatures[i] = String.valueOf(low[i]).substring(0, 2) + " ~ "
 					+ String.valueOf(high[i]).substring(0, 2);
 		}
 	}
 
+	class Worker implements Runnable {
+
+		private int what;
+
+		public Worker(int what) {
+			this.what = what;
+		}
+
+		@Override
+		public void run() {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					handler.sendMessage(Message.obtain(handler, what));
+				}
+			});
+
+		}
+	}
 }

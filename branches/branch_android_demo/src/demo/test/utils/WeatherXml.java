@@ -19,9 +19,9 @@ public class WeatherXml {
 
 	private static final String URL = HOST_ADDRESS + "/ig/api?weather=";
 
-	private static final int REQUEST_TIMEOUT = 30 * 1000;// 设置请求超时10秒钟
+	private static final int REQUEST_TIMEOUT = 15 * 1000;// 设置请求超时10秒钟
 
-	private static final int SO_TIMEOUT = 30 * 1000; // 设置等待数据超时时间10秒钟
+	private static final int SO_TIMEOUT = 15 * 1000; // 设置等待数据超时时间10秒钟
 
 	public static String getWeatherXml(String weather) {
 		BasicHttpParams httpParams = new BasicHttpParams();
@@ -43,6 +43,6 @@ public class WeatherXml {
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}
-		return null;
+		return "";
 	}
 }

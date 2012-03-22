@@ -76,7 +76,8 @@ public class Weather extends Activity {
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mypDialog.show();
+				mypDialog = ProgressDialog.show(context, "",
+						"Loading. Please wait...", true, true);
 				button.setClickable(false);
 				//
 				new Thread(new Runnable() {
@@ -98,13 +99,8 @@ public class Weather extends Activity {
 	private void initView() {
 		city = (EditText) findViewById(R.id.city);
 		button = (Button) findViewById(R.id.button);
-		listView = (ListView) findViewById(R.id.list);
-		//
-		mypDialog = new ProgressDialog(context);
-		mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		mypDialog.setMessage("Loading. Please wait...");
-		mypDialog.setCancelable(true);
-		mypDialog.setIndeterminate(false);
+		button.requestFocus();
+		listView = (ListView) findViewById(R.id.list_weather);
 	}
 
 	private void initData() {

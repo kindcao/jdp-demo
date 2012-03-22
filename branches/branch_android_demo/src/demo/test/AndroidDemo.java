@@ -13,10 +13,10 @@ public class AndroidDemo extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String[] countries = getResources().getStringArray(R.array.countries);
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.main, countries));
+		String[] demoitems = getResources().getStringArray(R.array.demoitems);
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.main, demoitems));
 		//
-		getListView().setTextFilterEnabled(true);
+		getListView().setTextFilterEnabled(true);		
 	}
 
 	@Override

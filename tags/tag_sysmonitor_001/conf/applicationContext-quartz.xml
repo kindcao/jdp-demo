@@ -14,7 +14,7 @@
 	</bean>
 	<bean id="netConnCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="netConnJobDetail" />
-		<property name="cronExpression" value="0/10 * * * * ? *" />
+		<property name="cronExpression" value="0/30 * * * * ? *" />
 	</bean>
 	<!-- -->
 	<bean id="netFlowJob" class="com.sysmonitor.job.NetFlowJob" />
@@ -36,14 +36,14 @@
 	</bean>
 	<bean id="sysResourceCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="sysResourceJobDetail" />
-		<property name="cronExpression" value="0/10 * * * * ? *" />
+		<property name="cronExpression" value="0/60 * * * * ? *" />
 	</bean>
 	<!-- -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<!--ref bean="netConnCronTrigger" /-->
-				<!--ref bean="netFlowCronTrigger" /-->
+				<ref bean="netConnCronTrigger" />
+				<ref bean="netFlowCronTrigger" />
 				<ref bean="sysResourceCronTrigger" />
 			</list>
 		</property>

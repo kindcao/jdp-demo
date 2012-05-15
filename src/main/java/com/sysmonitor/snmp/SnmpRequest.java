@@ -65,13 +65,15 @@ public class SnmpRequest implements PDUFactory {
 
     private int version = SnmpConstants.version1;
 
-    private Target target;
+    // private Target target;
 
     private IpAddress address;
 
     private PDUv1 v1TrapPDU = new PDUv1();
 
-    private int retries = 1;
+    // NullPointerException in PendingRequest.pduHandleAssigned
+    // when retry > 0.
+    private int retries = 0;
 
     private int timeout = 5000;
 
@@ -98,7 +100,7 @@ public class SnmpRequest implements PDUFactory {
 
     public void send(ResponseListener listener) throws IOException {
         Snmp snmp = createSnmpSession();
-        this.target = createTarget();
+        Target target = createTarget();
         target.setVersion(version);
         target.setAddress(address);
         target.setRetries(retries);
@@ -221,7 +223,7 @@ public class SnmpRequest implements PDUFactory {
 
     public void table(TableListener listener) throws IOException {
         Snmp snmp = createSnmpSession();
-        this.target = createTarget();
+        Target target = createTarget();
         target.setVersion(version);
         target.setAddress(address);
         target.setRetries(retries);

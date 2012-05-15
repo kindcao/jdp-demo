@@ -36,7 +36,7 @@ public class SysResourceJob extends AbstractJob {
         SrHost sr = new SrHost();
         sr.setStatus("1");
         List<?> list = sysResourceService.findByExample(sr);
-        logger.debug("host address list size : " + list.size());
+        logger.info("host address list size : " + list.size());
 
         //
         SrLog sl = null;

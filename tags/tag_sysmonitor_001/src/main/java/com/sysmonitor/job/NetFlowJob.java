@@ -49,7 +49,7 @@ public class NetFlowJob extends AbstractJob {
         NfHost nh = new NfHost();
         nh.setStatus("1");
         List<?> list = netFlowService.findByExample(nh);
-        logger.debug("host address list size : " + list.size());
+        logger.info("host address list size : " + list.size());
         //      
         for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
             NfHost nfHost = (NfHost) iterator.next();

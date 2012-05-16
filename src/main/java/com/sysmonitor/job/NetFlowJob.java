@@ -76,7 +76,7 @@ public class NetFlowJob extends AbstractJob {
         if (null == inSeries) {
             inSeries = new TimeSeries(inKey);
             // inSeries.setMaximumItemCount(500);
-            inSeries.setMaximumItemAge(60 * 1000);
+            // inSeries.setMaximumItemAge(60 * 1000);
             datasets.addSeries(inSeries);
         }
         //
@@ -85,7 +85,7 @@ public class NetFlowJob extends AbstractJob {
         if (null == outSeries) {
             outSeries = new TimeSeries(outKey);
             // outSeries.setMaximumItemCount(500);
-            outSeries.setMaximumItemAge(60 * 1000);
+            // outSeries.setMaximumItemAge(60 * 1000);
             datasets.addSeries(outSeries);
         }
         // ======================================//
@@ -168,6 +168,7 @@ public class NetFlowJob extends AbstractJob {
                         Double.valueOf(o2.getValue().doubleValue()));
             }
         });
+        System.out.println(max.getValue());
         return Utils.getExponent(max.getValue().doubleValue());
     }
 

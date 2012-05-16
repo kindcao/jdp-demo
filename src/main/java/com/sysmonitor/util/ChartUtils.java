@@ -109,7 +109,7 @@ public class ChartUtils {
         plot.setNoDataMessage("No Data!");
         plot.setDrawingSupplier(getSupplier());
         plot.setOutlineVisible(false);
-        plot.setAxisOffset(new RectangleInsets(0, 1, 3, 0));
+        plot.setAxisOffset(new RectangleInsets(0, 1, 1, 0));
         // plot.setBackgroundPaint(Color.lightGray);
 
         final DateAxis axis = (DateAxis) plot.getDomainAxis();

@@ -3,6 +3,8 @@ package com.sysmonitor.job;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import javax.annotation.Resource;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.TimeSeriesDataItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snmp4j.smi.OID;
@@ -72,7 +75,8 @@ public class NetFlowJob extends AbstractJob {
         TimeSeries inSeries = datasets.getSeries(inKey);
         if (null == inSeries) {
             inSeries = new TimeSeries(inKey);
-            inSeries.setMaximumItemCount(500);
+            // inSeries.setMaximumItemCount(500);
+            inSeries.setMaximumItemAge(60 * 1000);
             datasets.addSeries(inSeries);
         }
         //
@@ -80,7 +84,8 @@ public class NetFlowJob extends AbstractJob {
         TimeSeries outSeries = datasets.getSeries(outKey);
         if (null == outSeries) {
             outSeries = new TimeSeries(outKey);
-            outSeries.setMaximumItemCount(500);
+            // outSeries.setMaximumItemCount(500);
+            outSeries.setMaximumItemAge(60 * 1000);
             datasets.addSeries(outSeries);
         }
         // ======================================//
@@ -91,8 +96,12 @@ public class NetFlowJob extends AbstractJob {
         period = (System.currentTimeMillis() - entry.getLastUpdateTime()) / 1000;
         period = period != 0 ? period : 1;
         //
-        inRate = (entry.getIfInOctets() - entry.getLastIfInOctets() * 1.0) / period / 1000;
-        outRate = (entry.getIfOutOctets() - entry.getLastIfOutOctets() * 1.0) / period / 1000;
+        // inRate = (entry.getIfInOctets() - entry.getLastIfInOctets() * 1.0) /
+        // period / 1000;
+        // outRate = (entry.getIfOutOctets() - entry.getLastIfOutOctets() * 1.0)
+        // / period / 1000;
+        inRate = (entry.getIfInOctets() - entry.getLastIfInOctets() * 1.0) / period;
+        outRate = (entry.getIfOutOctets() - entry.getLastIfOutOctets() * 1.0) / period;
         // ======================================//
         inSeries.addOrUpdate(new Second(), inRate);
         logger.debug("ifInOctets=" + entry.getIfInOctets() + "\tlastIfInOctets=" + entry.getLastIfInOctets()
@@ -128,10 +137,14 @@ public class NetFlowJob extends AbstractJob {
         sb.append(" Total: " + entry.getStrTotalIfOutOctets());
         outSeries.setKey(sb.toString());
         // ======================================//
+        int maxExponent = Math.max(getMaxExponent(inSeries), getMaxExponent(outSeries));//
+        fmtTimeSeriesDataItem(inSeries, maxExponent);
+        fmtTimeSeriesDataItem(outSeries, maxExponent);
+        // ======================================//
         ChartInfo ci = new ChartInfo();
         ci.setTitle(nfSwitch.getRemarks());
         // ci.setTitle(entry.getIfDescr() + "-" + getDeviceDesc(host));
-        ci.setYName(new String[] { "In/Out (" + Utils.getUnit(3) + "/s)" });
+        ci.setYName(new String[] { "In/Out (" + Utils.getUnit(maxExponent) + "/s)" });
         //
         String chartPath = Config.getInstance().getValue("data.dir") + "/" + Constants.SUB_CHART_SAVE_PATH
                 + nfSwitch.getNfHost().getHostAddress() + "/" + nfSwitch.getIfIndex();
@@ -140,6 +153,29 @@ public class NetFlowJob extends AbstractJob {
         //
         inSeries.setKey(inKey);
         outSeries.setKey(outKey);
+        fmtTimeSeriesDataItem(inSeries, -maxExponent);
+        fmtTimeSeriesDataItem(outSeries, -maxExponent);
+    }
+
+    @SuppressWarnings("unchecked")
+    private int getMaxExponent(TimeSeries series) {
+        List<TimeSeriesDataItem> items = series.getItems();
+        TimeSeriesDataItem max = (TimeSeriesDataItem) Collections.max(items, new Comparator<TimeSeriesDataItem>() {
+
+            @Override
+            public int compare(TimeSeriesDataItem o1, TimeSeriesDataItem o2) {
+                return Double.valueOf(o1.getValue().doubleValue()).compareTo(
+                        Double.valueOf(o2.getValue().doubleValue()));
+            }
+        });
+        return Utils.getExponent(max.getValue().doubleValue());
+    }
+
+    private void fmtTimeSeriesDataItem(TimeSeries series, int maxExponent) {
+        for (Iterator<?> iterator = series.getItems().iterator(); iterator.hasNext();) {
+            TimeSeriesDataItem ele = (TimeSeriesDataItem) iterator.next();
+            series.addOrUpdate(ele.getPeriod(), ele.getValue().doubleValue() / (Math.pow(10, maxExponent)));
+        }
     }
 
     private void fetchData(NfSwitch nfSwitch) {

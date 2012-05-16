@@ -168,7 +168,6 @@ public class NetFlowJob extends AbstractJob {
                         Double.valueOf(o2.getValue().doubleValue()));
             }
         });
-        System.out.println(max.getValue());
         return Utils.getExponent(max.getValue().doubleValue());
     }
 

@@ -73,7 +73,7 @@ public class SnmpRequest implements PDUFactory {
 
     // NullPointerException in PendingRequest.pduHandleAssigned
     // when retry > 0.
-    private int retries = 0;
+    private int retries = 1;
 
     private int timeout = 5000;
 

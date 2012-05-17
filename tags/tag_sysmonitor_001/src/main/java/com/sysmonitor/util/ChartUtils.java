@@ -109,7 +109,7 @@ public class ChartUtils {
         plot.setNoDataMessage("No Data!");
         plot.setDrawingSupplier(getSupplier());
         plot.setOutlineVisible(false);
-        plot.setAxisOffset(new RectangleInsets(0, 1, 1, 0));
+        plot.setAxisOffset(new RectangleInsets(0, 0, 0, 0));
         // plot.setBackgroundPaint(Color.lightGray);
 
         final DateAxis axis = (DateAxis) plot.getDomainAxis();
@@ -119,17 +119,20 @@ public class ChartUtils {
         axis.setMinorTickCount(3);
         axis.setDateFormatOverride(new SimpleDateFormat("HH:mm"));
         axis.setLabelFont(verdanaFont10);
+        axis.setTickLabelFont(verdanaFont10);
         // axis.setMinorTickMarksVisible(true);
         // axis.setInverted(true);
         // axis.setVerticalTickLabels(true);
         // axis.setFixedAutoRange(1 * 10 * 60 * 1000); // 60 seconds
         // axis.setAutoRangeMinimumSize(1);
 
-        final NumberAxis rangeAxis = new NumberAxis(yName[yName.length - 1]);
-        rangeAxis.setAutoRangeIncludesZero(false);
+        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setLabel(yName[yName.length - 1]);
+        rangeAxis.setAutoRangeIncludesZero(true);
         rangeAxis.setAutoRange(true);
         rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
         rangeAxis.setLabelFont(verdanaFont10);
+        rangeAxis.setTickLabelFont(verdanaFont10);
         rangeAxis.setMinorTickCount(3);
         plot.setRangeAxis(rangeAxis);
 
@@ -138,8 +141,8 @@ public class ChartUtils {
         chart.setBorderVisible(false);
         chart.setBackgroundPaint(Color.white);
         chart.setTitle(new TextTitle(ci.getTitle(), new Font("宋体", Font.ITALIC, 12)));
-        // 字体模糊边界
-        // chart.setAntiAlias(true);
+        // 图例字体清晰
+        chart.setAntiAlias(false);
         chart.getRenderingHints().put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 
         // 设置子标题

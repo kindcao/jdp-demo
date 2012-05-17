@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartFactory;
@@ -21,12 +22,15 @@ import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
+import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sysmonitor.common.Config;
 
 /**
  * 
@@ -109,13 +113,14 @@ public class ChartUtils {
         plot.setNoDataMessage("No Data!");
         plot.setDrawingSupplier(getSupplier());
         plot.setOutlineVisible(false);
-        plot.setAxisOffset(new RectangleInsets(0, 0, 0, 0));
+        plot.setAxisOffset(new RectangleInsets(0, 1, 1, 0));
         // plot.setBackgroundPaint(Color.lightGray);
 
         final DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setNegativeArrowVisible(false);
-        axis.setAutoRange(true);
-        axis.setLowerMargin(0);
+        // axis.setAutoRange(true);
+        // axis.setAutoRangeMinimumSize(60 * 1000);
+        // axis.setLowerMargin(0);
         axis.setMinorTickCount(3);
         axis.setDateFormatOverride(new SimpleDateFormat("HH:mm"));
         axis.setLabelFont(verdanaFont10);
@@ -123,8 +128,7 @@ public class ChartUtils {
         // axis.setMinorTickMarksVisible(true);
         // axis.setInverted(true);
         // axis.setVerticalTickLabels(true);
-        // axis.setFixedAutoRange(1 * 10 * 60 * 1000); // 60 seconds
-        // axis.setAutoRangeMinimumSize(1);
+        axis.setFixedAutoRange(Config.getInstance().getIntValue("chart.maximum.range"));
 
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setLabel(yName[yName.length - 1]);

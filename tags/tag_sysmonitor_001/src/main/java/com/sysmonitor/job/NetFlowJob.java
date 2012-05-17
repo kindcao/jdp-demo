@@ -76,7 +76,7 @@ public class NetFlowJob extends AbstractJob {
         if (null == inSeries) {
             inSeries = new TimeSeries(inKey);
             // inSeries.setMaximumItemCount(500);
-            inSeries.setMaximumItemAge(60 * 60 * 1000);
+            inSeries.setMaximumItemAge(Config.getInstance().getIntValue("chart.maximum.range"));
             datasets.addSeries(inSeries);
         }
         //
@@ -85,7 +85,7 @@ public class NetFlowJob extends AbstractJob {
         if (null == outSeries) {
             outSeries = new TimeSeries(outKey);
             // outSeries.setMaximumItemCount(500);
-            outSeries.setMaximumItemAge(60 * 60 * 1000);
+            outSeries.setMaximumItemAge(Config.getInstance().getIntValue("chart.maximum.range"));
             datasets.addSeries(outSeries);
         }
         // ======================================//

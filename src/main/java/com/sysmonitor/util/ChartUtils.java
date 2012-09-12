@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartFactory;
@@ -22,7 +21,6 @@ import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.RectangleInsets;
@@ -119,8 +117,8 @@ public class ChartUtils {
         final DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setNegativeArrowVisible(false);
         // axis.setAutoRange(true);
-        // axis.setAutoRangeMinimumSize(60 * 1000);
         // axis.setLowerMargin(0);
+        axis.setAutoRangeMinimumSize(60 * 1000);
         axis.setMinorTickCount(3);
         axis.setDateFormatOverride(new SimpleDateFormat("HH:mm"));
         axis.setLabelFont(verdanaFont10);
@@ -128,7 +126,7 @@ public class ChartUtils {
         // axis.setMinorTickMarksVisible(true);
         // axis.setInverted(true);
         // axis.setVerticalTickLabels(true);
-        axis.setFixedAutoRange(Config.getInstance().getIntValue("chart.maximum.range"));
+         axis.setFixedAutoRange(Config.getInstance().getIntValue("chart.maximum.range"));
 
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setLabel(yName[yName.length - 1]);

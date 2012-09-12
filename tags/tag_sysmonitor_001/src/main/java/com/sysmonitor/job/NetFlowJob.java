@@ -59,6 +59,9 @@ public class NetFlowJob extends AbstractJob {
             Set<?> switchs = nfHost.getNfSwitchs();
             for (Iterator<?> iterator2 = switchs.iterator(); iterator2.hasNext();) {
                 NfSwitch nfSwitch = (NfSwitch) iterator2.next();
+                if (!nfSwitch.getStatus().equals(nh.getStatus())) {
+                    continue;
+                }
                 fetchData(nfSwitch);
                 writeData(nfSwitch);
                 // last

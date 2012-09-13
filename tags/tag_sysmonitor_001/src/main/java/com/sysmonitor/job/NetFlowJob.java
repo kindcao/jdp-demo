@@ -195,7 +195,9 @@ public class NetFlowJob extends AbstractJob {
         try {
             String mapKey = host.getHostAddress() + Constants.UNDERLINE + nfSwitch.getIfIndex();
             if (!beanMap.containsKey(mapKey)) {
-                beanMap.put(mapKey, new DataBean());
+                DataBean bean = new DataBean();
+                bean.getEntry().setIfIndex(nfSwitch.getIfIndex());
+                beanMap.put(mapKey, bean);
             }
             sr.send(new NetFlowTextListener(beanMap.get(mapKey).getEntry()));
         } catch (IOException e) {

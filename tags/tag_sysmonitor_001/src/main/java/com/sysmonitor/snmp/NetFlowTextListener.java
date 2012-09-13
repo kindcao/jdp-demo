@@ -34,12 +34,13 @@ public class NetFlowTextListener implements ResponseListener {
         //        
         if (null != response) {
             entry.setIfDescr(new String(OctetString.fromHexString(
-                    response.getVariable(new OID(Constants.ifDescr)).toString()).getValue()).trim());
+                    response.getVariable(new OID(Constants.ifDescr + entry.getIfIndex())).toString()).getValue())
+                    .trim());
             //    
-            entry.setIfInOctets(response.getVariable(new OID(Constants.ifInOctets)).toLong());
+            entry.setIfInOctets(response.getVariable(new OID(Constants.ifInOctets + entry.getIfIndex())).toLong());
             entry.setTotalIfInOctets(entry.getTotalIfInOctets() + entry.getIfInOctets() - entry.getLastIfInOctets());
             //    
-            entry.setIfOutOctets(response.getVariable(new OID(Constants.ifOutOctets)).toLong());
+            entry.setIfOutOctets(response.getVariable(new OID(Constants.ifOutOctets + entry.getIfIndex())).toLong());
             entry
                     .setTotalIfOutOctets(entry.getTotalIfOutOctets() + entry.getIfOutOctets()
                             - entry.getLastIfOutOctets());

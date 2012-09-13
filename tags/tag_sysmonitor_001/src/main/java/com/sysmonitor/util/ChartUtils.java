@@ -28,8 +28,6 @@ import org.jfree.ui.VerticalAlignment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sysmonitor.common.Config;
-
 /**
  * 
  * @author Kind Cao
@@ -104,29 +102,32 @@ public class ChartUtils {
         plot.setBackgroundPaint(Color.white);
         plot.setDomainGridlinePaint(Color.darkGray);
         plot.setRangeGridlinePaint(Color.darkGray);
-        plot.setDomainMinorGridlinePaint(Color.lightGray);
-        plot.setDomainMinorGridlinesVisible(true);
-        plot.setRangeMinorGridlinePaint(Color.lightGray);
-        plot.setRangeMinorGridlinesVisible(true);
+        // plot.setDomainMinorGridlinePaint(Color.lightGray);
+        // plot.setDomainMinorGridlinesVisible(true);
+        // plot.setRangeMinorGridlinePaint(Color.lightGray);
+        // plot.setRangeMinorGridlinesVisible(true);
         plot.setNoDataMessage("No Data!");
         plot.setDrawingSupplier(getSupplier());
         plot.setOutlineVisible(false);
         plot.setAxisOffset(new RectangleInsets(0, 1, 1, 0));
+        // for (int i = 0; i < datasets.getSeriesCount(); i++) {
+        // plot.getRenderer().setSeriesStroke(i, new BasicStroke(2.0f));
+        // }
         // plot.setBackgroundPaint(Color.lightGray);
 
         final DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setNegativeArrowVisible(false);
-        // axis.setAutoRange(true);
+        axis.setAutoRange(true);
         // axis.setLowerMargin(0);
-        axis.setAutoRangeMinimumSize(60 * 1000);
-        axis.setMinorTickCount(3);
+        // axis.setAutoRangeMinimumSize(60 * 1000);
+        // axis.setMinorTickCount(3);
         axis.setDateFormatOverride(new SimpleDateFormat("HH:mm"));
         axis.setLabelFont(verdanaFont10);
         axis.setTickLabelFont(verdanaFont10);
         // axis.setMinorTickMarksVisible(true);
         // axis.setInverted(true);
         // axis.setVerticalTickLabels(true);
-         axis.setFixedAutoRange(Config.getInstance().getIntValue("chart.maximum.range"));
+        // axis.setFixedAutoRange(Config.getInstance().getIntValue("chart.maximum.range"));
 
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setLabel(yName[yName.length - 1]);
@@ -135,7 +136,7 @@ public class ChartUtils {
         rangeAxis.setNumberFormatOverride(new DecimalFormat("#,##0.0"));
         rangeAxis.setLabelFont(verdanaFont10);
         rangeAxis.setTickLabelFont(verdanaFont10);
-        rangeAxis.setMinorTickCount(3);
+        // rangeAxis.setMinorTickCount(3);
         plot.setRangeAxis(rangeAxis);
 
         // 

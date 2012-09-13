@@ -21,7 +21,7 @@ public class ChartInfo {
     private String saveFilepath;
 
     public ChartInfo() {
-        this(550, 250, "", "", "", null, ".");
+        this(600, 200, "", "", "", null, ".");
     }
 
     public ChartInfo(int width, int height, String title, String subTitle, String xName, String[] yName,
